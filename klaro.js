@@ -5,6 +5,9 @@
   var meta = document.querySelector('meta[name="klaro-app"]');
   var APP = (meta && meta.content) || 'https://klaro-web-staging.klaroplatform.workers.dev';
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // The Arabic page opens the app in Arabic (the app reads ?lang= as the reader's choice).
+  var LANG = document.documentElement.lang === 'ar' ? 'lang=ar' : '';
+  function appLink(path, query) { var q = [query, LANG].filter(Boolean).join('&'); return APP + path + (q ? '?' + q : ''); }
 
   function placePill(seg) {
     var pill = seg.querySelector('.seg-pill');
@@ -21,7 +24,7 @@
       b.setAttribute('aria-pressed', String(b.dataset.value === as));
     });
     document.querySelectorAll('.seg[data-audience]').forEach(placePill);
-    document.querySelectorAll('[data-signup]').forEach(function (a) { a.href = APP + '/sign-up?as=' + as; });
+    document.querySelectorAll('[data-signup]').forEach(function (a) { a.href = appLink('/sign-up', 'as=' + as); });
     // The language link keeps the audience, so a tutor reading in English stays a tutor in Arabic.
     document.querySelectorAll('[data-lang-link]').forEach(function (a) { a.hash = as === 'tutor' ? 'tutor' : ''; });
     if (fromUser) {
@@ -29,8 +32,8 @@
     }
   }
 
-  document.querySelectorAll('[data-signin]').forEach(function (a) { a.href = APP + '/sign-in'; });
-  document.querySelectorAll('[data-legal]').forEach(function (a) { a.href = APP + '/' + a.dataset.legal; });
+  document.querySelectorAll('[data-signin]').forEach(function (a) { a.href = appLink('/sign-in'); });
+  document.querySelectorAll('[data-legal]').forEach(function (a) { a.href = appLink('/' + a.dataset.legal); });
 
   document.querySelectorAll('.seg').forEach(function (seg) {
     var pill = document.createElement('span');

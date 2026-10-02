@@ -1,0 +1,4 @@
+# GitHub Pages: publish the site, not the notes or the design explorations.
+exclude:
+  - README.md
+  - design

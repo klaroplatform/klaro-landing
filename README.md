@@ -2,7 +2,8 @@
 
 The public landing page for Klaro: plain HTML, CSS and a little JavaScript, with no build step.
 
-- `index.html` is English and `ar/index.html` is Arabic (right to left). They share `klaro.css` and `klaro.js`.
+- `index.html` is English and `ar/index.html` is Arabic (right to left). They share `klaro.css` and `klaro.js`. The Arabic page's links into the app carry `lang=ar`, so the app opens in Arabic.
+- `market/` is the public course market ("V1 Catalog"): search, level, subjects, sorting and a course drawer. Its courses, tutors and prices are examples until the back end has a market. Enroll goes to `<app>/sign-up?as=student&course=<id>`.
 - Visitors choose **I'm a student** or **I'm a tutor**. The copy, the animated preview and every sign-up link follow that choice. The sign-up links go to `<app>/sign-up?as=student` or `?as=tutor`, and the app's sign-up card opens on the same choice. `#tutor` in the address opens the tutor version.
 - The look is the app's own design system: tokens from `klaro-beta-v2/apps/web/src/styles/tokens.css`, shapes from `src/components/ui/KIT.md`, and images from `apps/web/public`. When the app's tokens change, update the `:root` block in `klaro.css`.
 
@@ -19,11 +20,7 @@ python3 -m http.server 8080
 
 ## Deploy
 
-It is a static folder, so any static host works. With Cloudflare Pages (where the app already runs):
-
-```sh
-npx wrangler pages deploy . --project-name klaro-landing
-```
+GitHub Pages serves `main` from the repository root: push to `main` and it is live in about a minute at https://klaroplatform.github.io/klaro-landing/. `_config.yml` keeps `README.md` and `design/` off the site.
 
 ## Editing copy
 
