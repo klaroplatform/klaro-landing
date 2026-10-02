@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Klaro · V1 Study view</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="klaro.css">
+<style>
+/* V1: the hero is the product. A live copy of the study view's three panes. */
+.hero { padding-block: 56px 72px; position: relative; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+.hero-copy .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.note { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-soft); }
+.hero .accent { inset-inline-end: -60px; inset-block-start: -40px; }
+
+/* The study window */
+.studio { position: relative; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-large); box-shadow: var(--shadow-lift); overflow: hidden; }
+.studio-head { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--band); font-size: 12px; font-weight: 600; color: var(--ink-soft); flex-wrap: wrap; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-inline-end: 6px; }
+.studio-head .grow { flex: 1; }
+.panes { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); }
+.pane { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.pane + .pane { border-inline-start: 1px solid var(--border); }
+.pane-label { font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; }
+.video { position: relative; border-radius: var(--r-control); overflow: hidden; aspect-ratio: 16 / 10; background: var(--teal-soft); }
+.video img { width: 100%; height: 100%; object-fit: cover; }
+.play { position: absolute; inset: 0; margin: auto; width: 46px; height: 46px; border-radius: 50%; background: rgb(255 255 255 / .92); display: grid; place-items: center; color: var(--purple-dark); box-shadow: var(--shadow-popover); }
+.video .bar { position: absolute; inset-inline: 10px; inset-block-end: 10px; height: 4px; background: rgb(255 255 255 / .6); }
+.video .bar i { animation: v1-play 10s linear infinite; }
+.book p { font-size: 12.5px; line-height: 1.65; color: var(--ink-soft); }
+.book mark { color: var(--ink); background: linear-gradient(#ffe9a3, #ffe9a3) no-repeat left / 0% 100%; border-radius: 3px; padding-inline: 2px; animation: v1-mark 10s var(--ease-out) infinite; }
+[dir="rtl"] .book mark { background-position: right; }
+.linked { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: var(--r-pill); background: var(--gold-soft); color: var(--gold-deep); font-size: 11px; font-weight: 700; animation: v1-pop 10s var(--ease-settle) infinite; transform-origin: left center; }
+.q { font-size: 13px; font-weight: 600; line-height: 1.45; }
+.opt { position: relative; display: flex; align-items: center; gap: 8px; padding: 9px 11px; border: 1px solid var(--border-strong); border-radius: var(--r-button); font-size: 12.5px; background: var(--card); }
+.opt b { width: 20px; height: 20px; border-radius: 6px; background: var(--surface); display: grid; place-items: center; font-size: 11px; color: var(--ink-soft); flex-shrink: 0; }
+.opt.right { animation: v1-right 10s var(--ease-out) infinite; }
+.cursor { position: absolute; inset-inline-end: 14px; top: 10px; width: 14px; height: 14px; border-radius: 50%; background: var(--purple); box-shadow: 0 0 0 4px rgb(146 84 224 / .25); animation: v1-cursor 10s var(--ease-out) infinite; }
+.correct { align-self: flex-start; animation: v1-pop 10s var(--ease-settle) infinite; animation-delay: 2.6s; }
+@keyframes v1-play { 0% { width: 16%; } 70%, 100% { width: 64%; } }
+@keyframes v1-mark { 0%, 18% { background-size: 0% 100%; } 30%, 92% { background-size: 100% 100%; } 100% { background-size: 0% 100%; } }
+@keyframes v1-pop { 0%, 30% { scale: .4; opacity: 0; } 36%, 90% { scale: 1; opacity: 1; } 96%, 100% { scale: .4; opacity: 0; } }
+@keyframes v1-cursor { 0%, 44% { translate: 30px 50px; opacity: 0; } 50% { opacity: 1; } 58%, 88% { translate: 0 0; opacity: 1; } 94%, 100% { opacity: 0; } }
+@keyframes v1-right { 0%, 58% { background: var(--card); border-color: var(--border-strong); } 62%, 90% { background: var(--success-soft); border-color: var(--success-line); color: var(--success); } 96%, 100% { background: var(--card); border-color: var(--border-strong); } }
+
+/* Tutor window: material moving through review, lectures in the tutor's order */
+.files, .order { display: flex; flex-direction: column; gap: 8px; }
+.file { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--r-control); font-size: 13px; font-weight: 600; }
+.file .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.states { display: grid; justify-items: end; }
+.states > * { grid-area: 1 / 1; }
+.states .s1 { animation: v1-s1 9s infinite; } .states .s2 { animation: v1-s2 9s infinite; } .states .s3 { animation: v1-s3 9s infinite; }
+.file:nth-child(2) .states > * { animation-delay: -3s; } .file:nth-child(3) .states > * { animation-delay: -6s; }
+@keyframes v1-s1 { 0%, 30% { opacity: 1; scale: 1; } 34%, 100% { opacity: 0; scale: .8; } }
+@keyframes v1-s2 { 0%, 30% { opacity: 0; scale: .8; } 34%, 64% { opacity: 1; scale: 1; } 68%, 100% { opacity: 0; scale: .8; } }
+@keyframes v1-s3 { 0%, 64% { opacity: 0; scale: .8; } 68%, 97% { opacity: 1; scale: 1; } 100% { opacity: 0; } }
+.lec { display: flex; align-items: center; gap: 10px; height: 44px; padding-inline: 12px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--card); font-size: 13px; font-weight: 600; position: relative; }
+.lec .n { width: 22px; height: 22px; border-radius: 6px; background: var(--purple-soft); color: var(--purple-dark); display: grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.lec .grip { margin-inline-start: auto; color: var(--faint); }
+.lec.up { animation: v1-up 8s var(--ease-settle) infinite; z-index: 2; }
+.lec.down { animation: v1-down 8s var(--ease-settle) infinite; }
+@keyframes v1-up { 0%, 35% { translate: 0 0; box-shadow: none; } 40% { box-shadow: var(--shadow-lift); border-color: var(--purple-line); } 48%, 85% { translate: 0 -52px; box-shadow: none; } 92%, 100% { translate: 0 0; } }
+@keyframes v1-down { 0%, 38% { translate: 0 0; } 48%, 85% { translate: 0 52px; } 92%, 100% { translate: 0 0; } }
+.joincode { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border-radius: var(--r-control); background: var(--purple-tint); border: 1px dashed var(--purple-line); font-size: 13px; }
+.joincode code { font: 700 15px/1 ui-monospace, Menlo, monospace; letter-spacing: .08em; color: var(--purple-dark); }
+
+/* Sections */
+.section { padding-block: 72px; }
+.section-head { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+.features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feature { display: flex; flex-direction: column; gap: 12px; }
+.feature p { color: var(--ink-soft); font-size: 14px; }
+.shelf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.band { position: relative; overflow: hidden; background: var(--ink); color: #fff; border-radius: var(--r-large); padding: clamp(28px, 5vw, 56px); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; }
+.band .lead { color: rgb(255 255 255 / .72); }
+.band .accent { inset-inline-end: -40px; inset-block-end: -70px; background: linear-gradient(135deg, rgb(146 84 224 / .45), rgb(240 201 61 / .25)); }
+.band .accent span { background: rgb(255 255 255 / .25); }
+.band > * { position: relative; }
+
+@media (max-width: 980px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  .features, .shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .hero { padding-block: 28px 48px; }
+  .panes { grid-template-columns: minmax(0, 1fr); }
+  .pane + .pane { border-inline-start: 0; border-top: 1px solid var(--border); }
+  .features, .shelf { grid-template-columns: minmax(0, 1fr); }
+  .section { padding-block: 48px; }
+  .hero-copy .actions .btn { flex: 1 1 auto; }
+}
+</style>
+</head>
+<body data-version="1">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/></defs></svg>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Klaro home"><img src="img/klaro-wordmark.svg" alt="Klaro"></a>
+    <span class="spacer"></span>
+    <a class="btn btn-quiet hide-sm" href="#" lang="ar">عربي</a>
+    <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
+    <a class="btn btn-glass" data-signup href="#">Get started</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="seg" data-audience role="group" aria-label="I am a">
+        <button type="button" data-value="student" aria-pressed="true">I'm a student</button>
+        <button type="button" data-value="tutor" aria-pressed="false">I'm a tutor</button>
+      </div>
+      <h1 class="display" data-aud="student">The lecture, the book and the questions. Side by side.</h1>
+      <h1 class="display" data-aud="tutor">Hand us your books. Get back a course.</h1>
+      <p class="lead" data-aud="student">Join your tutor's course with a code. Watch each lecture next to the book pages it covers, answer practice questions as you go, and see your progress before the exam.</p>
+      <p class="lead" data-aud="tutor">Upload your books and past papers. The Klaro team turns them into lectures and practice questions. You set the order, share a join code, and mark exams in one place.</p>
+      <div class="actions">
+        <a class="btn btn-primary btn-lg" data-signup href="#"><span data-aud="student">Create a student account</span><span data-aud="tutor">Apply as a tutor</span>
+          <svg class="flip" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-secondary btn-lg" data-signin href="#">I have an account</a>
+      </div>
+      <p class="note" data-aud="student"><svg class="star" viewBox="112.56 0 103.11 103.11" width="14" height="14" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Works in English and Arabic.</p>
+      <p class="note" data-aud="tutor"><svg class="star" viewBox="112.56 0 103.11 103.11" width="14" height="14" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>The Klaro team reviews every tutor account before it opens.</p>
+    </div>
+
+    <div style="position: relative">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <!-- Student: the study view -->
+      <div class="studio" data-aud="student" aria-label="The Klaro study view, animated">
+        <div class="studio-head">
+          <span><i class="dot" style="background: var(--purple)"></i>Lecture</span>
+          <span><i class="dot" style="background: var(--teal)"></i>Book</span>
+          <span><i class="dot" style="background: var(--amber)"></i>Questions</span>
+          <span class="grow"></span>
+          <span class="tag tag-slate">Biology · Grade 11</span>
+        </div>
+        <div class="panes">
+          <div class="pane">
+            <div class="pane-label"><i class="dot" style="background: var(--purple)"></i>Lecture 4</div>
+            <div class="video"><img src="img/lecture-osmosis.webp" alt=""><span class="play"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span><div class="bar"><i></i></div></div>
+            <div class="card-title" style="font-size: 16px">Osmosis</div>
+            <div class="small">12 min · 8 practice questions</div>
+          </div>
+          <div class="pane book">
+            <div class="pane-label"><i class="dot" style="background: var(--teal)"></i>Book · p. 48</div>
+            <p>Water molecules move freely through a partially permeable membrane. <mark>Osmosis is the net movement of water from a dilute solution to a more concentrated one</mark> through such a membrane.</p>
+            <span class="linked"><svg class="star" viewBox="112.56 0 103.11 103.11" width="12" height="12" aria-hidden="true"><use href="#spark" fill="currentColor"/></svg>Linked to 06:12 in the lecture</span>
+          </div>
+          <div class="pane">
+            <div class="pane-label"><i class="dot" style="background: var(--amber)"></i>Question 3 of 8</div>
+            <p class="q">A potato slice is left in pure water. Water moves into its cells. What is this called?</p>
+            <div class="opt"><b>A</b>Diffusion</div>
+            <div class="opt right"><b>B</b>Osmosis<span class="cursor" aria-hidden="true"></span></div>
+            <div class="opt"><b>C</b>Active transport</div>
+            <span class="tag tag-green correct">Correct</span>
+          </div>
+        </div>
+      </div>
+      <!-- Tutor: material in review, lectures in order -->
+      <div class="studio" data-aud="tutor" aria-label="A tutor's course setup, animated">
+        <div class="studio-head">
+          <span>Chemistry 0620</span><span class="grow"></span><span class="tag tag-purple">Setting up</span>
+        </div>
+        <div class="panes" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr)">
+          <div class="pane">
+            <div class="pane-label">Your material</div>
+            <div class="files">
+              <div class="file"><span class="icon-tile teal" style="width: 30px; height: 30px; border-radius: 8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></svg></span><span class="name">Chemistry textbook.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">In review</span><span class="tag tag-green s3">Ready</span></span></div>
+              <div class="file"><span class="icon-tile amber" style="width: 30px; height: 30px; border-radius: 8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg></span><span class="name">Past paper 2024 P1.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">In review</span><span class="tag tag-green s3">Ready</span></span></div>
+              <div class="file"><span class="icon-tile amber" style="width: 30px; height: 30px; border-radius: 8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg></span><span class="name">Mark scheme 2024 P1.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">In review</span><span class="tag tag-green s3">Ready</span></span></div>
+            </div>
+            <div class="joincode"><span>Join code</span><code>K7Q-2PX</code></div>
+          </div>
+          <div class="pane">
+            <div class="pane-label">Lectures, in your order</div>
+            <div class="order">
+              <div class="lec"><span class="n">1</span>States of matter<span class="grip">⋮⋮</span></div>
+              <div class="lec down"><span class="n">2</span>Electrolysis<span class="grip">⋮⋮</span></div>
+              <div class="lec up"><span class="n">3</span>Atomic structure<span class="grip">⋮⋮</span></div>
+              <div class="lec"><span class="n">4</span>Rates of reaction<span class="grip">⋮⋮</span></div>
+            </div>
+            <div class="small" style="display: flex; align-items: center; gap: 8px"><span class="tag tag-green">24 students joined</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: var(--card); border-block: 1px solid var(--border)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker" data-aud="student">Made for revision</span><span class="kicker" data-aud="tutor">Made for teaching</span>
+      <h2 class="h2" data-aud="student">Everything for one course, in one view.</h2>
+      <h2 class="h2" data-aud="tutor">You teach. We do the preparation.</h2>
+    </div>
+    <div class="features" data-aud="student">
+      <article class="card card-pad feature lift reveal"><span class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></span><h3 class="card-title">Lectures that know the book</h3><p>Klaro links each part of a lecture to the book pages it covers, so the right page is open when you need it.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .08s"><span class="icon-tile amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><h3 class="card-title">Questions, marked at once</h3><p>Practise as you watch. See what you got right and why, then try again.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .16s"><span class="icon-tile teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></svg></span><h3 class="card-title">Progress you can see</h3><p>Finished lectures, quiz marks and your streak for every course, on your home page.</p></article>
+    </div>
+    <div class="features" data-aud="tutor">
+      <article class="card card-pad feature lift reveal"><span class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></span><h3 class="card-title">Upload once</h3><p>Books, slides, past papers and mark schemes go in through one upload.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .08s"><span class="icon-tile teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><h3 class="card-title">Your order, your students</h3><p>Drag the lectures into the order you teach. Share one code and students join.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .16s"><span class="icon-tile amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></span><h3 class="card-title">Marking in one place</h3><p>Review exam papers against the mark scheme and release results to students.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">Your home page</span>
+      <h2 class="h2" data-aud="student">Pick up where you stopped.</h2>
+      <h2 class="h2" data-aud="tutor">Every course at a glance.</h2>
+    </div>
+    <div class="shelf">
+      <a class="media lift reveal" data-signup href="#"><div class="pic"><img src="img/course-biology.webp" alt=""><div class="corner"><span class="tag tag-purple" data-aud="student">In progress</span><span class="tag tag-green" data-aud="tutor">Published</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 11</div><div class="title">Biology 0610</div></div></div><div class="edge" data-aud="student"><i style="width: 62%"></i></div><div class="figs" data-aud="student"><span><b>62%</b> finished</span><span><b>6/10</b> lectures</span><span><b>3/5</b> quizzes</span></div><div class="figs" data-aud="tutor"><span><b>24</b> students</span><span><b>10</b> lectures</span></div><div class="foot"><span class="label" data-aud="student">Next up</span><span data-aud="student">Active transport</span><span data-aud="tutor" style="color: var(--ink-soft)">Course manager</span><span style="margin-inline-start: auto; color: var(--ink-soft)">›</span></div></a>
+      <a class="media lift reveal" data-signup href="#" style="--d: .08s"><div class="pic"><img src="img/course-chemistry.webp" alt=""><div class="corner"><span class="tag tag-purple" data-aud="student">In progress</span><span class="tag tag-yellow" data-aud="tutor">In review</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 10</div><div class="title">Chemistry 0620</div></div></div><div class="edge" data-aud="student"><i style="width: 28%"></i></div><div class="figs" data-aud="student"><span><b>28%</b> finished</span><span><b>3/11</b> lectures</span><span><b>1/4</b> quizzes</span></div><div class="figs" data-aud="tutor"><span><b>18</b> students</span><span><b>11</b> lectures</span></div><div class="foot"><span class="label" data-aud="student">Next up</span><span data-aud="student">Electrolysis</span><span data-aud="tutor" style="color: var(--ink-soft)">Course manager</span><span style="margin-inline-start: auto; color: var(--ink-soft)">›</span></div></a>
+      <a class="media lift reveal" data-signup href="#" style="--d: .16s"><div class="pic"><img src="img/course-physics.webp" alt=""><div class="corner"><span class="tag tag-yellow" data-aud="student">Not started</span><span class="tag tag-green" data-aud="tutor">Published</span></div><div class="scrim"><div class="eyebrow">A Level · Year 12</div><div class="title">Physics 9702</div></div></div><div class="edge" data-aud="student"><i style="width: 0%"></i></div><div class="figs" data-aud="student"><span><b>0%</b> finished</span><span><b>0/14</b> lectures</span></div><div class="figs" data-aud="tutor"><span><b>31</b> students</span><span><b>14</b> lectures</span></div><div class="foot"><span class="label" data-aud="student">Start</span><span data-aud="student">Speed and velocity</span><span data-aud="tutor" style="color: var(--ink-soft)">Course manager</span><span style="margin-inline-start: auto; color: var(--ink-soft)">›</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0">
+  <div class="wrap">
+    <div class="band reveal">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 560px">
+        <h2 class="h2" data-aud="student">Your course is waiting.</h2>
+        <h2 class="h2" data-aud="tutor">Bring your course to Klaro.</h2>
+        <p class="lead" data-aud="student">Create your account, then join with the code your tutor gives you.</p>
+        <p class="lead" data-aud="tutor">Apply in a minute. We'll check your account and help you set up your first course.</p>
+      </div>
+      <a class="btn btn-primary btn-lg" data-signup href="#"><span data-aud="student">Create a student account</span><span data-aud="tutor">Apply as a tutor</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <img src="img/klaro-icon.svg" alt="Klaro"><span>© 2026 Klaro</span>
+    <a data-legal="terms" href="#">Terms</a><a data-legal="privacy" href="#">Privacy</a>
+  </div>
+</footer>
+<script src="klaro.js"></script>
+</body>
+</html>

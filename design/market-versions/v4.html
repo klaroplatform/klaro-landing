@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Klaro Market · V4 Plan builder</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="klaro.css">
+<link rel="stylesheet" href="market.css">
+<style>
+/* V4: build a plan. Exam, then subjects, then courses into a plan whose total adds up live. */
+.intro { padding-block: 44px 24px; display: flex; flex-direction: column; gap: 12px; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; align-items: start; padding-bottom: 96px; }
+.step { display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px; }
+.step-title { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 20px; letter-spacing: -.03em; }
+.step-title .num { width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 700; letter-spacing: 0; }
+.exams { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.exam { all: unset; box-sizing: border-box; cursor: pointer; padding: 18px; border-radius: var(--r-panel); background: var(--card); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 6px; transition: border-color .2s, box-shadow .2s, translate .2s var(--ease-out); position: relative; }
+.exam:hover { translate: 0 -2px; border-color: var(--purple-line); }
+.exam:focus-visible { outline: 2px solid var(--purple); outline-offset: 2px; }
+.exam[aria-pressed="true"] { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
+.exam b { font-size: 18px; letter-spacing: -.02em; }
+.exam .small { font-size: 12.5px; }
+.exam .tick { position: absolute; top: 14px; inset-inline-end: 14px; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--border-strong); display: grid; place-items: center; color: #fff; transition: background-color .2s, border-color .2s, scale .3s var(--ease-settle); }
+.exam[aria-pressed="true"] .tick { background: var(--purple); border-color: var(--purple); scale: 1.1; }
+.results { display: flex; flex-direction: column; gap: 10px; }
+.rowc { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 10px; padding-inline-end: 16px; border-radius: var(--r-panel); background: var(--card); border: 1px solid var(--border); transition: border-color .2s, background-color .2s; }
+.rowc.added { border-color: var(--success-line); background: linear-gradient(90deg, var(--success-soft), var(--card) 40%); }
+.rowc .thumb { width: 112px; aspect-ratio: 16 / 10; border-radius: 11px; overflow: hidden; cursor: pointer; }
+.rowc .thumb img { width: 100%; height: 100%; object-fit: cover; }
+.rowc .info { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.rowc .info a { font-weight: 700; font-size: 15px; color: var(--ink); text-decoration: none; }
+.rowc .info a:hover { color: var(--purple-dark); }
+.rowc .meta { font-size: 12.5px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.rowc .end { display: flex; align-items: center; gap: 14px; }
+.add { min-width: 92px; }
+.add.on { background: var(--success-soft); border-color: var(--success-line); color: var(--success); }
+.plan { position: sticky; top: 88px; padding: 20px; display: flex; flex-direction: column; gap: 14px; border-radius: var(--r-large); }
+.plan h2 { font-weight: 600; font-size: 20px; letter-spacing: -.03em; }
+.planlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; min-height: 56px; }
+.planlist li { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: var(--r-control); background: var(--surface); font-size: 13px; font-weight: 600; animation: rise .35s var(--ease-out) both; }
+.planlist img { width: 46px; height: 30px; border-radius: 6px; object-fit: cover; }
+.planlist .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.planlist .p { font-size: 12px; color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.planlist button { width: 26px; height: 26px; border-radius: 50%; border: 0; background: none; color: var(--muted); cursor: pointer; display: grid; place-items: center; }
+.planlist button:hover { background: var(--card); color: var(--danger); }
+.planempty { font-size: 13px; color: var(--muted); padding: 14px; border: 1.5px dashed var(--border-strong); border-radius: var(--r-control); text-align: center; }
+.totals { border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--ink-soft); }
+.totals div { display: flex; justify-content: space-between; }
+.totals .big { color: var(--ink); font-weight: 700; font-size: 15px; align-items: baseline; }
+.totals .big b { font-size: 26px; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.plan.bump { animation: bump .45s var(--ease-settle); }
+@keyframes bump { 40% { scale: 1.025; } }
+.flyer { position: fixed; z-index: 95; border-radius: 10px; overflow: hidden; pointer-events: none; box-shadow: var(--shadow-lift); }
+.flyer img { width: 100%; height: 100%; object-fit: cover; }
+.mobilebar { display: none; }
+@media (max-width: 980px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .plan { display: none; }
+  .mobilebar { display: flex; position: fixed; inset-inline: 12px; inset-block-end: calc(64px + env(safe-area-inset-bottom, 0px)); z-index: 70; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 16px; border-radius: var(--r-panel); background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-lift); transition: translate .4s var(--ease-settle); }
+  .mobilebar.empty { translate: 0 160%; }
+  .mobilebar .sum { font-size: 13px; color: var(--ink-soft); } .mobilebar .sum b { color: var(--ink); font-size: 16px; font-variant-numeric: tabular-nums; }
+}
+@media (max-width: 640px) {
+  .exams { grid-template-columns: minmax(0, 1fr); }
+  .exam { flex-direction: row; align-items: center; gap: 12px; }
+  .rowc { grid-template-columns: 76px minmax(0, 1fr); }
+  .rowc .thumb { width: 76px; }
+  .rowc .end { grid-column: 1 / -1; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+<main id="top" class="wrap">
+  <div class="intro pub-only">
+    <span class="kicker">Klaro Market</span>
+    <h1 class="display" style="font-size: clamp(36px, 5vw, 60px)">Build your study plan.</h1>
+    <p class="lead">Choose your exam and your subjects. Add the courses you want, and see the monthly total before you sign up.</p>
+  </div>
+  <div class="pagehead app-only"><div><span class="kicker">Market</span><h1 class="title">Build your study plan</h1><p class="lead">Add courses for your exam. They join your Courses page when you enroll.</p></div></div>
+
+  <div class="layout">
+    <div>
+      <section class="step">
+        <h2 class="step-title"><span class="num">1</span>What are you studying for?</h2>
+        <div class="exams" id="exams">
+          <button class="exam" type="button" data-level="IGCSE" aria-pressed="true"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>IGCSE</b><span class="small">Cambridge, Years 9 to 11</span></button>
+          <button class="exam" type="button" data-level="A Level" aria-pressed="false"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>A Level</b><span class="small">Cambridge, Years 12 and 13</span></button>
+          <button class="exam" type="button" data-level="SAT" aria-pressed="false"><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><b>SAT</b><span class="small">The digital SAT, any year</span></button>
+        </div>
+      </section>
+      <section class="step">
+        <h2 class="step-title"><span class="num">2</span>Which subjects?</h2>
+        <div class="chips" id="subjects" role="group" aria-label="Subjects" style="flex-wrap: wrap"></div>
+      </section>
+      <section class="step">
+        <h2 class="step-title"><span class="num">3</span>Add your courses <span class="small" id="count" style="font-weight: 500; letter-spacing: 0"></span></h2>
+        <div class="results" id="results"></div>
+        <span class="example">Example courses, tutors and prices</span>
+      </section>
+    </div>
+
+    <aside class="card plan" id="plan" aria-live="polite">
+      <span class="kicker">Your plan</span>
+      <h2 id="plantitle">No courses yet</h2>
+      <ul class="planlist" id="planlist"></ul>
+      <div class="totals">
+        <div class="big"><span>Each month</span><span><b id="monthly">EGP 0</b></span></div>
+        <div id="oncerow" hidden><span>One payment</span><span id="once">EGP 0</span></div>
+      </div>
+      <a class="btn btn-primary btn-lg pub-only" id="go-pub" href="#">Create an account to enroll</a>
+      <button class="btn btn-primary btn-lg app-only" id="go-app" type="button">Enroll in these courses</button>
+    </aside>
+  </div>
+</main>
+<div class="mobilebar empty" id="mobilebar"><span class="sum"><span id="mcount">0 courses</span> · <b id="mtotal">EGP 0</b> / month</span><a class="btn btn-primary" id="mgo" href="#plan">Enroll</a></div>
+<script src="market.js"></script>
+<script>
+(function () {
+  var level = 'IGCSE', subjects = new Set(), plan = [];
+  var subjectsEl = document.getElementById('subjects'), resultsEl = document.getElementById('results');
+  var X = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  function byId(id) { return KM.COURSES.filter(function (c) { return c.id === id; })[0]; }
+  function renderSubjects() {
+    var list = Array.from(new Set(KM.COURSES.filter(function (c) { return c.level === level; }).map(function (c) { return c.subject; })));
+    subjects.forEach(function (s) { if (list.indexOf(s) < 0) subjects.delete(s); });
+    subjectsEl.innerHTML = list.map(function (s) { return '<button class="chip" type="button" data-s="' + s + '" aria-pressed="' + subjects.has(s) + '">' + s + '</button>'; }).join('');
+  }
+  function renderResults() {
+    var cs = KM.COURSES.filter(function (c) { return c.level === level && (!subjects.size || subjects.has(c.subject)); });
+    document.getElementById('count').textContent = cs.length + (cs.length === 1 ? ' course' : ' courses');
+    resultsEl.innerHTML = cs.map(function (c) {
+      var t = KM.TUTORS[c.tutor], on = plan.indexOf(c.id) >= 0;
+      return '<div class="rowc' + (on ? ' added' : '') + '" data-id="' + c.id + '"><div class="thumb" data-course="' + c.id + '"><img src="' + c.img + '" alt=""></div>' +
+        '<div class="info"><a href="#c-' + c.id + '" data-course="' + c.id + '">' + c.title + '</a><div class="meta">' + KM.avatar(t, 20) + t.name + '<span>' + c.year + '</span><span>' + c.lectures + ' lectures</span></div></div>' +
+        '<div class="end">' + KM.priceHTML(c) + '<button class="btn add' + (on ? ' on btn-secondary' : ' btn-primary') + '" type="button" data-add="' + c.id + '" aria-pressed="' + on + '">' + (on ? 'Added' : 'Add') + '</button></div></div>';
+    }).join('');
+    if (!KM.still) resultsEl.querySelectorAll('.rowc').forEach(function (el, i) { el.animate([{ opacity: 0, translate: '0 10px' }, { opacity: 1, translate: '0 0' }], { duration: 360, delay: i * 45, easing: 'cubic-bezier(.23,1,.32,1)', fill: 'backwards' }); });
+  }
+  var shown = { m: 0 };
+  function tween(el, from, to) {
+    if (KM.still) { el.textContent = KM.money(to); return; }
+    var t0 = performance.now();
+    (function step(t) { var k = Math.min(1, (t - t0) / 500), e = 1 - Math.pow(1 - k, 3); el.textContent = KM.money(Math.round(from + (to - from) * e)); if (k < 1) requestAnimationFrame(step); })(t0);
+  }
+  function renderPlan() {
+    var items = plan.map(byId);
+    var monthly = items.filter(function (c) { return c.per === 'month'; }).reduce(function (a, c) { return a + c.price; }, 0);
+    var once = items.filter(function (c) { return c.per === 'course'; }).reduce(function (a, c) { return a + c.price; }, 0);
+    document.getElementById('plantitle').textContent = items.length ? items.length + (items.length === 1 ? ' course' : ' courses') : 'No courses yet';
+    document.getElementById('planlist').innerHTML = items.length ? items.map(function (c) { return '<li><img src="' + c.img + '" alt=""><span class="t">' + c.title + '</span><span class="p">' + KM.money(c.price) + '</span><button type="button" data-remove="' + c.id + '" aria-label="Remove ' + c.title + '">' + X + '</button></li>'; }).join('') : '<li class="planempty" style="background: none; animation: none">Add a course and it lands here.</li>';
+    tween(document.getElementById('monthly'), shown.m, monthly); tween(document.getElementById('mtotal'), shown.m, monthly); shown.m = monthly;
+    document.getElementById('oncerow').hidden = !once; document.getElementById('once').textContent = KM.money(once);
+    document.getElementById('mcount').textContent = items.length + (items.length === 1 ? ' course' : ' courses');
+    document.getElementById('mobilebar').classList.toggle('empty', !items.length);
+    document.getElementById('go-pub').href = KM.APP + '/sign-up?as=student&courses=' + plan.join(',');
+    ['go-pub', 'go-app'].forEach(function (id) { var b = document.getElementById(id); b.style.opacity = items.length ? 1 : .4; b.style.pointerEvents = items.length ? 'auto' : 'none'; });
+  }
+  // The course's picture flies from its row into the plan.
+  function fly(fromEl) {
+    if (KM.still) return;
+    var target = window.innerWidth > 980 ? document.getElementById('planlist') : document.getElementById('mobilebar');
+    var a = fromEl.getBoundingClientRect(), b = target.getBoundingClientRect();
+    var f = document.createElement('div'); f.className = 'flyer'; f.innerHTML = fromEl.innerHTML;
+    f.style.cssText += 'left:' + a.left + 'px;top:' + a.top + 'px;width:' + a.width + 'px;height:' + a.height + 'px';
+    document.body.appendChild(f);
+    var dx = b.left + 20 - a.left, dy = b.top + Math.min(b.height, 60) - a.top;
+    f.animate([{ translate: '0 0', scale: 1, opacity: 1 }, { translate: dx * .5 + 'px ' + (dy * .5 - 80) + 'px', scale: .7, opacity: 1, offset: .5 }, { translate: dx + 'px ' + dy + 'px', scale: .3, opacity: .2 }], { duration: 650, easing: 'cubic-bezier(.45,0,.2,1)' }).onfinish = function () { f.remove(); };
+    var plan = document.getElementById('plan'); setTimeout(function () { plan.classList.remove('bump'); void plan.offsetWidth; plan.classList.add('bump'); }, 520);
+  }
+  document.getElementById('exams').addEventListener('click', function (e) {
+    var b = e.target.closest('.exam'); if (!b) return;
+    level = b.dataset.level;
+    this.querySelectorAll('.exam').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    renderSubjects(); renderResults();
+  });
+  subjectsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    subjects.has(b.dataset.s) ? subjects.delete(b.dataset.s) : subjects.add(b.dataset.s);
+    b.setAttribute('aria-pressed', String(subjects.has(b.dataset.s)));
+    renderResults();
+  });
+  resultsEl.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-add]'); if (!b) return;
+    var id = b.dataset.add, i = plan.indexOf(id);
+    if (i < 0) { plan.push(id); fly(b.closest('.rowc').querySelector('.thumb')); } else plan.splice(i, 1);
+    var row = b.closest('.rowc'), on = i < 0;
+    row.classList.toggle('added', on); b.classList.toggle('on', on); b.classList.toggle('btn-secondary', on); b.classList.toggle('btn-primary', !on);
+    b.textContent = on ? 'Added' : 'Add'; b.setAttribute('aria-pressed', String(on));
+    renderPlan();
+  });
+  document.getElementById('planlist').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-remove]'); if (!b) return;
+    plan.splice(plan.indexOf(b.dataset.remove), 1); renderPlan(); renderResults();
+  });
+  document.getElementById('go-app').addEventListener('click', function () { KM.toast('Payment comes next. It is not built yet; this is where it starts.'); });
+  document.getElementById('mgo').addEventListener('click', function (e) {
+    if (KM.chrome() === 'public') { this.href = KM.APP + '/sign-up?as=student&courses=' + plan.join(','); }
+    else { e.preventDefault(); KM.toast('Payment comes next. It is not built yet; this is where it starts.'); }
+  });
+  renderSubjects(); renderResults(); renderPlan();
+})();
+</script>
+</body>
+</html>

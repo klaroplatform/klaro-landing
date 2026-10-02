@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Klaro Market · V3 Tutors first</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="klaro.css">
+<link rel="stylesheet" href="market.css">
+<style>
+/* V3: people first. Pick the tutor; their card opens across the row with their courses. */
+.hero { padding-block: 56px 40px; overflow-x: clip; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.hero-copy { display: flex; flex-direction: column; gap: 18px; align-items: flex-start; }
+.cloud { position: relative; height: 380px; }
+.bubble { position: absolute; border: 0; padding: 0; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; animation: float 6s ease-in-out infinite; animation-delay: var(--dl); }
+.bubble .avatar { width: var(--s); height: var(--s); font-size: calc(var(--s) * .32); border-width: 4px; box-shadow: var(--shadow-lift); transition: scale .3s var(--ease-settle); }
+.bubble:hover .avatar, .bubble:focus-visible .avatar { scale: 1.08; }
+.bubble span.name { font: 700 12px/1 var(--font); background: var(--card); border: 1px solid var(--border); padding: 6px 10px; border-radius: var(--r-pill); white-space: nowrap; box-shadow: var(--shadow-popover); }
+@keyframes float { 50% { translate: 0 -10px; } }
+.cloud .accent { inset-inline-start: 30%; top: 25%; }
+.tutors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: start; }
+.tcard { padding: 22px; display: flex; flex-direction: column; gap: 14px; cursor: pointer; text-align: start; font: inherit; color: inherit; width: 100%; }
+.tcard .top { display: flex; align-items: center; gap: 14px; }
+.tcard .top .avatar { width: 58px; height: 58px; font-size: 18px; }
+.tcard h3 { font-weight: 600; font-size: 20px; letter-spacing: -.03em; }
+.tcard .bio { color: var(--ink-soft); font-size: 14px; }
+.tcard .subj { display: flex; flex-wrap: wrap; gap: 6px; }
+.tcard .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; border-top: 1px solid var(--border); padding-top: 14px; }
+.tcard .stats dt { font-size: 11px; color: var(--muted); } .tcard .stats dd { margin: 0; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
+.tcard .stats dl { margin: 0; }
+.tcard .from { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.tcard .open-label { font-weight: 700; font-size: 12px; color: var(--purple-dark); display: inline-flex; align-items: center; gap: 4px; }
+.tcard .open-label svg { transition: rotate .35s var(--ease-settle); }
+.tcard.open { grid-column: 1 / -1; border-color: var(--purple-line); cursor: default; box-shadow: var(--shadow-panel); }
+.tcard.open .open-label svg { rotate: 90deg; }
+.tcard .courses { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s var(--ease-out); }
+.tcard.open .courses { grid-template-rows: 1fr; }
+.tcard .courses > div { overflow: hidden; }
+.tcard .courses .grid3 { padding-top: 6px; }
+.tcard.open .head-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: start; }
+.tcard .closebtn { display: none; }
+.tcard.open .closebtn { display: inline-flex; }
+@media (max-width: 980px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .cloud { height: 300px; } .tutors { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .hero { padding-block: 28px 16px; } .tutors { grid-template-columns: minmax(0, 1fr); } .cloud { height: 260px; } .bubble .avatar { width: calc(var(--s) * .72); height: calc(var(--s) * .72); } }
+</style>
+</head>
+<body>
+<main id="top">
+  <section class="hero pub-only">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="kicker">Klaro Market</span>
+        <h1 class="display">Choose the tutor. The course comes with them.</h1>
+        <p class="lead">Every Klaro course is taught by one tutor, from their own book and past papers. Meet them first, then enroll.</p>
+        <a class="btn btn-primary btn-lg" href="#tutors">Meet the tutors</a>
+        <span class="example">Example tutors, courses and prices</span>
+      </div>
+      <div class="cloud" id="cloud"><div class="accent" aria-hidden="true"><span></span><span></span><span></span></div></div>
+    </div>
+  </section>
+  <div class="wrap app-only">
+    <div class="pagehead"><div><span class="kicker">Market</span><h1 class="title">Tutors and their courses</h1><p class="lead">Open a tutor to see what they teach. Enroll, and the course joins your Courses page.</p></div></div>
+  </div>
+  <section class="wrap" id="tutors" style="padding-bottom: 80px; scroll-margin-top: 80px">
+    <div class="tutors" id="grid"></div>
+  </section>
+</main>
+<script src="market.js"></script>
+<script>
+(function () {
+  var keys = Object.keys(KM.TUTORS);
+  var spots = [[8, 8, 120], [52, 0, 96], [70, 42, 110], [30, 46, 132], [2, 62, 92], [56, 74, 100]];
+  var cloud = document.getElementById('cloud');
+  keys.forEach(function (k, i) {
+    var t = KM.TUTORS[k], s = spots[i];
+    cloud.insertAdjacentHTML('beforeend', '<button class="bubble" type="button" data-pick="' + k + '" style="inset-inline-start: ' + s[0] + '%; top: ' + s[1] + '%; --s: ' + s[2] + 'px; --dl: ' + (-i * 1.1) + 's">' + KM.avatar(t) + '<span class="name">' + t.name + '</span></button>');
+  });
+
+  var grid = document.getElementById('grid');
+  grid.innerHTML = keys.map(function (k) {
+    var t = KM.TUTORS[k], cs = KM.COURSES.filter(function (c) { return c.tutor === k; });
+    var subjects = Array.from(new Set(cs.map(function (c) { return c.subject; })));
+    var levels = Array.from(new Set(cs.map(function (c) { return c.level; })));
+    var from = cs.filter(function (c) { return c.per === 'month'; }).map(function (c) { return c.price; });
+    var fromTxt = from.length ? '<span class="price"><span>From</span><b>' + KM.money(Math.min.apply(null, from)) + '</b><span>/ month</span></span>' : KM.priceHTML(cs[0]);
+    return '<article class="card tcard lift" data-tutor="' + k + '" tabindex="0" aria-expanded="false">' +
+      '<div class="head-row"><div style="display: flex; flex-direction: column; gap: 14px">' +
+        '<div class="top">' + KM.avatar(t) + '<div><h3>' + t.name + '</h3><div class="small">' + subjects.join(' · ') + '</div></div></div>' +
+        '<p class="bio">' + t.bio + '</p>' +
+        '<div class="subj">' + levels.map(function (l) { return '<span class="tag tag-slate">' + l + '</span>'; }).join('') + '</div></div>' +
+        '<button class="btn btn-secondary btn-sm closebtn" type="button" data-shut>Close</button></div>' +
+      '<div class="stats"><dl><dt>Courses</dt><dd>' + cs.length + '</dd></dl><dl><dt>Lectures</dt><dd>' + cs.reduce(function (a, c) { return a + c.lectures; }, 0) + '</dd></dl><dl><dt>Students</dt><dd>' + cs.reduce(function (a, c) { return a + c.students; }, 0) + '</dd></dl></div>' +
+      '<div class="from">' + fromTxt + '<span class="open-label">See courses <svg class="flip" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></span></div>' +
+      '<div class="courses"><div><div class="grid3">' + cs.map(function (c) { return KM.card(c); }).join('') + '</div></div></div></article>';
+  }).join('');
+  var cards = Array.prototype.slice.call(grid.children);
+
+  function open(k, scroll) {
+    var target = grid.querySelector('[data-tutor="' + k + '"]');
+    var already = target && target.classList.contains('open');
+    KM.flip(cards, function () {
+      cards.forEach(function (c) { var on = c === target && !already; c.classList.toggle('open', on); c.setAttribute('aria-expanded', String(on)); });
+      // The open card goes first in its row, so it opens where the eye already is.
+      if (target && !already) grid.insertBefore(target, grid.children[Math.floor(cards.indexOf(target) / cols()) * cols()] || null);
+    });
+    if (target && !already && scroll) setTimeout(function () { target.scrollIntoView({ behavior: KM.still ? 'auto' : 'smooth', block: 'start' }); }, 80);
+  }
+  function cols() { return getComputedStyle(grid).gridTemplateColumns.split(' ').length; }
+  grid.addEventListener('click', function (e) {
+    if (e.target.closest('[data-course]')) return;
+    if (e.target.closest('[data-shut]')) { open(null); return; }
+    var card = e.target.closest('.tcard');
+    if (card && !card.classList.contains('open')) open(card.dataset.tutor, true);
+  });
+  grid.addEventListener('keydown', function (e) {
+    var card = e.target.classList && e.target.classList.contains('tcard') ? e.target : null;
+    if (card && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); open(card.dataset.tutor, true); }
+  });
+  cloud.addEventListener('click', function (e) { var b = e.target.closest('[data-pick]'); if (b) open(b.dataset.pick, true); });
+})();
+</script>
+</body>
+</html>

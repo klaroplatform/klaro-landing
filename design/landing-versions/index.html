@@ -1,0 +1,32 @@
+<title>Klaro Landing Versions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="klaro.css">
+<style>
+.pick { padding-block: 56px 72px; display: flex; flex-direction: column; gap: 28px; }
+.pick header { display: flex; flex-direction: column; gap: 12px; }
+.pick header img { height: 34px; width: auto; align-self: flex-start; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.v { text-decoration: none; color: var(--ink); padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.v .art { aspect-ratio: 16 / 8; overflow: hidden; background: var(--surface); position: relative; }
+.v .art img { width: 100%; height: 100%; object-fit: cover; transition: scale .3s var(--ease-out); }
+.v:hover .art img { scale: 1.04; }
+.v .art .tag { position: absolute; inset-block-start: 12px; inset-inline-start: 12px; }
+.v .body { padding: 18px 22px 22px; display: flex; flex-direction: column; gap: 6px; }
+.v p { color: var(--ink-soft); font-size: 14px; }
+.v .go { margin-top: 6px; font-weight: 700; font-size: 12px; color: var(--purple-dark); }
+@media (max-width: 760px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+</style>
+<main class="wrap pick">
+  <header>
+    <img src="img/klaro-wordmark.svg" alt="Klaro">
+    <span class="kicker">Landing page · four versions</span>
+    <h1 class="h2">Pick the parts you like.</h1>
+    <p class="lead">All four use Klaro's own look: Manrope, the purple and yellow, flat white cards, the sliding segment, the course cards and the star. Each has a Student / Tutor switch, and every main button opens the real sign-up as a student or a tutor. The V1 to V4 pill in the corner jumps between them.</p>
+  </header>
+  <div class="grid">
+    <a class="card v lift" href="v1.html"><div class="art"><img src="img/lecture-osmosis.webp" alt=""><span class="tag tag-glass">V1</span></div><div class="body"><h2 class="card-title">Study view</h2><p>The hero is a live copy of the three-pane study view: lecture, book and questions, with the star linking a passage. Tutors see uploads moving through review and lectures being reordered.</p><span class="go">Open V1 ›</span></div></a>
+    <a class="card v lift" href="v2.html"><div class="art"><img src="img/course-biology.webp" alt=""><span class="tag tag-glass">V2</span></div><div class="body"><h2 class="card-title">Course shelf</h2><p>A big centred headline with a rotating subject, two rows of course cards drifting by, and a bento grid with the gauge and streak.</p><span class="go">Open V2 ›</span></div></a>
+    <a class="card v lift" href="v3.html"><div class="art"><img src="img/course-chemistry.webp" alt=""><span class="tag tag-glass">V3</span></div><div class="body"><h2 class="card-title">The path</h2><p>A story told by scrolling: a phone stays pinned while four steps pass, and its screen changes with each one. On phones the steps take turns on their own.</p><span class="go">Open V3 ›</span></div></a>
+    <a class="card v lift" href="v4.html"><div class="art"><img src="img/empty-quiz-complete.webp" alt="" style="object-fit: contain"><span class="tag tag-glass">V4</span></div><div class="body"><h2 class="card-title">Try it</h2><p>Students answer three real questions with instant marking and a burst of stars. Tutors put lectures in order. Then a ticker, feature cards and an FAQ.</p><span class="go">Open V4 ›</span></div></a>
+  </div>
+</main>
