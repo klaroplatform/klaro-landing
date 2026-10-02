@@ -124,7 +124,7 @@ h1, h2, h3, p { margin: 0; }
 @keyframes rise { from { opacity: 0; translate: 0 22px; } }
 
 /* ---------- Page ---------- */
-.hero { padding-block: 56px 72px; position: relative; }
+.hero { padding-block: 56px 72px; position: relative; overflow-x: clip; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 56px; align-items: center; }
 .hero-copy { display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
 .hero-copy .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
@@ -240,3 +240,5 @@ h1, h2, h3, p { margin: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+/* An English course name on an Arabic card still sits on the start (right) edge. */
+[dir="rtl"] .media .scrim bdi { text-align: right; }
