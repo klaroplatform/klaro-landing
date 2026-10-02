@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Klaro: المحاضرة والكتاب والأسئلة جنبًا إلى جنب</title>
+<meta name="description" content="يضع Klaro كل محاضرة بجانب صفحات الكتاب التي تشرحها، مع أسئلة تدريب تُصحَّح فور إجابتك. يرفع المدرّسون موادهم ويُعِدّ Klaro الكورس.">
+<meta property="og:title" content="Klaro">
+<meta property="og:description" content="المحاضرة والكتاب والأسئلة. جنبًا إلى جنب.">
+<meta property="og:image" content="../img/lecture-osmosis.webp">
+<meta name="klaro-app" content="https://klaro-web-staging.klaroplatform.workers.dev">
+<link rel="alternate" hreflang="en" href="../">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../klaro.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/></defs></svg>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="الصفحة الرئيسية لـ Klaro"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+    <span class="spacer"></span>
+    <a class="btn btn-quiet hide-sm" href="#how">كيف يعمل</a>
+    <a class="btn btn-quiet hide-sm" href="#faq">أسئلة شائعة</a>
+    <a class="btn btn-quiet" href="../" data-lang-link lang="en" hreflang="en">English</a>
+    <a class="btn btn-quiet hide-sm" data-signin href="#">تسجيل الدخول</a>
+    <a class="btn btn-glass" data-signup href="#">ابدأ الآن</a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="seg" data-audience role="group" aria-label="أنا">
+        <button type="button" data-value="student" aria-pressed="true">أنا طالب</button>
+        <button type="button" data-value="tutor" aria-pressed="false">أنا مدرّس</button>
+      </div>
+      <h1 class="display" data-aud="student">المحاضرة والكتاب والأسئلة. جنبًا إلى جنب.</h1>
+      <h1 class="display" data-aud="tutor">ارفع كتبك، واستلمها كورسًا كاملًا.</h1>
+      <p class="lead" data-aud="student">انضم إلى كورس مدرّسك بكود الانضمام. شاهد كل محاضرة بجانب صفحات الكتاب التي تشرحها، وأجب عن أسئلة التدريب أولًا بأول، وتابع تقدّمك قبل الامتحان.</p>
+      <p class="lead" data-aud="tutor">ارفع كتبك وامتحانات السنوات السابقة، ويحوّلها فريق Klaro إلى محاضرات وأسئلة تدريب. أنت تحدد الترتيب، وتشارك كود الانضمام، وتصحّح الامتحانات في مكان واحد.</p>
+      <div class="actions">
+        <a class="btn btn-primary btn-lg" data-signup href="#"><span data-aud="student">أنشئ حساب طالب</span><span data-aud="tutor">قدّم كمدرّس</span>
+          <svg class="flip" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-secondary btn-lg" data-signin href="#">لدي حساب بالفعل</a>
+      </div>
+      <p class="note" data-aud="student"><svg class="star" viewBox="112.56 0 103.11 103.11" width="14" height="14" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>يعمل بالعربية والإنجليزية.</p>
+      <p class="note" data-aud="tutor"><svg class="star" viewBox="112.56 0 103.11 103.11" width="14" height="14" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>يراجع فريق Klaro كل حساب مدرّس قبل تفعيله.</p>
+    </div>
+
+    <div style="position: relative">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="studio" data-aud="student" role="img" aria-label="شاشة المذاكرة في Klaro: محاضرة عن الخاصية الأسموزية، وصفحة الكتاب التي تشرحها، وسؤال تدريب أُجيب عنه إجابة صحيحة.">
+        <div class="studio-head">
+          <span><i class="dot" style="background: var(--purple)"></i>المحاضرة</span>
+          <span><i class="dot" style="background: var(--teal)"></i>الكتاب</span>
+          <span><i class="dot" style="background: var(--amber)"></i>الأسئلة</span>
+          <span class="grow"></span>
+          <span class="tag tag-slate">أحياء · الصف 11</span>
+        </div>
+        <div class="panes">
+          <div class="pane">
+            <div class="pane-label"><i class="dot" style="background: var(--purple)"></i>المحاضرة 4</div>
+            <div class="video"><img src="../img/lecture-osmosis.webp" alt="" width="960" height="548"><span class="play"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" style="transform: scaleX(-1)"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span><div class="bar"><i></i></div></div>
+            <div class="card-title course-content" style="font-size: 16px">Osmosis</div>
+            <div class="small">12 دقيقة · 8 أسئلة تدريب</div>
+          </div>
+          <div class="pane book">
+            <div class="pane-label"><i class="dot" style="background: var(--teal)"></i>الكتاب · ص 48</div>
+            <p class="course-content">Water molecules move freely through a partially permeable membrane. <mark>Osmosis is the net movement of water from a dilute solution to a more concentrated one</mark> through such a membrane.</p>
+            <span class="linked"><svg class="star" viewBox="112.56 0 103.11 103.11" width="12" height="12" aria-hidden="true"><use href="#spark" fill="currentColor"/></svg>مرتبط بالدقيقة 06:12 من المحاضرة</span>
+          </div>
+          <div class="pane">
+            <div class="pane-label"><i class="dot" style="background: var(--amber)"></i>السؤال 3 من 8</div>
+            <div class="course-content" style="display: flex; flex-direction: column; gap: 10px">
+              <p class="q">A potato slice is left in pure water. Water moves into its cells. What is this called?</p>
+              <div class="opt"><b>A</b>Diffusion</div>
+              <div class="opt right"><b>B</b>Osmosis<span class="cursor"></span></div>
+              <div class="opt"><b>C</b>Active transport</div>
+            </div>
+            <span class="tag tag-green correct">إجابة صحيحة</span>
+          </div>
+        </div>
+      </div>
+      <div class="studio" data-aud="tutor" role="img" aria-label="إعداد كورس لمدرّس: الملفات المرفوعة تنتقل من الرفع إلى المراجعة إلى الجاهزية، والمحاضرات تُرتَّب.">
+        <div class="studio-head"><span>Chemistry 0620</span><span class="grow"></span><span class="tag tag-purple">قيد الإعداد</span></div>
+        <div class="panes two">
+          <div class="pane">
+            <div class="pane-label">موادك</div>
+            <div class="files">
+              <div class="file"><span class="icon-tile teal"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></svg></span><bdi class="name">Chemistry textbook.pdf</bdi><span class="states"><span class="tag tag-neutral s1">جارٍ الرفع</span><span class="tag tag-yellow s2">قيد المراجعة</span><span class="tag tag-green s3">جاهز</span></span></div>
+              <div class="file"><span class="icon-tile amber"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg></span><bdi class="name">Past paper 2024 P1.pdf</bdi><span class="states"><span class="tag tag-neutral s1">جارٍ الرفع</span><span class="tag tag-yellow s2">قيد المراجعة</span><span class="tag tag-green s3">جاهز</span></span></div>
+              <div class="file"><span class="icon-tile amber"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg></span><bdi class="name">Mark scheme 2024 P1.pdf</bdi><span class="states"><span class="tag tag-neutral s1">جارٍ الرفع</span><span class="tag tag-yellow s2">قيد المراجعة</span><span class="tag tag-green s3">جاهز</span></span></div>
+            </div>
+            <div class="joincode"><span>كود الانضمام</span><code>K7Q-2PX</code></div>
+          </div>
+          <div class="pane">
+            <div class="pane-label">المحاضرات بترتيبك</div>
+            <div class="order">
+              <div class="lec"><span class="n">1</span><bdi>States of matter</bdi><span class="grip">⋮⋮</span></div>
+              <div class="lec down"><span class="n">2</span><bdi>Electrolysis</bdi><span class="grip">⋮⋮</span></div>
+              <div class="lec up"><span class="n">3</span><bdi>Atomic structure</bdi><span class="grip">⋮⋮</span></div>
+              <div class="lec"><span class="n">4</span><bdi>Rates of reaction</bdi><span class="grip">⋮⋮</span></div>
+            </div>
+            <span class="tag tag-green" style="align-self: flex-start">انضم 24 طالبًا</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section white">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker" data-aud="student">مصمم للمذاكرة</span><span class="kicker" data-aud="tutor">مصمم للتدريس</span>
+      <h2 class="h2" data-aud="student">كل ما يخص الكورس، في شاشة واحدة.</h2>
+      <h2 class="h2" data-aud="tutor">أنت تدرّس، ونحن نجهّز.</h2>
+    </div>
+    <div class="features" data-aud="student">
+      <article class="card card-pad feature lift reveal"><span class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg></span><h3 class="card-title">محاضرات تعرف الكتاب</h3><p>يربط Klaro كل جزء من المحاضرة بصفحات الكتاب التي يشرحها، فتجد الصفحة الصحيحة مفتوحة حين تحتاجها.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .08s"><span class="icon-tile amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span><h3 class="card-title">أسئلة تُصحَّح فورًا</h3><p>تدرّب وأنت تشاهد. اعرف ما أصبت فيه ولماذا، ثم حاول مرة أخرى.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .16s"><span class="icon-tile teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></svg></span><h3 class="card-title">تقدّم تراه بعينك</h3><p>المحاضرات التي أنهيتها ودرجات الاختبارات وأيامك المتتالية لكل كورس، في صفحتك الرئيسية.</p></article>
+    </div>
+    <div class="features" data-aud="tutor">
+      <article class="card card-pad feature lift reveal"><span class="icon-tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></span><h3 class="card-title">ارفع مرة واحدة</h3><p>الكتب والشرائح والامتحانات السابقة ونماذج الإجابة، كلها في رفعة واحدة.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .08s"><span class="icon-tile teal"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg></span><h3 class="card-title">ترتيبك وطلابك</h3><p>رتّب المحاضرات كما تدرّسها. شارك كودًا واحدًا وينضم طلابك.</p></article>
+      <article class="card card-pad feature lift reveal" style="--d: .16s"><span class="icon-tile amber"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/></svg></span><h3 class="card-title">التصحيح في مكان واحد</h3><p>راجع أوراق الامتحان مقابل نموذج الإجابة، ثم أعلن النتائج للطلاب.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="kicker">كيف يعمل</span><h2 class="h2" data-aud="student">ثلاث خطوات إلى أول محاضرة.</h2><h2 class="h2" data-aud="tutor">ثلاث خطوات إلى أول كورس.</h2></div>
+    <div class="steps" data-aud="student">
+      <div class="card card-pad step reveal"><span class="num">1</span><h3 class="card-title">أنشئ حسابك</h3><p>اسمك وبريدك الإلكتروني وكلمة مرور.</p></div>
+      <div class="card card-pad step reveal" style="--d: .08s"><span class="num">2</span><h3 class="card-title">انضم بالكود</h3><p>يعطيك مدرّسك كود الانضمام، فيظهر الكورس في صفحتك الرئيسية.</p></div>
+      <div class="card card-pad step reveal" style="--d: .16s"><span class="num">3</span><h3 class="card-title">ابدأ المذاكرة</h3><p>افتح أول محاضرة، ويحفظ Klaro مكانك.</p></div>
+    </div>
+    <div class="steps" data-aud="tutor">
+      <div class="card card-pad step reveal"><span class="num">1</span><h3 class="card-title">قدّم كمدرّس</h3><p>سجّل كمدرّس، ويراجع فريق Klaro كل حساب مدرّس قبل تفعيله.</p></div>
+      <div class="card card-pad step reveal" style="--d: .08s"><span class="num">2</span><h3 class="card-title">ارفع موادك</h3><p>الكتب والامتحانات السابقة. نُعِدّ منها المحاضرات والأسئلة ونراجعها.</p></div>
+      <div class="card card-pad step reveal" style="--d: .16s"><span class="num">3</span><h3 class="card-title">ادعُ طلابك</h3><p>رتّب المحاضرات وشارك كود الانضمام.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="kicker">صفحتك الرئيسية</span>
+      <h2 class="h2" data-aud="student">تابع من حيث توقفت.</h2>
+      <h2 class="h2" data-aud="tutor">كل كورساتك في نظرة واحدة.</h2>
+    </div>
+    <div class="shelf">
+      <a class="media lift reveal" data-signup href="#"><div class="pic"><img src="../img/course-biology.webp" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-purple" data-aud="student">جارٍ</span><span class="tag tag-green" data-aud="tutor">منشور</span></div><div class="scrim"><bdi class="eyebrow" style="display: block">IGCSE · Year 11</bdi><bdi class="title" style="display: block">Biology 0610</bdi></div></div><div class="edge" data-aud="student"><i style="width: 62%"></i></div><div class="figs" data-aud="student"><span><b>62%</b> مكتمل</span><span><b>6/10</b> محاضرات</span><span><b>3/5</b> اختبارات</span></div><div class="figs" data-aud="tutor"><span><b>24</b> طالبًا</span><span><b>10</b> محاضرات</span></div><div class="foot"><span class="label" data-aud="student">التالي</span><bdi data-aud="student">Active transport</bdi><span data-aud="tutor" style="color: var(--ink-soft)">افتح الكورس</span><span class="chev flip">›</span></div></a>
+      <a class="media lift reveal" data-signup href="#" style="--d: .08s"><div class="pic"><img src="../img/course-chemistry.webp" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-purple" data-aud="student">جارٍ</span><span class="tag tag-yellow" data-aud="tutor">قيد المراجعة</span></div><div class="scrim"><bdi class="eyebrow" style="display: block">IGCSE · Year 10</bdi><bdi class="title" style="display: block">Chemistry 0620</bdi></div></div><div class="edge" data-aud="student"><i style="width: 28%"></i></div><div class="figs" data-aud="student"><span><b>28%</b> مكتمل</span><span><b>3/11</b> محاضرة</span><span><b>1/4</b> اختبارات</span></div><div class="figs" data-aud="tutor"><span><b>18</b> طالبًا</span><span><b>11</b> محاضرة</span></div><div class="foot"><span class="label" data-aud="student">التالي</span><bdi data-aud="student">Electrolysis</bdi><span data-aud="tutor" style="color: var(--ink-soft)">افتح الكورس</span><span class="chev flip">›</span></div></a>
+      <a class="media lift reveal" data-signup href="#" style="--d: .16s"><div class="pic"><img src="../img/course-physics.webp" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-yellow" data-aud="student">لم يبدأ</span><span class="tag tag-green" data-aud="tutor">منشور</span></div><div class="scrim"><bdi class="eyebrow" style="display: block">A Level · Year 12</bdi><bdi class="title" style="display: block">Physics 9702</bdi></div></div><div class="edge" data-aud="student"><i style="width: 0%"></i></div><div class="figs" data-aud="student"><span><b>0/14</b> محاضرة</span><span><b>0/6</b> اختبارات</span></div><div class="figs" data-aud="tutor"><span><b>31</b> طالبًا</span><span><b>14</b> محاضرة</span></div><div class="foot"><span class="label" data-aud="student">ابدأ</span><bdi data-aud="student">Speed and velocity</bdi><span data-aud="tutor" style="color: var(--ink-soft)">افتح الكورس</span><span class="chev flip">›</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section white" id="faq">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="kicker">أسئلة شائعة</span><h2 class="h2">معلومات تهمّك</h2></div>
+    <div class="faq">
+      <div class="faq-item"><button type="button" aria-expanded="false">كيف أنضم إلى كورس؟<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>أنشئ حسابك، ثم أدخل كود الانضمام الذي يعطيك إياه مدرّسك. سيظهر الكورس في صفحتك الرئيسية.</p></div></div></div>
+      <div class="faq-item"><button type="button" aria-expanded="false">من يُعِدّ المحاضرات والأسئلة؟<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>يرفع المدرّسون كتبهم وامتحاناتهم السابقة، ويُعِدّ فريق Klaro منها المحاضرات وأسئلة التدريب ويراجعها قبل أن يراها الطلاب.</p></div></div></div>
+      <div class="faq-item"><button type="button" aria-expanded="false">كيف أصبح مدرّسًا على Klaro؟<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>اختر «مدرّس» عند التسجيل. يراجع فريق Klaro حسابات المدرّسين قبل تفعيلها، ويمكنك استخدام Klaro كطالب في هذه الأثناء.</p></div></div></div>
+      <div class="faq-item"><button type="button" aria-expanded="false">هل يمكنني استخدام Klaro بالعربية؟<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>نعم. صُمّم Klaro للعربية والإنجليزية، وتتحول الواجهة بالكامل من اليمين إلى اليسار بالعربية.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="band reveal">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="band-copy">
+        <h2 class="h2" data-aud="student">كورسك في انتظارك.</h2>
+        <h2 class="h2" data-aud="tutor">انقل كورسك إلى Klaro.</h2>
+        <p class="lead" data-aud="student">أنشئ حسابك، ثم انضم بالكود الذي يعطيك إياه مدرّسك.</p>
+        <p class="lead" data-aud="tutor">قدّم في دقيقة. سنراجع حسابك ونساعدك في إعداد أول كورس.</p>
+      </div>
+      <a class="btn btn-primary btn-lg" data-signup href="#"><span data-aud="student">أنشئ حساب طالب</span><span data-aud="tutor">قدّم كمدرّس</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <img src="../img/klaro-icon.svg" alt="Klaro" width="19" height="22"><span>© 2026 Klaro</span>
+    <a data-legal="terms" href="#">شروط الاستخدام</a><a data-legal="privacy" href="#">سياسة الخصوصية</a>
+    <a href="../" data-lang-link lang="en" hreflang="en">English</a>
+  </div>
+</footer>
+<script src="../klaro.js"></script>
+</body>
+</html>
