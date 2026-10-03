@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Klaro · v2 chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Readex+Pro:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="hey.css">
+<style>
+/* V2 "chat": klaro is a buddy you text. The hero is a thread; quick replies answer back. */
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; padding-block: 40px 0; }
+@media (max-width: 880px) { .hero { grid-template-columns: 1fr; gap: 28px; } }
+.hero > div { min-width: 0; display: grid; gap: 18px; align-content: start; }
+.hero .ar { font-size: 17px; color: var(--ink-2); }
+.hero .chip { justify-self: start; }
+.thread .win-body { display: flex; flex-direction: column; gap: 10px; block-size: 520px; overflow-y: auto; padding: 18px; background: var(--well); scroll-behavior: smooth; }
+.msg { display: flex; gap: 8px; align-items: flex-end; max-inline-size: 86%; animation: pop .45s var(--ease) both; }
+.msg:nth-child(2) { animation-delay: .25s; } .msg:nth-child(3) { animation-delay: .5s; } .msg:nth-child(4) { animation-delay: .75s; } .msg:nth-child(5) { animation-delay: 1s; } .msg:nth-child(6) { animation-delay: 1.25s; }
+@keyframes pop { from { translate: 0 8px; scale: .97; } }
+.msg .bubble { padding: 10px 14px; border-radius: 18px; font-size: 15px; line-height: 1.5; min-width: 0; }
+.msg.kl .bubble { background: var(--paper); border: 1px solid var(--line); border-end-start-radius: 6px; }
+.msg.me { align-self: flex-end; }
+.msg.me .bubble { background: var(--purple); color: #fff; border-end-end-radius: 6px; }
+.msg .av { inline-size: 28px; block-size: 28px; border-radius: 50%; background: var(--paper); border: 1px solid var(--line); display: grid; place-items: center; flex: none; }
+.msg .av img { block-size: 16px; inline-size: auto; }
+.card-in { display: grid; gap: 8px; margin-block-start: 8px; }
+.card-in img { border-radius: 10px; }
+.card-in .row { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.quick { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 14px; border-block-start: 1px solid var(--line); background: var(--paper); }
+.quick button { font: 600 13px/1 var(--sans); padding: 9px 13px; border-radius: 999px; border: 1px solid var(--purple); color: var(--purple-deep); background: var(--paper); cursor: pointer; }
+.quick button:hover { background: var(--purple-soft); }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 8px; }
+.opts button { font: 600 13px/1 var(--sans); padding: 8px 12px; border-radius: 10px; border: 1px solid var(--line-2); background: var(--paper); cursor: pointer; color: var(--ink); }
+.opts button.right { background: var(--ok-soft); border-color: var(--ok); }
+.opts button.wrong { background: var(--no-soft); border-color: var(--no); }
+.typing { display: inline-flex; gap: 4px; }
+.typing i { inline-size: 6px; block-size: 6px; border-radius: 50%; background: var(--faint); animation: blink 1s infinite; }
+.typing i:nth-child(2) { animation-delay: .15s; } .typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes blink { 50% { opacity: .25; } }
+.does { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 900px) { .does { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .does { grid-template-columns: 1fr; } }
+.does .it { background: var(--paper); border: 1px solid var(--line); border-radius: 20px 20px 20px 6px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.does .it .face { font-size: 18px; }
+.does .it h3 { font-size: 17px; font-weight: 600; letter-spacing: -.02em; }
+.does .it p { font-size: 14.5px; color: var(--ink-2); }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+@media (max-width: 880px) { .split { grid-template-columns: 1fr; } }
+.split > div { min-width: 0; display: grid; gap: 16px; }
+.split .thread .win-body { block-size: auto; }
+.msg.tu .bubble { background: var(--ink); color: #fff; border-end-end-radius: 6px; }
+.msg.tu { align-self: flex-end; }
+.file-chip { display: inline-flex; gap: 6px; align-items: center; padding: 6px 10px; border-radius: 8px; background: rgb(255 255 255 / .14); font: 500 12.5px/1.2 var(--mono); margin-block-start: 6px; margin-inline-end: 4px; }
+.voice { display: flex; gap: 14px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: 22px 22px 22px 6px; padding: 22px; }
+.voice img { block-size: 40px; inline-size: auto; flex: none; }
+.voice div { display: grid; gap: 10px; font-size: 17px; line-height: 1.6; min-width: 0; }
+.voice .small { font-size: 13px; }
+</style>
+</head>
+<body>
+
+<div class="wrap topbar">
+  <a class="brand" href="#top"><img src="img/klaro-icon.svg" alt="">klaro</a>
+  <nav>
+    <a class="hide-sm" href="#does">what it does</a>
+    <a class="hide-sm" href="#tutors">for tutors</a>
+    <a class="hide-sm" href="#prices">prices</a>
+    <a href="#" class="ar" lang="ar">عربي</a>
+    <a class="btn small-btn" href="https://app.klaroplatform.com/sign-in">sign in</a>
+  </nav>
+</div>
+
+<main id="top">
+  <section class="wrap hero">
+    <div>
+      <span class="chip purple">your study buddy <span class="face">( ˘ ³˘)♥</span></span>
+      <h1 class="title">hey, it's klaro. <span class="serif">exam soon?</span></h1>
+      <p class="lead">i keep your tutor's lectures, the book and past papers together, so you study in one place and always know what's next.</p>
+      <div class="btns">
+        <a class="btn main" href="https://app.klaroplatform.com/sign-up?as=student">join with a code</a>
+        <a class="btn" href="https://app.klaroplatform.com/sign-up?as=tutor">i'm a tutor</a>
+      </div>
+      <p class="ar" lang="ar">أهلاً، أنا كلارو. عندك امتحان قريب؟ يلا نذاكر سوا.</p>
+      <p class="small">free to join · english and عربي · phone or laptop</p>
+    </div>
+
+    <div class="win thread">
+      <div class="win-bar"><i></i><i></i><i></i><span>klaro · biology 0610</span></div>
+      <div class="win-body" id="chat" aria-live="polite">
+        <div class="msg me"><div class="bubble">exam in 3 weeks and i haven't opened the book <span class="face" style="color:#fff">(；′⌒`)</span></div></div>
+        <div class="msg kl"><span class="av"><img src="img/klaro-icon.svg" alt=""></span><div class="bubble">no panic. your tutor's course has 10 lectures and you've done 6. next up is <b>osmosis</b>, 12 min.</div></div>
+        <div class="msg kl"><span class="av"><img src="img/klaro-icon.svg" alt=""></span><div class="bubble">the book opens at page 48 while you watch. you'll never hunt for the page again.
+          <div class="card-in"><img src="img/lecture-osmosis.webp" alt="osmosis lecture"><div class="row"><span>lecture 4 · osmosis</span><span>book p. 48</span></div></div></div></div>
+        <div class="msg me"><div class="bubble">and past papers?</div></div>
+        <div class="msg kl"><span class="av"><img src="img/klaro-icon.svg" alt=""></span><div class="bubble">8 questions from 2024 paper 1 come after this lecture. tap a reply below to try one <span class="face">(^ ω ^)</span></div></div>
+      </div>
+      <div class="quick" id="quick">
+        <button data-say="q">try a question</button>
+        <button data-say="arabic">do you speak arabic?</button>
+        <button data-say="tutor">i'm a tutor</button>
+        <button data-say="price">how much?</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="does">
+    <div class="sec-head"><span class="label">what klaro does</span><h2 class="h2">four small things <span class="serif">that add up.</span></h2></div>
+    <div class="does">
+      <div class="it"><span class="face">(☞ﾟヮﾟ)☞</span><h3>opens the right page</h3><p>every part of a lecture is linked to the book page it covers.</p></div>
+      <div class="it"><span class="face">ヽ(•‿•)ノ</span><h3>marks you at once</h3><p>practise as you watch. see what you got right and why.</p></div>
+      <div class="it"><span class="face">( •_•)φ</span><h3>remembers your place</h3><p>lectures done, quiz marks and what's next, for every course.</p></div>
+      <div class="it"><span class="face ar" lang="ar">أهلاً</span><h3>speaks arabic too</h3><p>the whole app works in arabic and english, right to left.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="tutors">
+    <div class="split">
+      <div>
+        <span class="label">for tutors</span>
+        <h2 class="h2">send your books. <span class="serif">get back a course.</span></h2>
+        <p class="lead">the klaro team turns your books and past papers into lectures and practice questions, checks every one, and gives you a join code. you set the order and mark exams in one place.</p>
+        <div class="btns"><a class="btn main" href="https://app.klaroplatform.com/sign-up?as=tutor">apply as a tutor</a><span class="small">every tutor account is checked first</span></div>
+      </div>
+      <div class="win thread">
+        <div class="win-bar"><i></i><i></i><i></i><span>klaro · new course</span><span class="example">example</span></div>
+        <div class="win-body">
+          <div class="msg tu"><div class="bubble">i have my chemistry book and 6 years of past papers. can you use them?<br><span class="file-chip">chemistry.pdf</span><span class="file-chip">papers 2019–24.zip</span></div></div>
+          <div class="msg kl"><span class="av"><img src="img/klaro-icon.svg" alt=""></span><div class="bubble">yes! we'll turn them into lectures and questions and check every one. you'll see each file move from <b>in review</b> to <b>ready</b>.</div></div>
+          <div class="msg kl"><span class="av"><img src="img/klaro-icon.svg" alt=""></span><div class="bubble">your join code is <b class="mono">K7Q-2PX</b>. share it and students join. 24 already did <span class="face">\(^o^)/</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="narrow sec">
+    <div class="voice">
+      <img src="img/klaro-icon.svg" alt="">
+      <div>
+        <span class="label">a message from the team</span>
+        <p>it's early! klaro is in beta and we're building it with the first tutors and students in egypt. try it, break it, and tell us what's missing. we read every message. <span class="face">(•‿•)</span></p>
+        <span class="small">delivered · the klaro team</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <div class="sec-head"><span class="label">what people text us</span><h2 class="h2">screenshots <span class="serif">we keep.</span> <span class="example">example quotes</span></h2></div>
+    <div class="notes">
+      <div class="note"><div class="who"><span class="avatar">ma</span><span><b>mariam</b><br><span>igcse · year 11</span></span></div><p>the book opening at the right page is lowkey the best thing ever.</p></div>
+      <div class="note"><div class="who"><span class="avatar">yo</span><span><b>youssef</b><br><span>a level physics</span></span></div><p>did the past paper questions after every lecture. walked in calm for once.</p></div>
+      <div class="note"><div class="who"><span class="avatar">mh</span><span><b>mr. hany</b><br><span>chemistry tutor</span></span></div><p>i sent my books. the next week my students had lectures with questions. i just set the order.</p></div>
+      <div class="note"><div class="who"><span class="avatar">no</span><span><b>nour</b><br><span>igcse biology</span></span></div><p>seeing 6 of 10 done made me finish the other 4.</p></div>
+      <div class="note"><div class="who"><span class="avatar">ka</span><span><b>karim</b><br><span>year 10</span></span></div><p>my sister uses it in arabic, i use it in english. same course.</p></div>
+      <div class="note"><div class="who"><span class="avatar">sm</span><span><b>salma's mum</b><br><span>parent</span></span></div><p>i can see what she finished this week without asking.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="prices">
+    <div class="sec-head"><span class="label">prices</span><h2 class="h2">simple. <span class="serif">in egp.</span></h2></div>
+    <div class="prices">
+      <div class="price"><h3>student</h3><div class="amount">free</div><ul><li>your own account</li><li>join any course with a code</li><li>progress on your home page</li></ul><a class="btn" href="https://app.klaroplatform.com/sign-up?as=student">start free</a></div>
+      <div class="price pop"><h3>a course <span class="example">example</span></h3><div class="amount">450 <small>egp / month</small></div><ul><li>every lecture, with the book open</li><li>questions from past papers</li><li>quizzes, marked at once</li></ul><a class="btn main" href="https://learnklaro.com/market/">browse courses</a></div>
+      <div class="price"><h3>tutor</h3><div class="amount">free <small>in beta</small></div><ul><li>we prepare lectures and questions</li><li>your join code, your order</li><li>marking in one place</li></ul><a class="btn" href="https://app.klaroplatform.com/sign-up?as=tutor">apply</a></div>
+    </div>
+    <p class="small">tutors set their own course prices. the number above is an example.</p>
+  </section>
+
+  <section class="narrow sec">
+    <div class="sec-head"><span class="label">faq</span><h2 class="h2">you asked <span class="face">( ・_・)ノ</span></h2></div>
+    <div class="faq">
+      <details><summary>how do i join a course?</summary><p>make an account, then type the join code your tutor gives you. the course appears on your home page.</p></details>
+      <details><summary>who makes the lectures and questions?</summary><p>your tutor sends their books and past papers. the klaro team prepares the lectures and questions and checks them before you see them.</p></details>
+      <details><summary>is klaro an ai chatbot?</summary><p>no. this page talks like a chat for fun. klaro is a study app: lectures, the book and practice questions, prepared and checked by people.</p></details>
+      <details><summary>i don't have a code. now what?</summary><p>browse the market and pick a course, or ask your tutor to bring their course to klaro.</p></details>
+    </div>
+  </section>
+
+  <footer class="wrap foot">
+    <span>© 2026 klaro · made for students in egypt <span class="face">(^ ω ^)</span></span>
+    <nav><a href="#">terms</a><a href="#">privacy</a><a href="#" class="ar" lang="ar">عربي</a></nav>
+  </footer>
+</main>
+
+<nav class="vswitch" aria-label="versions">
+  <a href="index.html">all</a><a href="v1.html">v1 desktop</a><a href="v2.html" aria-current="page">v2 chat</a><a href="v3.html">v3 notebook</a><a href="v4.html">v4 one window</a>
+</nav>
+
+<script>
+(function () {
+  var chat = document.getElementById('chat');
+  var icon = '<span class="av"><img src="img/klaro-icon.svg" alt=""></span>';
+  var said = {
+    q: { me: 'try a question', kl: 'a potato slice is left in pure water. water moves into its cells. what is this called?<div class="opts"><button data-ok="0">diffusion</button><button data-ok="1">osmosis</button><button data-ok="0">active transport</button></div>' },
+    arabic: { me: 'do you speak arabic?', kl: '<span class="ar" lang="ar">أكيد! التطبيق كله بالعربي كمان، ومن اليمين للشمال.</span> switch any time.' },
+    tutor: { me: "i'm a tutor", kl: 'nice! send us your books and past papers and we prepare the lectures and questions. <a href="https://app.klaroplatform.com/sign-up?as=tutor">apply here</a>, we check every tutor first.' },
+    price: { me: 'how much?', kl: 'your account is free. each course is priced by its tutor, in egp. <a href="#prices">see prices</a>' }
+  };
+  function add(cls, html) {
+    var m = document.createElement('div'); m.className = 'msg ' + cls;
+    m.innerHTML = (cls === 'kl' ? icon : '') + '<div class="bubble">' + html + '</div>';
+    chat.appendChild(m); chat.scrollTop = chat.scrollHeight; return m;
+  }
+  document.getElementById('quick').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var s = said[b.dataset.say]; add('me', s.me);
+    var t = add('kl', '<span class="typing"><i></i><i></i><i></i></span>');
+    setTimeout(function () { t.querySelector('.bubble').innerHTML = s.kl; chat.scrollTop = chat.scrollHeight; }, 650);
+  });
+  chat.addEventListener('click', function (e) {
+    var b = e.target.closest('.opts button'); if (!b) return;
+    var ok = b.dataset.ok === '1';
+    b.parentNode.querySelectorAll('button').forEach(function (o) { o.classList.remove('right', 'wrong'); });
+    b.classList.add(ok ? 'right' : 'wrong');
+    add('kl', ok ? 'correct! that\'s osmosis: water crossing a membrane. 7 more to go (^ ω ^)' : 'close, but no. think about water crossing a membrane ¯\\_(ツ)_/¯');
+  });
+})();
+</script>
+</body>
+</html>

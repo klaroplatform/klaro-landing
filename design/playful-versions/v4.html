@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Klaro · v4 one window</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@400;500;600&family=Readex+Pro:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="hey.css">
+<style>
+/* V4 "one window": the first screen is one small window that does the main job, joining with a code.
+   Everything else is quiet: demo tiles, a note, prices, questions. */
+.hero { min-block-size: min(760px, 92svh); display: grid; place-items: center; align-content: center; gap: 22px; text-align: center; padding-block: 24px 40px; }
+.hero .title { font-size: clamp(36px, 5.2vw, 60px); max-width: 13em; }
+.hero .ar { font-size: 17px; color: var(--ink-2); }
+.seg { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--well); border: 1px solid var(--line); }
+.seg button { font: 600 14px/1 var(--sans); padding: 10px 16px; border-radius: 999px; border: 0; background: transparent; color: var(--ink-2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 4px rgb(23 23 23 / .1); }
+.join { inline-size: min(440px, 100%); text-align: start; }
+.join .win-body { display: grid; gap: 14px; padding: 22px; }
+.join h2 { font-size: 20px; font-weight: 600; letter-spacing: -.02em; }
+.join p { font-size: 14.5px; color: var(--ink-2); }
+.field { display: flex; gap: 8px; }
+.field input { flex: 1; min-width: 0; block-size: 50px; border-radius: 12px; border: 1px solid var(--line-2); padding-inline: 14px; font: 600 20px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); background: var(--paper); }
+.field input::placeholder { color: var(--line-2); }
+.field input:focus { outline: 2px solid var(--purple); outline-offset: 1px; border-color: transparent; }
+.field .btn { min-block-size: 50px; border-radius: 12px; }
+.result { border-radius: 12px; padding: 12px 14px; font-size: 14.5px; display: grid; gap: 8px; }
+.result.ok { background: var(--ok-soft); }
+.result.no { background: var(--well); }
+.result .course { display: flex; gap: 12px; align-items: center; }
+.result .course img { inline-size: 84px; border-radius: 8px; flex: none; }
+.drop { border: 2px dashed var(--line-2); border-radius: 12px; padding: 20px; text-align: center; display: grid; gap: 6px; color: var(--ink-2); font-size: 14.5px; }
+.drop b { color: var(--ink); }
+.under { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 14px; color: var(--ink-2); }
+.under a { color: var(--purple-deep); font-weight: 600; text-decoration: none; }
+.demos { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 760px) { .demos { grid-template-columns: 1fr; } }
+.demo .win-body { padding: 0; position: relative; }
+.demo img { inline-size: 100%; aspect-ratio: 960 / 548; object-fit: cover; }
+.demo .over { position: absolute; inset-inline: 14px; inset-block-end: 14px; background: rgb(255 255 255 / .92); backdrop-filter: blur(8px); border-radius: 12px; padding: 10px 12px; font-size: 14px; display: flex; justify-content: space-between; gap: 10px; align-items: center; box-shadow: var(--shadow); }
+.demo figcaption { padding: 14px 16px 16px; display: grid; gap: 4px; }
+.demo figcaption b { font-size: 16px; font-weight: 600; letter-spacing: -.02em; }
+.demo figcaption span { font-size: 14.5px; color: var(--ink-2); }
+.big { font-size: clamp(30px, 4.6vw, 54px); font-weight: 600; letter-spacing: -.045em; line-height: 1.08; text-wrap: balance; text-align: center; }
+.big .serif { font-size: 1.1em; color: var(--purple-deep); }
+.team { display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start; }
+.team img { block-size: 48px; inline-size: auto; }
+.team div { display: grid; gap: 10px; font-size: 17px; line-height: 1.65; }
+.toggle { justify-self: center; }
+.wordmark { padding-block: 60px 0; display: grid; place-items: center; }
+.wordmark img { inline-size: min(520px, 80%); opacity: .08; }
+</style>
+</head>
+<body>
+
+<div class="wrap topbar">
+  <a class="brand" href="#top"><img src="img/klaro-icon.svg" alt="">klaro</a>
+  <nav>
+    <a class="hide-sm" href="#demos">demos</a>
+    <a class="hide-sm" href="#prices">prices</a>
+    <a href="#" class="ar" lang="ar">عربي</a>
+    <a class="btn small-btn" href="https://app.klaroplatform.com/sign-in">sign in</a>
+  </nav>
+</div>
+
+<main id="top">
+  <section class="wrap hero">
+    <span class="chip purple">beta <span class="face">(^ ω ^)</span></span>
+    <h1 class="title">got a code from your tutor? <span class="serif">you're one step away.</span></h1>
+    <div class="seg" role="group" aria-label="who are you">
+      <button type="button" aria-pressed="true" data-who="student">i'm studying</button>
+      <button type="button" aria-pressed="false" data-who="tutor">i teach</button>
+    </div>
+
+    <div class="win join" id="w-student">
+      <div class="win-bar"><i></i><i></i><i></i><span>join a course</span></div>
+      <div class="win-body">
+        <h2>type your join code</h2>
+        <form class="field" id="joinform" autocomplete="off">
+          <input id="code" maxlength="7" placeholder="K7Q-2PX" aria-label="join code">
+          <button class="btn main" type="submit">join</button>
+        </form>
+        <div id="result" aria-live="polite"><p class="small">try <b class="mono">K7Q-2PX</b> to see what happens.</p></div>
+      </div>
+    </div>
+
+    <div class="win join" id="w-tutor" hidden>
+      <div class="win-bar"><i></i><i></i><i></i><span>start a course</span></div>
+      <div class="win-body">
+        <h2>send us your material</h2>
+        <div class="drop"><b>books, slides, past papers, mark schemes</b><span>after you apply, drop them here. we turn them into lectures and questions and check every one.</span></div>
+        <a class="btn main" href="https://app.klaroplatform.com/sign-up?as=tutor">apply as a tutor</a>
+        <p class="small">we check every tutor account before it opens.</p>
+      </div>
+    </div>
+
+    <div class="under"><span>no code? <a href="https://learnklaro.com/market/">browse courses →</a></span><span>new here? <a href="https://app.klaroplatform.com/sign-up?as=student">make an account</a></span></div>
+    <p class="ar" lang="ar">معاك كود من مدرسك؟ فاضل خطوة واحدة.</p>
+  </section>
+
+  <section class="wrap sec" id="demos">
+    <div class="sec-head"><span class="label">demos</span><h2 class="h2">what you get <span class="serif">after the code.</span></h2></div>
+    <div class="demos">
+      <figure class="win demo"><div class="win-bar"><i></i><i></i><i></i><span>demo 1</span></div><div class="win-body"><img src="img/lecture-osmosis.webp" alt="osmosis lecture"><div class="over"><span>book p. 48 opened at <b class="mono">06:12</b></span><span class="chip gold">linked</span></div></div><figcaption><b>the book opens itself</b><span>every part of a lecture is linked to the book page it covers.</span></figcaption></figure>
+      <figure class="win demo"><div class="win-bar"><i></i><i></i><i></i><span>demo 2</span></div><div class="win-body"><img src="img/lecture-diffusion.webp" alt="diffusion lecture"><div class="over"><span>question 3 of 8 · 2024 paper 1</span><span class="chip mint">correct</span></div></div><figcaption><b>questions from past papers</b><span>practise as you watch, marked at once, with the reason why.</span></figcaption></figure>
+      <figure class="win demo"><div class="win-bar"><i></i><i></i><i></i><span>demo 3</span></div><div class="win-body"><img src="img/course-biology.webp" alt="biology course"><div class="over"><span>biology 0610 · 6 of 10 lectures</span><span class="chip purple">62%</span></div></div><figcaption><b>see what's left</b><span>lectures done, quiz marks and what's next, on your home page.</span></figcaption></figure>
+      <figure class="win demo"><div class="win-bar"><i></i><i></i><i></i><span>demo 4</span></div><div class="win-body"><img src="img/lecture-photosynthesis.webp" alt="photosynthesis lecture"><div class="over"><span class="ar" lang="ar">البناء الضوئي · المحاضرة ٥</span><span class="chip sky">عربي</span></div></div><figcaption><b>english or عربي</b><span>the whole app works in both, right to left in arabic.</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="narrow sec">
+    <p class="big">we think studying should feel like <span class="serif">one window,</span> not twelve tabs.</p>
+  </section>
+
+  <section class="narrow sec">
+    <div class="win">
+      <div class="win-bar"><i></i><i></i><i></i><span>readme.txt</span></div>
+      <div class="win-body team">
+        <img src="img/klaro-icon.svg" alt="">
+        <div><p>it's early! klaro is in beta, and we're building it with the first tutors and students in egypt.</p><p>try it, break it, tell us what's missing. we read everything. <span class="face">(•‿•)</span></p><span class="small">the klaro team</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <div class="sec-head"><span class="label">notes</span><h2 class="h2">from the beta <span class="example">example quotes</span></h2></div>
+    <div class="notes">
+      <div class="note"><div class="who"><span class="avatar">ma</span><span><b>mariam</b><br><span>igcse · year 11</span></span></div><p>the book opening at the right page is lowkey the best thing ever.</p></div>
+      <div class="note"><div class="who"><span class="avatar">yo</span><span><b>youssef</b><br><span>a level physics</span></span></div><p>did the past paper questions after every lecture. walked in calm for once.</p></div>
+      <div class="note"><div class="who"><span class="avatar">mh</span><span><b>mr. hany</b><br><span>chemistry tutor</span></span></div><p>i sent my books. the next week my students had lectures with questions.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="prices">
+    <div class="sec-head"><span class="label">prices</span><h2 class="h2">simple. <span class="serif">in egp.</span></h2></div>
+    <div class="seg toggle" role="group" aria-label="how to pay">
+      <button type="button" aria-pressed="true" data-pay="month">per month</button>
+      <button type="button" aria-pressed="false" data-pay="course">whole course</button>
+    </div>
+    <div class="prices">
+      <div class="price"><h3>student</h3><div class="amount">free</div><ul><li>your own account</li><li>join any course with a code</li><li>progress on your home page</li></ul><a class="btn" href="https://app.klaroplatform.com/sign-up?as=student">start free</a></div>
+      <div class="price pop"><h3>a course <span class="example">example</span></h3><div class="amount" id="amount">450 <small>egp / month</small></div><ul><li>every lecture, with the book open</li><li>questions from past papers</li><li>quizzes, marked at once</li></ul><a class="btn main" href="https://learnklaro.com/market/">browse courses</a></div>
+      <div class="price"><h3>tutor</h3><div class="amount">free <small>in beta</small></div><ul><li>we prepare lectures and questions</li><li>your join code, your order</li><li>marking in one place</li></ul><a class="btn" href="https://app.klaroplatform.com/sign-up?as=tutor">apply</a></div>
+    </div>
+    <p class="small">tutors set their own course prices. the numbers above are examples.</p>
+  </section>
+
+  <section class="narrow sec">
+    <div class="sec-head"><span class="label">faq</span><h2 class="h2">questions <span class="face">( ・_・)ノ</span></h2></div>
+    <div class="faq">
+      <details><summary>where do i get a join code?</summary><p>from your tutor. if your tutor isn't on klaro yet, send them this page.</p></details>
+      <details><summary>who makes the lectures and questions?</summary><p>your tutor sends their books and past papers. the klaro team prepares the lectures and questions and checks them before you see them.</p></details>
+      <details><summary>is it in arabic?</summary><p>yes. the whole app works in arabic and english, and flips right to left in arabic.</p></details>
+      <details><summary>do i need to download anything?</summary><p>no. klaro runs in your browser, on your phone or laptop.</p></details>
+    </div>
+  </section>
+
+  <div class="wordmark"><img src="img/klaro-wordmark.svg" alt=""></div>
+  <footer class="wrap foot">
+    <span>© 2026 klaro · made for students in egypt <span class="face">(^ ω ^)</span></span>
+    <nav><a href="#">terms</a><a href="#">privacy</a><a href="#" class="ar" lang="ar">عربي</a></nav>
+  </footer>
+</main>
+
+<nav class="vswitch" aria-label="versions">
+  <a href="index.html">all</a><a href="v1.html">v1 desktop</a><a href="v2.html">v2 chat</a><a href="v3.html">v3 notebook</a><a href="v4.html" aria-current="page">v4 one window</a>
+</nav>
+
+<script>
+(function () {
+  // Student / tutor switch on the hero window
+  var seg = document.querySelector('.hero .seg');
+  seg.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    seg.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    document.getElementById('w-student').hidden = b.dataset.who !== 'student';
+    document.getElementById('w-tutor').hidden = b.dataset.who !== 'tutor';
+  });
+
+  // Join code: K7Q-2PX is the example course; anything else gets a friendly no
+  var input = document.getElementById('code'), out = document.getElementById('result');
+  input.addEventListener('input', function () {
+    var v = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6);
+    input.value = v.length > 3 ? v.slice(0, 3) + '-' + v.slice(3) : v;
+  });
+  document.getElementById('joinform').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value === 'K7Q-2PX') {
+      out.innerHTML = '<div class="result ok"><div class="course"><img src="img/course-biology.webp" alt=""><div><b>you\'re in! (^ ω ^)</b><br>biology 0610 · 10 lectures · mr. hany</div></div><a class="btn main" href="https://app.klaroplatform.com/sign-up?as=student">make an account to start</a><span class="small">example course, for this demo.</span></div>';
+    } else if (input.value.length < 7) {
+      out.innerHTML = '<div class="result no">codes look like <b class="mono">K7Q-2PX</b>: three letters or numbers, a dash, three more.</div>';
+    } else {
+      out.innerHTML = '<div class="result no">hmm, that code doesn\'t exist <span class="face">¯\\_(ツ)_/¯</span> check it with your tutor.</div>';
+    }
+  });
+
+  // Prices: per month or whole course (example numbers)
+  var t = document.querySelector('.toggle'), amount = document.getElementById('amount');
+  t.addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    t.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    amount.innerHTML = b.dataset.pay === 'month' ? '450 <small>egp / month</small>' : '1,800 <small>egp / course</small>';
+  });
+})();
+</script>
+</body>
+</html>
