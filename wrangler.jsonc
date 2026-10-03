@@ -6,5 +6,11 @@
   "compatibility_date": "2026-09-11",
   "assets": {
     "directory": "."
-  }
+  },
+  // Cloudflare creates the DNS records and certificates for these. learnklaro.com lives in the
+  // owner's second account for now, so deploy with CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca.
+  "routes": [
+    { "pattern": "learnklaro.com", "custom_domain": true },
+    { "pattern": "www.learnklaro.com", "custom_domain": true }
+  ]
 }
