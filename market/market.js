@@ -2,7 +2,7 @@
    the course drawer. Enroll leads to sign-up with the course attached.
    Every course, tutor and price here is an example until the market's back end exists. */
 (function () {
-  var APP = 'https://klaro-web-staging.klaroplatform.workers.dev';
+  var APP = 'https://app.klaroplatform.com';
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var TUTORS = {

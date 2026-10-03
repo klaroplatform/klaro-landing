@@ -9,7 +9,7 @@ The public landing page for Klaro: plain HTML, CSS and a little JavaScript, with
 
 ## The app's address
 
-Each page has `<meta name="klaro-app" content="https://klaro-web-staging.klaroplatform.workers.dev">`. Change it in both pages when production gets its own address.
+Each page has `<meta name="klaro-app" content="https://app.klaroplatform.com">`. Change it in both pages when production gets its own address.
 
 ## Preview
 

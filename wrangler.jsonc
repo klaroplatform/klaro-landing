@@ -1,0 +1,10 @@
+{
+  // The landing site is plain static files, served by Cloudflare. No build step and no Worker code.
+  // Deploy: npx wrangler deploy (from this folder). .assetsignore keeps the notes and designs out.
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "klaro-landing",
+  "compatibility_date": "2026-09-11",
+  "assets": {
+    "directory": "."
+  }
+}

@@ -3,7 +3,7 @@
    <meta name="klaro-app"> in each page, so moving from staging to production is one line. */
 (function () {
   var meta = document.querySelector('meta[name="klaro-app"]');
-  var APP = (meta && meta.content) || 'https://klaro-web-staging.klaroplatform.workers.dev';
+  var APP = (meta && meta.content) || 'https://app.klaroplatform.com';
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // The Arabic page opens the app in Arabic (the app reads ?lang= as the reader's choice).
   var LANG = document.documentElement.lang === 'ar' ? 'lang=ar' : '';
