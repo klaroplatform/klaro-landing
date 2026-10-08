@@ -401,7 +401,8 @@
 .show-screen, .rec-screen { direction: ltr; }   /* the camera works in app pixels from the top left; the app mirrors itself inside */
 .show-cam { position: absolute; inset-block-start: 0; inset-inline-start: 0; width: 1440px; height: 900px; transform-origin: 0 0; will-change: transform; }
 .show-cam > iframe { display: block; width: 1440px; height: 900px; border: 0; opacity: 0; pointer-events: none; transition: opacity .4s var(--ease-out); }
-.show.is-ready .show-cam > iframe { opacity: 1; }
+/* showcase.js reports state in data-state: the frame shows once the app has drawn */
+.show:is(.is-ready, [data-state="live"], [data-state="story"], [data-state="free"], [data-state="done"]) .show-cam > iframe { opacity: 1; }
 .show:is(.is-free, [data-state="free"]) .show-cam > iframe { pointer-events: auto; }
 .show:is(.is-free, [data-state="free"]) .device { outline: 3px solid var(--purple); outline-offset: 0; }
 .rec-cam { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
@@ -409,8 +410,8 @@
 .show-cursor { position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 2; opacity: 0; pointer-events: none; will-change: transform, opacity; }
 .show-tap { position: absolute; inset-block-start: -18px; inset-inline-start: -18px; width: 36px; height: 36px; border-radius: 50%; background: rgb(146 84 224 / .35); opacity: 0; }
 .show-hint { position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 3; opacity: 0; pointer-events: none; transition: opacity .35s var(--ease-out); }
-.show-hint.is-on { opacity: 1; }
-.show-ring { position: absolute; inset-block-start: -22px; inset-inline-start: -22px; width: 44px; height: 44px; border: 3px solid var(--purple); border-radius: 50%; }
+.show-hint:is(.is-on, :not([hidden])) { opacity: 1; }
+.show-ring, .show-hint-ring { position: absolute; inset-block-start: -22px; inset-inline-start: -22px; width: 44px; height: 44px; border: 3px solid var(--purple); border-radius: 50%; }
 .show-bubble { position: absolute; inset-block-start: -24px; inset-inline-start: 38px; width: max-content; max-width: 260px; padding: 10px 14px; border-radius: 14px;
   background: var(--ink); color: #fff; font: 600 15px/1.35 var(--font); box-shadow: 0 10px 24px rgb(23 23 23 / .18); }
 .show-bubble:lang(ar) { direction: rtl; inset-inline: auto 38px; }   /* in Arabic the book is on the right: the bubble opens leftwards */
@@ -612,7 +613,7 @@
   /* Hover and focus */
   .icard:is(:hover, :focus-visible) .ill img { scale: 1.03; }
   /* The hint ring pulses a few times, then rests. */
-  .show-hint.is-on .show-ring { animation: k-ring 1.6s ease-out 6; }
+  .show-hint:is(.is-on, :not([hidden])) :is(.show-ring, .show-hint-ring) { animation: k-ring 1.6s ease-out 6; }
 }
 
 /* Scroll-linked motion: only where the browser has scroll-driven animations (the opening also has
