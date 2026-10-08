@@ -1,0 +1,20 @@
+{
+ "duration": 12.866666666666667,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Minis",
+   "text": "Revise in minis: short, one idea at a time."
+  },
+  {
+   "t": 4.366666666666666,
+   "kicker": "Minis",
+   "text": "First, the moment your tutor explains it…"
+  },
+  {
+   "t": 7.566666666666666,
+   "kicker": "Minis",
+   "text": "…then quick checks on it, from real past papers."
+  }
+ ]
+}

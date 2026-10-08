@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Klaro · Spend your time understanding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{--ink:#171717;--soft:#66665f;--muted:#6b6a6f;--line:#ecece8;--line-2:#deded9;--page:#f3f3f1;--purple:#9254e0;--purple-dark:#7538bb;--tint:#f1e8fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:Manrope,system-ui,sans-serif;font-size:15px;line-height:1.5;color:var(--ink);background:var(--page)}
+.btn{height:46px;display:inline-flex;align-items:center;gap:8px;padding:0 20px;border-radius:9px;font:inherit;font-weight:600;text-decoration:none;white-space:nowrap;cursor:pointer;border:0}
+.btn-primary{background:var(--purple);color:#fff}.btn-primary:hover{background:var(--purple-dark)}
+.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line-2)}
+.btn-sm{height:40px;padding:0 16px}
+header{position:sticky;top:0;z-index:5;height:69px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,3vw,40px);background:rgba(243,243,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header nav{display:flex;gap:8px}
+
+.hero{padding:clamp(28px,4vw,56px) clamp(16px,3vw,40px) 72px}
+.hero-inner{max-width:1520px;margin:0 auto;display:flex;align-items:center;gap:clamp(24px,3.5vw,56px)}
+.copy{flex:0 0 min(380px,30%);display:flex;flex-direction:column;gap:18px}
+h1{margin:0;font-size:clamp(36px,3.7vw,56px);line-height:1.02;letter-spacing:-.045em;font-weight:600}
+h1 span{color:var(--purple)}
+.lead{margin:0;font-size:17px;line-height:1.55;color:var(--soft)}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+/* The kit's purple Tag (components/ui/tags.tsx), at hero size, with the brand mark's spark. */
+.beta{display:inline-flex;align-self:flex-start;align-items:center;gap:7px;height:30px;padding:0 13px 0 10px;border-radius:999px;background:var(--tint);color:var(--purple-dark);font-size:13px;font-weight:600;line-height:1;white-space:nowrap}
+.beta svg{flex:none}
+
+.frame{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px}
+.screen{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f3f3f1 url(../img/study-0.png) top left/100% auto no-repeat;box-shadow:0 30px 60px rgba(23,23,23,.12);transition:box-shadow .4s}
+.screen.free{box-shadow:0 0 0 3px var(--purple),0 30px 60px rgba(23,23,23,.14)}
+.cam{position:absolute;top:0;left:0;width:1440px;height:900px;transform-origin:0 0;will-change:transform}
+.cam iframe{display:block;width:1440px;height:900px;border:0;pointer-events:none;opacity:0;transition:opacity .4s}
+.cam iframe.ready{opacity:1}
+.screen.free .cam iframe{pointer-events:auto}
+.cursor{position:absolute;top:0;left:0;z-index:2;pointer-events:none;opacity:0;will-change:transform,opacity}
+.cursor .tap{position:absolute;left:-18px;top:-18px;width:36px;height:36px;border-radius:50%;background:rgba(146,84,224,.35);opacity:0}
+.hint{position:absolute;top:0;left:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .35s}
+.hint.on{opacity:1}
+.hint .ring{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;border:3px solid var(--purple);animation:ring 1.6s ease-out infinite}
+@keyframes ring{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
+.hint .bubble{position:absolute;left:38px;top:-24px;width:max-content;max-width:260px;padding:10px 14px;border-radius:12px;background:var(--ink);color:#fff;font-weight:600;font-size:15px;line-height:1.35;box-shadow:0 10px 24px rgba(23,23,23,.18)}
+.hint .bubble::before{content:"";position:absolute;left:-6px;top:18px;width:12px;height:12px;background:var(--ink);transform:rotate(45deg)}
+
+.under{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:46px}
+.caption{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em;transition:opacity .35s}
+.under .actions{display:flex;gap:8px}
+.replay[hidden],.tryit[hidden]{display:none}
+
+.end{padding:24px clamp(16px,3vw,40px) 96px}
+.end-card{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:64px 24px;background:#fff;border:1px solid var(--line);border-radius:24px}
+.end-card h2{margin:0;font-size:clamp(30px,3.4vw,44px);letter-spacing:-.045em;font-weight:600}
+
+/* Examples: each recording plays by itself once it is on screen (examples.js). */
+.ex .stage{padding:clamp(40px,5vw,72px) clamp(16px,3vw,40px)}
+.ex .row{width:100%;max-width:1520px;margin:0 auto;display:flex;align-items:center;gap:clamp(24px,3.5vw,56px)}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--purple-dark)}
+.ex h2{margin:0;font-size:clamp(28px,2.8vw,42px);line-height:1.08;letter-spacing:-.045em;font-weight:600}
+.note{margin:0;font-size:16px;color:var(--soft)}
+.note b{color:var(--ink)}
+.steps{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
+.steps li{position:relative;padding:9px 0 11px;font-size:16px;font-weight:600;color:var(--muted);transition:color .3s}
+.steps li.on{color:var(--ink)}
+.steps li::before,.steps li i{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--line)}
+.steps li i{background:var(--purple);transform-origin:0 50%;transform:scaleX(0)}
+.ex .screen{aspect-ratio:1440/900;background:#f3f3f1}
+.ex video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+/* Phone: the sample workspace full screen, in the app's own phone layout. */
+.sheet{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;background:var(--page)}
+.sheet[hidden]{display:none}
+.sheet-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:#fff;font-weight:600}
+.sheet-bar span{font-size:14px;color:var(--soft)}
+.sheet iframe{flex:1;width:100%;border:0}
+
+@media (max-width:900px){
+  .hero-inner{flex-direction:column;align-items:stretch;gap:24px}
+  .copy{flex:none;width:100%}
+  h1{font-size:36px}
+  .caption{font-size:16px}
+  .under{flex-wrap:wrap}
+  .ex .stage{padding:32px 16px}
+  .ex .row{flex-direction:column;align-items:stretch;gap:16px}
+  .ex h2{font-size:24px}
+  .steps li{padding:5px 0 7px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .hint .ring{animation:none}
+}
+</style>
+</head>
+<body>
+<header>
+  <a href="#top" aria-label="Klaro home"><img src="../brand/klaro-wordmark.svg" alt="Klaro" width="96" height="29"></a>
+  <nav>
+    <a class="btn btn-ghost btn-sm" href="../">For tutors</a>
+    <a class="btn btn-ghost btn-sm" href="https://app.klaroplatform.com/sign-in">Sign in</a>
+    <a class="btn btn-primary btn-sm" href="https://app.klaroplatform.com/sign-up">Try it free</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="copy">
+        <span class="beta"><svg width="14" height="14" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><path fill="#e3b23c" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/></svg>Klaro is in beta. Free to try.</span>
+        <h1>Spend your time understanding.<br><span>Not searching.</span></h1>
+        <p class="lead">Your tutor’s lectures, book and past papers, linked into one connected curriculum, down to the smallest idea.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start learning</a>
+        </div>
+      </div>
+      <div class="frame">
+        <div class="screen" id="screen">
+          <div class="cam" id="cam">
+            <iframe id="app" title="Klaro sample workspace: the study view" src="../showcase/showcase.html?scene=student-study&amp;lang=en"></iframe>
+          </div>
+          <div class="cursor" id="cursor" aria-hidden="true">
+            <span class="tap" id="tap"></span>
+            <svg width="26" height="26" viewBox="0 0 24 24" style="position:relative"><path d="M4 2l16 9.5-7 1.6L9.6 20z" fill="#171717" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="hint" id="hint" aria-hidden="true">
+            <span class="ring"></span>
+          </div>
+        </div>
+        <div class="under">
+          <p class="caption" id="caption" aria-live="polite"></p>
+          <div class="actions">
+            <button class="btn btn-primary btn-sm tryit" id="tryit" type="button" hidden>Try it full screen</button>
+            <button class="btn btn-ghost btn-sm replay" id="replay" type="button" hidden>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+              Replay
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="examples"></div>
+
+  <section class="end">
+    <div class="end-card">
+      <h2>Klaro is in beta. Free to try.</h2>
+      <div class="ctas">
+        <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start learning</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Klaro sample workspace">
+  <div class="sheet-bar">
+    <span>Tap any part of the book.</span>
+    <button class="btn btn-ghost btn-sm" id="close" type="button">Close</button>
+  </div>
+</div>
+
+<script src="hero.js"></script>
+<script src="examples.js"></script>
+</body>
+</html>

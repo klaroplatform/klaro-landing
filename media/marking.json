@@ -1,0 +1,25 @@
+{
+ "duration": 15.7,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Marking",
+   "text": "Every paper handed in waits here, one card per paper."
+  },
+  {
+   "t": 4.8,
+   "kicker": "Marking",
+   "text": "Each answer comes back marked…"
+  },
+  {
+   "t": 7.6,
+   "kicker": "Marking",
+   "text": "…with what earns the marks, so you can check it in seconds."
+  },
+  {
+   "t": 10.6,
+   "kicker": "Marking",
+   "text": "Each student’s mark adds up as you go."
+  }
+ ]
+}

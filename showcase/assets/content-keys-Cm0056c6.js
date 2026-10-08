@@ -1,0 +1,1 @@
+function e(e){return e[0]===`documents`&&e[2]===`menu`&&(e[3]===`node`||e[3]===`chain`)}var t=new Set([`clips`,`menu-links`,`segment-titles`,`transcript`]);function n(e){return e[0]===`documents`?!0:e[0]===`minis`?e[1]===`course`:e[0]===`lectures`&&t.has(`${e[2]}`)}function r(e){e.invalidateQueries({predicate:e=>n(e.queryKey)})}export{r as n,e as t};

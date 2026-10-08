@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-NZYk81nU.js";import{p as t,t as n}from"./components-BMzHfNJJ.js";import{i as r}from"./area-BCM77EaN.js";var i=e();function a(){let{courseId:e=``}=t();return(0,i.jsx)(n,{to:r(e),replace:!0})}export{a as ProcessingRedirect};

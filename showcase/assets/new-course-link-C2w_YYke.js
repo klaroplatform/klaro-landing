@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-NZYk81nU.js";import{Hn as t,pt as n}from"./kit-DdfCbJvI.js";import{t as r}from"./useTranslation-D3-wt4gR.js";import{t as i}from"./lib-CwiiKhBb.js";var a=e();function o(){let{t:e}=r();return(0,a.jsxs)(i,{to:`/tutor/courses/new`,className:n(`primary`),children:[(0,a.jsx)(t,{size:15}),e(`firstRun.empty.newCourse`)]})}export{o as t};
