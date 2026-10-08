@@ -133,7 +133,7 @@ body.km-open .km-drawer { translate: 0 0; visibility: visible; transition: trans
   .km-panel { margin-block-start: 22px; padding: 10px; }
   .km-seg { width: 100%; }
   .km-seg button { flex: 1 1 auto; padding-inline: 8px; }
-  .km-line { flex-direction: column; align-items: stretch; }
+  .km-line { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }   /* wrapping columns would size to the chips' full row */
   /* Subjects scroll sideways on phones; the padding keeps focus rings from being cut off */
   .km-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 4px; margin: -4px; }
   .km-chips::-webkit-scrollbar { display: none; }

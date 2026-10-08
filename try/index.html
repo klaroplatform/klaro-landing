@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Try the study view on a sample course · Klaro</title>
+<meta name="description" content="Try Klaro's study view on a sample IGCSE Biology course: tap a passage in the book, watch the lecture explain it and see the past-paper questions on it.">
+<!-- chrome:meta --><!-- /chrome:meta -->
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../klaro.css">
+<link rel="stylesheet" href="../site.css">
+<style>
+/* Try it only (try-, .show--full). A slim bar over the sample study view, which fills the rest of
+   the screen under the header: showcase.js with data-fit="fill" draws the app at its own size (its
+   phone layout on phones), with no camera and no story, and hands it to the visitor at once.
+   The frame needs a height, so <main> is exactly one screen under the header, the bar takes what
+   it needs and the screen the rest. The footer follows below.
+   Until the app has drawn, and for good without JavaScript or if it can't load, the screen shows
+   the poster and a short note (.try-fallback). */
+.try { display: flex; flex-direction: column; height: calc(100vh - var(--header-h)); height: calc(100svh - var(--header-h)); min-height: 540px; }
+.try-bar { flex: none; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; padding-block: 16px; }
+.try-head { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.try-title { font-size: clamp(22px, 2vw, 28px); font-weight: 600; line-height: 1.2; letter-spacing: var(--tr-title); }
+.try-line { font-size: 16px; line-height: 1.45; color: var(--text); }
+.try-line b { font-weight: 600; color: var(--ink); }
+.try-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; }
+.try-back .i { width: 18px; height: 18px; }
+@media (prefers-reduced-motion: no-preference) { .try-back.tlink:is(:hover, :focus-visible) .i { translate: calc(-3px * var(--k-dir)) 0; } }
+
+.show--full { flex: 1; min-height: 0; gap: 0; }
+.show--full .show-screen { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--surface); border-block-start: 1px solid var(--line); }
+.show--full .show-screen > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 0 0; }
+/* showcase.js fades the camera layer in once the app has drawn and lets the visitor in; the frame
+   itself is always visible and clickable inside it (site.css hides it until .is-ready, a class the
+   driver doesn't set). */
+.show--full .show-cam > iframe { opacity: 1; pointer-events: auto; }
+
+.try-fallback { position: absolute; z-index: 1; inset-block-end: 24px; inset-inline-start: 50%; translate: calc(-50% * var(--k-dir)) 0; display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  width: min(520px, calc(100% - 32px)); padding: 24px 28px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-media); box-shadow: var(--shadow-float); }
+.try-fallback p { color: var(--text); }
+.try-fallback p b { color: var(--ink); font-weight: 600; }
+.try-loading, .try-failed { display: none; }
+html.js .show--full[data-state="failed"] .try-failed { display: block; }
+/* With JavaScript the note waits: a quiet "Opening…" while the app loads, nothing once it has
+   drawn, and the note again if it fails. */
+html.js .show--full .try-fallback { display: none; }
+html.js .show--full[data-state="failed"] .try-fallback { display: flex; }
+html.js .show--full:is([data-state="poster"], [data-state="loading"]) .try-loading { position: absolute; z-index: 1; inset-block-start: 50%; inset-inline-start: 50%; translate: calc(-50% * var(--k-dir)) -50%;
+  display: inline-flex; align-items: center; gap: 10px; height: 44px; padding-inline: 20px; border-radius: var(--r-pill); background: var(--card); border: 1px solid var(--line);
+  box-shadow: var(--shadow-float); font-size: 15px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.try-loading .i { width: 14px; height: 14px; }
+
+@media (max-width: 640px) {
+  .try { min-height: 500px; }
+  .try-bar { gap: 10px 16px; padding-block: 12px; }
+  .try-title { font-size: 20px; }
+  .try-line { font-size: 14px; }
+  .try-actions { width: 100%; justify-content: space-between; }
+  .try-fallback { inset-block-end: 16px; padding: 20px; }
+}
+</style>
+</head>
+<body data-site="../">
+<!-- chrome:sprite --><!-- /chrome:sprite -->
+<!-- chrome:header --><!-- /chrome:header -->
+
+<main id="top" class="try">
+
+<!-- 1. The bar: what this is, a way back and the sign-up pill -->
+<div class="wrap try-bar">
+  <div class="try-head">
+    <h1 class="try-title">Try the study view</h1>
+    <p class="try-line"><b>Sample course: Biology 0610 (IGCSE).</b> Tap any part of the book.</p>
+  </div>
+  <div class="try-actions">
+    <a class="tlink try-back" href="../" data-back><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg>Back</a>
+    <a class="btn btn-primary" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
+  </div>
+</div>
+
+<!-- 2. The sample study view, full size and the visitor's from the start (showcase.js) -->
+<figure class="show show--full" data-showcase="student-study" data-fit="fill" data-play="free" data-title="Klaro sample workspace: the study view">
+  <div class="show-screen" data-screen data-nosnippet>
+    <img src="../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side." width="1440" height="900" fetchpriority="high">
+    <span class="try-loading" aria-hidden="true"><svg class="i spark" viewBox="112.56 0 103.11 103.11"><use href="#spark"/></svg>Opening the sample course…</span>
+    <div class="try-fallback">
+      <p><b>This is Klaro's study view.</b> The book, your tutor's lecture and past-paper questions sit on one screen. Tap a passage and the lecture plays the moment that explains it.</p>
+      <noscript><p>The sample course needs JavaScript to open here.</p></noscript>
+      <p class="try-failed">The sample course didn't open this time. Reload the page to try again.</p>
+      <a class="tlink" href="../products/study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+  <figcaption class="sr-only">Sample course. A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
+</figure>
+
+</main>
+
+<!-- chrome:footer --><!-- /chrome:footer -->
+<script>
+/* Back goes where the visitor came from on this site, else to the home page. */
+(function () {
+  var a = document.querySelector('[data-back]'), r = document.referrer;
+  try { var u = r && new URL(r); if (u && u.origin === location.origin && u.pathname !== location.pathname) a.href = r; } catch (e) {}
+})();
+</script>
+<script src="../klaro.js"></script>
+<script src="../site.js"></script>
+<script src="../showcase.js" defer></script>
+</body>
+</html>
