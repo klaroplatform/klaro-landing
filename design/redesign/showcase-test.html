@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>showcase.js test</title>
+<!--
+  Scratch test page for /showcase.js (not part of the site). Serve the repo root
+  (python3 -m http.server 8091) and open /design/redesign/showcase-test.html with:
+    ?lang=ar        Arabic page (html lang=ar, dir=rtl): the frame gets lang=ar
+    ?reduce=1       pretend prefers-reduced-motion: reduce
+    ?phone=<name>   data-phone-recording on the hero (a stand-in until media/study-hero.mp4 exists)
+    ?save=1         pretend Save-Data
+    ?try=1          the hero becomes the Try page's full-size frame (data-fit="fill", data-play="free")
+    ?hidden=real    keep document.hidden as the browser says (the built-in pane reports hidden)
+  The CSS here is a stand-in for site.css, borrowed from Omar's index.html.
+-->
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  if (q.get('lang') === 'ar') { document.documentElement.lang = 'ar'; document.documentElement.dir = 'rtl'; }
+  if (q.get('reduce') === '1') {
+    var real = window.matchMedia.bind(window);
+    window.matchMedia = function (s) {
+      if (/prefers-reduced-motion:\s*reduce/.test(s)) return { matches: true, media: s, addListener: function () {}, addEventListener: function () {} };
+      return real(s);
+    };
+    document.documentElement.classList.add('t-reduce');
+  }
+  if (q.get('lpm') === '1') {
+    // Like Safari in Low Power Mode: a video never starts by itself.
+    HTMLMediaElement.prototype.play = function () { return Promise.reject(new DOMException('Low Power Mode (test)', 'NotAllowedError')); };
+  }
+  if (q.get('save') === '1') { try { Object.defineProperty(navigator, 'connection', { value: { saveData: true, effectiveType: '4g' } }); } catch (e) {} }
+  if (q.get('hidden') !== 'real') { try { Object.defineProperty(document, 'hidden', { get: function () { return false; } }); } catch (e) {} }
+  // Bytes on the wire, for the phone budget: everything the page fetched so far.
+  window.__bytes = function () {
+    var t = 0, rows = [];
+    performance.getEntriesByType('navigation').concat(performance.getEntriesByType('resource')).forEach(function (e) {
+      t += e.transferSize || 0; rows.push([e.name.replace(location.origin, ''), e.transferSize, e.initiatorType]);
+    });
+    return { total: t, rows: rows };
+  };
+})();
+</script>
+<style>
+:root{--ink:#171717;--soft:#66665f;--muted:#6b6a6f;--line:#ecece8;--page:#f3f3f1;--purple:#9254e0;--purple-dark:#7538bb;--tint:#f1e8fb}
+*{box-sizing:border-box}
+body{margin:0;font:15px/1.5 system-ui,sans-serif;color:var(--ink);background:var(--page)}
+.bar{position:sticky;top:0;z-index:9;display:flex;flex-wrap:wrap;gap:8px;padding:8px 16px;background:#fff;border-bottom:1px solid var(--line);font-size:13px}
+.bar a{color:var(--purple-dark)}
+h1{margin:0;font-size:clamp(30px,3.4vw,48px);line-height:1.05;letter-spacing:-.04em}
+h2{margin:0 0 8px;font-size:28px;letter-spacing:-.03em}
+button,.btn{font:inherit;font-weight:600;height:40px;padding:0 16px;border-radius:999px;border:1px solid #deded9;background:#fff;color:var(--ink);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.btn-primary{background:var(--purple);color:#fff;border:0}
+[hidden]{display:none!important}
+
+/* The opening: a tall wrapper with a sticky stage (redesign.md §7.8). */
+.opening{padding:32px 16px 0}
+.opening-grid{min-height:calc(190vh - 32px);max-width:1400px;margin:0 auto;display:grid;grid-template-columns:5fr 7fr;gap:40px}
+.opening-copy{padding-top:60px;display:flex;flex-direction:column;gap:16px;align-self:start}
+.opening-stage{position:sticky;top:64px;align-self:start}
+.t-reduce .opening-grid{min-height:0}
+.t-reduce .opening-stage{position:static}
+
+/* A screen with the app's shape; the poster under the frame. */
+.show-screen,.rec-screen{position:relative;overflow:hidden;aspect-ratio:1440/900;border-radius:14px;border:1px solid var(--line);background:#fff;box-shadow:0 30px 60px -20px rgb(30 12 60/.35)}
+.show-screen>img,.rec-screen>img,.rec-screen>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.show[data-state="free"] .show-screen{box-shadow:0 0 0 3px var(--purple),0 30px 60px -20px rgb(30 12 60/.35)}
+.show[data-mode="phone"] .show-screen{aspect-ratio:auto;height:min(70vh,560px)}
+.show-hint-ring{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;border:3px solid var(--purple);animation:ring 1.6s ease-out infinite}
+@keyframes ring{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.show-hint-ring{animation:none}}
+.t-reduce .show-hint-ring{animation:none}
+
+/* Step lists: the current one in ink with a bar that fills. */
+[data-steps]{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:2px}
+[data-steps] li{position:relative;padding:8px 0 10px;font-weight:600;color:var(--muted)}
+[data-steps] li[data-current]{color:var(--ink)}
+[data-steps] li::after{content:"";position:absolute;inset-inline:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--purple) calc(var(--fill,0)*100%),var(--line) 0)}
+[dir="rtl"] [data-steps] li::after,[dir="rtl"] .steps-sticky li::after{background:linear-gradient(270deg,var(--purple) calc(var(--fill,0)*100%),var(--line) 0)}
+.actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
+/* The sticky step list beside the recordings. */
+.how{max-width:1400px;margin:0 auto;padding:80px 16px;display:grid;grid-template-columns:4fr 8fr;gap:40px}
+.steps-sticky{position:sticky;top:80px;align-self:start;list-style:none;margin:0;padding:0}
+.steps-sticky li{position:relative;padding:14px 0}
+.steps-sticky a{color:var(--muted);font-size:20px;font-weight:600;text-decoration:none}
+.steps-sticky a[aria-current]{color:var(--ink)}
+.steps-sticky li::after{content:"";position:absolute;inset-inline:0;bottom:0;height:2px;background:linear-gradient(90deg,var(--purple) calc(var(--fill,0)*100%),var(--line) 0)}
+.recs{display:flex;flex-direction:column;gap:120px}
+.rec{margin:0}
+.end{height:60vh}
+#log{position:fixed;inset-inline-end:8px;bottom:8px;z-index:9;max-width:360px;padding:8px 10px;background:#171717;color:#fff;font:12px/1.4 ui-monospace,monospace;border-radius:8px;white-space:pre-wrap}
+
+@media (max-width:899px){
+  .opening-grid{grid-template-columns:1fr;grid-template-rows:auto 1fr;min-height:calc(200vh - 32px)}
+  .opening-copy{padding-top:0}
+  .opening-stage{top:56px}
+  .how{grid-template-columns:1fr}
+  .steps-sticky{position:static}
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <strong>showcase.js test</strong>
+  <a href="?">EN</a><a href="?lang=ar">AR</a><a href="?reduce=1">reduced</a><a href="?lang=ar&amp;reduce=1">AR reduced</a>
+  <a href="?phone=student-wrong">phone stand-in</a><a href="?save=1">Save-Data</a><a href="?try=1">Try (fill)</a>
+</div>
+
+<section class="opening" data-opening>
+  <div class="opening-grid">
+    <div class="opening-copy">
+      <h1 data-en="Spend your time teaching." data-ar="اقضِ وقتك في التدريس.">Spend your time teaching.</h1>
+      <p data-en="Scroll: the steps follow the scroll. Don't: they advance every 4 s." data-ar="مرّر: الخطوات تتبع التمرير. أو انتظر: تتقدم كل 4 ثوانٍ.">Scroll: the steps follow the scroll. Don't: they advance every 4 s.</p>
+    </div>
+    <div class="opening-stage">
+      <figure class="show" id="hero" data-showcase="study" style="margin:0">
+        <div class="show-screen" data-screen data-nosnippet>
+          <img src="../../img/study-0.png" alt="The Klaro study view on a sample Biology course: the book, the lecture and a past-paper question side by side." width="1440" height="900" fetchpriority="high">
+        </div>
+        <ol class="show-steps" data-steps>
+          <li data-en="A student taps a passage in your book." data-ar="طالب يضغط على فقرة في كتابك.">A student taps a passage in your book.</li>
+          <li data-en="Your lecture jumps to that moment and explains exactly that passage." data-ar="محاضرتك تنتقل إلى تلك اللحظة وتشرح هذه الفقرة بالضبط.">Your lecture jumps to that moment and explains exactly that passage.</li>
+          <li data-en="The question on that passage is right there." data-ar="والسؤال على هذه الفقرة أمامك.">The question on that passage is right there.</li>
+          <li data-en="Your turn. Tap any part of the book." data-ar="دورك. اضغط على أي جزء من الكتاب.">Your turn. Tap any part of the book.</li>
+        </ol>
+        <p data-after-tap hidden data-en="Every page links to the moment you explained it." data-ar="كل صفحة مرتبطة بلحظة شرحها.">Every page links to the moment you explained it.</p>
+        <div class="actions" data-actions>
+          <a class="btn btn-primary show-try" href="../../try/" data-en="Try it full screen" data-ar="جرّبه بملء الشاشة">Try it full screen</a>
+          <button type="button" data-action="replay" hidden data-en="Replay" data-ar="إعادة التشغيل">Replay</button>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <ol class="steps-sticky" data-showcase-nav>
+    <li><a href="#rec-lives">Teach live from your schedule</a></li>
+    <li><a href="#rec-quiz">Ask for homework in plain words</a></li>
+    <li><a href="#rec-marking">Papers come back marked</a></li>
+  </ol>
+  <div class="recs">
+    <figure class="rec" id="rec-lives" data-recording="lives">
+      <div class="rec-screen" data-screen data-nosnippet>
+        <img src="../../media/lives-poster.jpg" alt="The Klaro teaching calendar on a sample course, with a live class on it." width="1440" height="900" loading="lazy" decoding="async">
+        <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a live class on the schedule"></video>
+      </div>
+      <!-- Times from media/lives.json -->
+      <ol class="rec-cues" data-steps>
+        <li>Your live class is on your schedule. Start it on Zoom from here.</li>
+        <li>Afterwards, the recording lands in your course…</li>
+        <li>…cut into clips, each one linked to your book.</li>
+        <li>One tap on “In the book” and the book opens at the part you explained.</li>
+      </ol>
+      <div class="actions" data-actions><button type="button" data-action="play" hidden>Play</button><button type="button" data-action="replay" hidden>Replay</button></div>
+    </figure>
+    <figure class="rec" id="rec-quiz" data-recording="quiz">
+      <div class="rec-screen" data-screen data-nosnippet>
+        <img src="../../media/quiz-poster.jpg" alt="The Klaro quiz assistant on a sample course." width="1440" height="900" loading="lazy" decoding="async">
+        <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the quiz assistant"></video>
+      </div>
+      <!-- Times from media/quiz.json; a camera on the third cue (test) -->
+      <ol class="rec-cues" data-steps>
+        <li>Tell the quiz assistant what you need.</li>
+        <li>Klaro plans it from your own question bank…</li>
+        <li data-cam="1.8 720 500">…and builds it from real past-paper questions.</li>
+        <li>Check it, then publish and assign it to your students.</li>
+      </ol>
+    </figure>
+    <figure class="rec" id="rec-marking" data-recording="marking">
+      <!-- The lazy poster: an <img loading="lazy"> under a video without poster= (poster= is fetched at once) -->
+      <div class="rec-screen" data-screen data-nosnippet>
+        <img src="../../media/marking-poster.jpg" alt="The Klaro marking queue on a sample course: one card for each paper handed in." width="1440" height="900" loading="lazy" decoding="async">
+        <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the tutor's marking queue"></video>
+      </div>
+      <!-- Times inline: no JSON fetch -->
+      <ol class="rec-cues" data-steps>
+        <li data-t="0">Every paper handed in waits here, one card per paper.</li>
+        <li data-t="4.8">Each answer comes back marked…</li>
+        <li data-t="7.6">…with what earns the marks, so you can check it in seconds.</li>
+        <li data-t="10.6">Each student’s mark adds up as you go.</li>
+      </ol>
+    </figure>
+  </div>
+</section>
+<div class="end"></div>
+<div id="log" aria-hidden="true"></div>
+
+<script>
+(function () {
+  var q = new URLSearchParams(location.search), ar = q.get('lang') === 'ar';
+  if (ar) document.querySelectorAll('[data-ar]').forEach(function (el) { el.textContent = el.getAttribute('data-ar'); });
+  var hero = document.getElementById('hero');
+  if (q.get('phone')) hero.setAttribute('data-phone-recording', q.get('phone'));
+  if (q.get('try') === '1') {
+    hero.setAttribute('data-showcase', 'student-study');
+    hero.setAttribute('data-fit', 'fill');
+    hero.setAttribute('data-play', 'free');
+    hero.querySelector('.show-screen').style.aspectRatio = 'auto';
+    hero.querySelector('.show-screen').style.height = 'calc(100vh - 120px)';
+  }
+  // A timeline of the hero's states and of the messages the app receives, for the checks.
+  var t0 = performance.now(), trace = window.__trace = [];
+  function note(what) { trace.push([Math.round(performance.now() - t0), what]); }
+  new MutationObserver(function () {
+    note('fig ' + hero.getAttribute('data-state') + ' step=' + hero.getAttribute('data-step'));
+    var f = hero.querySelector('iframe');
+    if (f && !f.__traced) {
+      f.__traced = true;
+      note('iframe created ' + f.getAttribute('src'));
+      f.addEventListener('load', function () {
+        note('iframe load');
+        try {
+          f.contentWindow.addEventListener('message', function (e) {
+            var d = e.data || {}, keys = Object.keys(d).filter(function (k) { return k !== 'type' && k !== 'measure' && k !== 'hello'; });
+            if (keys.length) note('app got ' + JSON.stringify(keys.reduce(function (o, k) { o[k] = typeof d[k] === 'number' ? Math.round(d[k] * 10) / 10 : d[k]; return o; }, {})));
+          });
+        } catch (e) {}
+      });
+    }
+  }).observe(hero, { attributes: true, subtree: true, childList: true, attributeFilter: ['data-state', 'data-step', 'src'] });
+  window.addEventListener('message', function (e) { if (e.data && e.data.type === 'klaro-showcase-ready') note('ready heard'); });
+  // A small live readout of the hero's state.
+  var log = document.getElementById('log');
+  setInterval(function () {
+    var o = document.querySelector('[data-opening]');
+    log.textContent = 'hero ' + hero.getAttribute('data-mode') + ' / ' + hero.getAttribute('data-state') +
+      ' / step ' + hero.getAttribute('data-step') + '\nprogress ' + (o.style.getPropertyValue('--progress') || '-') +
+      '\nbytes ' + Math.round(window.__bytes().total / 1024) + ' KB';
+  }, 300);
+})();
+</script>
+<script src="../../showcase.js" defer></script>
+</body>
+</html>
