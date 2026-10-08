@@ -153,6 +153,34 @@ Notes:
    direction is "respectable and tidy"?
 7. Are there real testimonials or case studies from the beta?
 
+### Answers (Mohamed, 2026-10-08)
+
+1. **Products, by audience.** The home page keeps two views, one for students and one for tutors,
+   and each view shows the products that audience cares about. Course builder is for tutors; the
+   study view is for both. The Products menu groups the products by audience. The join code is a
+   button in the menu, not a page.
+2. **Klaro connects; it does not generate.** He answered with the motto itself. The approved tutor
+   line: *"Upload your lectures, your books and your past papers. Klaro connects them: every moment
+   of a lecture to its book page, every topic to its past-paper questions. Nothing generated."*
+   Arabic: *"ارفع محاضراتك وكتبك وامتحانات السنوات السابقة. يربطها Klaro ببعضها: كل لحظة في
+   المحاضرة بصفحة الكتاب التي تشرحها، وكل درس بأسئلة امتحاناته. لا شيء مُصطنع."* Every "the Klaro
+   team turns your books into lectures" line on the site has to go.
+3. **Arabic motto (approved):** *"كفى محتوى مُصطنعًا. لا نصنع المحتوى بالذكاء الاصطناعي كما يفعل
+   الجميع. نربط محتواك كما أردته تمامًا."*
+4. **Research: one page only.** A single "Powered by research" page that explains the principles
+   Klaro is built on, with real sources. No articles for now.
+5. **Careers: not now.** There are no open roles, and the page is not needed yet.
+6. Not asked. Assumed dropped; the playful versions stay in `design/` as reference.
+7. **Testimonials: yes, Mohamed will send them.** Build the case-study cards marked "Example" until
+   the real ones arrive. Never ship made-up quotes.
+8. **Tech: open.** "If something other than plain HTML suits you better, or even a new repo, that's
+   fine." Decide when the real build starts.
+
+**How to proceed (his words, same day):** don't build the site yet. First build a rough static
+frame of the new landing page together, run it locally, look at the overall shape, and only then
+work on the details. The new look should stay close to the current design, in the spirit of the
+references above. The frame lives in `design/frame/`.
+
 ## 7. Constraints from the repo
 
 - Plain HTML, CSS and JS, no build step (see `README.md`). With many pages, the header and footer
