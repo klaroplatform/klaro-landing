@@ -1,12 +1,48 @@
+# Files Cloudflare must NOT publish. The whole repository root is the assets directory
+# (wrangler.jsonc), so anything not listed here goes live at learnklaro.com/<path>.
+# Same syntax as .gitignore. A leading "/" means "only at the top of the repository".
+# Keep this in step with _config.yml (GitHub Pages) while that still runs.
+# _headers is read by Cloudflare and never served, so it is not listed here.
+
+# Version control, editors, OS and agent tooling
 .git
+.github
 .gitignore
+.gitattributes
 .assetsignore
+.claude
+.vscode
+.idea
+**/.DS_Store
+**/Thumbs.db
+*.swp
+*.log
+
+# Cloudflare, Node and Python tooling
 .wrangler
 node_modules
+wrangler.json
 wrangler.jsonc
-_config.yml
-README.md
-design
-CLAUDE.md
-partials
-tools
+wrangler.toml
+package.json
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+**/__pycache__
+*.py
+
+# Secrets and local settings (none today; never publish them if they appear)
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+
+# Notes, briefs, design explorations, tooling, and the templates the pages are stamped from.
+# These names are taken: a public page can't live at /design/, /partials/ or /tools/.
+/_config.yml
+/design
+/partials
+/tools
+# Every Markdown file is a note (README.md, CLAUDE.md, briefs). If a public .md is ever wanted,
+# add it back below this line with "!path/file.md".
+*.md

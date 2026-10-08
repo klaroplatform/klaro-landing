@@ -1,16 +1,40 @@
 {
-  // The landing site is plain static files, served by Cloudflare. No build step and no Worker code.
-  // Deploy: npx wrangler deploy (from this folder). .assetsignore keeps the notes and designs out.
+  // The Klaro landing site: plain static files served by a Worker with static assets. There is no
+  // build step and no Worker script (no "main"), so every request is answered from the files.
+  // How it is deployed, previewed and rolled back: design/brief/cloudflare.md.
+  //
+  // Production deploys run from `main` through Workers Builds (Git integration, set up in the
+  // dashboard): deploy command `npx wrangler deploy`, no build command, root directory `/`.
+  // By hand, from a clean checkout:
+  //   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deploy            (goes live)
+  //   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler versions upload   (preview URL only)
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  // Must match the Worker's name in the dashboard, or Workers Builds refuses to build.
   "name": "klaro-landing",
   "compatibility_date": "2026-09-11",
   "assets": {
-    "directory": "."
+    // The repository root is the site. .assetsignore keeps the notes, designs and tooling out;
+    // _headers sets security and cache headers (it is read by Cloudflare, not served).
+    "directory": ".",
+    // Unknown URLs get the nearest 404.html with a 404 status. Until a 404.html exists they get an
+    // empty 404, so deploys work either way.
+    "not_found_handling": "404-page",
+    // The default, written out: /products/study-view redirects to /products/study-view/ and serves
+    // products/study-view/index.html; /index.html redirects to /.
+    "html_handling": "auto-trailing-slash"
   },
-  // Cloudflare creates the DNS records and certificates for these. learnklaro.com lives in the
-  // owner's second account for now, so deploy with CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca.
+  // learnklaro.com lives in the owner's second account, so every wrangler command needs
+  // CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca. Cloudflare creates the DNS records and
+  // certificates for these custom domains. Keep www here even though it redirects to the apex: the
+  // redirect rule needs the record and the certificate.
   "routes": [
     { "pattern": "learnklaro.com", "custom_domain": true },
     { "pattern": "www.learnklaro.com", "custom_domain": true }
-  ]
+  ],
+  // No public <name>.<subdomain>.workers.dev copy of the site (this is also what the routes imply).
+  "workers_dev": false,
+  // Version URLs (<version>-klaro-landing.<subdomain>.workers.dev) stay on, so a version can be
+  // checked before it is promoted (`wrangler versions upload`). They are public; _headers marks them
+  // noindex so search engines keep to learnklaro.com.
+  "preview_urls": true
 }

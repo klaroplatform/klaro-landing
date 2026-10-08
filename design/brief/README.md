@@ -178,6 +178,19 @@ Notes:
 8. **Tech: open.** "If something other than plain HTML suits you better, or even a new repo, that's
    fine." Decide when the real build starts.
 
+**Later the same day:**
+- **Market:** keep it live and indexable, with a small visible line saying the courses, tutors and
+  prices are examples; drop that line when real data arrives. Keep it out of the Products menu
+  (only a quiet footer link).
+- **Minis** joins the students' products.
+- **SAT, the streak and the approved tutor line stay as they are**, even though the app doesn't
+  have them yet.
+- **Marking is shown normally:** written answers on scanned papers, marked by Klaro against the
+  tutor's mark scheme, then checked and sent by the tutor.
+- **Don't mention AI on the site.**
+- **Hosting:** Cloudflare, auto-deploying from `main`. GitHub Pages will be shut down, and the
+  repo made private once everything is done.
+
 **How to proceed (his words, same day):** don't build the site yet. First build a rough static
 frame of the new landing page together, run it locally, look at the overall shape, and only then
 work on the details. The new look should stay close to the current design, in the spirit of the
