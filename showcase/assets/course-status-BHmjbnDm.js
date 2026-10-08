@@ -1,0 +1,1 @@
+function e(e){return e?e.status===`ready`?`ready`:e.status===`failed`&&e.cancelledAt?`stopped`:`processing`:`none`}function t(e){return e===`none`||e===`stopped`}var n={processing:`purple`,ready:`green`,stopped:`yellow`};export{t as n,e as r,n as t};

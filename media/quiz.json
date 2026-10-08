@@ -1,0 +1,25 @@
+{
+ "duration": 15.4,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Quizzes and homework",
+   "text": "Tell the quiz assistant what you need."
+  },
+  {
+   "t": 4.2,
+   "kicker": "Quizzes and homework",
+   "text": "Klaro plans it from your own question bank…"
+  },
+  {
+   "t": 8.6,
+   "kicker": "Quizzes and homework",
+   "text": "…and builds it from real past-paper questions."
+  },
+  {
+   "t": 11.2,
+   "kicker": "Quizzes and homework",
+   "text": "Check it, then publish and assign it to your students."
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "duration": 14.166666666666666,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Got one wrong?",
+   "text": "Practise past-paper questions from your course."
+  },
+  {
+   "t": 3,
+   "kicker": "Got one wrong?",
+   "text": "Not quite. Klaro shows the right answer…"
+  },
+  {
+   "t": 4.9,
+   "kicker": "Got one wrong?",
+   "text": "…and where it was explained: the page in your book and the moment in your lecture."
+  },
+  {
+   "t": 8.866666666666667,
+   "kicker": "Got one wrong?",
+   "text": "One tap, and your tutor explains it."
+  }
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "duration": 15.1,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Lives",
+   "text": "Your live class is on your schedule. Start it on Zoom from here."
+  },
+  {
+   "t": 4.2,
+   "kicker": "Lives",
+   "text": "Afterwards, the recording lands in your course…"
+  },
+  {
+   "t": 7.8,
+   "kicker": "Lives",
+   "text": "…cut into clips, each one linked to your book."
+  },
+  {
+   "t": 12.1,
+   "kicker": "Lives",
+   "text": "One tap on “In the book” and the book opens at the part you explained."
+  }
+ ]
+}

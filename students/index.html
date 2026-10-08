@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Klaro · Spend your time teaching</title>
+<title>Klaro · Spend your time understanding</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
@@ -31,7 +31,7 @@ h1 span{color:var(--purple)}
 .beta svg{flex:none}
 
 .frame{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px}
-.screen{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f3f3f1 url(img/study-0.png) top left/100% auto no-repeat;box-shadow:0 30px 60px rgba(23,23,23,.12);transition:box-shadow .4s}
+.screen{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f3f3f1 url(../img/study-0.png) top left/100% auto no-repeat;box-shadow:0 30px 60px rgba(23,23,23,.12);transition:box-shadow .4s}
 .screen.free{box-shadow:0 0 0 3px var(--purple),0 30px 60px rgba(23,23,23,.14)}
 .cam{position:absolute;top:0;left:0;width:1440px;height:900px;transform-origin:0 0;will-change:transform}
 .cam iframe{display:block;width:1440px;height:900px;border:0;pointer-events:none;opacity:0;transition:opacity .4s}
@@ -60,6 +60,8 @@ h1 span{color:var(--purple)}
 .ex .row{width:100%;max-width:1520px;margin:0 auto;display:flex;align-items:center;gap:clamp(24px,3.5vw,56px)}
 .eyebrow{font-size:13px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--purple-dark)}
 .ex h2{margin:0;font-size:clamp(28px,2.8vw,42px);line-height:1.08;letter-spacing:-.045em;font-weight:600}
+.note{margin:0;font-size:16px;color:var(--soft)}
+.note b{color:var(--ink)}
 .steps{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
 .steps li{position:relative;padding:9px 0 11px;font-size:16px;font-weight:600;color:var(--muted);transition:color .3s}
 .steps li.on{color:var(--ink)}
@@ -93,9 +95,9 @@ h1 span{color:var(--purple)}
 </head>
 <body>
 <header>
-  <a href="#top" aria-label="Klaro home"><img src="brand/klaro-wordmark.svg" alt="Klaro" width="96" height="29"></a>
+  <a href="#top" aria-label="Klaro home"><img src="../brand/klaro-wordmark.svg" alt="Klaro" width="96" height="29"></a>
   <nav>
-    <a class="btn btn-ghost btn-sm" href="students/">For students and parents</a>
+    <a class="btn btn-ghost btn-sm" href="../">For tutors</a>
     <a class="btn btn-ghost btn-sm" href="https://app.klaroplatform.com/sign-in">Sign in</a>
     <a class="btn btn-primary btn-sm" href="https://app.klaroplatform.com/sign-up">Try it free</a>
   </nav>
@@ -106,16 +108,16 @@ h1 span{color:var(--purple)}
     <div class="hero-inner">
       <div class="copy">
         <span class="beta"><svg width="14" height="14" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><path fill="#e3b23c" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/></svg>Klaro is in beta. Free to try.</span>
-        <h1>Spend your time teaching.<br><span>Everything else, handled.</span></h1>
-        <p class="lead">Upload your books, notes, past papers and videos. Klaro breaks each one down to the smallest idea and links them into one connected curriculum.</p>
+        <h1>Spend your time understanding.<br><span>Not searching.</span></h1>
+        <p class="lead">Your tutor’s lectures, book and past papers, linked into one connected curriculum, down to the smallest idea.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start your course</a>
+          <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start learning</a>
         </div>
       </div>
       <div class="frame">
         <div class="screen" id="screen">
           <div class="cam" id="cam">
-            <iframe id="app" title="Klaro sample workspace: the study view" src="showcase/showcase.html?scene=study&amp;lang=en"></iframe>
+            <iframe id="app" title="Klaro sample workspace: the study view" src="../showcase/showcase.html?scene=student-study&amp;lang=en"></iframe>
           </div>
           <div class="cursor" id="cursor" aria-hidden="true">
             <span class="tap" id="tap"></span>
@@ -145,7 +147,7 @@ h1 span{color:var(--purple)}
     <div class="end-card">
       <h2>Klaro is in beta. Free to try.</h2>
       <div class="ctas">
-        <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start your course</a>
+        <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start learning</a>
       </div>
     </div>
   </section>

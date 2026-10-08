@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-NZYk81nU.js";import{t}from"./components-BMzHfNJJ.js";import{r as n}from"./lib-CwiiKhBb.js";import{n as r}from"./run-url-DbxBwbaN.js";var i=e();function a(){let[e]=n();return(0,i.jsx)(t,{to:r(e),replace:!0})}export{a as PracticeRunRedirect};

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-NZYk81nU.js";import{t}from"./components-BMzHfNJJ.js";var n=e();function r(){return(0,n.jsx)(t,{to:`/courses`,replace:!0})}export{r as LecturesPage};

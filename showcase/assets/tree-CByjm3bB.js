@@ -1,0 +1,1 @@
+function e(e){let t=new Map(e.map(e=>[e.id,e])),n=new Map(e.map((e,t)=>[e.id,t])),r=e=>{let n=[],r=new Set([e]),i=t.get(e)?.parentId??null;for(;i&&!r.has(i)&&n.length<12;){r.add(i);let e=t.get(i);if(!e)break;n.push(e),i=e.parentId}return n},i=(e,t)=>r(e).some(e=>e.id===t);return{byId:t,order:e=>n.get(e)??2**53-1,ancestors:r,nested:(e,t)=>e===t||i(e,t)||i(t,e)}}export{e as t};

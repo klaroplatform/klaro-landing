@@ -1,0 +1,1 @@
+import{Gi as e,zi as t}from"./kit-DdfCbJvI.js";function n(){return e({queryKey:[`student`,`marking-results`],queryFn:()=>t(`/v1/me/marking-results`)})}function r(n){return e({queryKey:[`student`,`marking-results`,n],queryFn:()=>t(`/v1/me/marking-results/${encodeURIComponent(n)}`),enabled:!!n})}export{n,r as t};

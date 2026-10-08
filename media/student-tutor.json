@@ -1,0 +1,20 @@
+{
+ "duration": 10.966666666666667,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Your tutor",
+   "text": "Stuck on a question? Point at it."
+  },
+  {
+   "t": 2.3,
+   "kicker": "Your tutor",
+   "text": "Klaro shows where your own tutor explained it."
+  },
+  {
+   "t": 5.666666666666667,
+   "kicker": "Your tutor",
+   "text": "Your own tutor’s explanation. Not a random video or a chatbot’s guess."
+  }
+ ]
+}
