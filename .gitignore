@@ -5,3 +5,5 @@ node_modules/
 design/brief/refs/
 # What the app does today, from its private code and staging; internal, so it stays local.
 design/brief/app-facts.md
+# The SEO/GEO audit quotes the app facts above; internal too.
+design/brief/seo-geo.md
