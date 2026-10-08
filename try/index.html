@@ -150,6 +150,13 @@ html.js .show--full:is([data-state="poster"], [data-state="loading"]) .try-loadi
   .try-actions { width: 100%; justify-content: space-between; }
   .try-fallback { inset-block-end: 16px; padding: 20px; }
 }
+/* Phones and small tablets: the app's phone layout brings its own top bar (Klaro logo, menu), so
+   the site header steps aside and this bar, with Back and Start learning, is the only one above
+   the app. The header comes back while its sheet is open: the footer's join-code button opens it. */
+@media (max-width: 899px) {
+  html:not(.menu-open) .topbar { display: none; }
+  .try { height: 100vh; height: 100svh; }
+}
 </style>
 </head>
 <body data-site="../">
@@ -250,8 +257,8 @@ html.js .show--full:is([data-state="poster"], [data-state="loading"]) .try-loadi
 <!-- 1. The bar: what this is, a way back and the sign-up pill -->
 <div class="wrap try-bar">
   <div class="try-head">
-    <h1 class="try-title">Try the study view</h1>
-    <p class="try-line"><b>Sample course: Biology 0610 (IGCSE).</b> Tap any part of the book.</p>
+    <h1 class="try-title" data-try-title>Try the study view.</h1>
+    <p class="try-line"><b>Sample course: Biology 0610 (IGCSE).</b> <span data-try-do>Tap any part of the book.</span></p>
   </div>
   <div class="try-actions">
     <a class="tlink try-back" href="../" data-back><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg>Back</a>
@@ -265,13 +272,13 @@ html.js .show--full:is([data-state="poster"], [data-state="loading"]) .try-loadi
     <img src="../img/student-study-0.webp" alt="Klaro's study view as a student sees it, on a sample Biology course: the book, the lecture and the past-paper questions side by side." width="1440" height="900" fetchpriority="high">
     <span class="try-loading" aria-hidden="true"><svg class="i spark" viewBox="112.56 0 103.11 103.11"><use href="#spark"/></svg>Opening the sample course…</span>
     <div class="try-fallback">
-      <p><b>This is Klaro's study view.</b> The book, your tutor's lecture and past-paper questions sit on one screen. Tap a passage and the lecture plays the moment that explains it.</p>
+      <p data-try-about><b>This is Klaro's study view.</b> The book, your tutor's lecture and past-paper questions sit on one screen. Tap a passage and the lecture plays the moment that explains it.</p>
       <noscript><p>The sample course needs JavaScript to open here.</p></noscript>
       <p class="try-failed">The sample course didn't open this time. Reload the page to try again.</p>
-      <a class="tlink" href="../products/study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="tlink" href="../products/study-view/" data-try-more>About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </div>
-  <figcaption class="sr-only">Sample course. A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
+  <figcaption class="sr-only" data-try-caption>Sample course. A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
 </figure>
 
 </main>
@@ -318,6 +325,41 @@ html.js .show--full:is([data-state="poster"], [data-state="loading"]) .try-loadi
 (function () {
   var a = document.querySelector('[data-back]'), r = document.referrer;
   try { var u = r && new URL(r); if (u && u.origin === location.origin && u.pathname !== location.pathname) a.href = r; } catch (e) {}
+})();
+/* ?scene=student-practice opens practice instead of the study view (for the Practice page's "Try
+   it full screen"). Only the scenes listed here; anything else keeps the study view. This runs
+   before showcase.js (deferred), which reads data-showcase once the page is parsed. */
+(function () {
+  var SCENES = {
+    'student-practice': {
+      title: 'Try practice questions on a sample course · Klaro',
+      h1: 'Try practice questions.',
+      todo: 'Answer one wrong on purpose.',
+      frame: 'Klaro sample workspace: practice questions',
+      poster: '../media/student-wrong-poster.jpg',
+      alt: "A past-paper question in Klaro's practice, on a sample Biology course",
+      about: "<b>This is Klaro's practice.</b> Real past-paper questions from the course. Get one wrong and Klaro shows the right answer, then the page in the book and the moment in the lecture that explain it.",
+      more: ['../products/practice-questions/', 'About practice questions'],
+      caption: "Sample course. Practice: a past-paper question, then where it's explained in the book and the lecture."
+    }
+  };
+  var name, c;
+  try { name = new URLSearchParams(location.search).get('scene'); } catch (e) { return; }
+  c = name && Object.prototype.hasOwnProperty.call(SCENES, name) ? SCENES[name] : null;
+  var fig = document.querySelector('.show--full'), img = fig && fig.querySelector('[data-screen] > img');
+  if (!c || !img) return;
+  document.title = c.title;
+  fig.setAttribute('data-showcase', name);
+  fig.setAttribute('data-title', c.frame);
+  img.src = c.poster;
+  img.alt = c.alt;
+  document.querySelector('[data-try-title]').textContent = c.h1;
+  document.querySelector('[data-try-do]').textContent = c.todo;
+  document.querySelector('[data-try-about]').innerHTML = c.about;
+  document.querySelector('[data-try-caption]').textContent = c.caption;
+  var more = document.querySelector('[data-try-more]');
+  more.href = c.more[0];
+  more.firstChild.nodeValue = c.more[1] + ' ';
 })();
 </script>
 <script src="../klaro.js"></script>
