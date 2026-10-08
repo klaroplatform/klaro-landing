@@ -1,11 +1,12 @@
 # Cloudflare: how learnklaro.com is deployed
 
-Checked on 2026-10-08. The SEO side of the same settings is in `design/brief/seo-geo.md` §5 (a
-local file, not in git).
+Checked on 2026-10-08 (§2.5 and §3.1 re-checked at 19:40 UTC). The SEO side of the same settings
+is in `design/brief/seo-geo.md` §5 (a local file, not in git).
 
 The plan:
 
-- learnklaro.com is served by the Worker `klaro-landing` (static files, no code).
+- learnklaro.com is served by the Worker `klaro-landing`: static files, plus a small script for
+  video Range requests and 404s (§2.5).
 - Every push to `main` deploys it automatically (Workers Builds).
 - GitHub Pages is shut down.
 - The repository goes private.
@@ -32,8 +33,8 @@ The plan:
 
 | Setting | Value |
 |---|---|
-| Live deployment | Version **`e5660ed5-6e6b-4bba-957c-99bb5178c205`** at 100%: **Omar's landing** from `main`, deployed by hand on 2026-10-08 at 12:28 UTC (a first try, `6820e291-…`, went out at 12:26). Before that: `6fd94dd8-23d8-4d96-9a50-6d1a1a068155`, the old one-page site, deployed 2026-10-03. `e5660ed5` is the version to roll back to if the redesign's go-live goes wrong |
-| Preview versions | **`bd595b7b-5e0a-44cd-a838-97c18060cc3c`**: the `redesign` branch at `f90ab83` with the showcase headers (§2.3), alias `new-site`, uploaded 2026-10-08, **not deployed** (§3). Superseded preview uploads: `20285892-…` (`new-site` `d8c89e7`, English and Arabic), `bbb297dd-…`, `04b3477e-…`. Three range tests, never aliased or deployed: `958b0aaa-…`, `1e5a2451-…`, `d94c8408-…` (§3.1) |
+| Live deployment | Version **`e5660ed5-6e6b-4bba-957c-99bb5178c205`** at 100%: **Omar's landing** from `main` (`origin/main` `8a428a9`, with his Range Worker `worker.js` for `/demo/*` and `/media/*`, §3.1), deployed by hand on 2026-10-08 at 12:28 UTC (a first try, `6820e291-…`, went out at 12:26). Before that: `6fd94dd8-23d8-4d96-9a50-6d1a1a068155`, the old one-page site, deployed 2026-10-03. `e5660ed5` is the version to roll back to if the redesign's go-live goes wrong |
+| Preview versions | **`05deebdb-3048-4063-b32a-6700a642a444`**: the `redesign` branch at `51fd4d8` plus `worker/index.js` and its config (§2.5, not committed when uploaded), alias `new-site`, uploaded 2026-10-08 19:37 UTC, **not deployed** (§3). Superseded `new-site` uploads: `08ce965a-…` (first 404 fix, no Range), `67d5f063-…` (`f133065`), `02f62da5-…` (working tree), `bd595b7b-…` (`f90ab83`), `20285892-…` (`new-site` `d8c89e7`, English and Arabic), `bbb297dd-…`, `04b3477e-…`. Tests, never deployed: range tests `958b0aaa-…`, `1e5a2451-…`, `d94c8408-…`; 404 and Range tests `66f51887`, `9a838be0`, `2072f14c`, `01460ab9`, `ccc58637`, `3a915a97`, `f3e4c7e6`, `e03c09d5` (§2.5), several on the throwaway alias `cftest` (it still shows five probe files `zz-p87441.*`; harmless) |
 | Custom domains | `learnklaro.com` and `www.learnklaro.com`, both → `klaro-landing` (production) |
 | workers.dev route | Off |
 | Version URLs (`preview_urls`) | Were **off**. Turned **on** on 2026-10-08, for this Worker only, with the owner's go-ahead. Done with one API call (`POST …/workers/scripts/klaro-landing/subdomain` with `{"enabled": false, "previews_enabled": true}`), which touches nothing else. learnklaro.com was checked before and after. **Omar's deploy from `main` at 12:26 UTC switched them off again**: `main`'s old `wrangler.jsonc` has no `preview_urls`, and Wrangler then sets Version URLs to match workers.dev (off). Switched back on the same way before the redesign preview. Every deploy from a config without `preview_urls: true` turns them off; ours has it |
@@ -59,15 +60,16 @@ https or www redirect, no `_headers`, and `/ar/` is the old Arabic one-pager.
 
 ## 2. What changed in the repository, and why
 
-All three files are committed on branch `new-site` (`4c8bfa9`).
+The files are on branch `redesign`. §2.5 (`worker/index.js` and the matching lines in the three
+files) was made on 2026-10-08 and is not committed yet.
 
 ### 2.1 `wrangler.jsonc`
 
 - **Kept:** `name` (`klaro-landing`) and both custom domains. Workers Builds refuses to build if the
   name differs from the Worker's name in the dashboard. The `www` custom domain stays, because the
   www → apex redirect needs its DNS record and certificate.
-- **Added `"not_found_handling": "404-page"`:** unknown URLs get the nearest `404.html` with status 404.
-  Until a `404.html` exists they get an empty 404, so deploys work either way.
+- **Unknown URLs get `404.html` with status 404.** First done with `"not_found_handling": "404-page"`;
+  since §2.5 it is `"none"` and `worker/index.js` sends the page, with `Cache-Control: no-store`.
 - **Added `"html_handling": "auto-trailing-slash"`:** this is the default, written out.
   - `/products/study-view` → 307 to `/products/study-view/`, which serves `products/study-view/index.html`.
   - `/index.html` → `/`.
@@ -76,7 +78,10 @@ All three files are committed on branch `new-site` (`4c8bfa9`).
 - **Added `"preview_urls": true`:** Version URLs (`<version>-klaro-landing.<subdomain>.workers.dev`)
   stay on, so a version can be checked before it goes live. They are public; `_headers` marks them
   `noindex`.
-- Comments rewritten: how deploys and previews run, and the account id every command needs.
+- **Added a Worker script for videos and misses only (§2.5):** `"main": "worker/index.js"`,
+  `"assets.binding": "ASSETS"`, `"assets.run_worker_first": ["/media/*.mp4", "/demo/*.mp4"]`, and
+  `"not_found_handling": "none"` (was `"404-page"`). Every other file is still served without
+  running any code. It replaces Omar's `worker.js` on `main` (§4, step 1).
 
 ### 2.2 `.assetsignore`
 
@@ -88,10 +93,11 @@ The repository root is the assets folder, so anything not listed here is publish
 - **Secrets, if they ever appear:** `.env*`, `.dev.vars*`.
 - **Notes and internal folders:** `_config.yml`, `/design`, `/partials`, `/tools`, and **every `*.md`**
   (README, CLAUDE.md, the briefs).
+- **The Worker script:** `/worker` (it runs on Cloudflare; it must not also be published as a file).
 - If a public Markdown file is ever wanted, add it back with `!path/file.md`.
 
-The folder names `/design/`, `/partials/` and `/tools/` are now reserved: a public page can't live
-there.
+The folder names `/design/`, `/partials/`, `/tools/` and `/worker/` are now reserved: a public page
+can't live there.
 
 ### 2.3 `_headers` (new)
 
@@ -122,6 +128,10 @@ Cloudflare reads this file; it is never served. GitHub Pages ignores it.
 - **No HSTS yet.** It is switched on later in the dashboard (§5, step 8).
 - **Careful when editing:** if two blocks match one URL and set the same header, Cloudflare joins
   the values with a comma. Never set `Cache-Control` in two blocks that can match one URL.
+- **A rule applies to every response whose URL matches it, 404s and redirects included.** The cache
+  rules above would also reach a missing file; `worker/index.js` answers every miss instead, with
+  `no-store` (§2.5). Keep HTML pages out of the long-cached folders: their trailing-slash redirects (307) would
+  carry the folder's `Cache-Control`.
 
 ### 2.4 How it was checked
 
@@ -139,6 +149,90 @@ Checked on a clean snapshot of `new-site` (`68b0a8c`), using `wrangler deploy --
 - The workers.dev `noindex` rule couldn't be checked locally (the local server doesn't use the real
   hostname); it was confirmed on the real preview (§3.1).
 
+### 2.5 The Worker script: video ranges, and 404s that are never cached (2026-10-08)
+
+**What was seen.** At about 17:06 UTC the `new-site` alias answered
+`/media/student-minis-phone.mp4` with `404`, `cf-cache-status: HIT` and
+`cache-control: public, max-age=86400, stale-while-revalidate=86400`, while the version URL of
+`02f62da5` served the file.
+
+**What it was.**
+
+- **Not a 404 cached at the edge.** `02f62da5` had been uploaded at 17:06:34, and the alias was still
+  pointing at the previous `new-site` version, `bd595b7b`, which doesn't have that file (it came in
+  `9c6f64e`). An alias switches within about 10 seconds (measured below). The alias serves the file now.
+- **`cf-cache-status: HIT` misleads here.** On a static-assets response it says the file's body came
+  from Cloudflare's asset cache (here, the body of `404.html`), not that the answer for that URL was
+  cached. A path never requested before answers `404` with `HIT` too. Static assets have no cache by
+  URL unless Workers Caching (`"cache": {"enabled": true}`) is turned on. It is off; keep it off
+  (it would also make every static request billable).
+- **The real bug: `_headers` rules also apply to 404s.** The asset server attaches the matching
+  `_headers` rules to every response it builds, 404s and redirects included (open-source
+  `workers-shared` asset-worker: `handleRequest` → `attachCustomHeaders`; the docs don't say either
+  way). So a missing file was sent with its folder's `Cache-Control`:
+  - a day under `/media/*` and `/demo/*`;
+  - a week under `/img/*`, `/brand/*` and `/illustrations/*`;
+  - a year, `immutable`, under `/showcase/assets/*` and `/fonts/*`.
+
+  Any browser, or shared cache, that asked for a file before it existed kept the 404 that long.
+  That happens with a QA check made before the upload, a page that loads during a deploy and asks
+  the old version for a new file, or a broken link fixed later by adding the file.
+- `_headers` can't match on the status code, so no header rule can treat a 404 differently from the
+  file without also dropping the caching of files that exist.
+
+**Found on the way: the redesign had no Range support.** Workers static assets answer a Range
+request with the whole file (200); the asset server has no Range code. The 206 on learnklaro.com
+comes from Omar's `worker.js` (on `origin/main`, `8a428a9`, live in `e5660ed5`), not from the
+version being deployed, as §3.1 used to say. `redesign` doesn't have that commit, so its videos
+couldn't seek, and Safari on iPhone can refuse to play them.
+
+**The fix: one Worker script, `worker/index.js`, for both.**
+
+- **Videos** (`run_worker_first: ["/media/*.mp4", "/demo/*.mp4"]`): it fetches the file from
+  `env.ASSETS` (with the `_headers` applied) and answers a Range request with 206 and just those
+  bytes. It reads the file once and keeps only the bytes asked for, because the Worker can't see a
+  file's size before reading it (Chrome's first `bytes=0-` still holds the whole file, 9.4 MB at
+  most today, as Omar's version did for every range). One range only (several get the whole file), `If-Range` honoured,
+  416 for a range past the end. Posters, captions, images and the PDF never run it (`*.mp4` only).
+- **Misses** (`not_found_handling: "none"`): every URL that matches no file runs the script, which
+  sends `404.html` (served at `/404`) with status 404, `Cache-Control: no-store`, and the `_headers`
+  security headers.
+  - Why `"none"`: with a `run_worker_first` list, `"404-page"` makes the assets answer misses
+    themselves, with the folder's `Cache-Control`, and the script never sees them.
+  - `/404` itself still answers 200 (as before); `404.html` has `noindex`.
+- **`.assetsignore`:** `/worker`, so the script isn't also published as a file.
+- **`_headers`:** unchanged rules; a comment at the top says that rules reach 404s and redirects.
+- **No build step:** wrangler bundles the file on deploy (Workers Builds included). No imports.
+- **Cost.** Every other file is served without running the script, and static asset requests are
+  free and unlimited. Each video request and each 404 is one Worker invocation. The Free plan allows
+  100,000 a day. A page view with videos makes a few range requests per video, so that is several
+  thousand page views a day. If they ran out, videos and 404s would fail until midnight UTC; pages and
+  images keep working. If traffic grows, Workers Paid ($5 a month, 10 million requests) removes the
+  limit. Omar's version runs the Worker for every file under `/media/` and `/demo/`, posters
+  included, so this one costs fewer invocations.
+- **Caching of files that exist is unchanged.** To change a file, still give it a new name.
+- **Not chosen:**
+  - Versioned (hashed) file names alone. They are already the rule for changing a file, but they
+    don't stop a 404 being cached: a new hashed name asked for during a deploy would be cached for
+    a year.
+  - Short `max-age` or `no-cache` on `/media/*`, `/img/*` and the rest. Every view would then
+    revalidate every file. The script makes that unnecessary.
+  - Workers Caching, which slices ranges by itself: it bills every static request.
+
+**Tested** on version URLs and the throwaway alias `cftest`, with probe files `zz-p87441.*`:
+
+| Step | Version | Result |
+|---|---|---|
+| Before: old config, probes missing | `66f51887` | 404, `cf-cache-status: HIT`, and the folder's `cache-control`: `max-age=86400, …` (`/media/`, `/demo/`), `max-age=604800, …` (`/img/`), `max-age=31536000, immutable` (`/showcase/assets/`). Same on the alias |
+| Old config, probes added | `9a838be0` | Version URL 200 at once. Alias 200 on all four 8 to 14 seconds after the upload (one still 404 at 8 s). So no day-long cache at the edge |
+| `worker/index.js`, probes missing | `f3e4c7e6` | 404, `cache-control: no-store`, the 404 page, `x-frame-options` and the other security headers, `x-robots-tag` on the preview. The same under `/media/`, `/demo/`, `/img/`, `/showcase/assets/`, `/brand/`, `/illustrations/`, `/fonts/`, for `.mp4` misses, and for a navigation, HEAD, Range, POST and `?x=1`. `/worker/index.js`, `/wrangler.jsonc`, `/_headers`, `/design/`, `/README.md`: 404 `no-store` |
+| `worker/index.js`, video ranges | `f3e4c7e6` | 206 with the right `content-range`, checked byte for byte against the files: `1000-1999`, `0-1`, `0-`, `-1000`, `4646000-`, `4000000-9999999` on `marking.mp4`, two ranges on the 9.35 MB `lecture-bio-01.mp4`, `demo/lecture.mp4`, `student-minis-phone.mp4`. Past the end: 416 `bytes */4646953`, `no-store`. Two ranges: 200 whole. `If-Range` mismatch: 200; match: 206. `If-None-Match`: 304. No Range: 200 with `accept-ranges: bytes`. The 206 keeps the day-long `cache-control` |
+| `worker/index.js`, probes added | `e03c09d5` | 200 on the version URL and on the alias at once, each with its folder's caching; a Range on the new video: 206 |
+| Final preview | `05deebdb` (`new-site`) | §3.1 |
+
+Browsers that fetched a missing file from an earlier preview may keep that 404 for up to a day
+(a hard reload clears it). Production never had these rules: `e5660ed5` has no `_headers`.
+
 ---
 
 ## 3. The preview URL
@@ -148,15 +242,21 @@ Checked on a clean snapshot of `new-site` (`68b0a8c`), using `wrangler deploy --
 **https://new-site-klaro-landing.learnklaro.workers.dev**
 
 - It is the `new-site` alias, and always shows the latest upload made with `--preview-alias new-site`.
-- This exact version is also at https://bd595b7b-klaro-landing.learnklaro.workers.dev.
-- It was uploaded from a clean snapshot of the **`redesign`** branch at `f90ab83`, plus the new
-  `_headers` (§2.3, not committed when uploaded): version `bd595b7b-5e0a-44cd-a838-97c18060cc3c`,
-  **not deployed**.
-- It holds 357 files. The largest is `demo/lectures/lecture-bio-01.mp4`, at 8.92 MB, under the
-  25 MiB limit per file.
-- learnklaro.com still serves `e5660ed5` (Omar's landing), checked after the upload.
+- This exact version is also at https://05deebdb-klaro-landing.learnklaro.workers.dev.
+- It was uploaded at 19:37 UTC from a clean snapshot of the **`redesign`** branch at `51fd4d8`,
+  plus `worker/index.js` and its config (§2.5, not committed when uploaded): version
+  `05deebdb-3048-4063-b32a-6700a642a444`, **not deployed**.
+- Checked on it: `/`, `/students/`, `/products/`, `/products/marking/`, `/products/quizzes/`,
+  `/research/`, `/try/`, `/market/`, `/v1/`, `/showcase/showcase` answer 200 with
+  `public, max-age=0, must-revalidate`; `/media/student-minis-phone.mp4` 200 with a day;
+  `curl -r 1000-1999 …/media/marking.mp4` 206 `bytes 1000-1999/4646953`; `/does-not-exist`,
+  `/design/`, `/worker/index.js` and a missing `/media/*.mp4` 404 with `no-store`.
+- learnklaro.com still serves `e5660ed5` (Omar's landing), checked after the upload
+  (`wrangler deployments status`).
 
-Checked with curl:
+The table below was checked on the earlier preview `bd595b7b` (`f90ab83`, 357 files; the largest,
+`demo/lectures/lecture-bio-01.mp4`, is 8.92 MB, under the 25 MiB limit per file). Since §2.5,
+every 404 in it also carries `cache-control: no-store`, and Range requests on videos get 206.
 
 | Check | Result |
 |---|---|
@@ -172,36 +272,36 @@ Checked with curl:
 | `x-robots-tag` on the preview host | `noindex` on every path |
 | **Range request** on `/media/marking.mp4` | **200 with the whole file on the preview, not 206.** See below |
 
-**Byte ranges.** On Version URLs, Range requests get the whole file (200) unless the version is the
-one deployed to production. Tests on 2026-10-08:
+**Byte ranges.** Workers static assets answer a Range request with the whole file (200). Only a
+Worker script gives 206. Tests on 2026-10-08:
 
-| Version | `_headers` | Deployed? | `curl -r 1000-1999 …/media/marking.mp4` |
+| Version | Worker script | Deployed? | `curl -r 1000-1999 …/media/marking.mp4` |
 |---|---|---|---|
-| `e5660ed5` (Omar, live) | none | yes | **206**, `accept-ranges: bytes` |
-| `6820e291` (Omar, deployed for two minutes, then replaced) | none | no | 200, whole file |
-| `1e5a2451` (redesign, test) | none | no | 200, whole file |
-| `d94c8408` (redesign, test) | one rule, not matching `/media/` | no | 200, whole file |
-| `958b0aaa` (redesign, test) | ours, without the `/media` and `/demo` cache rules | no | 200, whole file |
-| `bd595b7b` (redesign, the preview) | ours | no | 200, whole file |
-| learnklaro.com (= `e5660ed5`) | none | yes | **206** |
+| `e5660ed5` (Omar, live) | Omar's `worker.js`, for `/demo/*` and `/media/*` | yes | **206**, `accept-ranges: bytes` |
+| `6820e291` (Omar's first try, live for two minutes) | none | no | 200, whole file |
+| `1e5a2451`, `d94c8408`, `958b0aaa`, `bd595b7b`, `02f62da5`, `2072f14c` (redesign) | none, or misses only | no | 200, whole file |
+| `f3e4c7e6`, `05deebdb` (redesign, `worker/index.js`) | ours, for `*.mp4` under `/media/` and `/demo/` | no | **206**, `content-range: bytes 1000-1999/4646953` |
+| learnklaro.com (= `e5660ed5`), re-checked 19:2x UTC | Omar's | yes | **206** |
 
-- So the 200 comes from previewing a version that isn't deployed. It isn't caused by `_headers` or the
-  cache rules. Browsers still play a video sent whole, but seeking waits for the download, and Safari
-  is strict about ranges.
+- **Corrected on 2026-10-08:** this section used to say the 200 came from previewing a version that
+  isn't deployed. It came from the missing Worker script: `e5660ed5` carries Omar's `worker.js`
+  (`wrangler versions view` shows `run_worker_first: ["/demo/*", "/media/*"]`), and `6820e291`,
+  his first upload without it, gave 200. Now an undeployed preview gives 206 too.
+- Without a 206, browsers still play a video sent whole, but seeking waits for the download, and
+  Safari on iPhone can refuse to play it.
 - **After go-live, check:**
   `curl -s -o /dev/null -r 0-1023 -w '%{http_code}\n' https://learnklaro.com/media/marking.mp4`
   should print `206`. Then play the hero and a recording on a real iPhone (`showcase.md` §7.2).
-- If it prints 200, the first thing to try is removing the `Cache-Control` lines of `/media/*` and
-  `/demo/*`. That can only be tested on the deployed version.
 
 Notes:
 
-- **Wait about a minute after an upload before checking the alias.** For a few seconds after an
-  upload the alias can answer some URLs from the previous version. The version URL
-  (`<8 chars>-klaro-landing…`) is right at once, so check it first.
+- **Wait about a minute after an upload before checking the alias.** For the first seconds after
+  an upload the alias can answer some URLs from the previous version (measured: 8 to 14 seconds,
+  §2.5). That is what made `/media/student-minis-phone.mp4` look "cached as 404" at 17:06. The
+  version URL (`<8 chars>-klaro-landing…`) is right at once, so check it first.
 - A brand-new workers.dev subdomain takes a minute or two to resolve.
-- `/404.html` itself redirects to `/404`; unknown URLs get the page with status 404, which is what
-  matters.
+- `/404.html` itself redirects to `/404`; unknown URLs get the page with status 404 and
+  `cache-control: no-store`, which is what matters.
 - Navigation links are relative, so clicking around the preview stays on the preview. The
   canonical, `og:url`, hreflang, sitemap and robots.txt URLs point at `https://learnklaro.com/…`, as
   they should.
@@ -238,9 +338,18 @@ Cloudflare Access can put a sign-in in front of them if that is ever wanted.
 
 ## 4. Going live
 
-1. **Orchestrator:** after QA and with the owner's go-ahead, merge `new-site` into `main` and push.
+1. **Orchestrator:** after QA and with the owner's go-ahead, merge `redesign` into `main` and push.
    - Until step 2 is done, this updates only GitHub Pages.
-   - Local `main` is 3 commits ahead of `origin/main` today.
+   - Local `main` is 3 commits ahead of `origin/main` and **1 behind** (2026-10-08): `origin/main`
+     has Omar's `8a428a9`, "Answer Range requests for the videos", which is live. Pull it first.
+   - **Resolving the merge.** `wrangler.jsonc`, `.assetsignore` and `_config.yml` were changed on
+     both sides. `worker/index.js` (§2.5) replaces Omar's `worker.js`, and a Worker has only one
+     `main`:
+     - Take `redesign`'s `wrangler.jsonc` and `.assetsignore` whole
+       (`git checkout redesign -- wrangler.jsonc .assetsignore`).
+     - `git rm worker.js`; drop its line from `_config.yml`'s `exclude`.
+     - Check: `grep '"main"' wrangler.jsonc` shows `worker/index.js`, and no `worker.js` is left.
+     - Tell Omar: his Range handling is kept, in `worker/index.js`, for `*.mp4` only.
 2. **Owner:** connect the repository to the Worker (Workers Builds):
    1. In the Cloudflare dashboard, switch to the account that holds learnklaro.com.
    2. Go to Workers & Pages → **klaro-landing** → Settings → **Builds** → **Connect**.
@@ -268,7 +377,10 @@ Cloudflare Access can put a sign-in in front of them if that is ever wanted.
      `klaro-landing` is still ticked (GitHub, signed in as `klaroplatform` → Settings → Applications
      → Installed GitHub Apps → Cloudflare Workers and Pages → Configure).
    - Connecting before step 1 is also safe: a build of today's `main` redeploys the old site, which
-     is what is live anyway.
+     is what is live anyway. It does switch Version URLs off (`main`'s config has no
+     `preview_urls`, §1.2) until the redesign is merged; turn them back on as in §1.2 if a preview
+     is needed in between.
+   - Nothing else is needed for the Worker script: `npx wrangler deploy` bundles `worker/index.js`.
    - **Preview builds, later:** they give each branch push its own URL. Newly connected Workers use
      `npx wrangler preview` (Worker Previews), which needs a `"previews": {}` block added to
      `wrangler.jsonc`. Add that only when branch previews are wanted.
@@ -278,14 +390,17 @@ Cloudflare Access can put a sign-in in front of them if that is ever wanted.
    git worktree add <scratch>/cf-live main --detach
    cd <scratch>/cf-live && CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deploy --profile learnklaro
    ```
-   This also applies `workers_dev: false` and `preview_urls: true` to the Worker.
+   This also uploads `worker/index.js` and applies `workers_dev: false` and `preview_urls: true`.
 4. **Check** (anyone):
    ```sh
    curl -s https://learnklaro.com/ | grep -o '<title>[^<]*'             # the new title
    curl -sI https://learnklaro.com/products/study-view/ | head -1        # 200
    curl -sI https://learnklaro.com/products/study-view | grep -i location # → /products/study-view/
    curl -sI https://learnklaro.com/market/ | head -1                     # 200
-   curl -sI https://learnklaro.com/does-not-exist | head -1              # 404 (with the 404 page once it exists)
+   curl -sI https://learnklaro.com/does-not-exist | grep -iE '^HTTP|cache-control'   # 404, no-store
+   curl -sI https://learnklaro.com/media/nope.mp4 | grep -iE '^HTTP|cache-control'   # 404, no-store
+   curl -sI https://learnklaro.com/media/marking.mp4 | grep -i cache-control         # max-age=86400, …
+   curl -s -o /dev/null -r 0-1023 -w '%{http_code}\n' https://learnklaro.com/media/marking.mp4   # 206
    curl -sI https://learnklaro.com/design/ | head -1                     # 404
    curl -sI https://learnklaro.com/README.md | head -1                   # 404
    curl -sI https://learnklaro.com/ | grep -iE 'x-content-type|referrer-policy|permissions-policy'
@@ -297,9 +412,12 @@ Cloudflare Access can put a sign-in in front of them if that is ever wanted.
    curl -sI https://www.learnklaro.com/research/ | grep -iE '^HTTP|location'    # 301 → https://learnklaro.com/research/
    curl -s https://learnklaro.com/robots.txt                                    # our file; nothing above it blocks a crawler
    ```
-5. **Orchestrator:** update `README.md` ("Deploy" still describes GitHub Pages) and `CLAUDE.md` ("it
-   goes live on GitHub Pages"). Both should say: a push to `main` goes live on learnklaro.com through
-   Cloudflare.
+5. **Orchestrator:** `README.md` and `CLAUDE.md` already describe Cloudflare (`51fd4d8`). Two
+   things are left:
+   - Now: README's "a Worker named `klaro-landing` with no code" is out of date since §2.5. It
+     should say a small Worker script (`worker/index.js`) answers video Range requests and 404s;
+     everything else is served straight from the files. List `worker/` among the files there.
+   - After go-live: drop "Once Workers Builds is connected" and "It is being retired".
 
 ---
 
@@ -410,7 +528,8 @@ seconds.
 - **Then fix `main`.** With Builds connected, the next push to `main` deploys whatever `main` holds.
   Revert the bad commit (`git revert <sha>`, push) so the rollback doesn't get undone.
 - **What a rollback covers:**
-  - It restores the files, including `_headers` and the `assets` settings, because they are part of
-    the version.
+  - It restores the files, including `_headers`, the `assets` settings and the Worker script,
+    because they are part of the version. `e5660ed5` brings back Omar's `worker.js` (ranges for
+    `/demo/*` and `/media/*`).
   - It does **not** undo zone settings, redirect rules or custom-domain changes. Change those back
     by hand.
