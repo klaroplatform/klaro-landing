@@ -16,6 +16,12 @@
      Utilities   Market support   Arabic   Motion */
 
 /* ======================================================================== Header */
+/* "Skip to content" (partials/header.*.html): the keyboard's first stop, out of sight until it has
+   focus, then a dark pill over the header's start. Every page's <main id="main"> is its target. */
+.skip-link { position: fixed; z-index: 90; inset-block-start: 10px; inset-inline-start: 10px; padding: 10px 18px; border-radius: var(--r-pill);
+  background: var(--ink); color: #fff; font: 600 15px/1.2 var(--font); text-decoration: none; }
+.skip-link:not(:focus) { width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.skip-link:focus-visible { outline-offset: 2px; }
 .topbar { position: sticky; top: 0; z-index: 50; background: var(--page); border-block-end: 1px solid transparent;
   transition: background-color var(--dur-ui) var(--ease-ui), border-color var(--dur-ui) var(--ease-ui); }
 .topbar.scrolled { background: rgb(243 243 241 / .84); -webkit-backdrop-filter: saturate(1.5) blur(14px); backdrop-filter: saturate(1.5) blur(14px); border-block-end-color: var(--line); }
