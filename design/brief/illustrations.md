@@ -136,9 +136,9 @@ The page lays the real app UI exactly over the drawn screen. Plates keep **empty
   - laptop or monitor: **16:10**, since the recordings are 1440×900;
   - phone: about **9:19.5**, portrait;
   - tablet: **4:3**.
-- **Screen size:**
-  - laptop or monitor: at least **about 55% of the plate's width**;
-  - phone: **70 to 80% of the plate's height**.
+- **Screen size (bigger, coordinator 2026-10-08):**
+  - laptop, monitor or tablet: **more than 56% of the image width** (aim for about 62%);
+  - phone (P2): the phone fills **most of the height of the 4:3 crop**.
 - **After generating:**
   1. Measure the green box with the script below.
   2. Record it in the table below.
@@ -169,22 +169,27 @@ need to switch those to the phone frame.
 
 ### Screen boxes (fill in after measuring)
 
-| Plate | File | Size | Device | Screen x, y, w, h (px) | Screen x, y, w, h (%) | Corner radius |
-|---|---|---|---|---|---|---|
-| P1 | `P1-evening-desk.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | — | — | — |
-| P2 | `P2-kitchen-tea.webp` / `-phone.webp` | 2000×833 / 1200×900 | phone | — | — | — |
-| P3 | `P3-chalkboard.webp` / `-phone.webp` | 2000×833 / 1200×900 | monitor | — | — | — |
-| P4 | `P4-marked-papers.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | — | — | — |
-| P5 | `P5-dusk-window.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | — | — | — |
-| P6 | `P6-library.webp` / `-phone.webp` | 2000×833 / 1200×900 | monitor | — | — | — |
-| P7 | `P7-sofa-corner.webp` / `-phone.webp` | 2000×833 / 1200×900 | tablet | — | — | — |
+Write each box the way `site.css` reads it: unitless percentages of the picture. `--pa` is the
+picture aspect (width / height), `--sx --sy` the screen's top-left, `--sw --sh` its size, and `--sr`
+its corner radius as a percentage of the picture's width. `plate.py` prints `box_pct` and
+`radius_px`; `--sr` is `radius_px / width × 100`.
+
+| Plate | File | Size | Device | Box (px) | `--pa --sx --sy --sw --sh --sr` |
+|---|---|---|---|---|---|
+| P1 | `P1-evening-desk.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | not made yet | — |
+| P2 | `P2-kitchen-tea.webp` / `-phone.webp` | 2000×833 / 1200×900 | phone | not made yet | — |
+| P3 | `P3-chalkboard.webp` / `-phone.webp` | 2000×833 / 1200×900 | monitor | not made yet | — |
+| P4 | `P4-marked-papers.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | not made yet | — |
+| P5 | `P5-dusk-window.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | not made yet | — |
+| P6 | `P6-library.webp` / `-phone.webp` | 2000×833 / 1200×900 | monitor | not made yet | — |
+| P7 | `P7-sofa-corner.webp` / `-phone.webp` | 2000×833 / 1200×900 | tablet | not made yet | — |
 
 ### Prompt (one per plate; for ChatGPT, attach 01, 09 and 14 as style references)
 
 `Wide landscape scene, 16:9, in exactly the same cut-paper style as the reference images. Subject:
 <scene>, seen straight on from the front. The <laptop|monitor|tablet|phone> faces the viewer exactly
 head-on, with no perspective, no tilt and no rotation, so its screen is a perfect upright rectangle
-with a <16:10|4:3|9:19.5> aspect ratio, about <55–60% of the image width | 70–80% of the image height>.
+with a <16:10|4:3|9:19.5> aspect ratio, about <62% of the image width (must be over 56%) for a laptop, monitor or tablet | most of the image height for the phone>.
 The screen is one flat, solid, pure chroma-key green (#00FF00) from edge to edge, with crisp straight
 edges: nothing on it, no gradient, no texture, no reflection, no shadow. The bezel, body and the whole
 scene are cut paper. Style recipe: <the recipe above, with "Wide 16:9." in place of "Square 1:1.">`
