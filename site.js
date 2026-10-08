@@ -7,8 +7,8 @@
      4. Sticky step lists (.steps-sticky): the pinned titles beside the recordings
      5. The opening's scroll fallback (.opening) where CSS scroll-driven animations are missing
      6. Illustrations and scene plates: a plate's drawn device (img/plates/<data-plate>.webp)
-        is loaded here, only once site.css opts it in, and takes over from the CSS frame;
-        ?ph shows the placeholders' file names
+        is loaded here, only once site.css opts it in and it is near the view, and takes over
+        from the CSS frame; ?ph shows the placeholders' file names
      7. Scroll reveal, calm and once
    The showcase (live app frames and recordings) is showcase.js; this file never touches it. */
 (function () {
@@ -341,10 +341,24 @@
   // img/plates/ changes nothing until its box is measured, and no page asks for a missing file.
   // Once loaded, .is-drawn hides the CSS device frame and the real app sits on the drawn screen;
   // until then, if the file is missing, or without JavaScript, the CSS frame stays in the same box.
+  // A plate is asked for only once it is within a screen of the view: native lazy loading fetches
+  // up to 1250–2500px ahead, which put two plates (50 KB) in a phone's opening of /. The picture
+  // fades in when it arrives (site.css), and the camera refits to it (showcase.js).
   var ROOT = (document.currentScript && document.currentScript.src || '').replace(/[^/]*$/, '') || '/';
-  document.querySelectorAll('.plate--device[data-plate]').forEach(function (plate) {
+  function drawn(img) {
+    var plate = img.closest('.plate--device');
+    if (plate) plate.classList.add('is-drawn');
+  }
+  function watch(img) {
+    if (img.complete && img.currentSrc && img.naturalWidth === 0) missing(img);
+    else if (img.complete && img.naturalWidth) drawn(img);
+    else {
+      img.addEventListener('error', function () { missing(img); }, { once: true });
+      img.addEventListener('load', function () { drawn(img); }, { once: true });
+    }
+  }
+  function drawPlate(plate) {
     if (plate.querySelector('.plate-img')) return;
-    if (getComputedStyle(plate).getPropertyValue('--drawn').trim() !== '1') return;
     var img = document.createElement('img');
     img.className = 'plate-img';
     img.alt = '';
@@ -352,19 +366,19 @@
     img.loading = 'lazy';
     img.src = ROOT + 'img/plates/' + plate.dataset.plate + '.webp';
     plate.insertBefore(img, plate.firstChild);
-  });
-  function drawn(img) {
-    var plate = img.closest('.plate--device');
-    if (plate) plate.classList.add('is-drawn');
+    watch(img);
   }
-  document.querySelectorAll('.ill > img, .ill > picture > img, .plate-img, .plate > picture > img').forEach(function (img) {
-    if (img.complete && img.currentSrc && img.naturalWidth === 0) missing(img);
-    else if (img.complete && img.naturalWidth) drawn(img);
-    else {
-      img.addEventListener('error', function () { missing(img); }, { once: true });
-      img.addEventListener('load', function () { drawn(img); }, { once: true });
-    }
+  var plates = Array.prototype.filter.call(document.querySelectorAll('.plate--device[data-plate]'), function (plate) {
+    return !plate.querySelector('.plate-img') && getComputedStyle(plate).getPropertyValue('--drawn').trim() === '1';
   });
+  if ('IntersectionObserver' in window) {
+    var near = new IntersectionObserver(function (list) {
+      list.forEach(function (en) { if (en.isIntersecting) { near.unobserve(en.target); drawPlate(en.target); } });
+    }, { rootMargin: '100% 0px' });
+    plates.forEach(function (plate) { near.observe(plate); });
+    window.addEventListener('beforeprint', function () { plates.forEach(drawPlate); });
+  } else plates.forEach(drawPlate);
+  document.querySelectorAll('.ill > img, .ill > picture > img, .plate-img, .plate > picture > img').forEach(watch);
 
   /* ---------------------------------------------------------------- 7. Scroll reveal */
   // Section heads and cards rise into place once. Only what starts below the first screen is
