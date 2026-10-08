@@ -32,7 +32,7 @@
   },
   "srcset": {
     "_about": "When on, tools/site.py gives every <img> of a full-size illustration (img/ill/NN-name.webp, 1200px) a srcset of its -480 and -800 versions and these sizes; a lazy image's sizes start with 'auto', so Chrome uses its drawn size (never on an eager image: Chrome then takes the full width). Off until the page branches are merged, so it doesn't collide with their edits: then set on to true and run the tool.",
-    "on": false,
+    "on": true,
     "widths": [480, 800],
     "sizes": "(max-width: 640px) 60vw, 400px"
   },

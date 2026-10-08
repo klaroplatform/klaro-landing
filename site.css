@@ -470,17 +470,17 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
    The pictures are 2000 × 833 (12:5); screens are 16:10 (laptop, monitor), 4:3 (tablet) or
    9:19.5 (phone), and the camera fills any shape. */
 .plate[data-plate] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
-.plate[data-plate="P1-evening-desk"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+.plate[data-plate="P1-evening-desk"] { --pa: 2.4038; --sx: 21; --sy: 1.56; --sw: 58; --sh: 97; --sr: 0; --drawn: 1; }
 /* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). A phone in a
    12:5 picture is small, so P2 uses the picture's 4:3 crop at every width, and is as tall as a
    screen allows. */
 .plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; --drawn: 1; }
 .plate--device[data-plate="P2-kitchen-tea-phone"] { width: min(100%, 960px); margin-inline: auto; }
-.plate[data-plate="P3-chalkboard"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
-.plate[data-plate="P4-marked-papers"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
-.plate[data-plate="P5-dusk-window"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
-.plate[data-plate="P6-library"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
-.plate[data-plate="P7-sofa-corner"] { --pa: 2.4; --sx: 42; --sy: 6; --sw: 48; --sh: 86.4; --sr: 1.2; }   /* a tablet, 4:3 landscape */
+.plate[data-plate="P3-chalkboard"] { --pa: 2.3981; --sx: 21; --sy: 5.64; --sw: 58.1; --sh: 88.73; --sr: 0; --drawn: 1; }
+.plate[data-plate="P4-marked-papers"] { --pa: 2.401; --sx: 20.05; --sy: 3.72; --sw: 60; --sh: 92.56; --sr: 0; --drawn: 1; }
+.plate[data-plate="P5-dusk-window"] { --pa: 2.3981; --sx: 21.5; --sy: 2.16; --sw: 57.05; --sh: 95.44; --sr: .25; --drawn: 1; }
+.plate[data-plate="P6-library"] { --pa: 2.3981; --sx: 21; --sy: 5.28; --sw: 58.05; --sh: 89.69; --sr: 0; --drawn: 1; }
+.plate[data-plate="P7-sofa-corner"] { --pa: 2.3981; --sx: 23.55; --sy: 1.68; --sw: 53.05; --sh: 96.52; --sr: .6; --drawn: 1; }   /* a tablet, 4:3 landscape */
 
 /* ======================================================================== The real app: showcase frames and recordings */
 /* The markup is design/brief/showcase.md §11.1; showcase.js drives it and styles nothing. The
