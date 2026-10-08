@@ -8,13 +8,13 @@
     </nav>
     <span class="spacer"></span>
     <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="{root}ar/" data-lang-link lang="ar" hreflang="ar">عربي</a>
+    <a class="btn btn-quiet" href="{twin}" data-lang-link lang="ar" hreflang="ar">عربي</a>
     <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
     <a class="btn btn-glass" data-signup href="#">Get started</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
   </div>
   <div class="mega-wrap">
-    <div class="mega" id="products-menu" hidden>
+    <nav class="mega" id="products-menu" aria-label="Products" hidden>
       <div class="mega-cols">
         <div class="mega-col">
           <p class="mega-head">For students</p>
@@ -32,6 +32,7 @@
         </div>
       </div>
       <div class="mega-links">
+        <a class="nav-btn" href="{root}products/">All products</a>
         <a class="nav-btn" href="{root}research/">Research</a>
         <a class="nav-btn" href="{home}#try">Try it</a>
         <a class="nav-btn" data-signin href="#">Sign in</a>
@@ -41,6 +42,6 @@
         <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
         <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
       </div>
-    </div>
+    </nav>
   </div>
 </header>

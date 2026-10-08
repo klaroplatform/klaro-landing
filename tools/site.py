@@ -1,0 +1,883 @@
+#!/usr/bin/env python3
+"""Stamp the shared parts and the metadata into every page, write sitemap.xml and llms.txt, and
+check the pages. Python 3 standard library only.
+
+The site stays plain HTML with no build step: each page is a complete file that Cloudflare serves
+as it is, and everything this tool writes is committed. What every page shares lives once, and the
+tool copies it into each page between markers:
+
+    <!-- chrome:meta --><!-- /chrome:meta -->       in <head>: generated (see below)
+    <!-- chrome:sprite --><!-- /chrome:sprite -->   partials/sprite.svg
+    <!-- chrome:header --><!-- /chrome:header -->   partials/header.<lang>.html
+    <!-- chrome:footer --><!-- /chrome:footer -->   partials/footer.<lang>.html
+
+Partials use {root} for the path to the site root ("" on the home page, "../../" two folders
+down, "/" on 404.html, which is served at any depth) and {home} for the home page link. A page
+picks the partials for its language from <html lang="...">.
+
+Metadata. Each page owns its <title> and <meta name="description">, written above the meta block.
+The meta block is built from those, the page's path and tools/site.json (site-wide facts and the
+few things a page can't say about itself): canonical, hreflang (only where the page and its ar/
+translation both exist), robots noindex, the klaro-app address, icons, theme colour, Open Graph,
+Twitter and one JSON-LD @graph (Organization, WebSite, the page's WebPage, WebApplication on the
+home page, BreadcrumbList, FAQPage from the page's visible .faq-item markup, and an Article with
+its citations from the visible .rs-cite references).
+
+App links. The href of every link marked data-signup, data-signup-as, data-signin or data-legal is
+set to its real address in the app (site.json "app"), so it works without JavaScript; klaro.js
+and site.js still refine them for the audience switch. Partials may write href="#" for these.
+
+The same run writes sitemap.xml (indexable pages, lastmod from git, hreflang alternates) and
+llms.txt (llmstxt.org format). A page is indexable unless site.json says "index": false or
+.assetsignore keeps it off the site. lastmod is the date of the last commit that changed the page
+outside the chrome blocks (today if the working copy differs), so restamping a header doesn't
+move every date.
+
+    python3 tools/site.py                 # stamp every page, write sitemap.xml and llms.txt, check
+    python3 tools/site.py research/*.html # stamp only these pages (sitemap and llms.txt still all)
+    python3 tools/site.py --check         # write nothing; exit 1 if anything is out of date or wrong
+    python3 tools/site.py --report        # every page's title and description, with lengths
+"""
+import datetime
+import fnmatch
+import json
+import os
+import posixpath
+import re
+import subprocess
+import sys
+from html import unescape
+from html.parser import HTMLParser
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PARTIALS = os.path.join(ROOT, 'partials')
+SKIP = {'design', 'partials', 'tools', 'node_modules'}
+BLOCK = re.compile(r'(<!-- chrome:(\w+) -->)(.*?)(<!-- /chrome:\2 -->)', re.S)
+TODAY = datetime.date.today().isoformat()
+TITLE_MAX, TITLE_SHORT, DESC_MIN, DESC_MAX = 60, 30, 50, 160
+
+with open(os.path.join(ROOT, 'tools', 'site.json'), encoding='utf-8') as _f:
+    SITE = json.load(_f)
+BASE = SITE['base']
+
+
+# ---------------------------------------------------------------- small helpers
+
+def read(path):
+    with open(path, encoding='utf-8') as f:
+        return f.read()
+
+
+def attr(s):
+    """Escape a value for a double-quoted HTML attribute (apostrophes stay readable)."""
+    return s.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;').replace('>', '&gt;')
+
+
+def squash(s):
+    return ' '.join(s.split())
+
+
+def git(*args):
+    try:
+        r = subprocess.run(['git', '-C', ROOT, *args], capture_output=True, text=True)
+    except OSError:
+        return None
+    return r.stdout if r.returncode == 0 else None
+
+
+def strip_chrome(html):
+    return BLOCK.sub(lambda m: m.group(1) + m.group(4), html)
+
+
+def assetsignore():
+    path = os.path.join(ROOT, '.assetsignore')
+    if not os.path.exists(path):
+        return []
+    rules = []
+    for line in read(path).splitlines():
+        line = line.strip()
+        if line and not line.startswith('#'):
+            rules.append(line)
+    return rules
+
+
+IGNORE = assetsignore()
+
+
+def deployed(rel):
+    """False when .assetsignore (gitignore syntax, simplified) keeps this file off the site."""
+    parts = rel.split('/')
+    prefixes = ['/'.join(parts[:i]) for i in range(1, len(parts) + 1)]
+    out = True
+    for rule in IGNORE:
+        neg = rule.startswith('!')
+        pat = rule[1:] if neg else rule
+        anchored = pat.startswith('/') or '/' in pat.strip('/').replace('**/', '')
+        pat = pat.strip('/')
+        if pat.startswith('**/'):
+            pat, anchored = pat[3:], False
+        hit = any(fnmatch.fnmatch(p, pat) if anchored else fnmatch.fnmatch(p.rsplit('/', 1)[-1], pat)
+                  for p in prefixes)
+        if hit:
+            out = neg
+    return out
+
+
+def partial(name, lang):
+    for candidate in (f'{name}.{lang}.html', f'{name}.en.html', f'{name}.svg', f'{name}.html'):
+        path = os.path.join(PARTIALS, candidate)
+        if os.path.exists(path):
+            return read(path).strip('\n')
+    raise SystemExit(f'No partial for "{name}" ({lang})')
+
+
+# ---------------------------------------------------------------- a small DOM, for reading pages
+
+VOID = {'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param',
+        'source', 'track', 'wbr'}
+
+
+class Node:
+    __slots__ = ('tag', 'attrs', 'children', 'parent', 'line')
+
+    def __init__(self, tag, attrs, parent, line):
+        self.tag, self.attrs, self.children, self.parent, self.line = tag, attrs, [], parent, line
+
+    def classes(self):
+        return self.attrs.get('class', '').split()
+
+    def iter(self):
+        yield self
+        for c in self.children:
+            if isinstance(c, Node):
+                yield from c.iter()
+
+    def find(self, pred):
+        return [n for n in self.iter() if pred(n)]
+
+    def text(self):
+        return ''.join(c if isinstance(c, str) else c.text() for c in self.children)
+
+    def ancestors(self):
+        n = self.parent
+        while n is not None:
+            yield n
+            n = n.parent
+
+
+class Tree(HTMLParser):
+    def __init__(self, html):
+        super().__init__(convert_charrefs=True)
+        self.root = Node('#root', {}, None, 0)
+        self.cur = self.root
+        self.feed(html)
+        self.close()
+
+    def _node(self, tag, attrs):
+        n = Node(tag, {k: (v if v is not None else '') for k, v in attrs}, self.cur, self.getpos()[0])
+        self.cur.children.append(n)
+        return n
+
+    def handle_starttag(self, tag, attrs):
+        n = self._node(tag, attrs)
+        if tag not in VOID:
+            self.cur = n
+
+    def handle_startendtag(self, tag, attrs):
+        self._node(tag, attrs)
+
+    def handle_endtag(self, tag):
+        n = self.cur
+        while n is not self.root and n.tag != tag:
+            n = n.parent
+        if n is not self.root:
+            self.cur = n.parent
+
+    def handle_data(self, data):
+        self.cur.children.append(data)
+
+
+# ---------------------------------------------------------------- pages
+
+class Page:
+    def __init__(self, rel):
+        self.rel = rel                                   # products/study-view/index.html
+        self.file = os.path.join(ROOT, rel)
+        self.path = rel[:-len('index.html')] if rel.endswith('index.html') else rel   # products/study-view/
+        self.html = read(self.file)
+        conf = SITE['pages'].get(self.path)
+        if conf is None and self.path.startswith('ar/'):
+            # An Arabic page takes its English twin's hints, except the English words.
+            conf = {k: v for k, v in SITE['pages'].get(self.path[3:], {}).items() if k not in ('label', 'llms')}
+        self.conf = conf or {}
+        m = re.search(r'<html[^>]*\blang="([\w-]+)"', self.html)
+        self.lang = (m.group(1) if m else 'en').split('-')[0]
+        if self.conf.get('rootAbsolute'):
+            self.root = '/'
+        else:
+            up = posixpath.relpath('.', posixpath.dirname(rel) or '.')
+            self.root = '' if up == '.' else up + '/'
+        self.url = BASE + self.path
+        self.deployed = deployed(rel)
+        self.indexable = self.deployed and self.conf.get('index', True)
+        m = re.search(r'<title>(.*?)</title>', self.html, re.S)
+        self.title = squash(unescape(m.group(1))) if m else ''
+        m = re.search(r'<meta name="description" content="([^"]*)"', self.html)
+        self.description = squash(unescape(m.group(1))) if m else ''
+        m = re.search(r'<body\b[^>]*\bdata-default-as="(\w+)"', self.html)
+        self.default_as = m.group(1) if m else 'student'
+        core = self.path[3:] if self.path.startswith('ar/') else self.path
+        self.type = self.conf.get('type') or ('product' if core.startswith('products/') else 'page')
+        self.tree = Tree(self.html)
+
+    @property
+    def label(self):
+        if self.conf.get('label'):
+            return self.conf['label']
+        t = self.title.split(' · ')[0]
+        return t.split(':')[0].strip()
+
+    @property
+    def og_title(self):
+        suffix = ' · ' + SITE['name']
+        return self.title[:-len(suffix)] if self.title.endswith(suffix) else self.title
+
+
+def discover():
+    found = []
+    for dirpath, dirnames, filenames in os.walk(ROOT):
+        dirnames[:] = sorted(d for d in dirnames if d not in SKIP and not d.startswith('.'))
+        for name in sorted(filenames):
+            if name.endswith('.html'):
+                found.append(os.path.relpath(os.path.join(dirpath, name), ROOT).replace(os.sep, '/'))
+    return found
+
+
+ORDER = {path: i for i, path in enumerate(SITE['pages'])}
+
+
+def order_key(page):
+    # The order of site.json's "pages" (home first, products as in the menu), then by path.
+    return (ORDER.get(page.path, len(ORDER)), page.path)
+
+
+# ---------------------------------------------------------------- dates from git
+
+def last_modified(page, content):
+    """Date of the last commit that changed the page outside the chrome blocks."""
+    stripped = strip_chrome(content)
+    head = git('show', f'HEAD:{page.rel}')
+    if head is None or strip_chrome(head) != stripped:
+        return TODAY
+    log = git('log', '--format=%H %cs', '--', page.rel) or ''
+    commits = [line.split() for line in log.splitlines() if line.strip()]
+    for sha, date in commits:
+        before = git('show', f'{sha}^:{page.rel}')
+        if before is None or strip_chrome(before) != stripped:
+            return date
+    return commits[-1][1] if commits else TODAY
+
+
+def first_published(page):
+    log = git('log', '--diff-filter=A', '--format=%cs', '--', page.rel) or ''
+    dates = [d for d in log.split() if d]
+    return dates[-1] if dates else TODAY
+
+
+# ---------------------------------------------------------------- app links
+
+APP_LINK = re.compile(r'<a\b[^>]*>')
+
+
+def app_href(tag, page):
+    app = SITE['app'].rstrip('/')
+    lang = 'lang=ar' if page.lang == 'ar' else ''
+
+    def link(path, query=''):
+        q = '&'.join(x for x in (query, lang) if x)
+        return app + path + ('?' + q if q else '')
+
+    m = re.search(r'\sdata-signup-as="(\w+)"', tag)
+    if m:
+        return link('/sign-up', 'as=' + m.group(1))
+    if re.search(r'\sdata-signup(?=[\s>=])', tag):
+        return link('/sign-up', 'as=' + page.default_as)
+    if re.search(r'\sdata-signin(?=[\s>=])', tag):
+        return link('/sign-in')
+    m = re.search(r'\sdata-legal="(\w+)"', tag)
+    if m:
+        return link('/' + m.group(1))
+    return None
+
+
+def fill_app_links(html, page):
+    def fix(m):
+        tag = m.group(0)
+        href = app_href(tag, page)
+        if href is None:
+            return tag
+        href = attr(href)
+        if re.search(r'\shref="[^"]*"', tag):
+            return re.sub(r'(\shref=")[^"]*(")', lambda h: h.group(1) + href + h.group(2), tag, count=1)
+        return tag[:-1] + f' href="{href}">'
+    return APP_LINK.sub(fix, html)
+
+
+# ---------------------------------------------------------------- JSON-LD
+
+def ref(i):
+    return {'@id': i}
+
+
+def image_object(img):
+    return {'@type': 'ImageObject', 'url': BASE + img['path'], 'width': img['width'], 'height': img['height']}
+
+
+def org_node():
+    o = SITE['org']
+    node = {'@type': 'Organization', '@id': BASE + '#org', 'name': SITE['name'], 'url': BASE,
+            'logo': image_object(SITE['logo']), 'description': o['description'], 'slogan': o['slogan']}
+    for key in ('legalName', 'alternateName', 'email', 'foundingDate'):
+        if o.get(key):
+            node[key] = o[key]
+    address = {k: o[k] for k in ('addressCountry', 'addressLocality') if o.get(k)}
+    if address:
+        node['address'] = {'@type': 'PostalAddress', **address}
+    if o.get('sameAs'):
+        node['sameAs'] = o['sameAs']
+    return node
+
+
+def website_node(pages):
+    langs = sorted({p.lang for p in pages if p.indexable}, key=lambda l: (l != 'en', l))
+    return {'@type': 'WebSite', '@id': BASE + '#website', 'url': BASE, 'name': SITE['name'],
+            'inLanguage': langs, 'publisher': ref(BASE + '#org')}
+
+
+def audiences(roles):
+    return [{'@type': 'EducationalAudience', 'educationalRole': r} for r in roles]
+
+
+def products(pages):
+    return sorted((p for p in pages if p.type == 'product' and p.indexable and p.lang == 'en'), key=order_key)
+
+
+def app_node(pages):
+    roles = []
+    for p in products(pages):
+        roles += [r for r in p.conf.get('audience', []) if r not in roles]
+    node = {'@type': 'WebApplication', '@id': BASE + '#app', 'name': SITE['name'], 'url': BASE,
+            'applicationCategory': 'EducationalApplication', 'operatingSystem': 'Web browser',
+            'inLanguage': website_node(pages)['inLanguage'], 'publisher': ref(BASE + '#org'),
+            'featureList': [f'{p.label}: {p.description}' for p in products(pages)]}
+    if roles:
+        node['audience'] = audiences(roles)
+    return node
+
+
+def breadcrumb(page, pages):
+    home = next((p for p in pages if p.type == 'home' and p.lang == page.lang and p.indexable), None)
+    items = [(SITE['name'], home.url if home else BASE)]
+    hub = next((p for p in pages if p.type == 'hub' and p.indexable and p.lang == page.lang), None)
+    if page.type == 'product' and hub:
+        items.append((hub.label, hub.url))
+    items.append((page.label, None))
+    out = []
+    for i, (name, url) in enumerate(items, 1):
+        item = {'@type': 'ListItem', 'position': i, 'name': name}
+        if url:
+            item['item'] = url
+        out.append(item)
+    return {'@type': 'BreadcrumbList', '@id': page.url + '#breadcrumb', 'itemListElement': out}
+
+
+def faq(page):
+    qa = []
+    for item in page.tree.root.find(lambda n: 'faq-item' in n.classes()):
+        q = next((n for n in item.iter() if n.tag == 'button'), None)
+        a = next((n for n in item.iter() if 'answer' in n.classes()), None)
+        if q is not None and a is not None:
+            qa.append((squash(q.text()), squash(a.text())))
+    return qa
+
+
+CITE = re.compile(r'^(?P<authors>.+?) \((?P<year>\d{4})\)\. (?P<title>.+?)\.?$')
+
+
+def person(apa):
+    family, _, given = apa.partition(', ')
+    return {'@type': 'Person', 'name': f'{given} {family}'.strip(), 'familyName': family, 'givenName': given}
+
+
+def citations(page, warn):
+    out = []
+    for cite in page.tree.root.find(lambda n: 'rs-cite' in n.classes()):
+        texts = [c for c in cite.children]
+        link = next((n for n in cite.iter() if n.tag == 'a' and n.attrs.get('href')), None)
+        doi = link.attrs['href'] if link is not None else None
+        whole = squash(cite.text())
+        node = {'@type': 'ScholarlyArticle'}
+        try:
+            pre = squash(texts[0])
+            journal = next(c for c in texts if isinstance(c, Node) and c.tag == 'i')
+            post = squash(texts[texts.index(journal) + 1])
+            m = CITE.match(pre)
+            j = re.match(r'^(?P<name>.+?),\s*(?P<volume>\d+)$', squash(journal.text()))
+            p = re.match(r'^\((?P<issue>[^)]+)\),\s*(?P<pages>[\d–-]+)\.?$', post)
+            names = re.split(r'(?<=\.), ', m.group('authors').replace(', & ', ', '))
+            if doi:
+                node.update({'@id': doi, 'url': doi})
+            node.update({
+                'name': m.group('title'),
+                'author': [person(n) for n in names],
+                'datePublished': m.group('year'),
+                'isPartOf': {'@type': 'PublicationIssue', 'issueNumber': p.group('issue'),
+                             'isPartOf': {'@type': 'PublicationVolume', 'volumeNumber': j.group('volume'),
+                                          'isPartOf': {'@type': 'Periodical', 'name': j.group('name')}}},
+                'pagination': p.group('pages'),
+            })
+        except (AttributeError, IndexError, StopIteration, ValueError):
+            warn(page.rel, f'could not read the parts of a reference, so it is cited as text: {whole[:60]}…')
+            node = {'@type': 'CreativeWork', 'name': whole}
+            if doi:
+                node.update({'@id': doi, 'url': doi})
+        out.append(node)
+    return out
+
+
+def graph(page, pages, lastmod, warn):
+    nodes = [org_node(), website_node(pages)]
+    url = page.url
+    web = {'@type': 'WebPage', '@id': url + '#webpage', 'url': url, 'name': page.title,
+           'description': page.description, 'inLanguage': page.lang, 'isPartOf': ref(BASE + '#website'),
+           'primaryImageOfPage': image_object(SITE['image']), 'dateModified': lastmod}
+    if page.type == 'home' and page.lang == 'en':
+        nodes.append(app_node(pages))
+    if page.type in ('home', 'hub', 'product'):
+        web['about'] = ref(BASE + '#app')
+    if page.conf.get('audience'):
+        web['audience'] = audiences(page.conf['audience'])
+    if page.type != 'home':
+        web['breadcrumb'] = ref(url + '#breadcrumb')
+    nodes.append(web)
+    if page.type != 'home':
+        nodes.append(breadcrumb(page, pages))
+    qa = faq(page)
+    if qa:
+        nodes.append({'@type': 'FAQPage', '@id': url + '#faq', 'url': url, 'inLanguage': page.lang,
+                      'isPartOf': ref(BASE + '#website'),
+                      'mainEntity': [{'@type': 'Question', 'name': q,
+                                      'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in qa]})
+    if page.type == 'article':
+        h1 = next((n for n in page.tree.root.iter() if n.tag == 'h1'), None)
+        article = {'@type': 'Article', '@id': url + '#article',
+                   'headline': squash(h1.text()) if h1 is not None else page.og_title,
+                   'description': page.description, 'inLanguage': page.lang,
+                   'datePublished': first_published(page), 'dateModified': lastmod,
+                   'author': ref(BASE + '#org'), 'publisher': ref(BASE + '#org'),
+                   'isPartOf': ref(BASE + '#website'), 'mainEntityOfPage': ref(url + '#webpage'),
+                   'image': BASE + SITE['image']['path']}
+        cited = citations(page, warn)
+        if cited:
+            article['citation'] = cited
+        web['mainEntity'] = ref(url + '#article')
+        nodes.append(article)
+    data = json.dumps({'@context': 'https://schema.org', '@graph': nodes}, ensure_ascii=False, indent=1)
+    return data.replace('</', '<\\/')
+
+
+# ---------------------------------------------------------------- the meta block
+
+def translation(page, pages):
+    """(en page, ar page) when this page and its ar/ twin both exist and are indexable."""
+    by_path = {p.path: p for p in pages}
+    if page.lang == 'ar' and page.path.startswith('ar/'):
+        en, ar = by_path.get(page.path[3:]), page
+    else:
+        en, ar = page, by_path.get('ar/' + page.path)
+    if en and ar and en.indexable and ar.indexable:
+        return en, ar
+    return None
+
+
+def meta_block(page, pages, lastmod, warn):
+    r = page.root
+    out = []
+    pair = translation(page, pages) if page.indexable else None
+    if page.indexable:
+        out.append(f'<link rel="canonical" href="{page.url}">')
+        if pair:
+            en, ar = pair
+            out += [f'<link rel="alternate" hreflang="en" href="{en.url}">',
+                    f'<link rel="alternate" hreflang="ar" href="{ar.url}">',
+                    f'<link rel="alternate" hreflang="x-default" href="{en.url}">']
+    else:
+        out.append('<meta name="robots" content="noindex, follow">')
+    out += [f'<meta name="klaro-app" content="{attr(SITE["app"])}">',
+            f'<meta name="theme-color" content="{SITE["themeColor"]}">',
+            f'<link rel="icon" href="{r}favicon.ico" sizes="32x32">',
+            f'<link rel="icon" href="{r}favicon.svg" type="image/svg+xml">',
+            f'<link rel="apple-touch-icon" href="{r}apple-touch-icon.png">']
+    img = SITE['image']
+    alt = img['alt'].get(page.lang) or img['alt'].get('en', '') if isinstance(img['alt'], dict) else img['alt']
+    locales = SITE['locales']
+    out += [f'<meta property="og:type" content="{"article" if page.type == "article" else "website"}">',
+            f'<meta property="og:site_name" content="{attr(SITE["name"])}">',
+            f'<meta property="og:locale" content="{locales.get(page.lang, page.lang)}">']
+    if pair:
+        other = 'ar' if page.lang == 'en' else 'en'
+        out.append(f'<meta property="og:locale:alternate" content="{locales[other]}">')
+    if page.indexable:
+        out.append(f'<meta property="og:url" content="{page.url}">')
+    out += [f'<meta property="og:title" content="{attr(page.og_title)}">',
+            f'<meta property="og:description" content="{attr(page.description)}">',
+            f'<meta property="og:image" content="{BASE + img["path"]}">',
+            f'<meta property="og:image:width" content="{img["width"]}">',
+            f'<meta property="og:image:height" content="{img["height"]}">',
+            f'<meta property="og:image:alt" content="{attr(alt)}">',
+            '<meta name="twitter:card" content="summary_large_image">']
+    if page.indexable:
+        out.append('<script type="application/ld+json">\n' + graph(page, pages, lastmod, warn) + '\n</script>')
+    return '\n'.join(out)
+
+
+def href_to(page, path):
+    """A link from this page to a site path ('' is the home page, 'ar/' the Arabic home)."""
+    if page.root == '/':
+        return '/' + path
+    up = posixpath.relpath(path.rstrip('/') or '.', posixpath.dirname(page.rel) or '.')
+    return './' if up == '.' else up + '/'
+
+
+def placeholders(page, pages):
+    """{root}: the site root. {home}: this language's home page. {twin}: this page in the other
+    language when it exists, else the other language's home page."""
+    paths = {p.path for p in pages if p.deployed}
+    if page.lang == 'ar':
+        home, other_home = 'ar/', ''
+        twin = page.path[3:] if page.path.startswith('ar/') else None
+    else:
+        home, other_home = '', 'ar/'
+        twin = 'ar/' + page.path
+    if twin is None or twin not in paths:
+        twin = other_home
+    return {'{root}': page.root, '{home}': href_to(page, home), '{twin}': href_to(page, twin)}
+
+
+def stamp(page, pages, lastmods, warn):
+    values = placeholders(page, pages)
+
+    def fill(m):
+        name = m.group(2)
+        if name == 'meta':
+            body = meta_block(page, pages, lastmods[page.rel], warn)
+        else:
+            body = partial(name, page.lang)
+            for key, value in values.items():
+                body = body.replace(key, value)
+        return f'{m.group(1)}\n{body}\n{m.group(4)}'
+    return fill_app_links(BLOCK.sub(fill, page.html), page)
+
+
+# ---------------------------------------------------------------- sitemap.xml and llms.txt
+
+def sitemap(pages, lastmods):
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
+    for p in sorted((p for p in pages if p.indexable), key=order_key):
+        lines += ['  <url>', f'    <loc>{p.url}</loc>', f'    <lastmod>{lastmods[p.rel]}</lastmod>']
+        pair = translation(p, pages)
+        if pair:
+            en, ar = pair
+            lines += [f'    <xhtml:link rel="alternate" hreflang="en" href="{en.url}"/>',
+                      f'    <xhtml:link rel="alternate" hreflang="ar" href="{ar.url}"/>',
+                      f'    <xhtml:link rel="alternate" hreflang="x-default" href="{en.url}"/>']
+        lines.append('  </url>')
+    lines.append('</urlset>')
+    return '\n'.join(lines) + '\n'
+
+
+def llms(pages):
+    by_path = {p.path: p for p in pages}
+    home = by_path.get('')
+    ar = by_path.get('ar/')
+    site = f'- Website: {BASE}' + (f' (Arabic: {ar.url})' if ar and ar.indexable else '')
+    out = [f'# {SITE["name"]}', '', f'> {SITE["org"]["description"]}', '']
+    out += [f'- {fact}' for fact in SITE.get('facts', [])]
+    out += [site, f'- App: {SITE["app"]}', '']
+
+    def line(p):
+        return f'- [{p.label}]({p.url}): {p.conf.get("llms") or p.description}'
+
+    listed = [p for p in sorted(pages, key=order_key)
+              if p.indexable and p.lang == 'en' and p.type != 'home' and p is not home]
+    for group, head in (('students', 'For students'), ('tutors', 'For tutors')):
+        members = [p for p in listed if p.conf.get('group') == group]
+        if members:
+            out += [f'## {head}', ''] + [line(p) for p in members] + ['']
+    rest = [p for p in listed if not p.conf.get('group')]
+    if rest:
+        out += ['## More', ''] + [line(p) for p in rest] + ['']
+    return '\n'.join(out).rstrip('\n') + '\n'
+
+
+# ---------------------------------------------------------------- checks
+
+SCHEMA_PARENT = {
+    'CreativeWork': 'Thing', 'Organization': 'Thing', 'Person': 'Thing', 'Intangible': 'Thing',
+    'MediaObject': 'CreativeWork', 'ImageObject': 'MediaObject', 'WebSite': 'CreativeWork',
+    'WebPage': 'CreativeWork', 'FAQPage': 'WebPage', 'SoftwareApplication': 'CreativeWork',
+    'WebApplication': 'SoftwareApplication', 'Article': 'CreativeWork', 'ScholarlyArticle': 'Article',
+    'Comment': 'CreativeWork', 'Answer': 'Comment', 'Question': 'Comment',
+    'PublicationIssue': 'CreativeWork', 'PublicationVolume': 'CreativeWork',
+    'CreativeWorkSeries': 'CreativeWork', 'Periodical': 'CreativeWorkSeries',
+    'StructuredValue': 'Intangible', 'ContactPoint': 'StructuredValue', 'PostalAddress': 'ContactPoint',
+    'ItemList': 'Intangible', 'BreadcrumbList': 'ItemList', 'ListItem': 'Intangible',
+    'Audience': 'Intangible', 'EducationalAudience': 'Audience', 'DefinedTerm': 'Intangible',
+}
+# The schema.org properties this site uses, by the type that defines them (checked 2026-10-08).
+SCHEMA_PROPS = {
+    'Thing': {'name', 'url', 'description', 'image', 'sameAs', 'alternateName', 'mainEntityOfPage', 'identifier'},
+    'CreativeWork': {'inLanguage', 'isPartOf', 'about', 'author', 'publisher', 'datePublished', 'dateModified',
+                     'headline', 'citation', 'audience', 'mainEntity', 'text', 'hasPart', 'keywords'},
+    'Organization': {'logo', 'slogan', 'email', 'legalName', 'foundingDate', 'address', 'founder', 'contactPoint'},
+    'Person': {'familyName', 'givenName', 'jobTitle'},
+    'MediaObject': {'width', 'height', 'contentUrl'},
+    'ImageObject': {'caption'},
+    'WebPage': {'breadcrumb', 'primaryImageOfPage', 'lastReviewed'},
+    'SoftwareApplication': {'applicationCategory', 'operatingSystem', 'featureList'},
+    'Article': {'pagination', 'articleSection'},
+    'Question': {'acceptedAnswer', 'suggestedAnswer', 'answerCount'},
+    'PublicationIssue': {'issueNumber', 'pagination'},
+    'PublicationVolume': {'volumeNumber', 'pagination'},
+    'Periodical': {'issn'},
+    'PostalAddress': {'addressCountry', 'addressLocality', 'addressRegion', 'postalCode', 'streetAddress'},
+    'ContactPoint': {'email', 'contactType', 'telephone'},
+    'ItemList': {'itemListElement', 'numberOfItems'},
+    'ListItem': {'position', 'item'},
+    'Audience': {'audienceType'},
+    'EducationalAudience': {'educationalRole'},
+}
+
+
+def schema_errors(value, where='@graph'):
+    errors = []
+    if isinstance(value, list):
+        for i, v in enumerate(value):
+            errors += schema_errors(v, f'{where}[{i}]')
+        return errors
+    if not isinstance(value, dict):
+        return errors
+    if set(value) <= {'@id'}:
+        return errors                                     # a reference to a node
+    types = value.get('@type')
+    if types is None:
+        return [f'{where}: no @type']
+    allowed = set()
+    for t in types if isinstance(types, list) else [types]:
+        if t not in SCHEMA_PARENT and t != 'Thing':
+            errors.append(f'{where}: unknown type {t}')
+        while t:
+            allowed |= SCHEMA_PROPS.get(t, set())
+            t = SCHEMA_PARENT.get(t)
+    for key, v in value.items():
+        if key.startswith('@'):
+            continue
+        if key not in allowed:
+            errors.append(f'{where}: {types} has no property "{key}"')
+        errors += schema_errors(v, f'{where}.{key}')
+    return errors
+
+
+def resolve(page, link):
+    """(target file relative to the root, fragment), None for an outside link, or an error string."""
+    if link.startswith(BASE):
+        link = '/' + link[len(BASE):]
+    if re.match(r'^[a-z][a-z0-9+.-]*:', link, re.I) or link.startswith('//'):
+        return None
+    path, _, frag = link.partition('#')
+    path = path.split('?')[0]
+    if path == '':
+        return page.rel, frag
+    if path.startswith('/'):
+        target = posixpath.normpath(path.lstrip('/') or '.')
+    else:
+        target = posixpath.normpath(posixpath.join(posixpath.dirname(page.rel), path))
+    if target == '..' or target.startswith('../'):
+        return f'{link} leaves the site'
+    if target == '.':
+        target = 'index.html'
+    elif os.path.isdir(os.path.join(ROOT, target)):
+        target = target + '/index.html'
+    return target, frag
+
+
+def ids(tree):
+    return {n.attrs['id'] for n in tree.root.iter() if n.attrs.get('id')}
+
+
+def check_page(page, pages, problem, warn):
+    rel = page.rel
+    root = page.tree.root
+    by_rel = {p.rel: p for p in pages}
+    # Language matches the folder.
+    html = next((n for n in root.iter() if n.tag == 'html'), None)
+    want = ('ar', 'rtl') if page.path.startswith('ar/') else ('en', 'ltr')
+    got = (html.attrs.get('lang', '') if html is not None else '', html.attrs.get('dir', 'ltr') if html is not None else '')
+    if got[0].split('-')[0] != want[0] or (want[1] == 'rtl' and got[1] != 'rtl'):
+        problem(rel, f'<html lang="{got[0]}" dir="{got[1]}"> should be lang="{want[0]}" dir="{want[1]}"')
+    # Title and description.
+    if not page.title:
+        problem(rel, 'no <title>')
+    elif len(page.title) > TITLE_MAX:
+        problem(rel, f'title is {len(page.title)} characters (at most {TITLE_MAX}): {page.title}')
+    elif len(page.title) < TITLE_SHORT and page.indexable:
+        warn(rel, f'title is only {len(page.title)} characters: {page.title}')
+    if not page.description:
+        problem(rel, 'no <meta name="description">')
+    elif not DESC_MIN <= len(page.description) <= DESC_MAX:
+        problem(rel, f'description is {len(page.description)} characters ({DESC_MIN}–{DESC_MAX})')
+    if '<!-- chrome:meta -->' not in page.html:
+        problem(rel, 'no <!-- chrome:meta --> block in <head>')
+    # One h1.
+    h1s = [n for n in root.iter() if n.tag == 'h1']
+    if len(h1s) != 1:
+        problem(rel, f'{len(h1s)} <h1> elements (want one), lines {[n.line for n in h1s]}')
+    # Images.
+    for img in root.find(lambda n: n.tag == 'img'):
+        if 'alt' not in img.attrs:
+            problem(rel, f'line {img.line}: <img src="{img.attrs.get("src", "")}"> has no alt')
+        if not ('width' in img.attrs and 'height' in img.attrs):
+            warn(rel, f'line {img.line}: <img src="{img.attrs.get("src", "")}"> has no width and height')
+    # JSON-LD parses and uses real schema.org types and properties.
+    for script in root.find(lambda n: n.tag == 'script' and n.attrs.get('type') == 'application/ld+json'):
+        try:
+            data = json.loads(script.text())
+        except ValueError as e:
+            problem(rel, f'line {script.line}: JSON-LD does not parse: {e}')
+            continue
+        if data.get('@context') != 'https://schema.org':
+            problem(rel, f'line {script.line}: JSON-LD @context is not https://schema.org')
+        for err in schema_errors(data.get('@graph', data)):
+            problem(rel, f'line {script.line}: JSON-LD {err}')
+    # Mock-ups stay out of search snippets and AI answers (screen readers still get their aria-label).
+    marked = set(SITE.get('nosnippet', []))
+    for n in root.iter():
+        if marked & set(n.classes()) and 'data-nosnippet' not in n.attrs and \
+                not any('data-nosnippet' in a.attrs for a in n.ancestors()):
+            problem(rel, f'line {n.line}: illustrative .{" .".join(sorted(marked & set(n.classes())))} without data-nosnippet')
+    # Links: no "#" placeholders, and every internal link, asset and fragment resolves.
+    own_ids = ids(page.tree)
+    for n in root.iter():
+        for key in ('href', 'src'):
+            if key not in n.attrs or (n.tag == 'link' and n.attrs.get('rel') in ('preconnect', 'dns-prefetch')):
+                continue
+            link = n.attrs[key]
+            if n.tag == 'a' and link == '#':
+                problem(rel, f'line {n.line}: <a href="#"> ({squash(n.text())[:40]})')
+                continue
+            if not link:
+                problem(rel, f'line {n.line}: empty {key} on <{n.tag}>')
+                continue
+            res = resolve(page, link)
+            if res is None:
+                continue
+            if isinstance(res, str):
+                problem(rel, f'line {n.line}: {res}')
+                continue
+            target, frag = res
+            if target == rel:
+                if frag and frag not in own_ids:
+                    problem(rel, f'line {n.line}: {link} has no target id="{frag}" on this page')
+                continue
+            if not os.path.exists(os.path.join(ROOT, target)):
+                problem(rel, f'line {n.line}: {link} → {target} does not exist')
+                continue
+            if not deployed(target) and page.deployed:
+                problem(rel, f'line {n.line}: {link} → {target} is kept off the site by .assetsignore')
+            if frag and target in by_rel and frag not in ids(by_rel[target].tree):
+                problem(rel, f'line {n.line}: {link} has no target id="{frag}" in {target}')
+
+
+def check_site(pages, problem, warn):
+    seen_t, seen_d = {}, {}
+    for p in pages:
+        if not p.indexable:
+            continue
+        for value, seen, what in ((p.title, seen_t, 'title'), (p.description, seen_d, 'description')):
+            if value and value in seen:
+                problem(p.rel, f'same {what} as {seen[value]}')
+            seen.setdefault(value, p.rel)
+    paths = {p.path for p in pages}
+    for path in SITE['pages']:
+        if path not in paths:
+            problem('tools/site.json', f'names a page that does not exist: "{path}"')
+    robots = os.path.join(ROOT, 'robots.txt')
+    if not os.path.exists(robots):
+        problem('robots.txt', 'missing')
+    elif f'Sitemap: {BASE}sitemap.xml' not in read(robots):
+        problem('robots.txt', f'no "Sitemap: {BASE}sitemap.xml" line')
+    for key in ('image', 'logo'):
+        if not os.path.exists(os.path.join(ROOT, SITE[key]['path'])):
+            problem('tools/site.json', f'{key} {SITE[key]["path"]} does not exist')
+
+
+# ---------------------------------------------------------------- main
+
+def main():
+    args = sys.argv[1:]
+    check, report = '--check' in args, '--report' in args
+    only = {os.path.relpath(os.path.abspath(a), ROOT).replace(os.sep, '/') for a in args if not a.startswith('--')}
+    pages = [Page(rel) for rel in discover()]
+    problems, warnings = [], []
+
+    def problem(where, msg):
+        problems.append(f'{where}: {msg}')
+
+    def warn(where, msg):
+        if f'{where}: {msg}' not in warnings:
+            warnings.append(f'{where}: {msg}')
+
+    if report:
+        for p in sorted(pages, key=order_key):
+            flag = '' if p.indexable else '  [noindex]' if p.deployed else '  [not deployed]'
+            print(f'{p.url}{flag}\n  title ({len(p.title)}): {p.title}\n  description ({len(p.description)}): {p.description}')
+        return
+
+    lastmods = {p.rel: last_modified(p, fill_app_links(p.html, p)) for p in pages}
+    stale = []
+    for p in pages:
+        out = stamp(p, pages, lastmods, warn) if '<!-- chrome:' in p.html else fill_app_links(p.html, p)
+        if out != p.html and (not only or p.rel in only):
+            stale.append(p.rel)
+            if not check:
+                with open(p.file, 'w', encoding='utf-8') as f:
+                    f.write(out)
+                p.html, p.tree = out, Tree(out)
+    for name, text in (('sitemap.xml', sitemap(pages, lastmods)), ('llms.txt', llms(pages))):
+        path = os.path.join(ROOT, name)
+        if not os.path.exists(path) or read(path) != text:
+            stale.append(name)
+            if not check:
+                with open(path, 'w', encoding='utf-8') as f:
+                    f.write(text)
+
+    for rel in stale:
+        if check:
+            problem(rel, 'out of date: run python3 tools/site.py')
+        else:
+            print('wrote: ' + rel)
+    for p in pages:
+        check_page(p, pages, problem, warn)
+    check_site(pages, problem, warn)
+    for w in warnings:
+        print('warning: ' + w)
+    for msg in problems:
+        print('problem: ' + msg)
+    if problems:
+        sys.exit(1)
+    print(f'ok: {len(pages)} pages, {sum(p.indexable for p in pages)} in the sitemap')
+
+
+if __name__ == '__main__':
+    main()

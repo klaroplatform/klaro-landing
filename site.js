@@ -4,13 +4,16 @@
   var meta = document.querySelector('meta[name="klaro-app"]');
   var APP = (meta && meta.content) || 'https://app.klaroplatform.com';
   var SITE = document.body.dataset.site || '';
+  // Arabic pages open the app in Arabic, as in klaro.js.
+  var LANG = document.documentElement.lang === 'ar' ? '&lang=ar' : '';
 
   // Links that always go to one audience's sign-up, whatever the page switch says (klaro.js
   // rewrites every [data-signup] to follow the switch, so these use their own attribute).
-  document.querySelectorAll('[data-signup-as]').forEach(function (a) { a.href = APP + '/sign-up?as=' + a.dataset.signupAs; });
+  // tools/site.py writes the same addresses into the HTML, so they work without JavaScript too.
+  document.querySelectorAll('[data-signup-as]').forEach(function (a) { a.href = APP + '/sign-up?as=' + a.dataset.signupAs + LANG; });
   // Tutor product pages have no student/tutor switch: their header "Get started" goes to tutor sign-up.
   if (document.body.dataset.defaultAs === 'tutor' && !document.querySelector('.seg[data-audience]')) {
-    document.querySelectorAll('[data-signup]').forEach(function (a) { a.href = APP + '/sign-up?as=tutor'; });
+    document.querySelectorAll('[data-signup]').forEach(function (a) { a.href = APP + '/sign-up?as=tutor' + LANG; });
   }
 
   // Products menu: one panel, opened by "Products" on desktop and the menu button on phones.
@@ -64,8 +67,7 @@
     var code = codeForm.code.value.trim().toUpperCase();
     if (!code) { codeForm.code.focus(); return; }
     // The app's join link: /join?code=… lets the student in once they sign in or sign up.
-    var lang = document.documentElement.lang === 'ar' ? '&lang=ar' : '';
-    window.location.href = APP + '/join?code=' + encodeURIComponent(code) + lang;
+    window.location.href = APP + '/join?code=' + encodeURIComponent(code) + LANG;
   });
 
   // Try it: example lessons. Real courses carry the tutor's own lecture, book and past papers.

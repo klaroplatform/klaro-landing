@@ -1,0 +1,31 @@
+# Klaro
+
+> Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.
+
+- For tutors and their students. Students join a tutor's course with a join code. Every tutor account is reviewed before it opens.
+- The lectures are the tutor's own, the book is the tutor's book, and the questions come from real past papers. Nothing generated.
+- Each lecture clip is linked to the part of the book it teaches and to past-paper questions on the same topic. The Klaro team checks and publishes each course.
+- Built for IGCSE, A Level and SAT, in English and Arabic. In Arabic the whole layout turns right to left.
+- Works in the browser on phone, tablet and computer.
+- Motto: "Enough AI slop. We don't generate AI content like everybody does."
+- Website: https://learnklaro.com/ (Arabic: https://learnklaro.com/ar/)
+- App: https://app.klaroplatform.com
+
+## For students
+
+- [Study view](https://learnklaro.com/products/study-view/): Your tutor's lecture, the course book and real past-paper questions on one screen. Each lecture clip opens the book part it teaches. Nothing generated.
+- [Practice questions](https://learnklaro.com/products/practice-questions/): Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.
+- [Minis](https://learnklaro.com/products/minis/): Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.
+- [Progress](https://learnklaro.com/products/progress/): Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.
+
+## For tutors
+
+- [Course builder](https://learnklaro.com/products/course-builder/): Upload your lectures, books and past papers. The Klaro team connects them: each lecture to its book pages and past-paper questions. Nothing generated.
+- [Live sessions](https://learnklaro.com/products/live-sessions/): Schedule a live class for your course and Klaro sets up the meeting. No links to send: students join from Klaro, get a reminder and are marked present.
+- [Marking](https://learnklaro.com/products/marking/): Scan your students' handwritten papers and upload them with your mark scheme. Klaro marks every answer; you check the marks and send the results.
+
+## More
+
+- [Products](https://learnklaro.com/products/): Every Klaro product in one place: study view, practice questions, Minis and progress for students; course builder, live sessions and marking for tutors.
+- [Powered by research](https://learnklaro.com/research/): The learning research Klaro is built on: the source beside the explanation, testing yourself instead of re-reading, and feedback. Every source is linked.
+- [Browse courses](https://learnklaro.com/market/): Course catalogue (example courses and prices for now).

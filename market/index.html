@@ -5,17 +5,98 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <title>Browse courses · Klaro Market</title>
-<meta name="description" content="Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each one. Every course is a tutor's own lectures, book and past papers, connected.">
+<meta name="description" content="Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each. Every course is a tutor's own lectures, book and past papers, connected.">
+<!-- chrome:meta -->
 <link rel="canonical" href="https://learnklaro.com/market/">
-<meta property="og:title" content="Browse courses · Klaro Market">
-<meta property="og:description" content="Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each one. Every course is a tutor's own lectures, book and past papers, connected.">
-<meta property="og:image" content="https://learnklaro.com/img/course-biology.webp">
-<meta property="og:url" content="https://learnklaro.com/market/">
-<meta property="og:type" content="website">
 <meta name="klaro-app" content="https://app.klaroplatform.com">
+<meta name="theme-color" content="#f3f3f1">
 <link rel="icon" href="../favicon.ico" sizes="32x32">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Klaro">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://learnklaro.com/market/">
+<meta property="og:title" content="Browse courses · Klaro Market">
+<meta property="og:description" content="Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each. Every course is a tutor's own lectures, book and past papers, connected.">
+<meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="548">
+<meta property="og:image:alt" content="A Klaro lecture on osmosis, from an example course">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://learnklaro.com/#org",
+   "name": "Klaro",
+   "url": "https://learnklaro.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/apple-touch-icon.png",
+    "width": 180,
+    "height": 180
+   },
+   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
+   "slogan": "Enough AI slop."
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://learnklaro.com/#website",
+   "url": "https://learnklaro.com/",
+   "name": "Klaro",
+   "inLanguage": [
+    "en",
+    "ar"
+   ],
+   "publisher": {
+    "@id": "https://learnklaro.com/#org"
+   }
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://learnklaro.com/market/#webpage",
+   "url": "https://learnklaro.com/market/",
+   "name": "Browse courses · Klaro Market",
+   "description": "Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each. Every course is a tutor's own lectures, book and past papers, connected.",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/img/lecture-osmosis.webp",
+    "width": 960,
+    "height": 548
+   },
+   "dateModified": "2026-10-08",
+   "breadcrumb": {
+    "@id": "https://learnklaro.com/market/#breadcrumb"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://learnklaro.com/market/#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Klaro",
+     "item": "https://learnklaro.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Browse courses"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<!-- /chrome:meta -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
@@ -66,12 +147,12 @@
     <span class="spacer"></span>
     <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
     <a class="btn btn-quiet" href="../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
-    <a class="btn btn-glass" data-signup href="#">Get started</a>
+    <a class="btn btn-quiet hide-sm" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
+    <a class="btn btn-glass" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
   </div>
   <div class="mega-wrap">
-    <div class="mega" id="products-menu" hidden>
+    <nav class="mega" id="products-menu" aria-label="Products" hidden>
       <div class="mega-cols">
         <div class="mega-col">
           <p class="mega-head">For students</p>
@@ -89,16 +170,17 @@
         </div>
       </div>
       <div class="mega-links">
+        <a class="nav-btn" href="../products/">All products</a>
         <a class="nav-btn" href="../research/">Research</a>
         <a class="nav-btn" href="../#try">Try it</a>
-        <a class="nav-btn" data-signin href="#">Sign in</a>
+        <a class="nav-btn" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
       </div>
       <div class="mega-foot">
         <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
         <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
+        <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
       </div>
-    </div>
+    </nav>
   </div>
 </header>
 <!-- /chrome:header -->
@@ -154,7 +236,7 @@
         <p>Upload your lectures, your books and your past papers. Klaro connects them: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.</p>
       </div>
       <div class="km-strip-actions">
-        <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="#">Apply as a tutor</a>
+        <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
         <a class="btn btn-secondary btn-lg" href="../products/course-builder/">See the course builder</a>
       </div>
     </div>
@@ -182,15 +264,16 @@
           <li><a href="../products/study-view/">Study view</a></li>
           <li><a href="../products/live-sessions/">Live sessions</a></li>
           <li><a href="../products/marking/">Marking</a></li>
-          <li><a data-signup-as="tutor" href="#">Apply as a tutor</a></li>
+          <li><a data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
     </ul></div>
     <div><h2 class="foot-h">Klaro</h2><ul>
           <li><a href="../research/">Research</a></li>
           <li><a href="../#try">Try it</a></li>
-          <li><a data-signin href="#">Sign in</a></li>
+          <li><a href="../market/">Browse courses</a></li>
+          <li><a data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
           <li><a href="../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
     </ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="#">Terms</a><a data-legal="privacy" href="#">Privacy</a></div>
+    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
   </div>
 </footer>
 <!-- /chrome:footer -->

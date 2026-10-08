@@ -6,13 +6,112 @@
 <meta name="color-scheme" content="light">
 <title>Past-paper practice, checked as you answer · Klaro</title>
 <meta name="description" content="Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.">
+<!-- chrome:meta -->
 <link rel="canonical" href="https://learnklaro.com/products/practice-questions/">
-<meta property="og:title" content="Past-paper practice, checked as you answer · Klaro">
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<meta name="theme-color" content="#f3f3f1">
+<link rel="icon" href="../../favicon.ico" sizes="32x32">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Klaro">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://learnklaro.com/products/practice-questions/">
+<meta property="og:title" content="Past-paper practice, checked as you answer">
 <meta property="og:description" content="Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.">
 <meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
-<meta property="og:type" content="website">
-<meta name="klaro-app" content="https://app.klaroplatform.com">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<meta property="og:image:width" content="960">
+<meta property="og:image:height" content="548">
+<meta property="og:image:alt" content="A Klaro lecture on osmosis, from an example course">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://learnklaro.com/#org",
+   "name": "Klaro",
+   "url": "https://learnklaro.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/apple-touch-icon.png",
+    "width": 180,
+    "height": 180
+   },
+   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
+   "slogan": "Enough AI slop."
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://learnklaro.com/#website",
+   "url": "https://learnklaro.com/",
+   "name": "Klaro",
+   "inLanguage": [
+    "en",
+    "ar"
+   ],
+   "publisher": {
+    "@id": "https://learnklaro.com/#org"
+   }
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://learnklaro.com/products/practice-questions/#webpage",
+   "url": "https://learnklaro.com/products/practice-questions/",
+   "name": "Past-paper practice, checked as you answer · Klaro",
+   "description": "Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/img/lecture-osmosis.webp",
+    "width": 960,
+    "height": 548
+   },
+   "dateModified": "2026-10-08",
+   "about": {
+    "@id": "https://learnklaro.com/#app"
+   },
+   "audience": [
+    {
+     "@type": "EducationalAudience",
+     "educationalRole": "student"
+    }
+   ],
+   "breadcrumb": {
+    "@id": "https://learnklaro.com/products/practice-questions/#breadcrumb"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://learnklaro.com/products/practice-questions/#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Klaro",
+     "item": "https://learnklaro.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Products",
+     "item": "https://learnklaro.com/products/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Practice questions"
+    }
+   ]
+  }
+ ]
+}
+</script>
+<!-- /chrome:meta -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
@@ -124,12 +223,12 @@
     <span class="spacer"></span>
     <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
     <a class="btn btn-quiet" href="../../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
-    <a class="btn btn-glass" data-signup href="#">Get started</a>
+    <a class="btn btn-quiet hide-sm" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
+    <a class="btn btn-glass" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
   </div>
   <div class="mega-wrap">
-    <div class="mega" id="products-menu" hidden>
+    <nav class="mega" id="products-menu" aria-label="Products" hidden>
       <div class="mega-cols">
         <div class="mega-col">
           <p class="mega-head">For students</p>
@@ -147,16 +246,17 @@
         </div>
       </div>
       <div class="mega-links">
+        <a class="nav-btn" href="../../products/">All products</a>
         <a class="nav-btn" href="../../research/">Research</a>
         <a class="nav-btn" href="../../#try">Try it</a>
-        <a class="nav-btn" data-signin href="#">Sign in</a>
+        <a class="nav-btn" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
       </div>
       <div class="mega-foot">
         <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
         <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
+        <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
       </div>
-    </div>
+    </nav>
   </div>
 </header>
 <!-- /chrome:header -->
@@ -166,7 +266,7 @@
 <!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
 <section class="p-hero">
   <div class="wrap">
-    <a class="p-back" href="../../#products"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
+    <a class="p-back" href="../"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
     <div class="p-top">
       <span class="p-chip"><span class="icon-tile amber"><svg class="i" width="16" height="16"><use href="#i-check"/></svg></span>Practice questions<span class="p-for">For students</span></span>
       <div class="p-head">
@@ -174,7 +274,7 @@
         <div class="p-head-side">
           <p class="lead">Practise on real past-paper questions from your course. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.</p>
           <div class="actions">
-            <a class="btn btn-primary btn-lg" data-signup href="#">Create a student account <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Create a student account <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
             <a class="btn btn-secondary btn-lg" href="../../#try">Try a lesson</a>
           </div>
         </div>
@@ -182,7 +282,7 @@
     </div>
 
     <div class="p-field">
-      <div class="studio" role="img" aria-label="A Klaro practice question from Paper 2, May/June 2024, on osmosis, answered correctly. Beside it, where to look: page 48 of the book and the lecture clip at 06:12 that explain it.">
+      <div data-nosnippet class="studio" role="img" aria-label="A Klaro practice question from Paper 2, May/June 2024, on osmosis, answered correctly. Beside it, where to look: page 48 of the book and the lecture clip at 06:12 that explain it.">
         <div class="studio-head" aria-hidden="true">
           <span><i class="dot pq-q"></i>Questions</span>
           <span><i class="dot pq-book"></i>Book</span>
@@ -254,7 +354,7 @@
         <h2>Questions from real past papers, with their source.</h2>
         <p>Each question shows the paper it came from: paper, year and series. The right answer comes from that paper's own mark scheme, and nothing is generated.</p>
       </div>
-      <div class="p-vis gold" role="img" aria-label="Question 14 from a 2023 Paper 2 PDF, shown in Klaro with its source line: Paper 2, 2023, October/November, Biology 0610.">
+      <div data-nosnippet class="p-vis gold" role="img" aria-label="Question 14 from a 2023 Paper 2 PDF, shown in Klaro with its source line: Paper 2, 2023, October/November, Biology 0610.">
         <div class="p-stack" aria-hidden="true">
           <div class="file pq-card">
             <span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span>
@@ -282,7 +382,7 @@
         <p>Multiple-choice answers are checked the moment you answer. Get one wrong and Klaro shows you the right answer, then where it's explained.</p>
         <a class="tlink" href="../study-view/">About the study view <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
       </div>
-      <div class="p-vis amber" role="img" aria-label="A Physics question with four answers. Choosing C shows Correct. Choosing D shows Not quite, the answer is C. Either way, where to look: book page 24 and the lecture clip at 03:40.">
+      <div data-nosnippet class="p-vis amber" role="img" aria-label="A Physics question with four answers. Choosing C shows Correct. Choosing D shows Not quite, the answer is C. Either way, where to look: book page 24 and the lecture clip at 03:40.">
         <div class="p-stack" aria-hidden="true">
           <div class="p-ui">
             <div class="p-ui-head"><i class="dot pq-q"></i>Question 5 of 10<span class="grow"></span><span class="tag tag-slate">Physics 9702 · A Level</span></div>
@@ -319,7 +419,7 @@
         <h2>Choose what to practise, and how much.</h2>
         <p>Pick chapters of your course book, the exam paper, year and series, how many questions and whether to use a timer. Practice never counts against you.</p>
       </div>
-      <div class="p-vis teal" role="img" aria-label="Building a practice set for Biology 0610: two chapters chosen, Paper 2 from 2024 and 2023, May/June, 10 questions, with a timer and where each answer is explained, and a Start practice button.">
+      <div data-nosnippet class="p-vis teal" role="img" aria-label="Building a practice set for Biology 0610: two chapters chosen, Paper 2 from 2024 and 2023, May/June, 10 questions, with a timer and where each answer is explained, and a Start practice button.">
         <div class="p-ui" aria-hidden="true">
           <div class="p-ui-head"><svg class="i pq-purple" width="14" height="14"><use href="#i-check"/></svg>Practise · Biology 0610<span class="grow"></span><span class="tag tag-slate">IGCSE</span></div>
           <div class="pq-field">
@@ -361,7 +461,7 @@
           <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Multiple-choice answers checked the moment you answer</li>
           <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>The book page and lecture clip that explain each one</li>
         </ul>
-        <a class="btn btn-primary" data-signup-as="student" href="#">Create a student account</a>
+        <a class="btn btn-primary" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
       </div>
       <div class="card card-pad">
         <span class="tag tag-slate">For tutors</span>
@@ -371,7 +471,7 @@
           <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Each question filed under your book's chapters</li>
           <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Nothing added that you didn't choose</li>
         </ul>
-        <a class="btn btn-secondary" data-signup-as="tutor" href="#">Apply as a tutor</a>
+        <a class="btn btn-secondary" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
       </div>
     </div>
   </div>
@@ -414,7 +514,7 @@
       <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
       <h2 class="closer-h">Real past papers. Not made-up questions.</h2>
       <p>Create your account, then join with the code your tutor gives you.</p>
-      <a class="btn btn-lg" data-signup href="#">Create a student account</a>
+      <a class="btn btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
     </div>
   </div>
 </section>
@@ -439,15 +539,16 @@
           <li><a href="../../products/study-view/">Study view</a></li>
           <li><a href="../../products/live-sessions/">Live sessions</a></li>
           <li><a href="../../products/marking/">Marking</a></li>
-          <li><a data-signup-as="tutor" href="#">Apply as a tutor</a></li>
+          <li><a data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
     </ul></div>
     <div><h2 class="foot-h">Klaro</h2><ul>
           <li><a href="../../research/">Research</a></li>
           <li><a href="../../#try">Try it</a></li>
-          <li><a data-signin href="#">Sign in</a></li>
+          <li><a href="../../market/">Browse courses</a></li>
+          <li><a data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
           <li><a href="../../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
     </ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="#">Terms</a><a data-legal="privacy" href="#">Privacy</a></div>
+    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
   </div>
 </footer>
 <!-- /chrome:footer -->

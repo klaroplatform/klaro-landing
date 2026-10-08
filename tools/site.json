@@ -1,0 +1,73 @@
+{
+  "_about": [
+    "Site-wide facts for tools/site.py. The tool stamps every page's <!-- chrome:meta --> block from",
+    "this file plus the page's own <title>, description and path, and writes sitemap.xml and llms.txt.",
+    "Each page owns its title and description; put here only what a page can't say about itself.",
+    "Empty strings and empty lists are skipped (never shipped as placeholders): fill them when the",
+    "owner supplies the fact. Keep every sentence here true to design/brief/app-facts.md."
+  ],
+
+  "base": "https://learnklaro.com/",
+  "name": "Klaro",
+  "app": "https://app.klaroplatform.com",
+  "themeColor": "#f3f3f1",
+  "locales": { "en": "en_GB", "ar": "ar_AR" },
+
+  "image": {
+    "_todo": "A 1200x630 PNG or JPG share image is wanted (img/og/klaro.png). Until then, the lecture still.",
+    "path": "img/lecture-osmosis.webp",
+    "width": 960,
+    "height": 548,
+    "alt": "A Klaro lecture on osmosis, from an example course"
+  },
+  "logo": {
+    "_todo": "A square 512x512 PNG of the K mark is wanted (img/klaro-logo-512.png). Until then, the touch icon.",
+    "path": "apple-touch-icon.png",
+    "width": 180,
+    "height": 180
+  },
+
+  "org": {
+    "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
+    "slogan": "Enough AI slop.",
+    "legalName": "",
+    "email": "",
+    "foundingDate": "",
+    "addressCountry": "",
+    "addressLocality": "",
+    "alternateName": "",
+    "sameAs": []
+  },
+
+  "facts": [
+    "For tutors and their students. Students join a tutor's course with a join code. Every tutor account is reviewed before it opens.",
+    "The lectures are the tutor's own, the book is the tutor's book, and the questions come from real past papers. Nothing generated.",
+    "Each lecture clip is linked to the part of the book it teaches and to past-paper questions on the same topic. The Klaro team checks and publishes each course.",
+    "Built for IGCSE, A Level and SAT, in English and Arabic. In Arabic the whole layout turns right to left.",
+    "Works in the browser on phone, tablet and computer.",
+    "Motto: \"Enough AI slop. We don't generate AI content like everybody does.\""
+  ],
+
+  "nosnippet": ["stage", "studio", "p-vis", "tile-vis", "connect", "mn-stage"],
+
+  "pages": {
+    "": { "type": "home" },
+    "ar/": { "type": "home" },
+    "products/": { "label": "Products", "type": "hub" },
+    "products/study-view/": { "label": "Study view", "group": "students", "audience": ["student", "teacher"] },
+    "products/practice-questions/": { "label": "Practice questions", "group": "students", "audience": ["student"] },
+    "products/minis/": { "label": "Minis", "group": "students", "audience": ["student"] },
+    "products/progress/": { "label": "Progress", "group": "students", "audience": ["student"] },
+    "products/course-builder/": { "label": "Course builder", "group": "tutors", "audience": ["teacher"] },
+    "products/live-sessions/": { "label": "Live sessions", "group": "tutors", "audience": ["teacher"] },
+    "products/marking/": { "label": "Marking", "group": "tutors", "audience": ["teacher"] },
+    "research/": { "label": "Powered by research", "type": "article" },
+    "market/": {
+      "_index": "The one switch for the market's indexing. false = noindex, and out of sitemap.xml and llms.txt.",
+      "index": true,
+      "label": "Browse courses",
+      "llms": "Course catalogue (example courses and prices for now)."
+    },
+    "404.html": { "index": false, "rootAbsolute": true }
+  }
+}

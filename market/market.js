@@ -2,7 +2,7 @@
    drawer. Enroll leads to student sign-up with the course attached: <app>/sign-up?as=student&course=<id>.
    Every course, tutor and price here is an example until the market's back end exists.
 
-   The header, footer and icon sprite are the site's own (stamped by tools/chrome.py), run by
+   The header, footer and icon sprite are the site's own (stamped by tools/site.py), run by
    klaro.js and site.js. This file stays out of their way: it uses km- classes only, never .seg
    (klaro.js drives every .seg as the student/tutor switch) and never [data-signup]. */
 (function () {
