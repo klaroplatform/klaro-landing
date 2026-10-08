@@ -14,8 +14,15 @@ tool copies it into each page between markers:
 Partials use {root} for the path to the site root ("" on the home page, "../../" two folders
 down, "/" on 404.html, which is served at any depth), {home} for this language's home page and
 {twin} for the same page in the other language (the other language's home when there is none,
-and always on a 404 page). A page picks the partials for its language from <html lang="...">.
-An ar/ page takes its English twin's entry in site.json (type, group, audience, index).
+and always on a 404 page), {home_tutors} and {home_students} for the two audience homes in the
+page's language, and {aud} for the audience home a page points to (from / the students' home,
+from /students/ the tutors' one, from a product page the home of its site.json "group", else the
+students' home). A page picks the partials for its language from <html lang="...">. An ar/ page
+takes its English twin's entry in site.json (type, group, audience, index).
+
+Not pages: the top-level folders in SKIP (notes, tooling, and the built showcase app with its
+media), which are never stamped or checked; links into them are checked. A page marked "frozen"
+in site.json (v1/, the old landing) is never written and only gets one warning.
 
 Metadata. Each page owns its <title> and <meta name="description">, written above the meta block.
 The meta block is built from those, the page's path and tools/site.json (site-wide facts and the
@@ -23,13 +30,17 @@ few things a page can't say about itself): canonical, hreflang (only where the p
 translation both exist), robots noindex, the klaro-app address, icons, theme colour, Open Graph,
 Twitter and one JSON-LD @graph (Organization, WebSite, the page's WebPage, WebApplication on each
 home page, BreadcrumbList, FAQPage from the page's visible .faq-item markup, and an Article with
-its citations from the visible .rs-cite references). Texts in site.json may be per language.
+its citations from the visible .rs-cite references, and a VideoObject for each recording the page
+embeds with data-recording="<name>", from media/<name>.json, its poster and the heading and caption
+next to it). Texts in site.json may be per language.
+
+On every page (but frozen ones) --check fails on any mention of AI: the owner's rule, with no motto
+exception since the literal motto left the site (design/brief/redesign.md, 8.1).
 
 On ar/ pages --check also applies the machine-checkable rules of design/brief/arabic.md, section 9:
 lang="ar" dir="rtl", an Arabic title and description, no text arrow → outside English course
-material (lang="en"), no .flip on text, no Eastern Arabic digits, and no "AI" or "ذكاء اصطناعي"
-outside the motto. A link to an ar/ page that doesn't exist yet is reported once, with the pages
-that link to it.
+material (lang="en"), no .flip on text and no Eastern Arabic digits. A link to an ar/ page that
+doesn't exist yet is reported once, with the pages that link to it.
 
 App links. The href of every link marked data-signup, data-signup-as, data-signin or data-legal is
 set to its real address in the app (site.json "app"), so it works without JavaScript; klaro.js
@@ -59,7 +70,10 @@ from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PARTIALS = os.path.join(ROOT, 'partials')
-SKIP = {'design', 'partials', 'tools', 'node_modules'}
+# Folders that hold no pages of ours: notes and tooling, and Omar's built app and its media (the
+# showcase is a generated app; never stamp or check it). Links into them are still checked.
+SKIP = {'design', 'partials', 'tools', 'showcase', 'media', 'demo', 'brand', 'illustrations'}
+SKIP_ANYWHERE = {'node_modules'}
 BLOCK = re.compile(r'(<!-- chrome:(\w+) -->)(.*?)(<!-- /chrome:\2 -->)', re.S)
 TODAY = datetime.date.today().isoformat()
 TITLE_MAX, TITLE_SHORT, DESC_MIN, DESC_MAX = 60, 30, 50, 160
@@ -236,6 +250,7 @@ class Page:
         self.default_as = m.group(1) if m else 'student'
         core = self.path[3:] if self.path.startswith('ar/') else self.path
         self.type = self.conf.get('type') or ('product' if core.startswith('products/') else 'page')
+        self.frozen = bool(self.conf.get('frozen'))      # kept as it is: never stamped, checked loosely
         self.tree = Tree(self.html)
 
     @property
@@ -254,7 +269,9 @@ class Page:
 def discover():
     found = []
     for dirpath, dirnames, filenames in os.walk(ROOT):
-        dirnames[:] = sorted(d for d in dirnames if d not in SKIP and not d.startswith('.'))
+        top = os.path.samefile(dirpath, ROOT)
+        dirnames[:] = sorted(d for d in dirnames if not d.startswith('.') and d not in SKIP_ANYWHERE
+                             and not (top and d in SKIP))
         for name in sorted(filenames):
             if name.endswith('.html'):
                 found.append(os.path.relpath(os.path.join(dirpath, name), ROOT).replace(os.sep, '/'))
@@ -399,7 +416,8 @@ def app_node(pages, lang):
 
 
 def breadcrumb(page, pages):
-    home = next((p for p in pages if p.type == 'home' and p.lang == page.lang and p.indexable), None)
+    home_path = 'ar/' if page.lang == 'ar' else ''
+    home = next((p for p in pages if p.path == home_path and p.indexable), None)
     items = [(SITE['name'], home.url if home else BASE)]
     hub = next((p for p in pages if p.type == 'hub' and p.indexable and p.lang == page.lang), None)
     if page.type == 'product' and hub:
@@ -468,6 +486,44 @@ def citations(page, warn):
     return out
 
 
+def recordings(page, warn):
+    """A VideoObject for each recording the page embeds (data-recording="<name>", with
+    media/<name>.json, .mp4 and -poster.jpg). Name and description come from the page's own text
+    next to it (a heading and the caption), so the markup says what the page says."""
+    out = []
+    for el in page.tree.root.find(lambda n: n.attrs.get('data-recording')):
+        name = el.attrs['data-recording']
+        meta_path = os.path.join(ROOT, 'media', name + '.json')
+        if not os.path.exists(meta_path):
+            warn(page.rel, f'line {el.line}: data-recording="{name}" has no media/{name}.json')
+            continue
+        with open(meta_path, encoding='utf-8') as f:
+            info = json.load(f)
+        scope = next((a for a in [el, *el.ancestors()] if a.tag in ('figure', 'section', 'article')), el)
+        heading = next((n for n in scope.iter() if n.tag in ('h2', 'h3', 'h4')), None)
+        caption = next((n for n in scope.iter() if n.tag == 'figcaption'), None)
+        title = info.get('name') or (squash(heading.text()) if heading is not None else '') \
+            or el.attrs.get('aria-label', '')
+        poster = info.get('poster') or f'media/{name}-poster.jpg'
+        if not title or not os.path.exists(os.path.join(ROOT, poster)):
+            warn(page.rel, f'line {el.line}: recording "{name}" needs a heading next to it and a poster for VideoObject')
+            continue
+        video = f'media/{name}.mp4'
+        first = (git('log', '--diff-filter=A', '--format=%cs', '--', video) or '').split()
+        node = {'@type': 'VideoObject', '@id': f'{page.url}#video-{name}', 'name': title,
+                'thumbnailUrl': BASE + poster, 'uploadDate': info.get('uploadDate') or (first[-1] if first else TODAY),
+                'inLanguage': page.lang}
+        description = info.get('description') or (squash(caption.text()) if caption is not None else '')
+        if description:
+            node['description'] = description
+        if info.get('duration'):
+            node['duration'] = f'PT{round(float(info["duration"]))}S'
+        if os.path.exists(os.path.join(ROOT, video)):
+            node['contentUrl'] = BASE + video
+        out.append(node)
+    return out
+
+
 def graph(page, pages, lastmod, warn):
     nodes = [org_node(), website_node(pages)]
     url = page.url
@@ -482,7 +538,11 @@ def graph(page, pages, lastmod, warn):
         web['audience'] = audiences(page.conf['audience'])
     if page.type != 'home':
         web['breadcrumb'] = ref(url + '#breadcrumb')
+    videos = recordings(page, warn)
+    if videos:
+        web['video'] = [ref(v['@id']) for v in videos]
     nodes.append(web)
+    nodes += videos
     if page.type != 'home':
         nodes.append(breadcrumb(page, pages))
     qa = faq(page)
@@ -573,8 +633,12 @@ def href_to(page, path):
 
 
 def placeholders(page, pages):
-    """{root}: the site root. {home}: this language's home page. {twin}: this page in the other
-    language when it exists, else the other language's home page."""
+    """{root}: the site root. {home}: this language's home page (the tutors' home).
+    {twin}: this page in the other language when it exists, else the other language's home page.
+    {home_tutors}, {home_students}: the two audience homes in this page's language (the English one
+    while an Arabic one is missing). {aud}: the audience home a page points to: from the tutors'
+    home, the students' one; from the students' home, the tutors' one; from a product page, the home
+    of its "group" in site.json; from any other page, the students' home."""
     paths = {p.path for p in pages if p.deployed}
     if page.lang == 'ar':
         home, other_home = 'ar/', ''
@@ -585,7 +649,24 @@ def placeholders(page, pages):
     # A 404 page's language link goes to the other language's home, never to the other 404.
     if twin is None or twin not in paths or page.type == 'notfound':
         twin = other_home
-    return {'{root}': page.root, '{home}': href_to(page, home), '{twin}': href_to(page, twin)}
+
+    def local(en_path):
+        ar = 'ar/' + en_path
+        return ar if page.lang == 'ar' and ar in paths else en_path
+
+    tutors, students = local(''), local('students/')
+    core = page.path[3:] if page.path.startswith('ar/') else page.path
+    if core == '':
+        aud = students
+    elif core == 'students/':
+        aud = tutors
+    elif page.conf.get('group') == 'tutors':
+        aud = tutors
+    else:
+        aud = students
+    return {'{root}': page.root, '{home}': href_to(page, home), '{twin}': href_to(page, twin),
+            '{home_tutors}': href_to(page, tutors), '{home_students}': href_to(page, students),
+            '{aud}': href_to(page, aud)}
 
 
 def stamp(page, pages, lastmods, warn):
@@ -634,7 +715,7 @@ def llms(pages):
         return f'- [{p.label}]({p.url}): {p.conf.get("llms") or p.description}'
 
     listed = [p for p in sorted(pages, key=order_key)
-              if p.indexable and p.lang == 'en' and p.type != 'home' and p is not home]
+              if p.indexable and p.lang == 'en' and p is not home]
     for group, head in (('students', 'For students'), ('tutors', 'For tutors')):
         members = [p for p in listed if p.conf.get('group') == group]
         if members:
@@ -647,7 +728,7 @@ def llms(pages):
     for p in sorted(pages, key=order_key):
         if p.indexable and p.lang == 'ar':
             en = by_path.get(p.path[3:]) if p.path.startswith('ar/') else None
-            what = 'The home page' if p.type == 'home' else (en.label if en else p.label)
+            what = 'The home page' if p.path == 'ar/' else (en.label if en else p.label)
             arabic.append(f'- [{p.label}]({p.url}): {what}, in Arabic.')
     if arabic:
         out += ['## Arabic', ''] + arabic + ['']
@@ -658,7 +739,7 @@ def llms(pages):
 
 SCHEMA_PARENT = {
     'CreativeWork': 'Thing', 'Organization': 'Thing', 'Person': 'Thing', 'Intangible': 'Thing',
-    'MediaObject': 'CreativeWork', 'ImageObject': 'MediaObject', 'WebSite': 'CreativeWork',
+    'MediaObject': 'CreativeWork', 'ImageObject': 'MediaObject', 'VideoObject': 'MediaObject', 'WebSite': 'CreativeWork',
     'WebPage': 'CreativeWork', 'FAQPage': 'WebPage', 'SoftwareApplication': 'CreativeWork',
     'WebApplication': 'SoftwareApplication', 'Article': 'CreativeWork', 'ScholarlyArticle': 'Article',
     'Comment': 'CreativeWork', 'Answer': 'Comment', 'Question': 'Comment',
@@ -672,10 +753,12 @@ SCHEMA_PARENT = {
 SCHEMA_PROPS = {
     'Thing': {'name', 'url', 'description', 'image', 'sameAs', 'alternateName', 'mainEntityOfPage', 'identifier'},
     'CreativeWork': {'inLanguage', 'isPartOf', 'about', 'author', 'publisher', 'datePublished', 'dateModified',
-                     'headline', 'citation', 'audience', 'mainEntity', 'text', 'hasPart', 'keywords'},
+                     'headline', 'citation', 'audience', 'mainEntity', 'text', 'hasPart', 'keywords',
+                     'thumbnailUrl', 'video'},
     'Organization': {'logo', 'slogan', 'email', 'legalName', 'foundingDate', 'address', 'founder', 'contactPoint'},
     'Person': {'familyName', 'givenName', 'jobTitle'},
-    'MediaObject': {'width', 'height', 'contentUrl'},
+    'MediaObject': {'width', 'height', 'contentUrl', 'embedUrl', 'uploadDate', 'duration'},
+    'VideoObject': {'caption', 'transcript'},
     'ImageObject': {'caption'},
     'WebPage': {'breadcrumb', 'primaryImageOfPage', 'lastReviewed'},
     'SoftwareApplication': {'applicationCategory', 'operatingSystem', 'featureList'},
@@ -753,8 +836,7 @@ ARABIC = re.compile(r'[\u0600-\u06ff]')
 LATIN = re.compile(r'[A-Za-z]')
 EASTERN_DIGITS = re.compile(r'[\u0660-\u0669\u06f0-\u06f9]')
 HARAKAT = re.compile(r'[\u064b-\u0652\u0640]')
-AI_WORDS = re.compile(r'(?<![A-Za-z])AI(?![A-Za-z])|ذكاء\s*(?:ال)?اصطناعي')
-MOTTO = {'motto', 'foot-motto'}
+AI_WORDS = re.compile(r'(?<![A-Za-z])AI(?![A-Za-z])|(?i:artificial intelligence)|ذكاء\s*(?:ال)?اصطناعي')
 TEXT_ATTRS = ('alt', 'aria-label', 'title', 'placeholder')
 
 
@@ -771,14 +853,11 @@ def check_arabic(page, problem):
             problem(rel, f'the {what} is not in Arabic: {value}')
         if value and EASTERN_DIGITS.search(value):
             problem(rel, f'the {what} has Eastern Arabic digits (use 0–9)')
-        if value and AI_WORDS.search(HARAKAT.sub('', value)):
-            problem(rel, f'the {what} mentions AI (only the motto may)')
     for n in page.tree.root.iter():
         if n.tag in ('script', 'style'):
             continue
         chain = [n, *n.ancestors()]
         english = any(a.attrs.get('lang', '').startswith('en') for a in chain)
-        in_motto = any(MOTTO & set(a.classes()) for a in chain)
         texts = [('text', c) for c in n.children if isinstance(c, str) and c.strip()]
         texts += [(f'{k}=', n.attrs[k]) for k in TEXT_ATTRS if n.attrs.get(k)]
         for where, text in texts:
@@ -787,10 +866,31 @@ def check_arabic(page, problem):
                 problem(rel, f'line {n.line}: a text arrow → in Arabic copy (write ←, or the SVG icon): {where} {short}')
             if EASTERN_DIGITS.search(text):
                 problem(rel, f'line {n.line}: Eastern Arabic digits (use 0–9): {where} {short}')
-            if AI_WORDS.search(HARAKAT.sub('', text)) and not in_motto:
-                problem(rel, f'line {n.line}: mentions AI outside the motto: {where} {short}')
         if 'flip' in n.classes() and n.tag != 'svg' and squash(n.text()):
             problem(rel, f'line {n.line}: .flip on text ("{squash(n.text())[:10]}"); text arrows mirror by themselves, use .flip only on SVG icons')
+
+
+def visible_texts(page):
+    """(element, where, text) for the page's text and its text attributes (not scripts or styles)."""
+    for n in page.tree.root.iter():
+        if n.tag in ('script', 'style'):
+            continue
+        for c in n.children:
+            if isinstance(c, str) and c.strip():
+                yield n, 'text', c
+        for k in TEXT_ATTRS:
+            if n.attrs.get(k):
+                yield n, f'{k}=', n.attrs[k]
+
+
+def check_no_ai(page, problem):
+    """The owner's rule: the site never mentions AI (redesign.md 8.1: no motto exception)."""
+    for what, value in (('title', page.title), ('description', page.description)):
+        if value and AI_WORDS.search(HARAKAT.sub('', value)):
+            problem(page.rel, f'the {what} mentions AI')
+    for n, where, text in visible_texts(page):
+        if AI_WORDS.search(HARAKAT.sub('', text)):
+            problem(page.rel, f'line {n.line}: mentions AI: {where} {squash(text)[:50]}')
 
 
 def check_page(page, pages, problem, warn, missing):
@@ -805,6 +905,7 @@ def check_page(page, pages, problem, warn, missing):
         problem(rel, f'<html lang="{got[0]}" dir="{got[1]}"> should be lang="{want[0]}" dir="{want[1]}"')
     if page.path.startswith('ar/'):
         check_arabic(page, problem)
+    check_no_ai(page, problem)
     # Title and description.
     if not page.title:
         problem(rel, 'no <title>')
@@ -848,7 +949,7 @@ def check_page(page, pages, problem, warn, missing):
     # Links: no "#" placeholders, and every internal link, asset and fragment resolves.
     own_ids = ids(page.tree)
     for n in root.iter():
-        for key in ('href', 'src'):
+        for key in ('href', 'src', 'poster'):
             if key not in n.attrs or (n.tag == 'link' and n.attrs.get('rel') in ('preconnect', 'dns-prefetch')):
                 continue
             link = n.attrs[key]
@@ -893,7 +994,13 @@ def check_site(pages, problem, warn):
     paths = {p.path for p in pages}
     for path in SITE['pages']:
         if path not in paths:
-            problem('tools/site.json', f'names a page that does not exist: "{path}"')
+            warn('tools/site.json', f'names a page that does not exist yet: "{path}"')
+    words = [SITE['org'].get('description', ''), SITE['org'].get('slogan', ''), *SITE.get('facts', [])]
+    alt = SITE['image']['alt']
+    words += list(alt.values()) if isinstance(alt, dict) else [alt]
+    for text in words:
+        if AI_WORDS.search(HARAKAT.sub('', text)):
+            problem('tools/site.json', f'mentions AI: {text[:60]}')
     robots = os.path.join(ROOT, 'robots.txt')
     if not os.path.exists(robots):
         problem('robots.txt', 'missing')
@@ -929,6 +1036,8 @@ def main():
     lastmods = {p.rel: last_modified(p, fill_app_links(p.html, p)) for p in pages}
     stale = []
     for p in pages:
+        if p.frozen:
+            continue
         out = stamp(p, pages, lastmods, warn) if '<!-- chrome:' in p.html else fill_app_links(p.html, p)
         if out != p.html and (not only or p.rel in only):
             stale.append(p.rel)
@@ -951,6 +1060,13 @@ def main():
             print('wrote: ' + rel)
     missing = {}
     for p in pages:
+        if p.frozen:
+            # A legacy page kept for reference: one warning, never a failure.
+            broken = []
+            check_page(p, pages, lambda where, msg: broken.append(msg), lambda *a: None, {})
+            if broken:
+                warn(p.rel, f'frozen in site.json: not stamped, and {len(broken)} rule(s) it breaks are not enforced')
+            continue
         check_page(p, pages, problem, warn, missing)
     for target, sources in sorted(missing.items()):
         page_url = target[:-len('index.html')] if target.endswith('index.html') else target

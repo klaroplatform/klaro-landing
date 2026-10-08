@@ -34,7 +34,8 @@
 
   "org": {
     "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
-    "slogan": "Enough AI slop.",
+    "_slogan": "Draft from design/brief/redesign.md 8.1, option 1 (owner to approve). The literal motto left the site.",
+    "slogan": "We don't make content. We connect yours.",
     "legalName": "",
     "email": "",
     "foundingDate": "",
@@ -50,14 +51,16 @@
     "Each lecture clip is linked to the part of the book it teaches and to past-paper questions on the same topic. The Klaro team checks and publishes each course.",
     "Built for IGCSE, A Level and SAT, in English and Arabic. In Arabic the whole layout turns right to left.",
     "Works in the browser on phone, tablet and computer.",
-    "Motto: \"Enough AI slop. We don't generate AI content like everybody does.\""
+    "Motto: \"We don't make content. We connect yours.\""
   ],
 
-  "nosnippet": ["stage", "studio", "p-vis", "tile-vis", "connect", "mn-stage"],
+  "_nosnippet": "Classes of example pictures (the showcase frame, recordings, stills, drawn mock-ups): kept out of snippets; their captions stay quotable.",
+  "nosnippet": ["show-screen", "rec-screen", "stage", "studio", "p-vis", "tile-vis", "connect", "mn-stage"],
 
   "pages": {
-    "": { "type": "home" },
-    "ar/": { "type": "home" },
+    "": { "type": "home", "audience": ["teacher"] },
+    "ar/": { "type": "home", "audience": ["teacher"] },
+    "students/": { "type": "home", "label": "For students and parents", "group": "students", "audience": ["student", "parent"] },
     "products/": { "label": "Products", "type": "hub" },
     "products/study-view/": { "label": "Study view", "group": "students", "audience": ["student", "teacher"] },
     "products/practice-questions/": { "label": "Practice questions", "group": "students", "audience": ["student"] },
@@ -65,7 +68,9 @@
     "products/progress/": { "label": "Progress", "group": "students", "audience": ["student"] },
     "products/course-builder/": { "label": "Course builder", "group": "tutors", "audience": ["teacher"] },
     "products/live-sessions/": { "label": "Live sessions", "group": "tutors", "audience": ["teacher"] },
+    "products/quizzes/": { "label": "Quizzes and homework", "group": "tutors", "audience": ["teacher"] },
     "products/marking/": { "label": "Marking", "group": "tutors", "audience": ["teacher"] },
+    "try/": { "label": "Try it", "audience": ["student"] },
     "research/": { "label": "Powered by research", "type": "article" },
     "market/": {
       "_index": "The one switch for the market's indexing. false = noindex, and out of sitemap.xml and llms.txt.",
@@ -73,6 +78,11 @@
       "label": "Browse courses",
       "llms": "Course catalogue (example courses and prices for now)."
     },
-    "404.html": { "index": false, "rootAbsolute": true, "type": "notfound" }
+    "404.html": { "index": false, "rootAbsolute": true, "type": "notfound" },
+    "v1/": {
+      "_frozen": "Omar's old landing, kept for reference: noindex, out of sitemap.xml and llms.txt, never stamped, checked loosely.",
+      "index": false,
+      "frozen": true
+    }
   }
 }
