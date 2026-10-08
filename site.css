@@ -2,8 +2,9 @@
    §5–7 and §11–12; markup for each component: design/redesign/components.html.
    Logical properties only (the device bar and the showcase camera are left to right on purpose:
    they draw a browser and the app's own pixels). Arabic: the block near the end, plus [dir="rtl"]
-   lines next to the few rules that need a mirror. Motion: the block at the end; nothing moves with
-   prefers-reduced-motion, nothing loops, transform and opacity only.
+   lines next to the few rules that need a mirror. Motion: the tokens and the block near the end;
+   every duration and curve is a token, nothing moves with prefers-reduced-motion, nothing loops,
+   transform and opacity only.
 
    Contents
      Header (.topbar, .nav, .mega, the phone sheet, .joinform)     Footer (.footer)
@@ -16,7 +17,7 @@
 
 /* ======================================================================== Header */
 .topbar { position: sticky; top: 0; z-index: 50; background: var(--page); border-block-end: 1px solid transparent;
-  transition: background-color .2s var(--ease-out), border-color .2s var(--ease-out); }
+  transition: background-color var(--dur-ui) var(--ease-ui), border-color var(--dur-ui) var(--ease-ui); }
 .topbar.scrolled { background: rgb(243 243 241 / .84); -webkit-backdrop-filter: saturate(1.5) blur(14px); backdrop-filter: saturate(1.5) blur(14px); border-block-end-color: var(--line); }
 .topbar-row { height: var(--header-h); display: flex; align-items: center; gap: 6px; }
 .brand { display: inline-flex; margin-inline-end: 14px; border-radius: 8px; }
@@ -24,10 +25,10 @@
 .nav { display: flex; align-items: center; gap: 2px; }
 .nav-link { display: inline-flex; align-items: center; gap: 4px; height: 36px; padding-inline: 12px; border: 0; border-radius: var(--r-pill); background: none;
   font: 500 var(--fs-nav)/1 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer;
-  transition: background-color .15s var(--ease-out), color .15s var(--ease-out); }
+  transition: background-color var(--dur-fast) var(--ease-ui), color var(--dur-fast) var(--ease-ui); }
 .nav-link:hover { background: rgb(23 23 23 / .05); }
 .nav-link[aria-expanded="true"] { background: var(--ink); color: #fff; }   /* the open trigger turns into a dark pill */
-.nav-link .chev { width: 14px; height: 14px; transition: rotate .25s var(--ease-out); }
+.nav-link .chev { width: 14px; height: 14px; transition: rotate var(--dur-ui) var(--ease-ui); }
 .nav-link[aria-expanded="true"] .chev { rotate: 180deg; }
 .nav-lang { color: var(--text); }
 .topbar-space { flex: 1; }
@@ -59,7 +60,7 @@
 .mega-col + .mega-col { border-inline-start: 1px solid var(--line); }
 .mega-head { align-self: flex-start; padding: 6px 12px 10px; border-radius: 8px; font: 600 14px/1.3 var(--font); color: var(--muted); text-decoration: none; }
 .mega-head:hover { color: var(--ink); }
-.mega-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px; border-radius: 16px; color: var(--ink); text-decoration: none; transition: background-color .15s var(--ease-out); }
+.mega-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px; border-radius: 16px; color: var(--ink); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-ui); }
 .mega-item:hover { background: var(--surface); }
 .mega-icon { flex-shrink: 0; display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 10px; background: var(--card); color: var(--muted); }
 .mega-icon .i { width: 18px; height: 18px; }
@@ -146,7 +147,7 @@
    current page is a dark pill (aria-current="page"). */
 .chip-switch { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; padding: 4px; border-radius: 22px; background: var(--chip); font: 500 14px/1 var(--font); }
 .chip-switch-label { padding-inline: 10px 6px; color: var(--chip-muted); }
-.chip-switch a { display: inline-flex; align-items: center; height: 32px; padding-inline: 14px; border-radius: var(--r-pill); color: var(--ink); text-decoration: none; transition: background-color .15s var(--ease-out); }
+.chip-switch a { display: inline-flex; align-items: center; height: 32px; padding-inline: 14px; border-radius: var(--r-pill); color: var(--ink); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-ui); }
 .chip-switch a:hover { background: rgb(23 23 23 / .06); }
 .chip-switch a[aria-current="page"] { background: var(--ink); color: #fff; }
 .spark { fill: var(--gold); }
@@ -207,11 +208,11 @@ html.ph-on :is(.ph, .ill.is-missing, .ill:not(:has(img, picture, video)))::befor
 /* Illustrated card (SchoolAI's "There's a Space for that"): the whole card is one link; white,
    hairline, radius 40, illustration 1:1 at radius 28, a title and one line. */
 .icard { display: flex; flex-direction: column; gap: 24px; height: 100%; padding: 16px 16px 32px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card);
-  color: var(--ink); text-decoration: none; transition: border-color .2s var(--ease-out); }
+  color: var(--ink); text-decoration: none; transition: border-color var(--dur-fast) var(--ease-ui); }
 .icard:hover { border-color: #c8c7c0; }
 .icard:focus-visible { outline-offset: 4px; }
 .icard > .ill { --ar: 1; border-radius: var(--radius-media); }
-.icard .ill img { transition: scale .5s var(--ease-out); }
+.icard .ill img { transition: scale var(--dur-slow) var(--ease-ui); }
 .icard-body { display: flex; flex-direction: column; gap: 8px; padding-inline: 16px; }
 .icard-title { font-size: var(--fs-h3); font-weight: 600; line-height: 1.15; letter-spacing: var(--tr-title); }
 .icard-line { font-size: 17px; line-height: 1.5; color: var(--text); }
@@ -227,7 +228,7 @@ html.ph-on :is(.ph, .ill.is-missing, .ill:not(:has(img, picture, video)))::befor
 .carousel-head > .section-head { margin-block-end: 0; }
 .carousel-nav { display: flex; gap: 8px; }
 .carousel-btn { display: grid; place-items: center; width: 64px; height: 44px; border: 0; border-radius: var(--r-pill); background: var(--ink); color: #fff; cursor: pointer;
-  transition: opacity .2s var(--ease-out), background-color .15s var(--ease-out), scale .15s var(--ease-out); }
+  transition: opacity var(--dur-ui) var(--ease-ui), background-color var(--dur-fast) var(--ease-ui), scale var(--dur-fast) var(--ease-ui); }
 .carousel-btn:hover { background: #33332f; }
 .carousel-btn:active { scale: .97; }
 .carousel-btn[aria-disabled="true"] { opacity: .3; cursor: default; }
@@ -331,12 +332,12 @@ html.ph-on :is(.ph, .ill.is-missing, .ill:not(:has(img, picture, video)))::befor
   font: 600 20px/1.35 var(--font); letter-spacing: -.01em; color: var(--ink); text-align: start; cursor: pointer; }
 .faq-q:focus-visible { outline-offset: 2px; border-radius: 8px; }
 .faq-icon { flex-shrink: 0; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; color: var(--ink);
-  transition: rotate .3s var(--ease-out), background-color .2s var(--ease-out), border-color .2s var(--ease-out), color .2s var(--ease-out); }
+  transition: rotate var(--dur-ui) var(--ease-ui), background-color var(--dur-fast) var(--ease-ui), border-color var(--dur-fast) var(--ease-ui), color var(--dur-fast) var(--ease-ui); }
 .faq-icon .i { width: 18px; height: 18px; }
 .faq-q[aria-expanded="true"] .faq-icon { rotate: 45deg; background: var(--ink); border-color: var(--ink); color: #fff; }
-.answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s var(--ease-out); }
+.answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-ui) var(--ease-inout); }
 .answer.open { grid-template-rows: 1fr; }
-.answer > div { overflow: hidden; visibility: hidden; transition: visibility 0s linear .35s; }
+.answer > div { overflow: hidden; visibility: hidden; transition: visibility 0s var(--dur-ui); }
 .answer.open > div { visibility: visible; transition-delay: 0s; }
 .answer p { max-width: 56ch; padding-block-end: 24px; font-size: 17px; line-height: 1.6; color: var(--text); }
 @media (max-width: 900px) { .faq { grid-template-columns: minmax(0, 1fr); } .faq-q { font-size: 18px; padding-block: 20px; } }
@@ -466,6 +467,9 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .plate--device.is-drawn > .device .device-body { padding: 0; border-radius: inherit; background: none; box-shadow: none; }
 .plate--device.is-drawn > .device .device-body::before, .plate--device.is-drawn > .device .device-body::after { display: none; }
 .plate--device.is-drawn > .device .device-screen { border-radius: inherit; background: #1b1722; }
+/* The drawn picture fades in when it arrives (it is lazy), instead of popping over the CSS frame. */
+.plate--device > .plate-img { opacity: 0; transition: opacity var(--dur-slow) var(--ease-ui); }
+.plate--device.is-drawn > .plate-img { opacity: 1; }
 @media (max-width: 640px) {
   html.ph-on .plate--device[data-ph]::before { display: none; }   /* no room for the file name beside the device */
   .plate--device { --frac: var(--frac-sm, 1); }
@@ -481,8 +485,8 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 /* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). */
 .plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; --frac-sm: .4; --drawn: 1; }
 .plate[data-plate="P3-chalkboard-phone"] { --pa: 1.3333; --sx: 11.25; --sy: 16.33; --sw: 77.58; --sh: 65.89; --sr: 0; --frac-sm: .88; --drawn: 1; }   /* monitor */
-.plate[data-plate="P4-marked-papers-full"] { --pa: 1.3333; --sx: 11.72; --sy: 18.36; --sw: 76.66; --sh: 65.62; --sr: 0; --frac-sm: .88; --drawn: 1; }   /* laptop: its keyboard is cut in the original too */
-.plate[data-plate="P5-dusk-window-full"] { --pa: 1.3333; --sx: 13.57; --sy: 19.79; --sw: 73.63; --sh: 68.49; --sr: .29; --frac-sm: .9; --drawn: 1; }   /* laptop: its keyboard is cut in the original too */
+.plate[data-plate="P4-marked-papers-full2"] { --pa: 1.3333; --sx: 26.75; --sy: 15.67; --sw: 46.5; --sh: 40; --sr: 0; --frac-sm: .74; --drawn: 1; }   /* laptop, drawn whole (4:3 original, v2) */
+.plate[data-plate="P5-dusk-window-full2"] { --pa: 1.3333; --sx: 26.25; --sy: 23.11; --sw: 47.67; --sh: 41.78; --sr: 0; --frac-sm: .82; --drawn: 1; }   /* laptop, drawn whole (4:3 original, v2) */
 .plate[data-plate="P6-library-full"] { --pa: 1.3333; --sx: 15.04; --sy: 16.54; --sw: 69.63; --sh: 59.77; --sr: 0; --frac-sm: .8; --drawn: 1; }   /* monitor */
 .plate[data-plate="P7-sofa-corner-phone"] { --pa: 1.3333; --sx: 14.58; --sy: 14.22; --sw: 70.75; --sh: 71.67; --sr: .83; --frac-sm: .82; --drawn: 1; }   /* a tablet, 4:3 landscape */
 
@@ -491,26 +495,39 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
    classes it adds or toggles, and what they look like:
      .show / .rec                the <figure>; .is-ready (the frame has drawn), .is-free (the visitor's turn), .is-playing
      .show-screen / .rec-screen  the screen inside a .device (it is also .device-screen); holds the poster <img>
-     .show-cam                   the 1440×900 camera layer the frame sits in (transform set by the driver)
-     .rec-cam                    optional wrapper round the <video>, for a recording's camera
+     .show-cam                   the layer the live frame sits in, scaled by the driver to fit its screen whole
+     .plate--device, .pr-shot-field
+                                 the camera's frame: showcase.js moves its children (the plate's picture and the
+                                 device, with the app in it) as one, with inline transforms, while it is in; the
+                                 frame itself stays put and clips. Nothing ever zooms inside a screen.
      .show-cursor, .show-tap     the drawn cursor and its tap ripple; .show-hint (.is-on), .show-ring, .show-bubble
      .show-steps / .rec-cues     the caption track: one <li> is .is-on (the first shows until one is)
      .show-under, .show-actions  the row under the device: the track, then .show-try / .show-replay (pills)
      .rec-play                   the Play button over a poster (reduced motion, or play refused)
      .show-sheet, .show-sheet-bar  the phone's full-screen "Try it" (a fixed dialog with a second frame) */
 .show, .rec { position: relative; display: flex; flex-direction: column; gap: 16px; margin: 0; }
-.show-screen, .rec-screen { direction: ltr; }   /* the camera works in app pixels from the top left; the app mirrors itself inside */
-.show-cam { position: absolute; inset-block-start: 0; inset-inline-start: 0; width: 1440px; height: 900px; transform-origin: 0 0; will-change: transform; }
-.show-cam > iframe { display: block; width: 1440px; height: 900px; border: 0; opacity: 0; pointer-events: none; transition: opacity .4s var(--ease-out); }
+.show-screen, .rec-screen { direction: ltr; }   /* the live frame is placed in app pixels from the top left; the app mirrors itself inside */
+/* No will-change: the frame's scale never animates, so it is drawn sharp at its size. */
+.show-cam { position: absolute; inset-block-start: 0; inset-inline-start: 0; width: 1440px; height: 900px; transform-origin: 0 0; }
+.show-cam > iframe { display: block; width: 1440px; height: 900px; border: 0; opacity: 0; pointer-events: none; transition: opacity var(--dur-slow) var(--ease-ui); }
 /* showcase.js reports state in data-state: the frame shows once the app has drawn */
 .show:is(.is-ready, [data-state="live"], [data-state="story"], [data-state="free"], [data-state="done"]) .show-cam > iframe { opacity: 1; }
 .show:is(.is-free, [data-state="free"]) .show-cam > iframe { pointer-events: auto; }
-.show:is(.is-free, [data-state="free"]) .device { outline: 3px solid var(--purple); outline-offset: 0; }
-.rec-cam { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
-.rec-cam > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.show .device { outline: 3px solid transparent; outline-offset: 0; transition: outline-color var(--dur-slow) var(--ease-ui); }
+.show:is(.is-free, [data-state="free"]) .device { outline-color: var(--purple); }   /* the hand-over: the ring fades in */
+/* A recording is always whole in its screen (the owner, 2026-10-09): contained, at the top and
+   centred across, on the app's own page colour, so a drawn screen that isn't 16:10 shows a strip of
+   that colour under the app instead of cutting it. A phone recording fills its phone (cover, centred
+   across): the difference there is under 2% and falls in the phone layout's side margins. */
+.rec .device-screen, .rec .plate--device.is-drawn > .device .device-screen { background: var(--page); }
+.rec .device-screen > :is(img, video), .rec .device-screen > picture > img { object-fit: contain; object-position: 50% 0; }
+.rec .device--phone .device-screen > :is(img, video), .rec .device--phone .device-screen > picture > img { object-fit: cover; object-position: 50% 0; }
+/* The video fades in over its poster once it has a frame (showcase.js sets data-shown). */
+.rec .device-screen > video { opacity: 0; transition: opacity var(--dur-slow) var(--ease-ui); }
+.rec .device-screen > video[data-shown] { opacity: 1; }
 .show-cursor { position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 2; opacity: 0; pointer-events: none; will-change: transform, opacity; }
 .show-tap { position: absolute; inset-block-start: -18px; inset-inline-start: -18px; width: 36px; height: 36px; border-radius: 50%; background: rgb(146 84 224 / .35); opacity: 0; }
-.show-hint { position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 3; opacity: 0; pointer-events: none; transition: opacity .35s var(--ease-out); }
+.show-hint { position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 3; opacity: 0; pointer-events: none; transition: opacity var(--dur-slow) var(--ease-ui); }
 .show-hint:is(.is-on, :not([hidden])) { opacity: 1; }
 .show-ring, .show-hint-ring { position: absolute; inset-block-start: -22px; inset-inline-start: -22px; width: 44px; height: 44px; border: 3px solid var(--purple); border-radius: 50%; }
 .show-bubble { position: absolute; inset-block-start: -24px; inset-inline-start: 38px; width: max-content; max-width: 260px; padding: 10px 14px; border-radius: 14px;
@@ -519,12 +536,15 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .show-under { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; min-height: 44px; }
 .show-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .show-steps, .rec-cues { display: grid; flex: 1 1 260px; margin: 0; padding: 0; list-style: none; }
-.show-steps > li, .rec-cues > li { grid-area: 1 / 1; font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -.01em; color: var(--ink); opacity: 0; transition: opacity .35s var(--ease-out); }
+/* The captions share one cell. The one leaving fades out quickly, then the next fades in, so two
+   lines never show on top of each other. */
+.show-steps > li, .rec-cues > li { grid-area: 1 / 1; font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -.01em; color: var(--ink); opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-ui); }
 /* showcase.js marks the current step with [data-current]; .is-on is kept for hand-written markup */
 .show-steps > li:first-child, .rec-cues > li:first-child,
-.show-steps > li:is(.is-on, [data-current]), .rec-cues > li:is(.is-on, [data-current]) { opacity: 1; }
+.show-steps > li:is(.is-on, [data-current]), .rec-cues > li:is(.is-on, [data-current]) { opacity: 1; transition: opacity var(--dur-ui) var(--ease-ui) var(--dur-fast); }
 .show-steps:has(> :is(.is-on, [data-current])) > li:not(.is-on, [data-current]),
-.rec-cues:has(> :is(.is-on, [data-current])) > li:not(.is-on, [data-current]) { opacity: 0; }
+.rec-cues:has(> :is(.is-on, [data-current])) > li:not(.is-on, [data-current]) { opacity: 0; transition: opacity var(--dur-fast) var(--ease-ui); }
 .rec-play { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; width: 64px; height: 64px; margin: auto; border: 0; border-radius: 50%;
   background: rgb(255 255 255 / .94); color: var(--purple-dark); box-shadow: 0 10px 30px -10px rgb(30 12 60 / .45); cursor: pointer; }
 .rec-play .i { width: 26px; height: 26px; margin-inline-start: 3px; }
@@ -578,7 +598,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .opening-stage { position: sticky; inset-block-start: var(--sticky-top); isolation: isolate; display: flex; flex-direction: column; justify-content: center;
   height: calc(100vh - var(--sticky-top) - 16px); height: calc(100svh - var(--sticky-top) - 16px); }
 .opening-stage > :is(.show, .rec) { position: relative; z-index: 1; width: min(88%, calc((100svh - 270px) * 1.6)); margin-inline: auto; }
-.opening-stage .device { --settle-s: 1.08; --settle-x: 3%; --settle-y: -2vh; }
+.opening-stage .device { --settle-s: 1.03; --settle-x: 0%; --settle-y: -1vh; }   /* a barely-there settle as the visitor scrolls; the app inside never zooms */
 .opening-collage { position: absolute; inset: 0 0 64px; z-index: 0; pointer-events: none; }
 .opening-tile { --ar: 1; position: absolute; inset-inline: 0; inset-block-start: 50%; width: 26%; margin: -13% auto 0;
   translate: calc(var(--fx) * var(--k-dir)) var(--fy); rotate: calc(var(--fr) * var(--k-dir)); box-shadow: 0 18px 40px -24px rgb(30 12 60 / .4); }
@@ -655,15 +675,15 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .steps-copy p { color: var(--text); }
 .steps-nav { display: none; }
 .steps-nav-item > h3 { margin: 0; font: inherit; }
-.steps-nav-title { display: block; width: 100%; padding: 0; border: 0; background: none; font: 600 24px/1.25 var(--font); letter-spacing: var(--tr-title); color: var(--muted); text-align: start; cursor: pointer; transition: color .25s var(--ease-out); }
+.steps-nav-title { display: block; width: 100%; padding: 0; border: 0; background: none; font: 600 24px/1.25 var(--font); letter-spacing: var(--tr-title); color: var(--muted); text-align: start; cursor: pointer; transition: color var(--dur-ui) var(--ease-ui); }
 .steps-nav-title:hover, .steps-nav-item.is-active .steps-nav-title { color: var(--ink); }
-.steps-nav-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s var(--ease-out); }
-.steps-nav-body > div { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; overflow: hidden; visibility: hidden; transition: visibility 0s linear .4s; }
+.steps-nav-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--dur-slow) var(--ease-inout); }   /* the open step eases open as the next one eases shut */
+.steps-nav-body > div { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; overflow: hidden; visibility: hidden; transition: visibility 0s var(--dur-slow); }
 .steps-nav-item.is-active .steps-nav-body { grid-template-rows: 1fr; }
 .steps-nav-item.is-active .steps-nav-body > div { visibility: visible; transition-delay: 0s; }
 .steps-nav-body p { padding-block-start: 10px; font-size: 17px; color: var(--text); }
 .steps-nav-bar { display: block; height: 2px; margin-block-start: 20px; overflow: hidden; border-radius: 2px; background: var(--line); }
-.steps-nav-bar > i { display: block; height: 100%; background: var(--purple); transform: scaleX(var(--p, 0)); transform-origin: 0 50%; transition: transform .3s linear; }
+.steps-nav-bar > i { display: block; height: 100%; background: var(--purple); transform: scaleX(var(--p, 0)); transform-origin: 0 50%; transition: transform var(--dur-ui) linear; }   /* linear on purpose: it follows the recording's clock */
 [dir="rtl"] .steps-nav-bar > i { transform-origin: 100% 50%; }
 @media (min-width: 1025px) {
   /* The recordings as large as they can be (§7.9): the plate's column is as wide as a 4:3 plate
@@ -711,18 +731,40 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .chip-switch-label:lang(ar) { padding-inline: 10px 6px; }
 
 /* ======================================================================== Motion */
+/* One motion system (the owner, 2026-10-09: calm and smooth, nothing snappy, nothing that zooms
+   inside a screen). Every duration and curve on the site is one of these tokens; showcase.js reads
+   --dur-camera and --ease-inout too, so the camera moves on the same curve as the CSS.
+     --ease-ui     a soft ease-out (cubic) for UI answering the visitor: hover, menus, captions, fades
+     --ease-inout  a slow sine ease-in-out for anything that travels: the camera, the opening, the
+                   accordions, the pointer in the hero
+     --dur-fast    .15s  colour, border and press feedback; a caption leaving
+     --dur-ui      .3s   menus, captions, small turns, the FAQ
+     --dur-slow    .6s   reveals, the live app and its hint fading in, the step list opening
+     --dur-camera  2s    one camera walk (in, or back out); then it holds
+   No overshoot and no bounce anywhere. Linear only where something follows a clock or the scroll
+   one to one (a progress bar, the parallax drift, the stacked cards). klaro.css's --ease-out and
+   --ease-settle point at --ease-ui here, so its buttons and links follow the system too. */
+:root {
+  --ease-ui: cubic-bezier(.33, 1, .68, 1);
+  --ease-inout: cubic-bezier(.37, 0, .63, 1);
+  --dur-fast: .15s;
+  --dur-ui: .3s;
+  --dur-slow: .6s;
+  --dur-camera: 2s;
+  --ease-out: var(--ease-ui);
+  --ease-settle: var(--ease-ui);
+}
 /* Calm and once. site.js adds html.motion only when motion is allowed, and hides (opacity) only
    what starts below the first screen, until any part of it is on screen: nothing visible ever
    waits, and with JavaScript off or reduced motion everything is simply there.
-     .k-rv  rises 16px into place once (--k-d staggers what comes in together) */
-@keyframes k-rise { from { opacity: 0; translate: 0 16px; } }
+     .k-rv  rises 12px into place once (--k-d staggers what comes in together) */
+@keyframes k-rise { from { opacity: 0; translate: 0 12px; } }
 @keyframes k-draw { from { transform: scaleX(0); } }
-@keyframes k-pop { from { opacity: 0; scale: .3; } }
+@keyframes k-pop { from { opacity: 0; scale: .6; } }
 @keyframes k-in { from { opacity: 0; translate: 0 -6px; } }
 @keyframes k-out { to { opacity: 0; translate: 0 -4px; } }
-@keyframes k-ring { from { scale: .5; opacity: 1; } to { scale: 1.6; opacity: 0; } }
+@keyframes k-ring { 50% { scale: 1.35; opacity: .35; } }   /* breathes out and back to the ring at rest */
 @keyframes k-settle { from { scale: var(--settle-s); translate: calc(var(--settle-x) * var(--k-dir)) var(--settle-y); } }
-@keyframes k-settle-sm { from { scale: 1; } to { scale: .97; } }   /* barely: on a phone every pixel of the app counts */
 @keyframes k-gather { to { translate: 0 0; rotate: 0deg; scale: .75; } }
 @keyframes k-fade { to { opacity: 0; } }
 @keyframes k-drift { from { translate: 0 calc(var(--depth, 24) * 1px); } to { translate: 0 calc(var(--depth, 24) * -1px); } }
@@ -730,22 +772,22 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 
 @media screen {
   html.motion .k-rv:not(.k-in) { opacity: 0; }
-  html.motion .k-rv.k-in { animation: k-rise .6s var(--ease-out) var(--k-d, 0s) backwards; }
+  html.motion .k-rv.k-in { animation: k-rise var(--dur-slow) var(--ease-ui) var(--k-d, 0s) backwards; }
 }
 @media print { html.motion .k-rv { opacity: 1 !important; animation: none !important; } }
 
 @media (prefers-reduced-motion: no-preference) {
   /* The H1's underline draws in from the inline start, then its spark appears. */
-  .uline::after { transform-origin: 0 50%; animation: k-draw .9s var(--ease-out) .35s both; }
+  .uline::after { transform-origin: 0 50%; animation: k-draw calc(var(--dur-slow) * 1.5) var(--ease-inout) .35s both; }
   [dir="rtl"] .uline::after { transform-origin: 100% 50%; }
-  .uline::before { animation: k-pop .5s var(--ease-settle) 1.05s both; }
-  /* Menus */
-  .mega:not([hidden]) { animation: k-in .26s var(--ease-out) both; }
-  .mega.is-closing { animation: k-out .18s var(--ease-out) both; pointer-events: none; }
+  .uline::before { animation: k-pop var(--dur-slow) var(--ease-ui) 1.05s both; }
+  /* Menus (site.js waits for k-out to end before it hides the panel) */
+  .mega:not([hidden]) { animation: k-in var(--dur-ui) var(--ease-ui) both; }
+  .mega.is-closing { animation: k-out var(--dur-fast) var(--ease-ui) both; pointer-events: none; }
   /* Hover and focus */
-  .icard:is(:hover, :focus-visible) .ill img { scale: 1.03; }
-  /* The hint ring pulses a few times, then rests. */
-  .show-hint:is(.is-on, :not([hidden])) :is(.show-ring, .show-hint-ring) { animation: k-ring 1.6s ease-out 6; }
+  .icard:is(:hover, :focus-visible) .ill img { scale: 1.02; }
+  /* The hint ring breathes three times, slowly, then rests. */
+  .show-hint:is(.is-on, :not([hidden])) :is(.show-ring, .show-hint-ring) { animation: k-ring calc(var(--dur-camera) * 1.2) var(--ease-inout) var(--dur-slow) 3; }
 }
 
 /* Scroll-linked motion: only where the browser has scroll-driven animations (the opening also has
@@ -753,14 +795,14 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .opening { view-timeline: --opening block; view-timeline-inset: 0; }
-    .opening-stage .device { animation: k-settle linear both; animation-timeline: --opening; animation-range: exit-crossing 0px exit-crossing 100vh; }
-    .opening-tile { animation: k-gather cubic-bezier(.7, 0, .84, 0) both, k-fade linear both; animation-timeline: --opening, --opening;
+    .opening-stage .device { animation: k-settle var(--ease-inout) both; animation-timeline: --opening; animation-range: exit-crossing 0px exit-crossing 100vh; }
+    .opening-tile { animation: k-gather var(--ease-inout) both, k-fade var(--ease-inout) both; animation-timeline: --opening, --opening;
       animation-range: exit-crossing var(--g0) exit-crossing var(--g1), exit-crossing 60vh exit-crossing 80vh; }
     .mosaic-col + .mosaic-col { animation: k-drift linear both; animation-timeline: view(); animation-range: cover; --depth: 20; }
     .closing-tile { animation: k-drift linear both; animation-timeline: view(); animation-range: cover; }
   }
   @media (prefers-reduced-motion: no-preference) and (max-width: 1024px) {
-    .opening-stage .device { animation-name: k-settle-sm; }
+    .opening-stage .device { animation: none; }   /* phones and tablets: the device stays as it is */
   }
   @media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
     .closing-tile { animation: none; }
@@ -782,16 +824,18 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
   }
 }
 /* The opening without scroll-driven animations: site.js sets html.k-sd-js and, on .opening, --od
-   (how far the opening has scrolled past the top of the screen, in vh). Same ranges as above. */
+   (how far the opening has scrolled past the top of the screen, in vh). Same ranges as above, and
+   the same gentle in-and-out (a smoothstep, close to --ease-inout). */
 @media (prefers-reduced-motion: no-preference) {
   html.k-sd-js .opening-stage .device {
-    --p: clamp(0, var(--od, 0) / 100, 1);
+    --q: clamp(0, var(--od, 0) / 100, 1);
+    --p: calc(var(--q) * var(--q) * (3 - 2 * var(--q)));
     scale: calc(var(--settle-s) - (var(--settle-s) - 1) * var(--p));
     translate: calc(var(--settle-x) * var(--k-dir) * (1 - var(--p))) calc(var(--settle-y) * (1 - var(--p)));
   }
   html.k-sd-js .opening-tile {
     --t: clamp(0, (var(--od, 0) - var(--g0n)) / 50, 1);
-    --e: calc(var(--t) * var(--t) * var(--t));
+    --e: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
     translate: calc(var(--fx) * var(--k-dir) * (1 - var(--e))) calc(var(--fy) * (1 - var(--e)));
     rotate: calc(var(--fr) * var(--k-dir) * (1 - var(--e)));
     scale: calc(1 - .25 * var(--e));
@@ -799,7 +843,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
   }
 }
 @media (prefers-reduced-motion: no-preference) and (max-width: 1024px) {
-  html.k-sd-js .opening-stage .device { scale: calc(1 - .03 * var(--p)); translate: none; }
+  html.k-sd-js .opening-stage .device { scale: none; translate: none; }
 }
 /* Reduced motion: the opening is an ordinary hero (no pin); the tiles sit still round the stage on
    desktop and are hidden on phones. */

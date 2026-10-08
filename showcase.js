@@ -33,18 +33,22 @@
                     marking, student-minis, student-tutor. A name starting with student- runs as
                     the sample student.
     data-play       "story" (the default when the scene has one; study and student-study do): the
-                    camera story, then the visitor's turn. "steps": each <li> is a step of the
-                    scene (<li data-step="n"> picks one), and there is no camera. "free": the
+                    story (a drawn pointer taps the book, the lecture jumps, the question shows),
+                    then the visitor's turn. "steps": each <li> is a step of the scene (<li
+                    data-step="n"> picks one). The app is always whole in its screen: there is no
+                    camera on a live scene (see "The camera" below). "free": the
                     visitor's turn at once; on a scene with a story, Replay (or a step) plays the
                     whole story on the clock and hands over again. The visitor's turn only
                     exists on study, student-study and student-practice; elsewhere the frame stays
                     read-only.
-    data-story      A story by name (default: the scene's own). "none" means no camera.
+    data-story      A story by name (default: the scene's own). "none" means no story.
     data-fit        "fill": the frame fills the screen at its own size, in the app's own layout,
-                    with no camera and no story (data-play defaults to "free"), so the app's text
-                    is at its real size. On phones and with Save-Data it stays a poster like any
-                    scene, unless data-phone="live" (/try/, where phones get the phone layout).
-                    The default draws the app at 1440 × 900, scaled to the screen.
+                    with no story (data-play defaults to "free"), so the app's text is at its real
+                    size. On phones and with Save-Data it stays a poster like any scene, unless
+                    data-phone="live" (/try/, where phones get the phone layout). The default
+                    draws the app 1440 wide (data-app-width) and as tall as the screen's shape
+                    asks, scaled to fit the screen, so it fills a drawn screen whole whatever its
+                    shape: nothing cut, no band.
     data-phone-recording
                     On phones (< 900px) the page plays this recording instead of loading the live
                     app, stepped like the story: media/<name>.mp4 and media/<name>.json (one cue
@@ -55,8 +59,8 @@
                     Save-Data) keep the poster and the Try link.
     data-app-width  The width the app is drawn at before it is scaled to the screen (default 1440,
                     at least 1000, where the study view still has its three panes; the height
-                    follows at 16:10). A product page's frame uses 1000, so the app's text is
-                    about 45% larger on the same screen than at 1440.
+                    follows the screen's shape). A product page's frame uses 1000, so the app's
+                    text is about 45% larger on the same screen than at 1440.
     data-title      The frame's title (default "Klaro sample workspace").
     <li data-at>    Where the step starts in the opening's pin, from 0 to 1 (defaults: 0.15, 0.35,
                     0.6, 0.85). The study story's four <li> are the tap, the lecture, the question
@@ -85,44 +89,55 @@
                     media/ar/marking.mp4.
     <li data-t>     The cue's start, in seconds. Without it, the times come from media/<name>.json,
                     fetched once the video is near.
-    data-camera="0 .9 260 300; 4.8 .7 640 420"
-                    A camera over the video, keyed to the video's own time and independent of the
-                    captions (redesign.md §7.6, §7.9): from each time (seconds) it eases, over
-                    0.8 s, to show the point x, y (the recording's own pixels, 1440 × 900 for
-                    the desktop recordings) in the middle of the screen at the given scale (screen
-                    pixels per recording pixel: .9 shows the app's 14px text at about 13px). A big
-                    screen keeps the scale and shows more round the point; a small one shows less.
-                    It never zooms out past the whole recording, nor in more than 4×. The poster
-                    gets the first view, so it reads before the video plays. A still (a figure
-                    with data-camera and an <img>, no recording) gets the first view too; its
-                    pixels are the <img>'s width and height.
-                    A second number above 8 is a width instead of a scale: "4.8 700 380 700"
-                    puts 700 of the recording's pixels across the screen, whatever its size, so a
-                    component that fits stays whole on every phone.
-    data-camera-narrow="0 420 260 400; 4.7 760 420 380"
-                    The track used while the screen is narrower than 480px (phones, and the
-                    plates of the 768 layout), keyed on whole components so no word is cut at the
-                    screen's edge. Written in widths. Without it the narrow screen uses data-camera.
+    data-camera="1" The camera (below): how far it walks in before the recording plays.
+    data-camera-narrow
+                    The same, for a screen narrower than 480px (phones, and the plates of the 768
+                    layout). "0" keeps the whole scene there. Without it, data-camera.
     media/<name>-sm.mp4
-                    On a screen narrower than 480px the recording plays its -sm file (960 × 600,
-                    H.264, +faststart: about a sixth of the bytes; data-sm="none" opts out), and
-                    the full one if the -sm is missing. The camera stays in the full recording's
-                    pixels (the poster's width and height). Give the poster a phone source too:
+                    The recording plays its -sm file (960 × 600, H.264, +faststart: about a sixth
+                    of the bytes; data-sm="none" opts out) while it is drawn at no more than about
+                    960 device pixels across (its screen, times the camera's zoom, times the
+                    screen's pixel ratio), and the full one otherwise, or if the -sm is missing.
+                    Give the poster a phone source too:
                     srcset="media/<name>-poster-sm.webp 960w, media/<name>-poster.jpg 1440w"
                     sizes="(max-width: 640px) 320px, 1440px".
-    <li data-cam="2.2 980 420">
-                    Older form, per caption: zoom (1 = the whole recording), x and y. A "cam" in
-                    the JSON cue does the same. data-camera wins when both are given.
-    The camera works in the recording's pixels from the top left of the screen, which is how
-    site.css fits it (object-fit: cover, object-position: 0 0), so a screen of any shape works
-    (the drawn screens on the scene plates are not exactly 16:10).
-    The source is set only when the video comes within 200px of the screen. It plays when 60% of it
-    is on screen and pauses when it leaves. With reduced motion or Save-Data it waits for Play.
+    A recording is always whole in its screen: site.css contains it (object-fit: contain, at the
+    top, centred across) on the app's own page colour, so a drawn screen that isn't 16:10 shows a
+    strip of that colour under the app, never a cut. Nothing zooms inside a screen.
+    The source is set only after the visitor's first scroll, tap or key, and once the video comes
+    within 200px of the screen, so a page that opens on a recording shows its poster and fetches
+    nothing more until then. It plays when 60% of it is on screen and pauses when it leaves. With
+    reduced motion or Save-Data it waits for Play. The poster may be another moment of the
+    recording (the quiz's poster is the finished homework): the video fades in over it once it
+    has a frame.
     A live scene loads its app only after the page's load event, once it is within a quarter of a
     screen of view. During the visitor's turn the app takes a pointer at once, but the keyboard and
     screen readers skip it until the visitor taps in it or presses "Use the sample app with the
     keyboard" (a button that shows when it has focus), so a keyboard doesn't wade through its ~50
     stops to reach the page.
+
+  ── The camera (the owner's call, 2026-10-09) ───────────────────────────────────────────────
+
+    It never zooms inside a screen. It moves the whole picture, the scene plate with its drawn
+    device and the app in it, inside the plate's own frame, like a camera walking up to the desk.
+    The frame stays where it is and clips; the drawn screen (with a little of its bezel) always
+    stays in view, so the app is never cut.
+
+    data-camera="amount [fx fy]"
+                    amount: 0 is the whole scene, 1 is the drawn screen plus a little bezel filling
+                    the frame (about 2× on the laptop plates at 1440, about 1.5× on a phone, where
+                    the plates are already cropped round the device); never more. fx fy (0–1,
+                    default .5 .5): the point of the screen to lean towards, as far as the whole
+                    screen allows.
+    A recording: the poster rests on the whole scene. When the recording is about to play, the
+    camera walks in (--dur-camera, --ease-inout in site.css) and the video starts once it is there;
+    it holds while the recording plays (the recordings have their own zooms inside the app, so the
+    camera stays still meanwhile), and a moment after the end it walks back out to the whole scene.
+    A still (a figure with data-camera and an <img>, no recording): the camera walks in once, when
+    the still is well on screen, and stays. The frame is the figure's .plate--device, or the
+    .pr-shot-field of a device on a plain field; a frame where the screen already fills most of the
+    picture (the push would be under 1.12×) doesn't move. With reduced motion the camera never
+    moves. A live scene has no camera.
 
   ── 3. The opening (redesign.md §7.8) ───────────────────────────────────────────────────────
 
@@ -153,6 +168,9 @@
                       (0–1) on each. Its words are wrapped in <button class="step-go"> (inline-reset
                       to look like the text; the focus ring is kept). A click jumps there. Use
                       data-steps="static" for a list that should not be clickable.
+    .plate--device, .pr-shot-field
+                      the camera's frame: its children get an inline transform while it is in.
+    video[data-shown] a recording's video once it has a frame (site.css fades it in over the poster).
     [data-screen]     gets .show-cam > iframe.show-frame, .show-cursor (a drawn pointer and its tap)
                       and .show-hint > .show-hint-ring (the "your turn" ring: style it in site.css),
                       or video.show-video (the phone recording).
@@ -161,9 +179,9 @@
                       missing (inside [data-actions], or at the end of the figure).
     [data-after-tap]  Unhidden after the visitor's first tap in the app.
 
-  With reduced motion there is no story, no clock and no autoplay. A live study scene is handed to
-  the visitor at once, and recordings wait for Play. If JavaScript is off or the frame fails, the
-  poster and the words stay.
+  With reduced motion there is no story, no clock, no autoplay and no camera. A live study scene is
+  handed to the visitor at once, and recordings wait for Play. If JavaScript is off or the frame
+  fails, the poster and the words stay.
 
   window.KlaroShowcase.get(figure) returns a figure's controller (for tests and pages added later).
 */
@@ -177,7 +195,6 @@
   var ROOT = ME ? ME.slice(0, ME.lastIndexOf('/') + 1) : '/';
   var LANG = /^ar/i.test(HTML.lang || '') ? 'ar' : 'en';
   var APP_W = 1440, APP_H = 900;
-  var WHOLE = { z: 1, x: 720, y: 450 };
   var FRAME = 'showcase/showcase.html';
   // The visitor's turn (free.ts) only works inside the study view. On any other scene the app's
   // guard loops until the stack overflows (showcase.md §4.2). Practice redirects into the study
@@ -205,7 +222,6 @@
 
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function lin(p, a, b) { return b === a ? (p >= b ? 1 : 0) : clamp((p - a) / (b - a), 0, 1); }
-  function smooth(p, a, b) { var x = lin(p, a, b); return x * x * (3 - 2 * x); }
   function mix(a, b, t) { return a + (b - a) * t; }
   function now() { return W.performance && performance.now ? performance.now() : Date.now(); }
   function noop() {}
@@ -261,72 +277,194 @@
     if (!s) { var m = fig.querySelector('img, video'); s = m ? m.parentNode : fig; }
     return s;
   }
-  // The camera needs a positioned box that clips, in the app's shape. site.css should give it
-  // that; this only fills in what is missing.
+  // A screen needs a positioned box that clips, in the app's shape. site.css should give it that;
+  // this only fills in what is missing.
   function boxIn(screen) {
     var cs = W.getComputedStyle(screen);
     if (cs.position === 'static') screen.style.position = 'relative';
     if (cs.overflow === 'visible') screen.style.overflow = 'hidden';
     if (!screen.clientHeight) screen.style.aspectRatio = APP_W + ' / ' + APP_H;
   }
-  function readCam(text) {
-    var v = (text || '').trim().split(/[\s,]+/).map(parseFloat);
-    return v.length === 3 && v.every(isFinite) ? { z: v[0], x: v[1], y: v[2] } : null;
+  // The motion tokens in site.css (:root), so the camera and the CSS keep one system: the camera's
+  // duration (--dur-camera) and its slow ease-in-out (--ease-inout), read once they are needed.
+  var TOKENS = null;
+  function tokens() {
+    if (TOKENS) return TOKENS;
+    var cs = null;
+    try { cs = W.getComputedStyle(HTML); } catch (e) { /* no styles: the defaults below */ }
+    function tok(name, dflt) { var v = cs && cs.getPropertyValue(name).trim(); return v || dflt; }
+    var d = tok('--dur-camera', '2s'), ms = /ms$/.test(d) ? parseFloat(d) : parseFloat(d) * 1000;
+    TOKENS = {
+      camera: isFinite(ms) && ms > 0 ? ms : 2000,
+      inout: bezier(tok('--ease-inout', 'cubic-bezier(.37, 0, .63, 1)'))
+    };
+    return TOKENS;
   }
-  // data-camera: "t s x y; t s x y; …", sorted by time. s up to 8 is a scale (screen px per
-  // recording px); above 8 it is a width: that many recording px across the screen, whatever the
-  // screen's size, so a component that fits stays whole on every phone.
-  function readTrack(text) {
-    return (text || '').split(';').map(function (part) {
-      var v = part.trim().split(/[\s,]+/).map(parseFloat);
-      if (!(v.length === 4 && v.every(isFinite) && v[1] > 0)) return null;
-      return v[1] > 8 ? { t: v[0], w: v[1], x: v[2], y: v[3] } : { t: v[0], s: v[1], x: v[2], y: v[3] };
-    }).filter(Boolean).sort(function (a, b) { return a.t - b.t; });
+  // A CSS cubic-bezier() as a function of time (0–1): x is solved by Newton's method, with
+  // bisection when that doesn't settle.
+  function bezier(css) {
+    var m = /cubic-bezier\(([^)]*)\)/.exec(css || ''), p = m ? m[1].split(',').map(parseFloat) : [];
+    if (p.length !== 4 || !p.every(isFinite)) p = [0.37, 0, 0.63, 1];
+    function coef(a1, a2) { var c = 3 * a1, b = 3 * (a2 - a1) - c; return [1 - c - b, b, c]; }
+    var X = coef(p[0], p[2]), Y = coef(p[1], p[3]);
+    function at(k, t) { return ((k[0] * t + k[1]) * t + k[2]) * t; }
+    function slope(t) { return (3 * X[0] * t + 2 * X[1]) * t + X[2]; }
+    return function (x) {
+      if (!(x > 0)) return 0;
+      if (x >= 1) return 1;
+      var t = x, i, d;
+      for (i = 0; i < 6; i++) {
+        d = slope(t);
+        if (Math.abs(d) < 1e-6) break;
+        t -= (at(X, t) - x) / d;
+      }
+      if (!(t >= 0 && t <= 1) || Math.abs(at(X, t) - x) > 1e-4) {
+        var lo = 0, hi = 1;
+        for (i = 0, t = x; i < 32; i++) { if (at(X, t) < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+      }
+      return at(Y, t);
+    };
   }
-  // A key's scale on a screen `sw` px wide.
-  function keyScale(c, sw) { return c.w ? sw / c.w : c.s; }
+
   // A screen narrower than this uses the figure's data-camera-narrow (when it has one) and the
   // recording's -sm file: phones, and the plates of the 768 layout.
   var NARROW = 480;
-  function tracks(fig) {
-    var wide = readTrack(fig.getAttribute('data-camera')), narrow = readTrack(fig.getAttribute('data-camera-narrow'));
-    return function (sw) { return narrow.length && sw < NARROW ? narrow : wide; };
-  }
-  var CAM_EASE = 0.8, CAM_MAX = 4;
-  // A recording fills its screen like object-fit: cover from the top left (site.css): at zoom 1
-  // its pixels are drawn at `base`, and the camera's transform scales from there.
-  function coverBase(w, h, vw, vh) { return Math.max(w / vw, h / vh); }
-  // Lays a recording, its poster or a still out for the camera: the element is the whole
-  // picture at the cover scale (not the screen's box, which would clip what the camera pans to),
-  // its top left at the screen's, and the camera's transform on it. The screen clips. css ''
-  // gives the element back to site.css.
-  function lay(el, css, w, h, vw, vh) {
-    if (!el) return;
-    var st = el.style;
-    if (!css) {
-      if (st.transform) { st.transform = st.transformOrigin = st.width = st.height = st.left = st.top = st.right = st.bottom = st.objectFit = st.maxWidth = st.maxHeight = ''; }
-      return;
+  // data-camera="amount [fx fy]" (the top of this file). 0, or nothing, is no camera.
+  function readPush(text, fig) {
+    var v = (text || '').trim().split(/[\s,]+/).map(parseFloat);
+    if (!isFinite(v[0])) return null;
+    if (v.length > 3 || /;/.test(text)) {
+      warn('data-camera is "amount fx fy" now (the camera moves the whole plate)', fig && (fig.getAttribute('data-recording') || fig.id));
+      return null;
     }
-    var b = coverBase(w, h, vw, vh);
-    // Wider than the screen when the screen is narrower than the picture (every drawn screen is):
-    // klaro.css caps img and video at 100%, which would squeeze the picture and leave a dark band.
-    st.maxWidth = st.maxHeight = 'none';
-    st.left = st.top = '0';
-    st.right = st.bottom = 'auto';
-    st.width = (vw * b).toFixed(1) + 'px';
-    st.height = (vh * b).toFixed(1) + 'px';
-    st.objectFit = 'fill';
-    st.transformOrigin = '0 0';
-    if (st.transform !== css) st.transform = css;
+    var a = clamp(v[0], 0, 1);
+    return a > 0 ? { a: a, fx: isFinite(v[1]) ? clamp(v[1], 0, 1) : 0.5, fy: isFinite(v[2]) ? clamp(v[2], 0, 1) : 0.5 } : null;
   }
-  function camTransform(w, h, vw, vh, z, x, y) {
-    var s = coverBase(w, h, vw, vh) * z;
-    var tx = Math.min(0, Math.max(w - vw * s, w / 2 - x * s));
-    var ty = Math.min(0, Math.max(h - vh * s, h / 2 - y * s));
-    return 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z.toFixed(4) + ')';
+  function pushOf(fig) {
+    var wide = readPush(fig.getAttribute('data-camera'), fig), has = fig.hasAttribute('data-camera-narrow');
+    var narrow = has ? readPush(fig.getAttribute('data-camera-narrow'), fig) : null;
+    return function (sw) { return has && sw < NARROW ? narrow : wide; };
   }
-  // Cue times (and cameras) from media/<name>.json, for the <li> that don't carry their own.
-  function cuesFrom(name, times, cams, done) {
+
+  /*
+    The camera (the top of this file): the whole picture moves inside its frame, never the app
+    inside its screen. Its children (the plate's picture and the device, with the app in it) get
+    one transform between them, so they move as one: each gets translate() scale() from its own
+    top left, offset so that the frame's point p lands on T + z·p for all of them. The frame keeps
+    its own overflow and corners, and clips.
+    A view is { z, ux, uy }: the zoom, and where the frame's centre sits between the two ends of
+    the range that keeps the whole drawn screen (and a little bezel) and nothing but the picture
+    in view, across and down (0–1). Moving between two views eases z geometrically and u in a
+    straight line, so every frame on the way keeps the screen whole too.
+  */
+  var BEZEL = 0.03, WORTH = 1.12, REST = { z: 1, ux: 0.5, uy: 0.5 };
+  function Camera(fig, screen) {
+    var stage = fig.querySelector('.plate--device') || fig.querySelector('.pr-shot-field');
+    if (!stage || !screen || !stage.contains(screen)) return null;
+    var cur = REST, done = { x: 0, y: 0, z: 1 }, g = null, tw = null, raf = 0, aim = null;
+
+    // The frame's size and the drawn screen's box in it, in the frame's own px, measured through
+    // whatever transform is on (and through a scaled ancestor: a covered stack card).
+    function measure() {
+      var F = stage.getBoundingClientRect(), k = stage.offsetWidth ? F.width / stage.offsetWidth : 1;
+      if (!F.width || !F.height || !k) return null;
+      function box(el) {
+        var r = el.getBoundingClientRect();
+        return { x: ((r.left - F.left) / k - done.x) / done.z, y: ((r.top - F.top) / k - done.y) / done.z, w: r.width / k / done.z, h: r.height / k / done.z };
+      }
+      var w = F.width / k, h = F.height / k, s = box(screen), b = BEZEL * s.w;
+      var x0 = Math.max(0, s.x - b), y0 = Math.max(0, s.y - b), x1 = Math.min(w, s.x + s.w + b), y1 = Math.min(h, s.y + s.h + b);
+      var top = Math.min(w / (x1 - x0), h / (y1 - y0));
+      var parts = [];
+      each(stage.children, function (el) { var o = box(el); parts.push({ el: el, x: o.x, y: o.y }); });
+      return { w: w, h: h, s: s, x0: x0, y0: y0, x1: x1, y1: y1, top: top >= WORTH ? top : 1, parts: parts };
+    }
+    function geo() { return g || (g = measure()); }
+    // The range the frame's centre may take at zoom z, on one axis: the screen stays in, and the
+    // picture fills the frame.
+    function range(z, len, a0, a1) {
+      var half = len / z / 2;
+      return [Math.max(a1 - half, half), Math.min(a0 + half, len - half)];
+    }
+    function along(u, r) { return r[1] > r[0] ? r[0] + u * (r[1] - r[0]) : (r[0] + r[1]) / 2; }
+    function where(c, r) { return r[1] > r[0] ? clamp((c - r[0]) / (r[1] - r[0]), 0, 1) : 0.5; }
+    // A push (data-camera) as a view on this frame now.
+    function viewOf(push) {
+      var G = geo();
+      if (!push || !G || G.top <= 1) return REST;
+      var z = 1 + push.a * (G.top - 1);
+      return {
+        z: z,
+        ux: where(G.s.x + push.fx * G.s.w, range(z, G.w, G.x0, G.x1)),
+        uy: where(G.s.y + push.fy * G.s.h, range(z, G.h, G.y0, G.y1))
+      };
+    }
+    function put(v) {
+      cur = v;
+      var G = geo();
+      if (!G) return;
+      if (v.z <= 1.0005) {
+        if (done.z !== 1) G.parts.forEach(function (p) { p.el.style.transform = p.el.style.transformOrigin = p.el.style.willChange = ''; });
+        done = { x: 0, y: 0, z: 1 };
+        return;
+      }
+      var cx = along(v.ux, range(v.z, G.w, G.x0, G.x1)), cy = along(v.uy, range(v.z, G.h, G.y0, G.y1));
+      var tx = G.w / 2 - cx * v.z, ty = G.h / 2 - cy * v.z;
+      G.parts.forEach(function (p) {
+        p.el.style.transformOrigin = '0 0';
+        p.el.style.transform = 'translate(' + (tx + (v.z - 1) * p.x).toFixed(2) + 'px,' + (ty + (v.z - 1) * p.y).toFixed(2) + 'px) scale(' + v.z.toFixed(4) + ')';
+      });
+      done = { x: tx, y: ty, z: v.z };
+    }
+    function tick() {
+      raf = 0;
+      if (!tw) return;
+      // The end is worked out from the frame as it is now, so a layout that settles mid-walk
+      // (fonts, the step list being built) still ends with the whole screen in view.
+      var q = clamp((now() - tw.t0) / tw.ms, 0, 1), e = tokens().inout(q), a = tw.a, b = viewOf(tw.push);
+      put({ z: a.z * Math.pow(b.z / a.z, e), ux: mix(a.ux, b.ux, e), uy: mix(a.uy, b.uy, e) });
+      if (q < 1) { raf = requestAnimationFrame(tick); return; }
+      var fn = tw.fn;
+      tw = null;
+      // Off the compositor's layer again, so the picture is drawn sharp at its new size.
+      if (g) g.parts.forEach(function (p) { p.el.style.willChange = ''; });
+      if (fn) fn();
+    }
+    function same(a, b) { return Math.abs(a.z - b.z) < 0.002 && Math.abs(a.ux - b.ux) < 0.002 && Math.abs(a.uy - b.uy) < 0.002; }
+    function samePush(a, b) { return a === b || !!(a && b && a.a === b.a && a.fx === b.fx && a.fy === b.fy); }
+    // Walks to `push` (null: the whole scene) and calls fn when it is there; at once if it is.
+    function go(push, fn) {
+      aim = push;
+      if (still()) { put(REST); if (fn) fn(); return; }
+      if (tw && samePush(tw.push, push)) { tw.fn = fn; return; }
+      g = measure();
+      if (!g) { if (fn) fn(); return; }
+      if (!tw && same(cur, viewOf(push))) { if (fn) fn(); return; }
+      g.parts.forEach(function (p) { p.el.style.willChange = 'transform'; });
+      tw = { a: cur, push: push, t0: now(), ms: tokens().camera, fn: fn };
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+    // A new size (or a layout that settled): measure again and stand where the camera was, or, in
+    // the middle of a walk, let the walk carry on to the new end.
+    function refit() {
+      if (tw) { g = null; return; }
+      put(REST);
+      g = measure();
+      put(viewOf(aim));
+    }
+    // The frame, and the screen in it: the screen grows when the drawn picture arrives and the CSS
+    // frame's bar goes (site.css, .is-drawn), inside a frame that keeps its size.
+    if (W.ResizeObserver) { var ro = new ResizeObserver(guard(refit, 'camera')); ro.observe(stage); ro.observe(screen); }
+    else W.addEventListener('resize', guard(refit, 'camera'));
+    return {
+      go: go,
+      // How far a push zooms on this frame now (1: it doesn't move).
+      zoom: function (push) { return still() ? 1 : viewOf(push).z || 1; }
+    };
+  }
+
+  // Cue times from media/<name>.json, for the <li> that don't carry their own.
+  function cuesFrom(name, times, done) {
     if (!W.fetch) return;
     fetch(ROOT + 'media/' + name + '.json').then(function (r) {
       if (!r.ok) throw new Error(r.status);
@@ -336,7 +474,6 @@
       if (cues.length !== times.length) warn('the cues of ' + name + ' don’t match its list', cues.length + ' cues, ' + times.length + ' items');
       for (var k = 0; k < times.length; k++) {
         if (!isFinite(times[k]) && cues[k] && isFinite(+cues[k].t)) times[k] = +cues[k].t;
-        if (!cams[k] && cues[k] && cues[k].cam) cams[k] = cues[k].cam;
       }
       done();
     }).catch(function (e) { warn('no cues for ' + name, e && e.message); });
@@ -553,72 +690,61 @@
   }
 
   /*
-    Stories: a camera over the live app, as Omar's hero.js plays it, but every point is found in
-    the app with `measure` (showcase.md §2.1), so it also works in Arabic, where the panes mirror.
-    `px` are Omar's English pixels, used only when a target can't be measured (mirrored in Arabic).
-    The book page is a PDF and never mirrors, so points inside it are fractions of the page.
+    Stories: Omar's hero.js, without its camera (the owner, 2026-10-09: nothing zooms inside a
+    screen). The whole app stays in view; a drawn pointer taps the book, the lecture jumps and the
+    question shows, each at its own calm pace. Every point is found in the app with `measure`
+    (showcase.md §2.1), so it also works in Arabic, where the panes mirror. `px` are Omar's English
+    pixels, used only when a target can't be measured (mirrored in Arabic). The book page is a PDF
+    and never mirrors, so points inside it are fractions of the page.
   */
   var STORIES = {
     study: {
       shown: { selector: '[data-book-page="2"] .textLayer span' },
       targets: {
-        page: { selector: '[data-book-page="2"]' },
-        video: { selector: '[data-pane="lecture"] video' },
-        question: { selector: '[data-pane="questions"] article' }
+        page: { selector: '[data-book-page="2"]' }
       },
       points: {
-        passage: { from: 'page', at: [0.58, 0.33], px: [215, 395] },   // "Parts every cell has"
-        tap: { from: 'page', at: [0.545, 0.318], px: [205, 392] },
-        hint: { from: 'page', at: [0.53, 0.51], px: [200, 470] },      // "The cell membrane"
-        lecture: { from: 'video', at: [0.5, 0.5], px: [700, 470] },
-        question: { from: 'question', at: [0.5, 0.17], px: [1228, 420] }
+        tap: { from: 'page', at: [0.545, 0.318], px: [205, 392] },     // "Parts every cell has"
+        hint: { from: 'page', at: [0.53, 0.51], px: [200, 470] }       // "The cell membrane"
       },
       beats: [
-        { // A passage of the book is tapped (the app points at it, as a click would).
-          ms: 2800,
+        { // A passage of the book is tapped (the app points at it, as a click would): the pointer
+          // glides in, rests, taps, and fades.
+          ms: 3200,
           enter: function (S) { S.tell({ free: false, scrub: false, step: 0 }); S.measure(); },
           draw: function (S, q) {
-            var p = S.point('passage'), t = S.point('tap'), g = smooth(q, 0.15, 0.6);
-            S.camTo({ z: 2.1, x: p.x, y: p.y }, smooth(q, 0, 0.5));
-            S.cursor(mix(t.x + S.dir * 330, t.x, g), mix(t.y + 230, t.y, g), smooth(q, 0.1, 0.2) * (1 - smooth(q, 0.86, 1)));
-            S.ripple(lin(q, 0.62, 0.86));
-            if (q >= 0.62) S.once('point', function () { S.tell({ step: 1 }); });
+            var t = S.point('tap'), g = S.ease(lin(q, 0.1, 0.6));
+            S.cursor(mix(t.x + S.dir * 220, t.x, g), mix(t.y + 150, t.y, g), S.ease(lin(q, 0.04, 0.2)) * (1 - S.ease(lin(q, 0.86, 1))));
+            S.ripple(lin(q, 0.66, 0.94));
+            if (q >= 0.66) S.once('point', function () { S.tell({ step: 1 }); });
           }
         },
         { // The lecture jumps to that moment and plays the explanation (scrubbed, 113 s to 163 s).
           ms: 4200,
-          enter: function (S) { S.tell({ step: 1 }); S.tell({ step: 2, scrub: true }); S.time(113, true); S.measure(); },
-          draw: function (S, q) {
-            var v = S.point('lecture');
-            S.cursor(0, 0, 0);
-            S.camTo({ z: mix(1.9, 2.0, lin(q, 0.3, 1)), x: v.x, y: v.y }, smooth(q, 0, 0.3));
-            S.time(113 + 50 * lin(q, 0.2, 1));
-          }
+          enter: function (S) { S.cursor(0, 0, 0); S.tell({ step: 1 }); S.tell({ step: 2, scrub: true }); S.time(113, true); S.measure(); },
+          draw: function (S, q) { S.time(113 + 50 * lin(q, 0.1, 1)); }
         },
         { // The past-paper question on that passage, beside it.
-          ms: 2800,
+          ms: 3000,
           enter: function (S) { S.tell({ step: 2, scrub: true }); S.measure(); },
-          draw: function (S, q) {
-            var p = S.point('question');
-            S.camTo({ z: 2.3, x: p.x, y: p.y }, smooth(q, 0, 0.45));
-          }
+          draw: noop
         },
-        { // Back out to the book and the lecture, side by side; then the study view is the visitor's.
-          ms: 1500,
+        { // The study view is the visitor's.
+          ms: 800,
           enter: function (S) { S.tell({ step: 2 }); },
-          draw: function (S, q) { S.camTo(S.freeView(), smooth(q, 0, 1)); },
+          draw: noop,
           end: function (S) { S.handOver(); }
         }
       ]
     }
   };
-  // Before the first step: the whole app, as it opened.
+  // Before the first step: the app as it opened.
   var INTRO = {
     ms: 700,
     enter: function (S) { S.tell({ free: false, scrub: false, step: 0 }); S.cursor(0, 0, 0); },
-    draw: function (S, q) { S.camTo(WHOLE, smooth(q, 0, 1)); }
+    draw: noop
   };
-  // "steps": each <li> is a step of the scene, with no camera.
+  // "steps": each <li> is a step of the scene.
   function stepBeats(items) {
     return items.map(function (li, k) {
       var s = parseInt(li.getAttribute('data-step'), 10);
@@ -626,7 +752,7 @@
       return {
         ms: 3000,
         enter: function (S) { S.tell({ step: s }); },
-        draw: function (S, q) { S.camTo(WHOLE, smooth(q, 0, 1)); }
+        draw: noop
       };
     });
   }
@@ -648,7 +774,7 @@
     var scene = fig.getAttribute('data-showcase') || 'study';
     var fill = fig.getAttribute('data-fit') === 'fill';
     var storyName = fig.getAttribute('data-story');
-    // A frame at its own size has no camera, so no story.
+    // A frame at its own size has no story.
     var story = fill ? null : STORIES[storyName == null ? STORY_OF[scene] || '' : storyName] || null;
     var mode = fig.getAttribute('data-play') || (story ? 'story' : fill ? 'free' : 'steps');
     var freeKind = FREE[scene] || 0;
@@ -659,8 +785,9 @@
     var screen = screenOf(fig);
     var api = { fig: fig, scene: scene };
     fig._showcase = api;
-    // The app's own size in the frame (data-app-width, 1440 by default; 16:10). Narrower draws the
-    // app larger on a small screen while it keeps its three panes (they need about 1000px).
+    // The app's own size in the frame (data-app-width, 1440 by default; the height follows the
+    // screen's shape, see fit()). Narrower draws the app larger on a small screen while it keeps
+    // its three panes (they need about 1000px).
     var AW = Math.max(1000, +fig.getAttribute('data-app-width') || APP_W), AH = Math.round(AW * APP_H / APP_W);
 
     // Phones and Save-Data: no live app inline (it is the whole app, ~1.1 MB of code). Phones
@@ -683,7 +810,7 @@
     var camEl = null, frame = null, cursor = null, tapEl = null, hint = null;
     var talking = false, drawn = false, dead = false, freeOn = false, used = false;
     var rects = {}, seq = 0, waiting = {}, pinger = 0, born = 0;
-    var Wd = 0, Ht = 0, base = 1, cam = WHOLE, from = WHOLE;
+    var Wd = 0, Ht = 0, base = 1;
     var raf = 0, bi = -1, t0 = 0, once = {}, lastTime = -1;
     var lis = fig.querySelectorAll('[data-steps] > li');
     var beats = story ? story.beats : mode === 'steps' ? stepBeats(Array.prototype.slice.call(lis)) : [];
@@ -747,9 +874,6 @@
           measure(story.targets, function (r) {
             if (!r) return;
             for (var k in r) if (r.hasOwnProperty(k)) rects[k] = r[k];
-            // Handed over before the panes were measured: frame them now, unless the visitor is
-            // already using the app.
-            if (freeOn && !used && !fill) place(freeView());
             placeHint();
           });
         }, d);
@@ -757,49 +881,33 @@
     }
     function point(name) {
       var p = story && story.points[name];
-      if (!p) return { x: WHOLE.x, y: WHOLE.y };
+      if (!p) return { x: AW / 2, y: AH / 2 };
       var r = rects[p.from];
       if (r && r.w > 0) return { x: r.x + p.at[0] * r.w, y: r.y + p.at[1] * r.h };
       return { x: dir < 0 ? AW - p.px[0] : p.px[0], y: p.px[1] };
     }
 
-    // The camera: the app point at the centre of the screen, and a zoom, as one CSS transform.
+    // The app in its screen, whole: drawn AW wide and as tall as the screen's shape asks (a drawn
+    // screen on a plate is not exactly 16:10), then scaled to fit, so nothing is cut and there is no
+    // band. There is no camera inside the screen (the owner, 2026-10-09).
     function fit() {
       Wd = screen.clientWidth;
       Ht = screen.clientHeight || Math.round(Wd * AH / AW);
-      // The app covers the screen whatever its shape (a drawn screen on a plate is not exactly 16:10).
-      base = coverBase(Wd, Ht, AW, AH);
-      place(cam);
+      if (!fill && Wd && Ht) {
+        var ah = clamp(Math.round(AW * Ht / Wd), Math.round(AW * 0.5), Math.round(AW * 0.8));
+        if (ah !== AH) {
+          AH = ah;
+          if (camEl) { camEl.style.height = AH + 'px'; frame.style.height = AH + 'px'; }
+          if (talking) remeasure();
+        }
+      }
+      base = Math.min(Wd / AW, Ht / AH) || 1;
+      if (camEl && !fill) camEl.style.transform = 'translate(' + ((Wd - AW * base) / 2).toFixed(2) + 'px,0) scale(' + base.toFixed(5) + ')';
       placeHint();
     }
-    function view(c) {
-      var s = base * c.z;
-      return {
-        s: s,
-        tx: Math.min(0, Math.max(Wd - AW * s, Wd / 2 - c.x * s)),
-        ty: Math.min(0, Math.max(Ht - AH * s, Ht / 2 - c.y * s))
-      };
-    }
-    function place(c) {
-      cam = c;
-      if (!camEl || fill) return;
-      var v = view(c);
-      camEl.style.transform = 'translate(' + v.tx.toFixed(2) + 'px,' + v.ty.toFixed(2) + 'px) scale(' + v.s.toFixed(5) + ')';
-    }
+    // Puts an overlay (the pointer, the hint ring) on the app's point x, y.
     function at(el, x, y) {
-      var v = view(cam);
-      el.style.transform = 'translate(' + (v.tx + x * v.s).toFixed(1) + 'px,' + (v.ty + y * v.s).toFixed(1) + 'px)';
-    }
-    // The visitor's turn: the book and the lecture side by side, as large as they fit (the
-    // questions pane is cut; the whole app is a tap on "Try it full screen" away). The app's own
-    // header is off the top. Until the panes are measured, the whole app.
-    function freeView() {
-      var a = rects.page, v = rects.video;
-      if (!story || !a || !v || !(a.w > 0) || !(v.w > 0)) return WHOLE;
-      var left = Math.max(0, Math.min(a.x, v.x) - 28), right = Math.min(AW, Math.max(a.x + a.w, v.x + v.w) + 28);
-      // Never past the app's own size on a big screen (a frame drawn at 1000 on a 1100px screen).
-      var z = clamp(Math.min(AW / (right - left), 1 / base), 1, 1.7), half = AH / (2 * z);
-      return { z: z, x: (left + right) / 2, y: clamp(Math.min(a.y, v.y) - 24 + half, half, AH - half) };
+      el.style.transform = 'translate(' + ((Wd - AW * base) / 2 + x * base).toFixed(1) + 'px,' + (y * base).toFixed(1) + 'px)';
     }
     function placeHint() {
       if (!hint || hint.hidden) return;
@@ -812,17 +920,18 @@
       tell: function (m) { tell(m); },
       point: point,
       measure: remeasure,
-      camTo: function (c, t) { place({ z: mix(from.z, c.z, t), x: mix(from.x, c.x, t), y: mix(from.y, c.y, t) }); },
-      freeView: function () { return freeView(); },
+      ease: function (q) { return tokens().inout(q); },
       cursor: function (x, y, o) {
         if (!cursor) return;
         cursor.style.opacity = o > 0.001 ? o.toFixed(3) : '0';
         if (o > 0.001) at(cursor, x, y);
       },
+      // The tap: a soft ring that opens and fades (eased, no snap).
       ripple: function (q) {
         if (!tapEl) return;
-        tapEl.style.transform = 'scale(' + (0.3 + 2.2 * q).toFixed(3) + ')';
-        tapEl.style.opacity = q > 0 && q < 1 ? (1 - q).toFixed(3) : '0';
+        var e = tokens().inout(q);
+        tapEl.style.transform = 'scale(' + (0.5 + 1.1 * e).toFixed(3) + ')';
+        tapEl.style.opacity = q > 0 && q < 1 ? (0.9 * (1 - e)).toFixed(3) : '0';
       },
       time: function (t, force) {
         if (force || Math.abs(t - lastTime) > 0.04) { lastTime = t; if (!force) tell({ time: t }); }
@@ -843,24 +952,22 @@
       for (var k = Math.max(prev + 1, 0); k < i; k++) {
         once = {};
         beats[k].enter(S);
-        from = cam;
         beats[k].draw(S, 1);
       }
       var b = i < 0 ? INTRO : beats[i];
       once = {};
       b.enter(S);
-      from = cam;
       steps.set(i, 0);
       if (how === 'instant' || still()) { b.draw(S, 1); steps.set(i, 1); finish(i); return; }
       bi = i;
       t0 = now();
       raf = requestAnimationFrame(loop);
     }
-    function loop(t) {
+    function loop() {
       raf = 0;
       if (dead) return;
       var b = bi < 0 ? INTRO : beats[bi];
-      var q = clamp((t - t0) / b.ms, 0, 1);
+      var q = clamp((now() - t0) / b.ms, 0, 1);
       guard(b.draw, 'story')(S, q);
       if (bi >= 0) steps.set(bi, q);
       if (q < 1) raf = requestAnimationFrame(loop);
@@ -877,7 +984,6 @@
       var free = !!freeKind;
       S.cursor(0, 0, 0);
       S.ripple(0);
-      place(fill ? cam : free ? freeView() : WHOLE);
       tell({ scrub: false, free: free });
       if (free) {
         freeOn = true;
@@ -987,9 +1093,11 @@
     function create() {
       if (frame || dead) return;
       boxIn(screen);
+      // The app fades in once it has drawn, on the site's slow UI curve (site.css motion tokens).
+      var fade = ';opacity:0;pointer-events:none;transition:opacity var(--dur-slow, .6s) var(--ease-ui, ease-out)';
       camEl = make('div', 'show-cam', fill
-        ? 'position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;pointer-events:none;transition:opacity .4s'
-        : 'position:absolute;top:0;left:0;width:' + AW + 'px;height:' + AH + 'px;transform-origin:0 0;opacity:0;pointer-events:none;transition:opacity .4s');
+        ? 'position:absolute;top:0;left:0;width:100%;height:100%' + fade
+        : 'position:absolute;top:0;left:0;width:' + AW + 'px;height:' + AH + 'px;transform-origin:0 0' + fade);
       if (still()) camEl.style.transition = 'none';
       camEl.setAttribute('inert', '');
       frame = make('iframe', 'show-frame', fill
@@ -1078,7 +1186,7 @@
     if (img && img.alt) video.setAttribute('aria-label', img.alt);
     screen.appendChild(video);
 
-    var engaged = false, loaded = false, seg = -1, times = [], cams = [];
+    var engaged = false, loaded = false, seg = -1, times = [];
     var steps = Steps(fig.querySelector('[data-steps]'), function (k) { load(); cond.hold(false); cond.go(k, 'click'); });
     var n = steps.items.length;
     steps.items.forEach(function (li) { times.push(parseFloat(li.getAttribute('data-t'))); });
@@ -1100,7 +1208,7 @@
       loaded = true;
       video.preload = 'auto';
       video.src = ROOT + 'media/' + name + '.mp4';
-      if (times.some(function (t) { return !isFinite(t); })) cuesFrom(name, times, cams, noop);
+      if (times.some(function (t) { return !isFinite(t); })) cuesFrom(name, times, noop);
     }
     function play(i, prev, how) {
       seg = i;
@@ -1132,6 +1240,25 @@
     return api;
   }
 
+  // The visitor's first scroll, tap or key. A recording waits for it before it fetches or plays,
+  // so a page that opens with one in view (a product page's hero) costs only its poster, and
+  // shows it, until the visitor does something (qa.md S4).
+  var touched = false, onTouch = [];
+  var TOUCH = ['scroll', 'wheel', 'pointerdown', 'keydown', 'touchstart'];
+  function firstTouch(fn) { if (touched) fn(); else onTouch.push(fn); }
+  function touch() {
+    if (touched) return;
+    touched = true;
+    TOUCH.forEach(function (t) { W.removeEventListener(t, touch, true); });
+    onTouch.splice(0).forEach(function (fn) { guard(fn, 'touch')(); });
+  }
+  TOUCH.forEach(function (t) { W.addEventListener(t, touch, { capture: true, passive: true }); });
+
+  // The phone-sized encode is 960 wide: a recording plays it only while it is drawn at no more
+  // device pixels than that (its screen, contained, times the camera's zoom, times the screen's
+  // pixel ratio), so a short laptop window or a 3× phone gets the full file (qa.md R1, S12).
+  var SM_W = 960;
+
   // A recording: poster first, its source only when it is near, played on screen, paused off it.
   function Recording(fig) {
     var name = fig.getAttribute('data-recording');
@@ -1152,23 +1279,20 @@
     fig._showcase = api;
     fig.setAttribute('data-state', 'poster');
 
-    var loaded = false, ratio = 0, wanted = false, times = [], cams = [];
-    var trackFor = tracks(fig);
+    var loaded = false, ratio = 0, wanted = false, times = [];
+    // The camera (the top of this file): it walks up to the screen before the recording plays and
+    // back out after it ends. `want` counts the starts, so a walk-in that finishes after the
+    // visitor has scrolled away (or chosen another cue) doesn't start anything.
+    var cam = Camera(fig, screen), pushFor = pushOf(fig), want = 0, out = 0;
     var poster = screen.querySelector('img');
+    // The video fades in over the poster once it has a frame (site.css: video[data-shown]), so the
+    // start is never a cut, even where the poster is another moment of the recording.
+    ['playing', 'seeked'].forEach(function (type) {
+      video.addEventListener(type, function () { if (video.readyState >= 2) video.setAttribute('data-shown', ''); });
+    });
     var steps = Steps(fig.querySelector('[data-steps]'), function (k) { start(times[k] || 0); });
     var n = steps.items.length;
-    steps.items.forEach(function (li) {
-      times.push(parseFloat(li.getAttribute('data-t')));
-      cams.push(readCam(li.getAttribute('data-cam')));
-    });
-    // The recording's own size, which the camera's points are in: the poster's width and height
-    // (1440 × 900), else the video's, where a -sm file is two thirds of the full one.
-    function size() {
-      var w = poster && +poster.getAttribute('width'), h = poster && +poster.getAttribute('height');
-      if (w && h) return [w, h];
-      if (video.videoWidth) return small ? [video.videoWidth * 1.5, video.videoHeight * 1.5] : [video.videoWidth, video.videoHeight];
-      return [APP_W, APP_H];
-    }
+    steps.items.forEach(function (li) { times.push(parseFloat(li.getAttribute('data-t'))); });
     var playBtn = action(fig, 'play', WORDS.play, function () { start(api.ended ? 0 : null); });
     var replayBtn = action(fig, 'replay', WORDS.replay, function () { start(0); });
     function auto() { return !still() && !lean(); }
@@ -1178,20 +1302,27 @@
       if (loaded) return;
       loaded = true;
       if (video.getAttribute('preload') === 'none') video.preload = 'metadata';
-      // A narrow screen gets the phone-sized encode, media/<name>-sm.mp4 (a fraction of the bytes;
-      // data-sm="none" opts out). If it is missing, the error below falls back to the full one.
-      var sw = screen.clientWidth;
-      small = !own && fig.getAttribute('data-sm') !== 'none' && sw > 0 && sw < NARROW ? ROOT + 'media/' + name + '-sm.mp4' : '';
+      // The phone-sized encode, media/<name>-sm.mp4 (a fraction of the bytes; data-sm="none" opts
+      // out), when it is sharp enough where it is drawn (SM_W). If it is missing, the error below
+      // falls back to the full one.
+      var sw = screen.clientWidth, sh = screen.clientHeight, pw = poster && +poster.getAttribute('width'), ph = poster && +poster.getAttribute('height');
+      var drawn = Math.min(sw, sh * (pw && ph ? pw / ph : APP_W / APP_H)) * (cam ? cam.zoom(pushFor(sw)) : 1) * (W.devicePixelRatio || 1);
+      small = !own && fig.getAttribute('data-sm') !== 'none' && drawn > 0 && drawn <= SM_W * 1.1 ? ROOT + 'media/' + name + '-sm.mp4' : '';
       video.src = small || src;
-      if (times.some(function (t) { return !isFinite(t); })) cuesFrom(name, times, cams, function () { onTime(video.currentTime || 0); });
+      if (times.some(function (t) { return !isFinite(t); })) cuesFrom(name, times, function () { onTime(video.currentTime || 0); });
     }
     function start(from) {
       load();
       api.ended = false;
       playBtn.hidden = true;
       replayBtn.hidden = true;
+      clearTimeout(out);
       fig.setAttribute('data-state', 'playing');
-      player.play(from);
+      var my = ++want, push = cam && pushFor(screen.clientWidth);
+      if (!push) { player.play(from); return; }
+      // The poster (or the frame at the chosen cue) waits while the camera walks in.
+      if (from != null && isFinite(from)) player.seek(from);
+      cam.go(push, function () { if (my === want) player.play(from); });
     }
     function cueAt(t) {
       var k = 0;
@@ -1204,34 +1335,9 @@
         var a = times[k] || 0, b = isFinite(times[k + 1]) ? times[k + 1] : d || a + 1;
         steps.set(k, lin(t, a, b));
       }
-      camera(k, t);
       api.progress = api.ended ? 1 : d ? clamp(t / d, 0, 1) : 0;
       emit();
     }
-    // The camera (redesign.md §7.6, §7.9): data-camera on the figure, or the older per-cue cams.
-    function aim(css, w, h, d) {
-      lay(video, css, w, h, d && d[0], d && d[1]);
-      lay(poster, css, w, h, d && d[0], d && d[1]);
-    }
-    function trackView(track, t, w, h, vw, vh) {
-      var base = coverBase(w, h, vw, vh), i = 0;
-      for (var k = 0; k < track.length; k++) if (t >= track[k].t - 0.02) i = k;
-      function zoom(c) { return clamp(keyScale(c, w) / base, 1, CAM_MAX); }
-      var c = track[i], p = track[i > 0 ? i - 1 : 0];
-      var q = i > 0 ? smooth(t - c.t, 0, CAM_EASE) : 1;
-      return camTransform(w, h, vw, vh, mix(zoom(p), zoom(c), q), mix(p.x, c.x, q), mix(p.y, c.y, q));
-    }
-    function camera(k, t) {
-      var w = screen.clientWidth, h = screen.clientHeight, d = size(), track = trackFor(w);
-      if (!w || !h) return;
-      if (track.length) { aim(trackView(track, t, w, h, d[0], d[1]), w, h, d); return; }
-      if (!cams[k] && !(k > 0 && cams[k - 1])) { aim(''); return; }
-      var c = cams[k] || WHOLE, p = (k > 0 && cams[k - 1]) || WHOLE;
-      var q = smooth(t - (times[k] || 0), 0, 0.9);
-      aim(camTransform(w, h, d[0], d[1], mix(p.z, c.z, q), mix(p.x, c.x, q), mix(p.y, c.y, q)), w, h, d);
-    }
-    // Before it plays (and with reduced motion, until Play), the poster shows the first view.
-    function rest() { if (!player.playing()) camera(cueAt(video.currentTime || 0), video.currentTime || 0); }
     function onEnd() {
       api.ended = true;
       api.progress = 1;
@@ -1239,6 +1345,8 @@
       fig.setAttribute('data-state', 'done');
       replayBtn.hidden = false;
       emit();
+      // A moment on the last frame, then back out to the whole scene.
+      if (cam) out = setTimeout(function () { if (api.ended) cam.go(null); }, 1200);
     }
     var player = Player(video, onTime, onEnd, function () {
       if (!api.ended) fig.setAttribute('data-state', 'paused');
@@ -1258,7 +1366,12 @@
       replayBtn.hidden = true;
     });
     function pause() {
-      if (!player.playing()) return;
+      want++;
+      if (!player.playing()) {
+        // Still walking in: it won't start the recording now.
+        if (fig.getAttribute('data-state') === 'playing') fig.setAttribute('data-state', 'paused');
+        return;
+      }
       player.pause();
       fig.setAttribute('data-state', 'paused');
     }
@@ -1266,19 +1379,16 @@
       api.active = ratio >= 0.6;
       if (ratio >= 0.6 && !D.hidden) {
         if (wanted) { wanted = false; start(api.ended ? 0 : null); }
-        else if (auto() && !api.ended && !player.playing()) start(null);
+        else if (auto() && touched && !api.ended && !player.playing()) start(null);
       } else if (ratio < 0.25 || D.hidden) {
         pause();
       }
       emit();
     }
     if (n) steps.set(0, 0);
-    video.addEventListener('loadedmetadata', function () { guard(rest, 'camera')(); });
     afterLoad(function () {
-      guard(rest, 'camera')();
-      if (W.ResizeObserver) new ResizeObserver(guard(rest, 'camera')).observe(screen);
-      else W.addEventListener('resize', guard(rest, 'camera'));
-      near(fig, '200px 0px', load);
+      near(fig, '200px 0px', function () { firstTouch(load); });
+      firstTouch(look);
       watch(screen, [0, 0.25, 0.6], function (e) { ratio = e.isIntersecting ? e.intersectionRatio : 0; look(); });
       if (!auto()) playBtn.hidden = false;
     });
@@ -1293,24 +1403,21 @@
     return api;
   }
 
-  // A still with a camera (<figure data-camera="0 .75 420 260">, no recording): the first view,
-  // the same way a recording's poster gets it, so a crop of the app reads at its real size.
+  // A still with a camera (data-camera on a figure with an <img> on a plate, no recording): the
+  // camera walks in once, when the still is well on screen, and stays. With reduced motion, never.
   function Still(fig) {
-    var screen = screenOf(fig), img = screen.querySelector('img'), trackFor = tracks(fig);
-    if (!img || !trackFor(0).length && !trackFor(1e4).length) return;
+    var screen = screenOf(fig), cam = Camera(fig, screen), pushFor = pushOf(fig);
+    if (!cam) return;
     fig._showcase = { fig: fig, still: true };
-    function aim() {
-      var w = screen.clientWidth, h = screen.clientHeight;
-      var vw = +img.getAttribute('width') || img.naturalWidth || APP_W, vh = +img.getAttribute('height') || img.naturalHeight || APP_H;
-      var track = trackFor(w);
-      if (!w || !h) return;
-      if (!track.length) { lay(img, ''); return; }
-      var c = track[0], z = clamp(keyScale(c, w) / coverBase(w, h, vw, vh), 1, CAM_MAX);
-      lay(img, camTransform(w, h, vw, vh, z, c.x, c.y), w, h, vw, vh);
-    }
-    aim();
-    if (W.ResizeObserver) new ResizeObserver(guard(aim, 'still')).observe(screen);
-    else W.addEventListener('resize', guard(aim, 'still'));
+    var gone = false;
+    afterLoad(function () {
+      var io = watch(screen, [0.6], function (e) {
+        if (gone || still() || !e.isIntersecting || e.intersectionRatio < 0.6) return;
+        gone = true;
+        io.disconnect();
+        setTimeout(function () { cam.go(pushFor(screen.clientWidth)); }, 500);
+      });
+    });
   }
 
   // The sticky list of recordings (redesign.md §7.8): which one is on, and how far it has played.

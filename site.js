@@ -53,7 +53,7 @@
     var back = panel.querySelector('[data-drill-back]');
     var codeBtn = panel.querySelector('[data-joincode]');
     var codeForm = panel.querySelector('[data-joinform]');
-    var open = false, opener = null, timer = 0;
+    var open = false, opener = null, timer = 0, closer = null;
 
     function isSheet() { return sheetQuery.matches; }
     function setView(view) {
@@ -66,6 +66,7 @@
       if (from) opener = from;
       openers.forEach(function (b) { b.setAttribute('aria-expanded', String(state)); });
       clearTimeout(timer);
+      if (closer) { panel.removeEventListener('animationend', closer); closer = null; }
       panel.classList.remove('is-closing');
       root.classList.toggle('menu-open', state && isSheet());
       if (state) {
@@ -75,10 +76,17 @@
         return;
       }
       if (panel.hidden) return;
-      var done = function () { panel.hidden = true; panel.classList.remove('is-closing'); resetCode(); };
+      var done = function () {
+        clearTimeout(timer);
+        if (closer) { panel.removeEventListener('animationend', closer); closer = null; }
+        panel.hidden = true; panel.classList.remove('is-closing'); resetCode();
+      };
       if (still) { done(); return; }
+      // Hidden once its closing fade (site.css: k-out, --dur-fast) has run; the timer is a safety net.
+      closer = function (e) { if (e.target === panel && e.animationName === 'k-out') done(); };
+      panel.addEventListener('animationend', closer);
       panel.classList.add('is-closing');
-      timer = setTimeout(done, 180);
+      timer = setTimeout(done, 500);
     }
     function back2opener() {
       var b = opener && opener.getClientRects().length ? opener : null;
