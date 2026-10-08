@@ -12,16 +12,24 @@ tool copies it into each page between markers:
     <!-- chrome:footer --><!-- /chrome:footer -->   partials/footer.<lang>.html
 
 Partials use {root} for the path to the site root ("" on the home page, "../../" two folders
-down, "/" on 404.html, which is served at any depth) and {home} for the home page link. A page
-picks the partials for its language from <html lang="...">.
+down, "/" on 404.html, which is served at any depth), {home} for this language's home page and
+{twin} for the same page in the other language (the other language's home when there is none,
+and always on a 404 page). A page picks the partials for its language from <html lang="...">.
+An ar/ page takes its English twin's entry in site.json (type, group, audience, index).
 
 Metadata. Each page owns its <title> and <meta name="description">, written above the meta block.
 The meta block is built from those, the page's path and tools/site.json (site-wide facts and the
 few things a page can't say about itself): canonical, hreflang (only where the page and its ar/
 translation both exist), robots noindex, the klaro-app address, icons, theme colour, Open Graph,
-Twitter and one JSON-LD @graph (Organization, WebSite, the page's WebPage, WebApplication on the
+Twitter and one JSON-LD @graph (Organization, WebSite, the page's WebPage, WebApplication on each
 home page, BreadcrumbList, FAQPage from the page's visible .faq-item markup, and an Article with
-its citations from the visible .rs-cite references).
+its citations from the visible .rs-cite references). Texts in site.json may be per language.
+
+On ar/ pages --check also applies the machine-checkable rules of design/brief/arabic.md, section 9:
+lang="ar" dir="rtl", an Arabic title and description, no text arrow → outside English course
+material (lang="en"), no .flip on text, no Eastern Arabic digits, and no "AI" or "ذكاء اصطناعي"
+outside the motto. A link to an ar/ page that doesn't exist yet is reported once, with the pages
+that link to it.
 
 App links. The href of every link marked data-signup, data-signup-as, data-signin or data-legal is
 set to its real address in the app (site.json "app"), so it works without JavaScript; klaro.js
@@ -257,8 +265,10 @@ ORDER = {path: i for i, path in enumerate(SITE['pages'])}
 
 
 def order_key(page):
-    # The order of site.json's "pages" (home first, products as in the menu), then by path.
-    return (ORDER.get(page.path, len(ORDER)), page.path)
+    # The order of site.json's "pages" (home first, products as in the menu); an ar/ page right
+    # after its English twin.
+    core = page.path[3:] if page.path.startswith('ar/') else page.path
+    return (ORDER.get(page.path, ORDER.get(core, len(ORDER))), page.lang != 'en', page.path)
 
 
 # ---------------------------------------------------------------- dates from git
@@ -329,6 +339,13 @@ def ref(i):
     return {'@id': i}
 
 
+def localized(value, lang):
+    """A site.json text that is either one string or {"en": ..., "ar": ...}."""
+    if isinstance(value, dict):
+        return value.get(lang) or value.get('en', '')
+    return value
+
+
 def image_object(img):
     return {'@type': 'ImageObject', 'url': BASE + img['path'], 'width': img['width'], 'height': img['height']}
 
@@ -362,14 +379,20 @@ def products(pages):
     return sorted((p for p in pages if p.type == 'product' and p.indexable and p.lang == 'en'), key=order_key)
 
 
-def app_node(pages):
-    roles = []
+def app_node(pages, lang):
+    """The app, on each home page. Its languages are the app's (both); its feature list is in the
+    page's language, from the product pages in that language (English where one is missing)."""
+    roles, features = [], []
+    by_path = {p.path: p for p in pages}
     for p in products(pages):
         roles += [r for r in p.conf.get('audience', []) if r not in roles]
+        local = by_path.get('ar/' + p.path) if lang == 'ar' else None
+        shown = local if local is not None and local.indexable else p
+        features.append(f'{shown.label}: {shown.description}')
     node = {'@type': 'WebApplication', '@id': BASE + '#app', 'name': SITE['name'], 'url': BASE,
             'applicationCategory': 'EducationalApplication', 'operatingSystem': 'Web browser',
             'inLanguage': website_node(pages)['inLanguage'], 'publisher': ref(BASE + '#org'),
-            'featureList': [f'{p.label}: {p.description}' for p in products(pages)]}
+            'featureList': features}
     if roles:
         node['audience'] = audiences(roles)
     return node
@@ -451,8 +474,8 @@ def graph(page, pages, lastmod, warn):
     web = {'@type': 'WebPage', '@id': url + '#webpage', 'url': url, 'name': page.title,
            'description': page.description, 'inLanguage': page.lang, 'isPartOf': ref(BASE + '#website'),
            'primaryImageOfPage': image_object(SITE['image']), 'dateModified': lastmod}
-    if page.type == 'home' and page.lang == 'en':
-        nodes.append(app_node(pages))
+    if page.type == 'home':
+        nodes.append(app_node(pages, page.lang))
     if page.type in ('home', 'hub', 'product'):
         web['about'] = ref(BASE + '#app')
     if page.conf.get('audience'):
@@ -519,7 +542,7 @@ def meta_block(page, pages, lastmod, warn):
             f'<link rel="icon" href="{r}favicon.svg" type="image/svg+xml">',
             f'<link rel="apple-touch-icon" href="{r}apple-touch-icon.png">']
     img = SITE['image']
-    alt = img['alt'].get(page.lang) or img['alt'].get('en', '') if isinstance(img['alt'], dict) else img['alt']
+    alt = localized(img['alt'], page.lang)
     locales = SITE['locales']
     out += [f'<meta property="og:type" content="{"article" if page.type == "article" else "website"}">',
             f'<meta property="og:site_name" content="{attr(SITE["name"])}">',
@@ -559,7 +582,8 @@ def placeholders(page, pages):
     else:
         home, other_home = '', 'ar/'
         twin = 'ar/' + page.path
-    if twin is None or twin not in paths:
+    # A 404 page's language link goes to the other language's home, never to the other 404.
+    if twin is None or twin not in paths or page.type == 'notfound':
         twin = other_home
     return {'{root}': page.root, '{home}': href_to(page, home), '{twin}': href_to(page, twin)}
 
@@ -618,6 +642,15 @@ def llms(pages):
     rest = [p for p in listed if not p.conf.get('group')]
     if rest:
         out += ['## More', ''] + [line(p) for p in rest] + ['']
+    # The Arabic pages: one short line each, naming the English page they translate.
+    arabic = []
+    for p in sorted(pages, key=order_key):
+        if p.indexable and p.lang == 'ar':
+            en = by_path.get(p.path[3:]) if p.path.startswith('ar/') else None
+            what = 'The home page' if p.type == 'home' else (en.label if en else p.label)
+            arabic.append(f'- [{p.label}]({p.url}): {what}, in Arabic.')
+    if arabic:
+        out += ['## Arabic', ''] + arabic + ['']
     return '\n'.join(out).rstrip('\n') + '\n'
 
 
@@ -707,7 +740,7 @@ def resolve(page, link):
         return f'{link} leaves the site'
     if target == '.':
         target = 'index.html'
-    elif os.path.isdir(os.path.join(ROOT, target)):
+    elif path.endswith('/') or os.path.isdir(os.path.join(ROOT, target)):
         target = target + '/index.html'
     return target, frag
 
@@ -716,7 +749,51 @@ def ids(tree):
     return {n.attrs['id'] for n in tree.root.iter() if n.attrs.get('id')}
 
 
-def check_page(page, pages, problem, warn):
+ARABIC = re.compile(r'[\u0600-\u06ff]')
+LATIN = re.compile(r'[A-Za-z]')
+EASTERN_DIGITS = re.compile(r'[\u0660-\u0669\u06f0-\u06f9]')
+HARAKAT = re.compile(r'[\u064b-\u0652\u0640]')
+AI_WORDS = re.compile(r'(?<![A-Za-z])AI(?![A-Za-z])|ذكاء\s*(?:ال)?اصطناعي')
+MOTTO = {'motto', 'foot-motto'}
+TEXT_ATTRS = ('alt', 'aria-label', 'title', 'placeholder')
+
+
+def mostly_arabic(text):
+    text = text.replace(SITE['name'], '')
+    return len(ARABIC.findall(text)) > len(LATIN.findall(text))
+
+
+def check_arabic(page, problem):
+    """design/brief/arabic.md, section 9: the rules a machine can check on an ar/ page."""
+    rel = page.rel
+    for what, value in (('title', page.title), ('description', page.description)):
+        if value and not mostly_arabic(value):
+            problem(rel, f'the {what} is not in Arabic: {value}')
+        if value and EASTERN_DIGITS.search(value):
+            problem(rel, f'the {what} has Eastern Arabic digits (use 0–9)')
+        if value and AI_WORDS.search(HARAKAT.sub('', value)):
+            problem(rel, f'the {what} mentions AI (only the motto may)')
+    for n in page.tree.root.iter():
+        if n.tag in ('script', 'style'):
+            continue
+        chain = [n, *n.ancestors()]
+        english = any(a.attrs.get('lang', '').startswith('en') for a in chain)
+        in_motto = any(MOTTO & set(a.classes()) for a in chain)
+        texts = [('text', c) for c in n.children if isinstance(c, str) and c.strip()]
+        texts += [(f'{k}=', n.attrs[k]) for k in TEXT_ATTRS if n.attrs.get(k)]
+        for where, text in texts:
+            short = squash(text)[:50]
+            if '→' in text and not english:
+                problem(rel, f'line {n.line}: a text arrow → in Arabic copy (write ←, or the SVG icon): {where} {short}')
+            if EASTERN_DIGITS.search(text):
+                problem(rel, f'line {n.line}: Eastern Arabic digits (use 0–9): {where} {short}')
+            if AI_WORDS.search(HARAKAT.sub('', text)) and not in_motto:
+                problem(rel, f'line {n.line}: mentions AI outside the motto: {where} {short}')
+        if 'flip' in n.classes() and n.tag != 'svg' and squash(n.text()):
+            problem(rel, f'line {n.line}: .flip on text ("{squash(n.text())[:10]}"); text arrows mirror by themselves, use .flip only on SVG icons')
+
+
+def check_page(page, pages, problem, warn, missing):
     rel = page.rel
     root = page.tree.root
     by_rel = {p.rel: p for p in pages}
@@ -726,6 +803,8 @@ def check_page(page, pages, problem, warn):
     got = (html.attrs.get('lang', '') if html is not None else '', html.attrs.get('dir', 'ltr') if html is not None else '')
     if got[0].split('-')[0] != want[0] or (want[1] == 'rtl' and got[1] != 'rtl'):
         problem(rel, f'<html lang="{got[0]}" dir="{got[1]}"> should be lang="{want[0]}" dir="{want[1]}"')
+    if page.path.startswith('ar/'):
+        check_arabic(page, problem)
     # Title and description.
     if not page.title:
         problem(rel, 'no <title>')
@@ -791,7 +870,10 @@ def check_page(page, pages, problem, warn):
                     problem(rel, f'line {n.line}: {link} has no target id="{frag}" on this page')
                 continue
             if not os.path.exists(os.path.join(ROOT, target)):
-                problem(rel, f'line {n.line}: {link} → {target} does not exist')
+                if target.startswith('ar/') and os.path.exists(os.path.join(ROOT, target[3:])):
+                    missing.setdefault(target, []).append(rel)   # reported once, in main()
+                else:
+                    problem(rel, f'line {n.line}: {link} → {target} does not exist')
                 continue
             if not deployed(target) and page.deployed:
                 problem(rel, f'line {n.line}: {link} → {target} is kept off the site by .assetsignore')
@@ -867,8 +949,14 @@ def main():
             problem(rel, 'out of date: run python3 tools/site.py')
         else:
             print('wrote: ' + rel)
+    missing = {}
     for p in pages:
-        check_page(p, pages, problem, warn)
+        check_page(p, pages, problem, warn, missing)
+    for target, sources in sorted(missing.items()):
+        page_url = target[:-len('index.html')] if target.endswith('index.html') else target
+        shown = ', '.join(sorted(set(sources))[:4]) + (', …' if len(set(sources)) > 4 else '')
+        problem(page_url, f'no Arabic page yet (its English twin exists), but {len(set(sources))} '
+                          f'page(s) link to it: {shown}. Add it, or link to the English page with hreflang="en"')
     check_site(pages, problem, warn)
     for w in warnings:
         print('warning: ' + w)

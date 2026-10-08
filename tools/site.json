@@ -3,6 +3,8 @@
     "Site-wide facts for tools/site.py. The tool stamps every page's <!-- chrome:meta --> block from",
     "this file plus the page's own <title>, description and path, and writes sitemap.xml and llms.txt.",
     "Each page owns its title and description; put here only what a page can't say about itself.",
+    "An ar/ page takes its English twin's entry (type, group, audience, index), not its words.",
+    "A text may be one string or {\"en\": ..., \"ar\": ...}.",
     "Empty strings and empty lists are skipped (never shipped as placeholders): fill them when the",
     "owner supplies the fact. Keep every sentence here true to design/brief/app-facts.md."
   ],
@@ -18,7 +20,10 @@
     "path": "img/lecture-osmosis.webp",
     "width": 960,
     "height": 548,
-    "alt": "A Klaro lecture on osmosis, from an example course"
+    "alt": {
+      "en": "A Klaro lecture on osmosis, from an example course",
+      "ar": "محاضرة على Klaro عن Osmosis، من كورس مثال"
+    }
   },
   "logo": {
     "_todo": "A square 512x512 PNG of the K mark is wanted (img/klaro-logo-512.png). Until then, the touch icon.",
@@ -68,6 +73,6 @@
       "label": "Browse courses",
       "llms": "Course catalogue (example courses and prices for now)."
     },
-    "404.html": { "index": false, "rootAbsolute": true }
+    "404.html": { "index": false, "rootAbsolute": true, "type": "notfound" }
   }
 }
