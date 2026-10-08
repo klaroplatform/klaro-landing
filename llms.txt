@@ -29,3 +29,16 @@
 - [Products](https://learnklaro.com/products/): Every Klaro product in one place: study view, practice questions, Minis and progress for students; course builder, live sessions and marking for tutors.
 - [Powered by research](https://learnklaro.com/research/): The learning research Klaro is built on: the source beside the explanation, testing yourself instead of re-reading, and feedback. Every source is linked.
 - [Browse courses](https://learnklaro.com/market/): Course catalogue (example courses and prices for now).
+
+## Arabic
+
+- [Klaro](https://learnklaro.com/ar/): The home page, in Arabic.
+- [المنتجات](https://learnklaro.com/ar/products/): Products, in Arabic.
+- [شاشة المذاكرة](https://learnklaro.com/ar/products/study-view/): Study view, in Arabic.
+- [أسئلة التدريب](https://learnklaro.com/ar/products/practice-questions/): Practice questions, in Arabic.
+- [ميني](https://learnklaro.com/ar/products/minis/): Minis, in Arabic.
+- [التقدّم](https://learnklaro.com/ar/products/progress/): Progress, in Arabic.
+- [إعداد الكورس](https://learnklaro.com/ar/products/course-builder/): Course builder, in Arabic.
+- [الحصص المباشرة](https://learnklaro.com/ar/products/live-sessions/): Live sessions, in Arabic.
+- [التصحيح](https://learnklaro.com/ar/products/marking/): Marking, in Arabic.
+- [مبنيّ على الأبحاث](https://learnklaro.com/ar/research/): Powered by research, in Arabic.

@@ -110,6 +110,22 @@
     }
   };
 
+  // Arabic pages show the demo's interface in Arabic, with the app's words (design/brief/arabic.md).
+  // The lesson itself (course and lecture names, book text, question and options) stays English,
+  // as it is in the real courses.
+  var AR = document.documentElement.lang === 'ar';
+  if (AR) {
+    var AR_LABELS = {
+      'igcse-biology': { subject: 'الأحياء', lecno: 'المحاضرة 4', page: 'الكتاب · ص 48', link: 'مرتبط بالدقيقة 06:12 من المحاضرة' },
+      'igcse-chemistry': { subject: 'الكيمياء', lecno: 'المحاضرة 2', page: 'الكتاب · ص 112', link: 'مرتبط بالدقيقة 04:40 من المحاضرة' },
+      'alevel-physics': { subject: 'الفيزياء', lecno: 'المحاضرة 2', page: 'الكتاب · ص 21', link: 'مرتبط بالدقيقة 08:05 من المحاضرة' },
+      'sat-math': { subject: 'الرياضيات', lecno: 'المحاضرة 3', page: 'الكتاب · ص 64', link: 'مرتبط بالدقيقة 02:30 من المحاضرة' }
+    };
+    Object.keys(AR_LABELS).forEach(function (id) {
+      Object.keys(AR_LABELS[id]).forEach(function (k) { LESSONS[id][k] = AR_LABELS[id][k]; });
+    });
+  }
+
   var form = document.querySelector('[data-try]');
   var view = document.querySelector('[data-try-view]');
   if (!form || !view) return;
@@ -147,7 +163,9 @@
         b.classList.add(right ? 'is-right' : 'is-wrong');
         t('key').classList.add('on');
         t('feedback').className = 'feedback ' + (right ? 'ok' : 'no');
-        t('feedback').textContent = right ? 'Correct. It is explained in the highlighted part of the book page.' : 'Not quite. The answer is ' + 'ABC'[L.answer] + '. It is explained in the highlighted part of the book page.';
+        var said = right ? 'Correct. It is explained in the highlighted part of the book page.' : 'Not quite. The answer is ' + 'ABC'[L.answer] + '. It is explained in the highlighted part of the book page.';
+        if (AR) said = right ? 'إجابة صحيحة. الشرح في الجزء المظلَّل من صفحة الكتاب.' : 'ليس تمامًا. الإجابة هي ' + 'ABC'[L.answer] + '. الشرح في الجزء المظلَّل من صفحة الكتاب.';
+        t('feedback').textContent = said;
       });
       box.appendChild(b);
     });
