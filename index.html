@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
 <title>Klaro: the lecture, the book and the questions, side by side</title>
-<meta name="description" content="Enough AI slop. Klaro connects a tutor's own lectures, books and past papers: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.">
+<meta name="description" content="Enough AI slop. Klaro puts your tutor's lecture, the book page it covers and real past-paper questions side by side. Nothing generated.">
 <link rel="canonical" href="https://learnklaro.com/">
 <meta property="og:title" content="Klaro: the lecture, the book and the questions, side by side">
-<meta property="og:description" content="Enough AI slop. Klaro connects a tutor's own lectures, books and past papers: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.">
+<meta property="og:description" content="Enough AI slop. Klaro puts your tutor's lecture, the book page it covers and real past-paper questions side by side. Nothing generated.">
 <meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
 <meta property="og:type" content="website">
 <meta name="klaro-app" content="https://app.klaroplatform.com">
-<link rel="alternate" hreflang="ar" href="ar/">
+<link rel="alternate" hreflang="en" href="https://learnklaro.com/">
+<link rel="alternate" hreflang="ar" href="https://learnklaro.com/ar/">
+<link rel="alternate" hreflang="x-default" href="https://learnklaro.com/">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -21,6 +23,72 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="klaro.css">
 <link rel="stylesheet" href="site.css">
+<style>
+/* Home page only (hm-): the one headline per audience, small visual details that used to be inline
+   styles, the Try it options and the Marking tile's scanned answer. Logical properties only. */
+.hm-h1 > [data-aud] { display: block; }
+.hm-list { list-style: none; margin: 0; padding: 0; }
+.section.hm-closer { padding-block-start: 0; }
+.dot.hm-lec { background: var(--purple); }
+.dot.hm-book { background: var(--teal); }
+.dot.hm-q { background: var(--amber); }
+.icon-tile.hm-gold { background: var(--gold-soft); color: var(--gold-deep); }
+.icon-tile.hm-green { background: var(--success-soft); color: var(--success); }
+.card-title.hm-lt { font-size: 16px; }
+.hm-start { align-self: flex-start; }
+.hm-purple { color: var(--purple); }
+.joincode.hm-code { flex-wrap: wrap; }
+.hm-lines i:nth-child(1) { width: 92%; }
+.hm-lines i:nth-child(2) { width: 100%; }
+.hm-lines i:nth-child(3) { width: 74%; }
+.hm-lines i:nth-child(4) { width: 86%; }
+.hm-lines i:nth-child(5) { width: 60%; }
+.hm-opts { display: flex; flex-direction: column; gap: 10px; }
+/* Product tiles */
+.tile-vis.hm-amber { background: var(--amber-soft); }
+.tile-vis.hm-teal { background: var(--teal-soft); }
+.mini.hm-across { flex-direction: row; align-items: center; gap: 12px; }
+.mini .hm-col { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.mini .hm-op-sm { padding: 3px; }
+.mini .hm-t12 { font-size: 12px; }
+.mini .hm-grow { flex: 1; }
+.mini .hm-muted { color: var(--muted); }
+.mini .hm-center { text-align: center; }
+.mini .hm-w60 { width: 60%; }
+.mini .hm-ic { width: 22px; height: 22px; border-radius: 6px; }
+.mini .hm-ok { color: var(--success); }
+/* Marking tile: one line of a scanned, handwritten answer on ruled paper */
+.mini .hm-scan { padding: 3px 8px 4px; border: 1px solid var(--border); border-radius: 7px; background: repeating-linear-gradient(transparent 0 16px, #dfe5ee 16px 17px), #fbfbf7;
+  font: italic 14px/17px var(--serif); color: #2b3f6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does Klaro generate lectures or questions with AI?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The lectures are the tutor's own, the book is the tutor's book, and the questions come from real past papers. Klaro does not generate lectures, book text or questions. Each lecture clip is linked to the part of the book it teaches and to past-paper questions on the same topic. The Klaro team prepares and checks the links before a course is published." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I join a course?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Create your account, then enter the join code your tutor gives you. The course appears on your home page. If your tutor shares a course link instead, you can ask to join, and your tutor lets you in." }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I become a tutor on Klaro?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Choose \"I'm a tutor\" when you sign up. The Klaro team reviews every tutor account before it opens, and emails you the decision." }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use Klaro in Arabic?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Klaro is built for English and Arabic, and the whole layout turns right to left in Arabic." }
+    }
+  ]
+}
+</script>
 </head>
 <body data-site="">
 <!-- chrome:sprite -->
@@ -75,7 +143,7 @@
         <div class="mega-col">
           <p class="mega-head">For students</p>
           <a class="mega-item" href="products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span></a>
+          <a class="mega-item" href="products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
           <a class="mega-item" href="products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
           <a class="mega-item" href="products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
         </div>
@@ -83,7 +151,7 @@
           <p class="mega-head">For tutors</p>
           <a class="mega-item" href="products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
           <a class="mega-item" href="products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Teach your students live, straight from your Klaro course</small></span></a>
+          <a class="mega-item" href="products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class. Klaro sets up the meeting.</small></span></a>
           <a class="mega-item" href="products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
         </div>
       </div>
@@ -94,7 +162,7 @@
       </div>
       <div class="mega-foot">
         <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden><input name="code" placeholder="K7Q-2PX" aria-label="Join code" autocomplete="off" maxlength="9"><button class="btn btn-primary" type="submit">Join</button></form>
+        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
         <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
       </div>
     </div>
@@ -111,8 +179,7 @@
       <button type="button" data-value="student" aria-pressed="true">I'm a student</button>
       <button type="button" data-value="tutor" aria-pressed="false">I'm a tutor</button>
     </div>
-    <h1 class="display big" data-aud="student">The lecture, the book and the questions. <span class="key">Side by side.</span></h1>
-    <h1 class="display big" data-aud="tutor">Your lectures. Your books. <span class="key">Connected.</span></h1>
+    <h1 class="display big hm-h1"><span data-aud="student">The lecture, the book and the questions. <span class="key">Side by side.</span></span><span data-aud="tutor">Your lectures. Your books. <span class="key">Connected.</span></span></h1>
     <p class="lead" data-aud="student">Join your tutor's course with a code. Watch each lecture next to the book pages it covers, answer real past-paper questions as you go, and see your progress before the exam.</p>
     <p class="lead" data-aud="tutor">Upload your lectures, your books and your past papers. Klaro connects them: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.</p>
     <div class="actions">
@@ -125,36 +192,36 @@
     <!-- chips: the student's view -->
     <span class="chip c1" data-aud="student"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-video"/></svg></span>Your tutor's own lecture</span>
     <span class="chip c2" data-aud="student"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span>From the 2024 past paper</span>
-    <span class="chip c3" data-aud="student"><span class="icon-tile" style="background: var(--gold-soft); color: var(--gold-deep)"><svg class="star" viewBox="112.56 0 103.11 103.11" width="14" height="14"><use href="#spark" fill="currentColor"/></svg></span>Linked to p. 48</span>
-    <span class="chip c4" data-aud="student"><span class="icon-tile" style="background: var(--success-soft); color: var(--success)"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span>Marked as you answer</span>
+    <span class="chip c3" data-aud="student"><span class="icon-tile hm-gold"><svg class="star" viewBox="112.56 0 103.11 103.11" width="14" height="14"><use href="#spark" fill="currentColor"/></svg></span>Linked to p. 48</span>
+    <span class="chip c4" data-aud="student"><span class="icon-tile hm-green"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span>Checked as you answer</span>
     <!-- chips: the tutor's view -->
     <span class="chip c1" data-aud="tutor"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-video"/></svg></span>Your lecture</span>
     <span class="chip c2" data-aud="tutor"><span class="icon-tile teal"><svg class="i" width="15" height="15"><use href="#i-book"/></svg></span>Your book</span>
     <span class="chip c3" data-aud="tutor"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span>Your past papers</span>
-    <span class="chip c4" data-aud="tutor"><span class="icon-tile" style="background: var(--gold-soft); color: var(--gold-deep)"><svg class="i" width="15" height="15"><use href="#i-link"/></svg></span>Connected, not generated</span>
+    <span class="chip c4" data-aud="tutor"><span class="icon-tile hm-gold"><svg class="i" width="15" height="15"><use href="#i-link"/></svg></span>Connected, not generated</span>
 
     <div class="studio" data-aud="student" role="img" aria-label="The Klaro study view: a lecture on osmosis, the book page it covers, and a past-paper question answered correctly.">
-      <div class="studio-head">
-        <span><i class="dot" style="background: var(--purple)"></i>Lecture</span>
-        <span><i class="dot" style="background: var(--teal)"></i>Book</span>
-        <span><i class="dot" style="background: var(--amber)"></i>Questions</span>
+      <div class="studio-head" aria-hidden="true">
+        <span><i class="dot hm-lec"></i>Lecture</span>
+        <span><i class="dot hm-book"></i>Book</span>
+        <span><i class="dot hm-q"></i>Questions</span>
         <span class="grow"></span>
         <span class="tag tag-slate">Biology 0610 · IGCSE</span>
       </div>
-      <div class="panes">
+      <div class="panes" aria-hidden="true">
         <div class="pane">
-          <div class="pane-label"><i class="dot" style="background: var(--purple)"></i>Lecture 4</div>
+          <div class="pane-label"><i class="dot hm-lec"></i>Lecture 4</div>
           <div class="video"><img src="img/lecture-osmosis.webp" alt="" width="960" height="548"><span class="play"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span><div class="bar"><i></i></div></div>
-          <div class="card-title" style="font-size: 16px">Osmosis</div>
+          <div class="card-title hm-lt">Osmosis</div>
           <div class="small">12 min · 8 practice questions</div>
         </div>
         <div class="pane book">
-          <div class="pane-label"><i class="dot" style="background: var(--teal)"></i>Book · p. 48</div>
+          <div class="pane-label"><i class="dot hm-book"></i>Book · p. 48</div>
           <p>Water molecules move freely through a partially permeable membrane. <mark>Osmosis is the net movement of water from a dilute solution to a more concentrated one</mark> through such a membrane.</p>
           <span class="linked"><svg class="star" viewBox="112.56 0 103.11 103.11" width="12" height="12" aria-hidden="true"><use href="#spark" fill="currentColor"/></svg>Linked to 06:12 in the lecture</span>
         </div>
         <div class="pane">
-          <div class="pane-label"><i class="dot" style="background: var(--amber)"></i>Question 3 of 8</div>
+          <div class="pane-label"><i class="dot hm-q"></i>Question 3 of 8</div>
           <p class="q">A potato slice is left in pure water. Water moves into its cells. What is this called?</p>
           <div class="opt"><b>A</b>Diffusion</div>
           <div class="opt right"><b>B</b>Osmosis<span class="cursor"></span></div>
@@ -164,17 +231,17 @@
       </div>
     </div>
 
-    <div class="studio" data-aud="tutor" role="img" aria-label="A tutor's course: the tutor's lecture, book and past paper are uploaded and linked, and lectures are put in order.">
-      <div class="studio-head"><span>Chemistry 0620 · IGCSE</span><span class="grow"></span><span class="tag tag-purple">Setting up</span></div>
-      <div class="panes two">
+    <div class="studio" data-aud="tutor" role="img" aria-label="A tutor's course being set up: the tutor's lecture, book and past paper are uploaded and added to the course, the lectures are put in the tutor's order, and the course has a join code.">
+      <div class="studio-head" aria-hidden="true"><span>Chemistry 0620 · IGCSE</span><span class="grow"></span><span class="tag tag-purple">Setting up</span></div>
+      <div class="panes two" aria-hidden="true">
         <div class="pane">
           <div class="pane-label">Your material</div>
           <div class="files">
-            <div class="file"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-video"/></svg></span><span class="name">Lecture 2, Electrolysis.mp4</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Linking</span><span class="tag tag-green s3">Linked</span></span></div>
-            <div class="file"><span class="icon-tile teal"><svg class="i" width="15" height="15"><use href="#i-book"/></svg></span><span class="name">Chemistry textbook.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Linking</span><span class="tag tag-green s3">Linked</span></span></div>
-            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span><span class="name">Past paper 2024 P1.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Linking</span><span class="tag tag-green s3">Linked</span></span></div>
+            <div class="file"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-video"/></svg></span><span class="name">Lecture 2, Electrolysis.mp4</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Processing</span><span class="tag tag-green s3">Added</span></span></div>
+            <div class="file"><span class="icon-tile teal"><svg class="i" width="15" height="15"><use href="#i-book"/></svg></span><span class="name">Chemistry textbook.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Processing</span><span class="tag tag-green s3">Added</span></span></div>
+            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span><span class="name">Past paper 2024 P1.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Processing</span><span class="tag tag-green s3">Added</span></span></div>
           </div>
-          <div class="joincode"><span>Join code</span><code>K7Q-2PX</code></div>
+          <div class="joincode hm-code"><span>Join code</span><code>K7QM-2PXD-HN4R-T8WC</code></div>
         </div>
         <div class="pane">
           <div class="pane-label">Lectures, in your order</div>
@@ -184,7 +251,7 @@
             <div class="lec up"><span class="n">3</span>Atomic structure<span class="grip">⋮⋮</span></div>
             <div class="lec"><span class="n">4</span>Rates of reaction<span class="grip">⋮⋮</span></div>
           </div>
-          <span class="tag tag-green" style="align-self: flex-start">24 students joined</span>
+          <span class="tag tag-green hm-start">24 students joined</span>
         </div>
       </div>
     </div>
@@ -206,25 +273,25 @@
       <p>We don't generate AI content like everybody does.</p>
       <p>We connect your current content, <span class="gold-text">exactly how you intended it to look.</span></p>
     </div>
-    <div class="connect" aria-label="A lecture, a book page and a past-paper question, all the tutor's own, linked by Klaro">
-      <div class="piece">
+    <div class="connect" role="img" aria-label="Three pieces linked by Klaro: the tutor's lecture on osmosis at 06:12, page 48 of the tutor's book, and a real past-paper question on osmosis.">
+      <div class="piece" aria-hidden="true">
         <span class="who">The tutor's lecture</span>
         <div class="thumb"><img src="img/lecture-osmosis.webp" alt="" loading="lazy" width="960" height="548"></div>
         <span class="what">Lecture 4 · Osmosis, at 06:12</span>
       </div>
-      <div class="piece">
+      <div class="piece" aria-hidden="true">
         <span class="who">The tutor's book</span>
-        <div class="lines"><i style="width: 92%"></i><i class="hl" style="width: 100%"></i><i class="hl" style="width: 74%"></i><i style="width: 86%"></i><i style="width: 60%"></i></div>
+        <div class="lines hm-lines"><i></i><i class="hl"></i><i class="hl"></i><i></i><i></i></div>
         <span class="what">Book · page 48</span>
       </div>
-      <div class="piece">
+      <div class="piece" aria-hidden="true">
         <span class="who">A real past-paper question</span>
         <div class="mini-opt">A · Diffusion</div>
         <div class="mini-opt ok">B · Osmosis ✓</div>
         <span class="what">2024 Paper 1 · Question 3</span>
       </div>
     </div>
-    <p class="connect-note"><span class="tag">Nothing generated</span>Every piece is the tutor's own. Klaro only draws the lines between them.</p>
+    <p class="connect-note"><span class="tag">Nothing generated</span>The lecture and the book are the tutor's own, and the question is from a real past paper. Klaro only draws the lines between them.</p>
   </div>
 </section>
 
@@ -235,7 +302,7 @@
       <div class="try-copy">
         <span class="kicker">Try it</span>
         <h2 class="h2">Try a lesson. <span class="key">No account needed.</span></h2>
-        <p class="lead">Pick a level and a subject. You get a small Klaro study view: a lecture, the book page it covers, and a question that marks your answer.</p>
+        <p class="lead">Pick a level and a subject. You get a small Klaro study view: a lecture, the book page it covers, and a question that checks your answer.</p>
       </div>
       <form class="try-box" data-try>
         <h3>Try a lesson</h3>
@@ -254,28 +321,28 @@
     <div class="try-stage" aria-live="polite">
       <div class="studio" data-try-view>
         <div class="studio-head">
-          <span><i class="dot" style="background: var(--purple)"></i>Lecture</span>
-          <span><i class="dot" style="background: var(--teal)"></i>Book</span>
-          <span><i class="dot" style="background: var(--amber)"></i>Questions</span>
+          <span><i class="dot hm-lec"></i>Lecture</span>
+          <span><i class="dot hm-book"></i>Book</span>
+          <span><i class="dot hm-q"></i>Questions</span>
           <span class="grow"></span>
-          <span class="tag tag-slate" data-t="course"></span>
+          <span class="tag tag-slate" data-t="course">Biology 0610 · IGCSE</span>
         </div>
         <div class="panes">
           <div class="pane">
-            <div class="pane-label"><i class="dot" style="background: var(--purple)"></i><span data-t="lecno"></span></div>
+            <div class="pane-label"><i class="dot hm-lec"></i><span data-t="lecno">Lecture 4</span></div>
             <div class="video"><img data-t="img" src="img/lecture-osmosis.webp" alt="" width="960" height="548"><span class="play"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></div>
-            <div class="card-title" style="font-size: 16px" data-t="lecture"></div>
+            <div class="card-title hm-lt" data-t="lecture">Osmosis</div>
             <div class="small">Example lesson</div>
           </div>
           <div class="pane book">
-            <div class="pane-label"><i class="dot" style="background: var(--teal)"></i><span data-t="page"></span></div>
-            <p><span data-t="before"></span><mark data-t="key"></mark><span data-t="after"></span></p>
-            <span class="linked"><svg class="star" viewBox="112.56 0 103.11 103.11" width="12" height="12" aria-hidden="true"><use href="#spark" fill="currentColor"/></svg><span data-t="link"></span></span>
+            <div class="pane-label"><i class="dot hm-book"></i><span data-t="page">Book · p. 48</span></div>
+            <p><span data-t="before">Water molecules move freely through a partially permeable membrane. </span><mark data-t="key">Osmosis is the net movement of water from a dilute solution to a more concentrated one</mark><span data-t="after"> through such a membrane.</span></p>
+            <span class="linked"><svg class="star" viewBox="112.56 0 103.11 103.11" width="12" height="12" aria-hidden="true"><use href="#spark" fill="currentColor"/></svg><span data-t="link">Linked to 06:12 in the lecture</span></span>
           </div>
           <div class="pane">
-            <div class="pane-label"><i class="dot" style="background: var(--amber)"></i>Question 1 of 1</div>
-            <p class="q" data-t="q"></p>
-            <div data-t="opts" style="display: flex; flex-direction: column; gap: 10px"></div>
+            <div class="pane-label"><i class="dot hm-q"></i>Question 1 of 1</div>
+            <p class="q" data-t="q">A potato slice is left in pure water. Water moves into its cells. What is this called?</p>
+            <div class="hm-opts" data-t="opts"><button type="button" class="opt"><b>A</b>Diffusion</button><button type="button" class="opt"><b>B</b>Osmosis</button><button type="button" class="opt"><b>C</b>Active transport</button></div>
             <p class="feedback" data-t="feedback"></p>
           </div>
         </div>
@@ -301,39 +368,39 @@
 
     <div class="tiles" data-aud="student">
       <a class="card tile lift" href="products/study-view/">
-        <div class="tile-vis"><div class="mini"><div class="three"><div><div class="vid"><img src="img/lecture-osmosis.webp" alt="" loading="lazy"></div><div class="ln"></div></div><div><div class="ln"></div><div class="ln hl"></div><div class="ln hl"></div><div class="ln"></div></div><div><div class="ln"></div><div class="op" style="padding: 3px"></div><div class="op ok" style="padding: 3px"></div></div></div></div></div>
+        <div class="tile-vis" aria-hidden="true"><div class="mini"><div class="three"><div><div class="vid"><img src="img/lecture-osmosis.webp" alt="" loading="lazy"></div><div class="ln"></div></div><div><div class="ln"></div><div class="ln hl"></div><div class="ln hl"></div><div class="ln"></div></div><div><div class="ln"></div><div class="op hm-op-sm"></div><div class="op ok hm-op-sm"></div></div></div></div></div>
         <div class="tile-body"><h3 class="card-title">Study view</h3><p>The lecture, the book page and the questions, side by side.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
       <a class="card tile lift" href="products/practice-questions/">
-        <div class="tile-vis" style="background: var(--amber-soft)"><div class="mini"><b style="font-size: 12px">Which process moves water into the cell?</b><div class="op">A · Diffusion</div><div class="op ok">B · Osmosis ✓</div><div class="op">C · Active transport</div></div></div>
-        <div class="tile-body"><h3 class="card-title">Practice questions</h3><p>Real past-paper questions, marked the moment you answer.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+        <div class="tile-vis hm-amber" aria-hidden="true"><div class="mini"><b class="hm-t12">Which process moves water into the cell?</b><div class="op">A · Diffusion</div><div class="op ok">B · Osmosis ✓</div><div class="op">C · Active transport</div></div></div>
+        <div class="tile-body"><h3 class="card-title">Practice questions</h3><p>Real past-paper questions, checked the moment you answer.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
       <a class="card tile lift" href="products/progress/">
-        <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini" style="flex-direction: row; align-items: center; gap: 12px"><span class="ring"></span><div style="flex: 1; display: flex; flex-direction: column; gap: 6px"><b style="font-size: 12px">Biology 0610</b><div class="bar"><i style="width: 60%"></i></div><span style="color: var(--muted)">6/10 lectures · 3/5 quizzes</span></div></div></div>
-        <div class="tile-body"><h3 class="card-title">Progress</h3><p>Lectures finished, quiz marks and your streak, course by course.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+        <div class="tile-vis hm-teal" aria-hidden="true"><div class="mini hm-across"><span class="ring"></span><div class="hm-col"><b class="hm-t12">Biology 0610</b><div class="bar"><i class="hm-w60"></i></div><span class="hm-muted">6/10 lectures · 3/5 quizzes</span></div></div></div>
+        <div class="tile-body"><h3 class="card-title">Progress</h3><p>Lectures finished and quiz marks for every course, plus your study streak.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
       <a class="card tile lift" href="products/minis/">
-        <div class="tile-vis"><div class="phone"><img src="img/lecture-osmosis.webp" alt="" loading="lazy"><span class="phone-top">Missed 3 of 5</span><span class="phone-rail"><span class="phone-btn"><svg class="i" width="12" height="12"><use href="#i-book"/></svg></span>p. 48</span><span class="phone-cta">Swipe up · 3 questions</span></div></div>
+        <div class="tile-vis" aria-hidden="true"><div class="phone"><img src="img/lecture-osmosis.webp" alt="" loading="lazy"><span class="phone-top">Missed 3 of 5</span><span class="phone-rail"><span class="phone-btn"><svg class="i" width="12" height="12"><use href="#i-book"/></svg></span>p. 48</span><span class="phone-cta">Swipe up · 3 questions</span></div></div>
         <div class="tile-body"><h3 class="card-title">Minis</h3><p>Your weak spots each day, as the lecture moment that teaches them and three past-paper checks.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
     </div>
 
     <div class="tiles" data-aud="tutor">
       <a class="card tile lift" href="products/course-builder/">
-        <div class="tile-vis"><div class="mini"><div class="row"><span class="icon-tile" style="width: 22px; height: 22px; border-radius: 6px"><svg class="i" width="12" height="12"><use href="#i-video"/></svg></span><span style="flex: 1">Lecture 2.mp4</span><span class="tag tag-green">Linked</span></div><div class="row"><span class="icon-tile teal" style="width: 22px; height: 22px; border-radius: 6px"><svg class="i" width="12" height="12"><use href="#i-book"/></svg></span><span style="flex: 1">Textbook.pdf</span><span class="tag tag-green">Linked</span></div><div class="row"><span class="icon-tile amber" style="width: 22px; height: 22px; border-radius: 6px"><svg class="i" width="12" height="12"><use href="#i-doc"/></svg></span><span style="flex: 1">Past paper P1.pdf</span><span class="tag tag-yellow">Linking</span></div></div></div>
+        <div class="tile-vis" aria-hidden="true"><div class="mini"><div class="row"><span class="icon-tile hm-ic"><svg class="i" width="12" height="12"><use href="#i-video"/></svg></span><span class="hm-grow">Lecture 2.mp4</span><span class="tag tag-green">Added</span></div><div class="row"><span class="icon-tile teal hm-ic"><svg class="i" width="12" height="12"><use href="#i-book"/></svg></span><span class="hm-grow">Textbook.pdf</span><span class="tag tag-green">Added</span></div><div class="row"><span class="icon-tile amber hm-ic"><svg class="i" width="12" height="12"><use href="#i-doc"/></svg></span><span class="hm-grow">Past paper P1.pdf</span><span class="tag tag-yellow">Processing</span></div></div></div>
         <div class="tile-body"><h3 class="card-title">Course builder</h3><p>Upload your lectures, books and past papers. Set the order and share one join code.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
       <a class="card tile lift" href="products/study-view/">
-        <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini"><div class="three"><div><div class="vid"><img src="img/course-chemistry.webp" alt="" loading="lazy"></div><div class="ln"></div></div><div><div class="ln"></div><div class="ln hl"></div><div class="ln"></div></div><div><div class="ln"></div><div class="op" style="padding: 3px"></div><div class="op ok" style="padding: 3px"></div></div></div></div></div>
-        <div class="tile-body"><h3 class="card-title">Study view</h3><p>See your course exactly the way your students see it.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+        <div class="tile-vis hm-teal" aria-hidden="true"><div class="mini"><div class="three"><div><div class="vid"><img src="img/course-chemistry.webp" alt="" loading="lazy"></div><div class="ln"></div></div><div><div class="ln"></div><div class="ln hl"></div><div class="ln"></div></div><div><div class="ln"></div><div class="op hm-op-sm"></div><div class="op ok hm-op-sm"></div></div></div></div></div>
+        <div class="tile-body"><h3 class="card-title">Study view</h3><p>See your course the way your students see it.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
       <a class="card tile lift" href="products/live-sessions/">
-        <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini"><div class="row"><span class="tag tag-green">● Live</span><span style="flex: 1"></span><span style="color: var(--muted)">Today · 7:00 pm</span></div><b style="font-size: 12px">Chemistry 0620 · Revision: electrolysis</b><div class="row" style="color: var(--muted)"><svg class="i" width="13" height="13"><use href="#i-users"/></svg>Students join from the course page</div><div class="op ok" style="text-align: center">Start session</div></div></div>
-        <div class="tile-body"><h3 class="card-title">Live sessions</h3><p>Teach your students live, straight from your Klaro course.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+        <div class="tile-vis hm-teal" aria-hidden="true"><div class="mini"><div class="row"><span class="tag tag-green">● Live</span><span class="hm-grow"></span><span class="hm-muted">Today · 7:00 pm</span></div><b class="hm-t12">Chemistry 0620 · Revision: electrolysis</b><div class="row hm-muted"><svg class="i" width="13" height="13"><use href="#i-users"/></svg>Students join from Klaro</div><div class="op ok hm-center">Start session</div></div></div>
+        <div class="tile-body"><h3 class="card-title">Live sessions</h3><p>Schedule a live class and Klaro sets up the meeting. Your students join from Klaro.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
       <a class="card tile lift" href="products/marking/">
-        <div class="tile-vis" style="background: var(--amber-soft)"><div class="mini"><div class="row"><b style="flex: 1; font-size: 12px">Paper 1 · Ahmed S.</b><span class="mark">7/9</span></div><div class="row"><span class="ln"></span><svg class="i" width="13" height="13" style="color: var(--success)"><use href="#i-check"/></svg></div><div class="row"><span class="ln" style="flex: .7"></span><span style="flex: .3"></span><svg class="i" width="13" height="13" style="color: var(--success)"><use href="#i-check"/></svg></div><div class="row"><span class="ln" style="flex: .85"></span><span style="flex: .15"></span><span style="color: var(--warn); font-weight: 700">½</span></div></div></div>
-        <div class="tile-body"><h3 class="card-title">Marking</h3><p>Review exam papers against the mark scheme and release results.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+        <div class="tile-vis hm-amber" aria-hidden="true"><div class="mini"><div class="row"><b class="hm-t12 hm-grow">Paper 2 · Question 3(b)</b><span class="mark">2/3</span></div><div class="hm-scan">Water moves in by osmosis…</div><div class="row hm-muted"><svg class="i hm-ok" width="13" height="13"><use href="#i-check"/></svg>Against your mark scheme</div><div class="op ok hm-center">Send results</div></div></div>
+        <div class="tile-body"><h3 class="card-title">Marking</h3><p>Klaro marks scanned written papers against your mark scheme. You check, change any mark and send.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
     </div>
   </div>
@@ -343,16 +410,16 @@
 <section class="section white" id="how">
   <div class="wrap">
     <div class="section-head"><span class="kicker">How it works</span><h2 class="h2" data-aud="student">Three steps to your first lecture.</h2><h2 class="h2" data-aud="tutor">Three steps to your first course.</h2></div>
-    <div class="steps" data-aud="student">
-      <div class="card card-pad step"><span class="num">1</span><h3 class="card-title">Create your account</h3><p>Your name, your email and a password.</p></div>
-      <div class="card card-pad step"><span class="num">2</span><h3 class="card-title">Join with a code</h3><p>Your tutor gives you a join code. The course appears on your home page.</p></div>
-      <div class="card card-pad step"><span class="num">3</span><h3 class="card-title">Start studying</h3><p>Open the first lecture. Klaro keeps your place.</p></div>
-    </div>
-    <div class="steps" data-aud="tutor">
-      <div class="card card-pad step"><span class="num">1</span><h3 class="card-title">Apply as a tutor</h3><p>The Klaro team checks every tutor account before it opens.</p></div>
-      <div class="card card-pad step"><span class="num">2</span><h3 class="card-title">Upload what you already have</h3><p>Your recorded lectures, your books, your past papers and mark schemes.</p></div>
-      <div class="card card-pad step"><span class="num">3</span><h3 class="card-title">Klaro connects it</h3><p>Each lecture is linked to its book pages and questions. Set the order and share your join code.</p></div>
-    </div>
+    <ol class="steps hm-list" data-aud="student">
+      <li class="card card-pad step"><span class="num" aria-hidden="true">1</span><h3 class="card-title">Create your account</h3><p>Your name, your email, your mobile number and a password.</p></li>
+      <li class="card card-pad step"><span class="num" aria-hidden="true">2</span><h3 class="card-title">Join with a code</h3><p>Your tutor gives you a join code. The course appears on your home page.</p></li>
+      <li class="card card-pad step"><span class="num" aria-hidden="true">3</span><h3 class="card-title">Start studying</h3><p>Open the first lecture. Klaro keeps your place in every lecture.</p></li>
+    </ol>
+    <ol class="steps hm-list" data-aud="tutor">
+      <li class="card card-pad step"><span class="num" aria-hidden="true">1</span><h3 class="card-title">Apply as a tutor</h3><p>The Klaro team checks every tutor account before it opens.</p></li>
+      <li class="card card-pad step"><span class="num" aria-hidden="true">2</span><h3 class="card-title">Upload what you already have</h3><p>Your recorded lectures, your books, your past papers and their mark schemes.</p></li>
+      <li class="card card-pad step"><span class="num" aria-hidden="true">3</span><h3 class="card-title">Klaro connects it</h3><p>The Klaro team links your lectures to the book pages and past-paper questions, then checks and publishes your course. Set the order and share your join code.</p></li>
+    </ol>
   </div>
 </section>
 
@@ -369,21 +436,21 @@
         <span class="label">Research · Multimedia learning</span>
         <h3>Keep the source next to the explanation.</h3>
         <p>People learn better when related words and pictures sit together, instead of apart on different pages or screens.</p>
-        <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--purple)"><use href="#i-study"/></svg>So the book page opens beside the lecture, at the right moment.</div>
+        <div class="in-klaro"><svg class="i hm-purple" width="16" height="16"><use href="#i-study"/></svg>So the book page sits beside the lecture, at the moment it's explained.</div>
         <p class="cite"><i>Ginns (2006).</i> Integrating information: a meta-analysis of the spatial contiguity and temporal contiguity effects. Learning and Instruction.</p>
       </article>
       <article class="card card-pad rcard">
         <span class="label">Research · Retrieval practice</span>
         <h3>Testing yourself beats reading it again.</h3>
         <p>Students who practised recalling what they'd read remembered more a week later than students who studied it again.</p>
-        <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--purple)"><use href="#i-check"/></svg>So every lecture comes with practice questions.</div>
+        <div class="in-klaro"><svg class="i hm-purple" width="16" height="16"><use href="#i-check"/></svg>So your course comes with real past-paper questions to practise on.</div>
         <p class="cite"><i>Roediger &amp; Karpicke (2006).</i> Test-enhanced learning: taking memory tests improves long-term retention. Psychological Science.</p>
       </article>
       <article class="card card-pad rcard">
         <span class="label">Research · Feedback</span>
-        <h3>Know what you got wrong, and why.</h3>
+        <h3>Know what you got wrong, and where to look.</h3>
         <p>Feedback is one of the strongest influences on learning, when it tells learners how they did and what to work on next.</p>
-        <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--purple)"><use href="#i-link"/></svg>So answers are marked at once and point back to the book.</div>
+        <div class="in-klaro"><svg class="i hm-purple" width="16" height="16"><use href="#i-link"/></svg>So each answer shows the right one, with the book page and lecture clip that explain it.</div>
         <p class="cite"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research.</p>
       </article>
     </div>
@@ -398,23 +465,23 @@
   <div class="wrap">
     <div class="section-head"><span class="kicker">Questions</span><h2 class="h2">Good to know</h2></div>
     <div class="faq">
-      <div class="faq-item"><button type="button" aria-expanded="false">Does Klaro generate lectures or questions with AI?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>No. The lectures are the tutor's own, the book is the tutor's book, and the questions come from real past papers. Klaro connects them: each part of a lecture to the book page it covers, each topic to its questions.</p></div></div></div>
-      <div class="faq-item"><button type="button" aria-expanded="false">How do I join a course?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>Create your account, then enter the join code your tutor gives you. The course appears on your home page.</p></div></div></div>
-      <div class="faq-item"><button type="button" aria-expanded="false">How do I become a tutor on Klaro?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>Choose "Tutor" when you sign up. The Klaro team reviews tutor accounts before they open. You can use Klaro as a student in the meantime.</p></div></div></div>
+      <div class="faq-item"><button type="button" aria-expanded="false">Does Klaro generate lectures or questions with AI?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>No. The lectures are the tutor's own, the book is the tutor's book, and the questions come from real past papers. Klaro does not generate lectures, book text or questions. Each lecture clip is linked to the part of the book it teaches and to past-paper questions on the same topic. The Klaro team prepares and checks the links before a course is published.</p></div></div></div>
+      <div class="faq-item"><button type="button" aria-expanded="false">How do I join a course?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>Create your account, then enter the join code your tutor gives you. The course appears on your home page. If your tutor shares a course link instead, you can ask to join, and your tutor lets you in.</p></div></div></div>
+      <div class="faq-item"><button type="button" aria-expanded="false">How do I become a tutor on Klaro?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>Choose "I'm a tutor" when you sign up. The Klaro team reviews every tutor account before it opens, and emails you the decision.</p></div></div></div>
       <div class="faq-item"><button type="button" aria-expanded="false">Can I use Klaro in Arabic?<span class="plus" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span></button><div class="answer"><div><p>Yes. Klaro is built for English and Arabic, and the whole layout turns right to left in Arabic.</p></div></div></div>
     </div>
   </div>
 </section>
 
 <!-- 9. Closing call, strong words -->
-<section class="section" style="padding-top: 0">
+<section class="section hm-closer">
   <div class="wrap">
     <div class="closer">
       <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
       <h2 class="closer-h" data-aud="student">Your tutor's course. One view.</h2>
       <h2 class="closer-h" data-aud="tutor">Your content. Connected. Not generated.</h2>
       <p data-aud="student">Create your account, then join with the code your tutor gives you.</p>
-      <p data-aud="tutor">Apply in a minute. We'll check your account and help you set up your first course.</p>
+      <p data-aud="tutor">Apply as a tutor. The Klaro team reviews your account, then you set up your first course.</p>
       <a class="btn btn-lg" data-signup href="#"><span data-aud="student">Create a student account</span><span data-aud="tutor">Apply as a tutor</span></a>
     </div>
   </div>
@@ -429,20 +496,20 @@
       <p class="foot-motto">Enough AI slop.</p>
       <p class="small">We connect your content exactly how you intended it to look.</p>
     </div>
-    <div><h4>For students</h4><ul>
+    <div><h2 class="foot-h">For students</h2><ul>
           <li><a href="products/study-view/">Study view</a></li>
           <li><a href="products/practice-questions/">Practice questions</a></li>
           <li><a href="products/minis/">Minis</a></li>
           <li><a href="products/progress/">Progress</a></li>
     </ul></div>
-    <div><h4>For tutors</h4><ul>
+    <div><h2 class="foot-h">For tutors</h2><ul>
           <li><a href="products/course-builder/">Course builder</a></li>
           <li><a href="products/study-view/">Study view</a></li>
           <li><a href="products/live-sessions/">Live sessions</a></li>
           <li><a href="products/marking/">Marking</a></li>
           <li><a data-signup-as="tutor" href="#">Apply as a tutor</a></li>
     </ul></div>
-    <div><h4>Klaro</h4><ul>
+    <div><h2 class="foot-h">Klaro</h2><ul>
           <li><a href="research/">Research</a></li>
           <li><a href="./#try">Try it</a></li>
           <li><a data-signin href="#">Sign in</a></li>

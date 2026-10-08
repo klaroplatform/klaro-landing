@@ -63,8 +63,9 @@
     e.preventDefault();
     var code = codeForm.code.value.trim().toUpperCase();
     if (!code) { codeForm.code.focus(); return; }
-    // The app doesn't take a code in the address yet; for now this opens student sign-up.
-    window.open(APP + '/sign-up?as=student', '_blank', 'noopener');
+    // The app's join link: /join?code=… lets the student in once they sign in or sign up.
+    var lang = document.documentElement.lang === 'ar' ? '&lang=ar' : '';
+    window.location.href = APP + '/join?code=' + encodeURIComponent(code) + lang;
   });
 
   // Try it: example lessons. Real courses carry the tutor's own lecture, book and past papers.
@@ -144,7 +145,7 @@
         b.classList.add(right ? 'is-right' : 'is-wrong');
         t('key').classList.add('on');
         t('feedback').className = 'feedback ' + (right ? 'ok' : 'no');
-        t('feedback').textContent = right ? 'Correct. The highlighted line on the book page says why.' : 'Not quite. Read the highlighted line on the book page, then try again.';
+        t('feedback').textContent = right ? 'Correct. It is explained in the highlighted part of the book page.' : 'Not quite. The answer is ' + 'ABC'[L.answer] + '. It is explained in the highlighted part of the book page.';
       });
       box.appendChild(b);
     });
