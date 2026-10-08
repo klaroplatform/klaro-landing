@@ -402,8 +402,8 @@
 .show-cam { position: absolute; inset-block-start: 0; inset-inline-start: 0; width: 1440px; height: 900px; transform-origin: 0 0; will-change: transform; }
 .show-cam > iframe { display: block; width: 1440px; height: 900px; border: 0; opacity: 0; pointer-events: none; transition: opacity .4s var(--ease-out); }
 .show.is-ready .show-cam > iframe { opacity: 1; }
-.show.is-free .show-cam > iframe { pointer-events: auto; }
-.show.is-free .device { outline: 3px solid var(--purple); outline-offset: 0; }
+.show:is(.is-free, [data-state="free"]) .show-cam > iframe { pointer-events: auto; }
+.show:is(.is-free, [data-state="free"]) .device { outline: 3px solid var(--purple); outline-offset: 0; }
 .rec-cam { position: absolute; inset: 0; transform-origin: 0 0; will-change: transform; }
 .rec-cam > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .show-cursor { position: absolute; inset-block-start: 0; inset-inline-start: 0; z-index: 2; opacity: 0; pointer-events: none; will-change: transform, opacity; }
@@ -418,8 +418,11 @@
 .show-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 .show-steps, .rec-cues { display: grid; flex: 1 1 260px; margin: 0; padding: 0; list-style: none; }
 .show-steps > li, .rec-cues > li { grid-area: 1 / 1; font-size: 18px; font-weight: 600; line-height: 1.4; letter-spacing: -.01em; color: var(--ink); opacity: 0; transition: opacity .35s var(--ease-out); }
-.show-steps > li:first-child, .rec-cues > li:first-child, .show-steps > li.is-on, .rec-cues > li.is-on { opacity: 1; }
-.show-steps:has(> .is-on) > li:not(.is-on), .rec-cues:has(> .is-on) > li:not(.is-on) { opacity: 0; }
+/* showcase.js marks the current step with [data-current]; .is-on is kept for hand-written markup */
+.show-steps > li:first-child, .rec-cues > li:first-child,
+.show-steps > li:is(.is-on, [data-current]), .rec-cues > li:is(.is-on, [data-current]) { opacity: 1; }
+.show-steps:has(> :is(.is-on, [data-current])) > li:not(.is-on, [data-current]),
+.rec-cues:has(> :is(.is-on, [data-current])) > li:not(.is-on, [data-current]) { opacity: 0; }
 .rec-play { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; width: 64px; height: 64px; margin: auto; border: 0; border-radius: 50%;
   background: rgb(255 255 255 / .94); color: var(--purple-dark); box-shadow: 0 10px 30px -10px rgb(30 12 60 / .45); cursor: pointer; }
 .rec-play .i { width: 26px; height: 26px; margin-inline-start: 3px; }
