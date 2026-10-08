@@ -50,6 +50,7 @@
   <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
   <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
   <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
+  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
 </defs></svg>
 <!-- /chrome:sprite -->
 <!-- chrome:header -->
@@ -75,15 +76,15 @@
           <p class="mega-head">For students</p>
           <a class="mega-item" href="products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
           <a class="mega-item" href="products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span></a>
+          <a class="mega-item" href="products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
           <a class="mega-item" href="products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
-          <a class="mega-item" href="products/klaro-market/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-market"/></svg></span><span><b>Klaro Market</b><small>Find a course and the tutor who teaches it</small></span></a>
         </div>
         <div class="mega-col">
           <p class="mega-head">For tutors</p>
           <a class="mega-item" href="products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
           <a class="mega-item" href="products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
           <a class="mega-item" href="products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Teach your students live, straight from your Klaro course</small></span></a>
-          <a class="mega-item" href="products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Review papers against the mark scheme and release results</small></span></a>
+          <a class="mega-item" href="products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
         </div>
       </div>
       <div class="mega-links">
@@ -200,7 +201,7 @@
 <section class="motto" id="motto">
   <div class="wrap">
     <span class="kicker">What we stand for</span>
-    <h2 class="shout motto-big">Enough<br>AI <span class="gold">slop.</span></h2>
+    <h2 class="shout motto-big"><span class="ml">Enough</span> <span class="ml">AI <span class="gold">slop.</span></span></h2>
     <div class="motto-lines">
       <p>We don't generate AI content like everybody does.</p>
       <p>We connect your current content, <span class="gold-text">exactly how you intended it to look.</span></p>
@@ -231,9 +232,11 @@
 <section class="section white" id="try">
   <div class="wrap try">
     <div class="try-left">
-      <span class="kicker">Try it</span>
-      <h2 class="h2">Try a lesson. <span class="key">No account needed.</span></h2>
-      <p class="lead">Pick a level and a subject. You get a small Klaro study view: a lecture, the book page it covers, and a question that marks your answer.</p>
+      <div class="try-copy">
+        <span class="kicker">Try it</span>
+        <h2 class="h2">Try a lesson. <span class="key">No account needed.</span></h2>
+        <p class="lead">Pick a level and a subject. You get a small Klaro study view: a lecture, the book page it covers, and a question that marks your answer.</p>
+      </div>
       <form class="try-box" data-try>
         <h3>Try a lesson</h3>
         <label for="try-level">Level</label>
@@ -309,9 +312,9 @@
         <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini" style="flex-direction: row; align-items: center; gap: 12px"><span class="ring"></span><div style="flex: 1; display: flex; flex-direction: column; gap: 6px"><b style="font-size: 12px">Biology 0610</b><div class="bar"><i style="width: 60%"></i></div><span style="color: var(--muted)">6/10 lectures · 3/5 quizzes</span></div></div></div>
         <div class="tile-body"><h3 class="card-title">Progress</h3><p>Lectures finished, quiz marks and your streak, course by course.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
-      <a class="card tile lift" href="products/klaro-market/">
-        <div class="tile-vis"><div class="covers"><img src="img/course-chemistry.webp" alt="" loading="lazy"><img src="img/course-sat-math.webp" alt="" loading="lazy"></div></div>
-        <div class="tile-body"><h3 class="card-title">Klaro Market</h3><p>Find a course and the tutor who teaches it.</p><span class="more">Browse courses <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+      <a class="card tile lift" href="products/minis/">
+        <div class="tile-vis"><div class="phone"><img src="img/lecture-osmosis.webp" alt="" loading="lazy"><span class="phone-top">Missed 3 of 5</span><span class="phone-rail"><span class="phone-btn"><svg class="i" width="12" height="12"><use href="#i-book"/></svg></span>p. 48</span><span class="phone-cta">Swipe up · 3 questions</span></div></div>
+        <div class="tile-body"><h3 class="card-title">Minis</h3><p>Your weak spots each day, as the lecture moment that teaches them and three past-paper checks.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
     </div>
 
@@ -379,7 +382,7 @@
       <article class="card card-pad rcard">
         <span class="label">Research · Feedback</span>
         <h3>Know what you got wrong, and why.</h3>
-        <p>Feedback that tells learners where they went wrong is one of the strongest influences on learning.</p>
+        <p>Feedback is one of the strongest influences on learning, when it tells learners how they did and what to work on next.</p>
         <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--purple)"><use href="#i-link"/></svg>So answers are marked at once and point back to the book.</div>
         <p class="cite"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research.</p>
       </article>
@@ -429,8 +432,8 @@
     <div><h4>For students</h4><ul>
           <li><a href="products/study-view/">Study view</a></li>
           <li><a href="products/practice-questions/">Practice questions</a></li>
+          <li><a href="products/minis/">Minis</a></li>
           <li><a href="products/progress/">Progress</a></li>
-          <li><a href="products/klaro-market/">Klaro Market</a></li>
     </ul></div>
     <div><h4>For tutors</h4><ul>
           <li><a href="products/course-builder/">Course builder</a></li>
@@ -442,7 +445,6 @@
     <div><h4>Klaro</h4><ul>
           <li><a href="research/">Research</a></li>
           <li><a href="./#try">Try it</a></li>
-          <li><a href="market/">Browse courses</a></li>
           <li><a data-signin href="#">Sign in</a></li>
           <li><a href="ar/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
     </ul></div>

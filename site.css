@@ -10,6 +10,7 @@
 .display.big { font-size: clamp(42px, 6.4vw, 86px); font-weight: 700; letter-spacing: -.055em; line-height: .98; }
 /* Klaro's own mark for one key phrase per headline: a straight gold bar behind the words */
 .key { background: linear-gradient(rgb(240 201 61 / .62), rgb(240 201 61 / .62)) no-repeat 0 86% / 100% .26em; padding-inline: .03em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+[dir="rtl"] .key { background-position: 100% 86%; } /* so the bar draws in from the start (right) side */
 .gold-text { color: var(--yellow); }
 .shout { font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; line-height: .9; }
 .i { flex-shrink: 0; }
@@ -30,6 +31,9 @@
   box-shadow: var(--shadow-lift); padding: 10px; transform-origin: top center; animation: mega-in .32s var(--ease-out) both; }
 .mega[hidden] { display: none; }
 @keyframes mega-in { from { opacity: 0; translate: 0 -6px; scale: .985; } }
+/* Closing: site.js adds .closing, then hides the panel when this short fade has played */
+.mega.closing { animation: mega-out .18s var(--ease-out) both; pointer-events: none; }
+@keyframes mega-out { to { opacity: 0; translate: 0 -4px; scale: .99; } }
 .mega-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 .mega-col { display: flex; flex-direction: column; padding: 6px; }
 .mega-col + .mega-col { border-inline-start: 1px solid var(--border); }
@@ -49,6 +53,7 @@
 .joinform[hidden] { display: none; }
 .joinform input { flex: 1; min-width: 0; border: 0; background: none; padding-inline: 14px; font: 700 15px/1 ui-monospace, Menlo, monospace; letter-spacing: .08em; color: var(--purple-dark); text-transform: uppercase; }
 .joinform input:focus { outline: none; }
+.joinform:focus-within { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); } /* the field's focus, since the input hides its own */
 .joinform input::placeholder { color: var(--faint); letter-spacing: .04em; }
 .joinform .btn { height: 38px; border-radius: 8px; }
 
@@ -91,6 +96,7 @@
 .motto .wrap { position: relative; }
 .motto .kicker { color: rgb(255 255 255 / .55); }
 .motto-big { font-size: clamp(64px, 12.5vw, 176px); margin-block: 18px 30px; }
+.motto-big .ml { display: block; } /* one span per line, so each line can rise in on its own */
 .motto-big .gold { color: var(--yellow); }
 .motto-lines { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 48px; max-width: 1040px; }
 .motto-lines p { font-size: clamp(20px, 2.3vw, 30px); line-height: 1.22; font-weight: 600; letter-spacing: -.03em; color: rgb(255 255 255 / .9); }
@@ -114,7 +120,7 @@
 .connect-note .tag { background: rgb(240 201 61 / .16); color: var(--yellow); height: 26px; padding-inline: 11px; font-size: 12px; }
 @media (max-width: 860px) {
   .motto-lines { grid-template-columns: 1fr; }
-  .connect { grid-template-columns: 1fr; gap: 40px; }
+  .connect { grid-template-columns: 1fr; gap: 40px; max-width: 480px; } /* full width made the lecture still ~340px tall on tablets */
   .piece + .piece::before { inset-inline-end: auto; inset-inline-start: 50%; top: auto; bottom: 100%; width: 0; height: 40px; translate: 0 0; border-top: 0; border-inline-start: 2px dashed var(--yellow); }
   .piece + .piece::after { inset-inline-end: auto; inset-inline-start: calc(50% - 5px); top: auto; bottom: calc(100% + 14px); }
 }
@@ -139,13 +145,27 @@
 .mini .three > * { border: 1px solid var(--border); border-radius: 8px; padding: 6px; display: flex; flex-direction: column; gap: 5px; }
 .mini .vid { aspect-ratio: 16 / 10; border-radius: 5px; overflow: hidden; }
 .mini .vid img { width: 100%; height: 100%; object-fit: cover; }
-.ring { width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--purple) 62%, var(--purple-soft) 0); display: grid; place-items: center; flex-shrink: 0; }
+/* The ring's value is a registered property so it can fill in (site.js checks it is registered;
+   without @property it simply shows its value). */
+@property --ring { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+.ring { --ring: 62%; width: 64px; height: 64px; border-radius: 50%; background: conic-gradient(var(--purple) var(--ring), var(--purple-soft) 0); display: grid; place-items: center; flex-shrink: 0; }
 .ring::after { content: "62%"; width: 48px; height: 48px; border-radius: 50%; background: var(--card); display: grid; place-items: center; font-weight: 800; font-size: 13px; }
 .covers { position: relative; width: 220px; height: 124px; }
 .covers img { position: absolute; width: 150px; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 12px; border: 3px solid var(--card); box-shadow: var(--shadow-panel); }
 .covers img:nth-child(1) { inset-inline-start: 0; top: 18px; rotate: -6deg; }
 .covers img:nth-child(2) { inset-inline-end: 0; top: 0; rotate: 5deg; }
 .mark { font: 800 13px/1 var(--font); color: var(--success); background: var(--success-soft); border-radius: 6px; padding: 4px 6px; }
+/* Minis tile: a small phone-shaped card, the lecture moment behind it. Sized to sit inside the
+   168px tile field (a 120x200 phone would be clipped). */
+.phone { position: relative; width: 106px; height: 156px; flex-shrink: 0; border: 3px solid var(--ink); border-radius: 16px; background: var(--ink); box-shadow: var(--shadow-panel); overflow: hidden;
+  color: #fff; font: 700 8.5px/1 var(--font); letter-spacing: -.01em; }
+.phone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.phone::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgb(23 23 23 / .3), rgb(23 23 23 / 0) 32%, rgb(23 23 23 / 0) 52%, rgb(23 23 23 / .72)); }
+.phone > span { position: absolute; z-index: 1; white-space: nowrap; }
+.phone-top { inset-block-start: 7px; inset-inline-start: 6px; padding: 4px 6px; border-radius: var(--r-pill); background: rgb(255 255 255 / .92); color: var(--ink); }
+.phone-rail { inset-inline-end: 5px; inset-block-start: 50%; translate: 0 -50%; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 8px; }
+.phone-btn { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .22); }
+.phone-cta { inset-block-end: 7px; inset-inline: 4px; padding: 5px 3px; border-radius: var(--r-pill); background: var(--yellow); color: var(--ink); font-size: 8px; text-align: center; overflow: hidden; }
 
 /* ---------- Research cards ---------- */
 .rcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -160,7 +180,11 @@
 
 /* ---------- Try it ---------- */
 .try { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; align-items: start; }
-.try-left { display: flex; flex-direction: column; gap: 18px; }
+.try-left, .try-copy { display: flex; flex-direction: column; gap: 18px; }
+/* Between phone and desktop the form sits beside the copy, instead of stretching across the page */
+@media (min-width: 641px) and (max-width: 980px) {
+  .try-left { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+}
 .try-box { background: var(--plum); color: #fff; border-radius: var(--r-large); padding: 22px; display: flex; flex-direction: column; gap: 10px; }
 .try-box h3 { font-weight: 700; font-size: 22px; letter-spacing: -.03em; margin-bottom: 4px; }
 .try-box label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgb(255 255 255 / .55); }
@@ -170,6 +194,7 @@
 .select::after { content: ""; position: absolute; inset-inline-end: 16px; top: 50%; width: 8px; height: 8px; border-inline-end: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); translate: 0 -70%; rotate: 45deg; pointer-events: none; }
 .try-box .btn { margin-top: 6px; background: var(--yellow); border-color: var(--yellow); color: var(--plum); }
 .try-box .btn:hover { background: #f5d561; }
+.try-box :focus-visible, .closer :focus-visible, .motto :focus-visible { outline-color: #fff; } /* purple focus rings vanish on the dark fields */
 .try-box .fine { font-size: 12.5px; color: rgb(255 255 255 / .55); display: flex; gap: 8px; align-items: flex-start; }
 .try-stage .studio { box-shadow: var(--shadow-lift); }
 .try-stage .opt { cursor: pointer; width: 100%; text-align: start; font: inherit; font-size: 12.5px; color: inherit; transition: background-color .15s, border-color .15s; }
@@ -328,4 +353,92 @@
   .p-head-side .actions .btn { flex: 1 1 auto; }
   .p-field { margin-top: 28px; border-radius: 20px; }
   .p-vis { min-height: 0; }
+}
+
+/* ---------- Motion: calm, short and once ----------
+   site.js adds html.motion only when motion is allowed (no reduced-motion setting and
+   IntersectionObserver present), and it marks only what starts below the first screen. With JS
+   off or reduced motion nothing here hides anything: every page is simply in its final state.
+   Transform and opacity only, plus the highlight sweeps (background-size). Nothing loops.
+   Classes set by site.js:
+     .k-rv  rises into place; .k-grp  its children do (.p-row, .motto-big); .k-in  it has come in
+     .k-box a product visual whose pieces fill: .k-f bars, .k-r rings, .k-sw highlights, .k-mk
+            timeline marks; .k-go  it has come in
+     --k-d  stagger of a revealed element; --k-fd  delay of a filling piece; .k-rtl  right to left */
+:root { --k-dir: 1; }
+[dir="rtl"] { --k-dir: -1; }
+@keyframes k-rise { from { opacity: 0; translate: 0 18px; } }
+@keyframes k-line { from { opacity: 0; translate: 0 .3em; } }
+@keyframes k-chip { from { opacity: 0; translate: var(--k-x, 0) 6px; } }
+@keyframes k-draw-x { from { scale: 0 1; } }
+@keyframes k-draw-y { from { scale: 1 0; } }
+@keyframes k-pop { from { opacity: 0; scale: 0; } }
+@keyframes k-fill { from { scale: 0 1; } }
+@keyframes k-ring { from { --ring: 0%; } }
+@keyframes k-sweep { from { background-size: 0% 100%; } }
+@keyframes k-key { from { background-size: 0% .26em; } }
+@keyframes k-tick { 40% { transform: scale(1.1); } }
+.k-f { transform-origin: 0 50%; }
+.k-f.k-rtl { transform-origin: 100% 50%; }
+mark.k-sw.k-rtl { background-position: 100% 50% !important; }
+.chip.c1, .chip.c2 { --k-x: calc(-16px * var(--k-dir)); }
+.chip.c3, .chip.c4 { --k-x: calc(16px * var(--k-dir)); }
+
+@media screen {
+  /* Scroll reveal. backwards fill, so hover and focus states are untouched once it has played. */
+  html.motion .k-rv:not(.k-in),
+  html.motion .k-grp:not(.k-in) > * { opacity: 0; }
+  html.motion .k-rv.k-in,
+  html.motion .p-row.k-grp.k-in > * { animation: k-rise .7s var(--ease-out) var(--k-d, 0s) backwards; }
+  html.motion .p-row.k-grp.k-in > * + * { animation-delay: calc(var(--k-d, 0s) + .12s); } /* copy, then its visual */
+  html.motion .k-in .key { animation: k-key .8s var(--ease-out) calc(var(--k-d, 0s) + .3s) backwards; }
+
+  /* The motto: "Enough" / "AI slop." rise line by line */
+  html.motion .motto-big.k-grp.k-in > .ml { animation: k-line .9s var(--ease-out) var(--k-d, 0s) backwards; }
+  html.motion .motto-big.k-grp.k-in > .ml + .ml { animation-delay: calc(var(--k-d, 0s) + .12s); }
+  /* ...then each dashed connector draws from the piece before it, and its gold dot pops once.
+     --k-d is 0 / .08s / .16s when the three pieces come in together, so the lines go one by one. */
+  html.motion .piece + .piece.k-in::before { transform-origin: 0 50%; animation: k-draw-x .5s var(--ease-out) calc(var(--k-d, 0s) * 4 + .25s) backwards; }
+  html.motion[dir="rtl"] .piece + .piece.k-in::before { transform-origin: 100% 50%; }
+  html.motion .piece + .piece.k-in::after { animation: k-pop .45s var(--ease-settle) calc(var(--k-d, 0s) * 4 + .55s) backwards; }
+
+  /* Hero: the four chips come in after the study window, from their own side */
+  html.motion .stage > .chip { animation: k-chip .6s var(--ease-out) .4s backwards; }
+  html.motion .stage > .chip.c3 { animation-delay: .48s; }
+  html.motion .stage > .chip.c2 { animation-delay: .56s; }
+  html.motion .stage > .chip.c4 { animation-delay: .64s; }
+
+  /* Product visuals: bars, rings, book highlights and timeline marks fill in once */
+  html.motion .k-box:not(.k-go) .k-f { scale: 0 1; }
+  html.motion .k-box.k-go .k-f { animation: k-fill 1.1s var(--ease-out) var(--k-fd, .3s) backwards; }
+  html.motion .k-box:not(.k-go) .k-r { --ring: 0%; }
+  html.motion .k-box.k-go .k-r { animation: k-ring 1.2s var(--ease-out) var(--k-fd, .3s) backwards; }
+  html.motion .k-box:not(.k-go) mark.k-sw { background-size: 0% 100% !important; }
+  html.motion .k-box.k-go mark.k-sw { animation: k-sweep .9s var(--ease-out) var(--k-fd, .4s) backwards !important; }
+  html.motion .k-box:not(.k-go) .k-mk { opacity: 0; }
+  html.motion .k-box.k-go .k-mk { animation: k-pop .45s var(--ease-settle) var(--k-fd, .4s) backwards; }
+}
+/* On the stacked phone layout the connectors run down, so they draw from the top */
+@media screen and (max-width: 860px) {
+  html.motion .piece + .piece.k-in::before,
+  html.motion[dir="rtl"] .piece + .piece.k-in::before { transform-origin: 50% 0; animation-name: k-draw-y; }
+}
+
+/* Hover and keyboard focus: the same small response, and none at all with reduced motion */
+.lift:focus-visible { border-color: var(--purple-line); }
+.tile .mini .bar > i { transform-origin: 0 50%; }
+[dir="rtl"] .tile .mini .bar > i { transform-origin: 100% 50%; }
+@media (prefers-reduced-motion: no-preference) {
+  .lift:focus-visible { translate: 0 -3px; box-shadow: var(--shadow-panel); }
+  .p-rel:focus-visible .chev { color: var(--purple-dark); translate: calc(3px * var(--k-dir)) 0; }
+  .tile .mini, .tile .phone, .tile .phone-cta { transition: translate .35s var(--ease-out); }
+  .tile:is(:hover, :focus-visible) :is(.mini, .phone) { translate: 0 -3px; }
+  .tile:is(:hover, :focus-visible) .phone-cta { translate: 0 -2px; } /* "swipe up" */
+  .tile:is(:hover, :focus-visible) .mini :is(.op.ok, .mark) { animation: k-tick .45s var(--ease-settle); }
+  .tile .mini .bar > i { transition: transform .5s var(--ease-settle); }
+  .tile:is(:hover, :focus-visible) .mini .bar > i { transform: scaleX(1.1); }
+}
+
+@media print {
+  html.motion .k-rv, html.motion .k-grp > * { opacity: 1 !important; animation: none !important; }
 }
