@@ -13,3 +13,5 @@ design/brief/redesign.md
 design/brief/qa.md
 # The handover note for the next session or agent; internal, like the plans above.
 design/brief/handover.md
+# Screenshots sent to the owner for review; local only.
+design/review/
