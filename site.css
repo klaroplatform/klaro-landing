@@ -469,6 +469,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 @media (max-width: 640px) {
   html.ph-on .plate--device[data-ph]::before { display: none; }   /* no room for the file name beside the device */
   .plate--device { --frac: var(--frac-sm, 1); }
+  .plate--device[data-plate^="P2-"] { --plate-room: 140px; }   /* the phone as tall as the screen allows; the words follow under it */
 }
 /* The boxes, measured on each picture (design/brief/illustrations.md, "Screen boxes"; the -full
    files are new crops of the uncropped originals, so the whole laptop or monitor is in them).
@@ -476,7 +477,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
    screens are 1.43–1.57:1 (laptops, monitors), 1.32:1 (the tablet) or 0.45:1 (the phone), and
    the camera fills any shape. */
 .plate[data-plate] { --pa: 1.3333; --sx: 12; --sy: 15; --sw: 76; --sh: 70; --sr: .8; }
-.plate[data-plate="P1-evening-desk-full"] { --pa: 1.5; --sx: 21.18; --sy: 13.15; --sw: 55.9; --sh: 58.33; --sr: 0; --drawn: 1; }   /* laptop, 3:2: the keyboard reaches the picture's edges at 4:3 */
+.plate[data-plate="P1-evening-desk-full"] { --pa: 1.5; --sx: 21.18; --sy: 13.15; --sw: 55.9; --sh: 58.33; --sr: 0; --frac-sm: .9; --drawn: 1; }   /* laptop, 3:2: at 4:3 the keyboard would touch the edges */
 /* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). */
 .plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; --frac-sm: .4; --drawn: 1; }
 .plate[data-plate="P3-chalkboard-phone"] { --pa: 1.3333; --sx: 11.25; --sy: 16.33; --sw: 77.58; --sh: 65.89; --sr: 0; --frac-sm: .88; --drawn: 1; }   /* monitor */
@@ -527,6 +528,9 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .rec-play { position: absolute; z-index: 2; inset: 0; display: grid; place-items: center; width: 64px; height: 64px; margin: auto; border: 0; border-radius: 50%;
   background: rgb(255 255 255 / .94); color: var(--purple-dark); box-shadow: 0 10px 30px -10px rgb(30 12 60 / .45); cursor: pointer; }
 .rec-play .i { width: 26px; height: 26px; margin-inline-start: 3px; }
+/* "Use the sample app with the keyboard" (showcase.js, during the visitor's turn): the live app is
+   out of the tab order until it is chosen, so this shows only when the keyboard reaches it. */
+.show-use:not(:focus, :focus-visible) { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .show-sheet { position: fixed; inset: 0; z-index: 80; display: flex; flex-direction: column; background: var(--page); }
 .show-sheet-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 8px 16px; padding-block-start: max(8px, env(safe-area-inset-top, 0px));
   background: var(--card); border-block-end: 1px solid var(--line); font-size: 15px; font-weight: 600; color: var(--text); }
@@ -606,14 +610,18 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
    a phone there (its poster is the <picture>'s phone source). */
 @media (max-width: 899px) {
   .opening-stage > .show[data-phone-recording] { width: auto; align-items: center; }
-  .show[data-phone-recording] .device--browser { --device-w: min(72vw, calc((100svh - 200px) * 390 / 844 * .94)); width: var(--device-w); max-width: 100%;
+  /* The screen starts under the app's own header and toolbar (the top 200 of its 844 px), so the
+     book, the lecture and the question fill it, and the phone can be wider for the same height. */
+  .show[data-phone-recording] { --phone-screen: 390 / 644; }
+  .show[data-phone-recording] .device--browser { --device-w: min(86vw, calc((100svh - 190px) * 390 / 644 * .94)); width: var(--device-w); max-width: 100%;
     padding: calc(var(--device-w) * .026); background: #151515; border: 0; border-radius: calc(var(--device-w) * .124); box-shadow: 0 24px 50px -28px rgb(30 12 60 / .4); }
   .show[data-phone-recording] .device--browser::before { content: ""; position: absolute; z-index: 2; inset-inline: 0; inset-block-start: calc(var(--device-w) * .048);
     width: 28%; height: calc(var(--device-w) * .074); margin-inline: auto; border-radius: var(--r-pill); background: #151515; }
   .show[data-phone-recording] .device--browser .device-bar { display: none; }
-  .show[data-phone-recording] .device--browser .device-screen { --screen: 390 / 844; border-radius: calc(var(--device-w) * .098); }
+  .show[data-phone-recording] .device--browser .device-screen { --screen: var(--phone-screen); --focus: 50% 100%; border-radius: calc(var(--device-w) * .098); }
+  .show[data-phone-recording] .show-video { object-position: 50% 100%; }
 }
-@media (max-width: 899px) and (min-width: 641px) { .show[data-phone-recording] .device--browser { --device-w: 300px; } }
+@media (max-width: 899px) and (min-width: 641px) { .show[data-phone-recording] .device--browser { --device-w: min(340px, calc((100svh - 240px) * 390 / 644 * .94)); } }
 @media (max-width: 1024px) and (min-width: 641px) {
   .opening-stage .device--phone { --device-w: 300px; }
   /* Tablets: a landscape device with room on both sides, so the tiles sit beside it, not under the caption. */
@@ -714,7 +722,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 @keyframes k-out { to { opacity: 0; translate: 0 -4px; } }
 @keyframes k-ring { from { scale: .5; opacity: 1; } to { scale: 1.6; opacity: 0; } }
 @keyframes k-settle { from { scale: var(--settle-s); translate: calc(var(--settle-x) * var(--k-dir)) var(--settle-y); } }
-@keyframes k-settle-sm { from { scale: 1; } to { scale: .9; } }
+@keyframes k-settle-sm { from { scale: 1; } to { scale: .97; } }   /* barely: on a phone every pixel of the app counts */
 @keyframes k-gather { to { translate: 0 0; rotate: 0deg; scale: .75; } }
 @keyframes k-fade { to { opacity: 0; } }
 @keyframes k-drift { from { translate: 0 calc(var(--depth, 24) * 1px); } to { translate: 0 calc(var(--depth, 24) * -1px); } }
@@ -791,7 +799,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
   }
 }
 @media (prefers-reduced-motion: no-preference) and (max-width: 1024px) {
-  html.k-sd-js .opening-stage .device { scale: calc(1 - .1 * var(--p)); translate: none; }
+  html.k-sd-js .opening-stage .device { scale: calc(1 - .03 * var(--p)); translate: none; }
 }
 /* Reduced motion: the opening is an ordinary hero (no pin); the tiles sit still round the stage on
    desktop and are hidden on phones. */
