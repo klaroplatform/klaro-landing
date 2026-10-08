@@ -92,7 +92,7 @@
   {
    "@type": "VideoObject",
    "@id": "https://learnklaro.com/products/marking/#video-marking",
-   "name": "Answers come back marked, with feedback for each student",
+   "name": "Marking in Klaro: the queue, then one paper, marked",
    "thumbnailUrl": "https://learnklaro.com/media/marking-poster.jpg",
    "uploadDate": "2026-10-08",
    "inLanguage": "en",
@@ -134,10 +134,10 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "What do I upload?",
+     "name": "Who marks the papers?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "The question paper, your mark scheme, the total marks and each student's scanned paper as one PDF. Klaro matches each file to the student it's named after."
+      "text": "Klaro marks every answer against the mark scheme you upload, question part by question part. You check the marks, change any of them, and send the results."
      }
     },
     {
@@ -263,184 +263,101 @@
 
 <main id="top">
 
-<!-- 1. Hero: chip, H1 with the underline, lead, one pill and a text link; the illustration mosaic -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Marking <span class="chip-for">for tutors</span></span>
-      <h1 class="h1">Upload the papers. Get them back <span class="uline">marked</span>.</h1>
-      <p class="lead">Scan your students' written papers and upload them with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
-        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+<!-- Marking. The recording is the hero: chip and H1 on one side, the lead and button on the other,
+     then Omar's marking recording at full width on plate P4. Then one marked answer (a crop) with
+     two short cards and the research line, what a tutor uploads, the FAQ and the closing call. -->
+<section class="hero pr-hero-row">
+  <div class="wrap">
+    <div class="pr-row">
+      <div class="pr-row-head">
+        <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Marking <span class="chip-for">for tutors</span></span>
+        <h1 class="h1">Upload the papers. Get them back <span class="uline">marked</span>.</h1>
+      </div>
+      <div class="pr-row-side">
+        <p class="lead">Scan your students' written papers and upload them with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
+        </div>
       </div>
     </div>
-    <div class="mosaic" aria-hidden="true">
-      <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+    <figure class="rec pr-hero-media" id="in-action" data-recording="marking" data-camera="0 .85 260 420; 4.7 .7 270 430; 7.5 .7 270 430; 10.5 .7 450 360; 11.6 .5 860 405; 14.2 .6 720 360">
+      <h2 class="sr-only">Marking in Klaro: the queue, then one paper, marked</h2>
+      <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
+        <div class="device device--browser">
+          <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+          <div class="device-screen rec-screen" data-screen data-nosnippet>
+            <img src="../../media/marking-poster.jpg" alt="Klaro's marking queue on a sample course: each paper handed in, one card per paper" width="1440" height="900" decoding="async">
+            <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the tutor's marking queue, then one student's paper, marked"></video>
+            <button class="rec-play" type="button" data-action="play" aria-label="Play: a paper, marked" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+          </div>
+        </div>
       </div>
-      <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      <div class="show-under">
+        <ol class="rec-cues" data-steps>
+          <li>Every paper handed in waits here, one card per paper.</li>
+          <li>Each answer comes back marked…</li>
+          <li>…with what earns the marks beside it.</li>
+          <li>Each student's mark adds up as you go.</li>
+        </ol>
+        <div class="show-actions" data-actions>
+          <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
+        </div>
       </div>
-    </div>
+      <figcaption class="caption"><b>Sample course.</b> The marking queue, then one student's paper, marked.</figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- 2. In action: Omar's marking recording on its plate -->
-<section class="section" id="in-action" aria-labelledby="in-action-h">
+<!-- One marked answer, wide, with two short cards beside it, then the research line -->
+<section class="section" id="scheme" aria-labelledby="scheme-h">
   <div class="wrap">
-    <div class="split-card">
-      <div class="split-copy">
-        <h2 class="h3" id="in-action-h">Answers come back marked, with feedback for each student</h2>
-        <p>Every answer is marked question by question against the scheme you upload, with what earns the marks beside it. You check each paper, change any mark you disagree with, and send the results.</p>
-      </div>
-      <figure class="rec" data-recording="marking" data-camera="0 .85 260 420; 4.7 .7 270 430; 7.5 .7 270 430; 10.5 .7 450 360; 11.6 .5 860 405; 14.2 .6 720 360">
-        <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
-          <div class="device device--browser">
-            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen rec-screen" data-screen data-nosnippet>
-              <img src="../../media/marking-poster.jpg" alt="Klaro's marking queue on a sample course: each paper handed in, one card per paper" width="1440" height="900" loading="lazy" decoding="async">
-              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the tutor's marking queue, then one student's paper, marked"></video>
-              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
-            </div>
-          </div>
+    <div class="section-head section-head--start">
+      <h2 class="h2" id="scheme-h">Marked against your scheme</h2>
+      <p class="section-sub">Question part by question part, with what earns the marks beside each answer.</p>
+    </div>
+    <div class="pr-aside">
+      <figure class="pr-shot pr-shot--bleed" data-camera="0 .75 0 260">
+        <div class="pr-shot-field">
+          <div class="pr-shot-screen" data-nosnippet><img src="../../media/stills/marking-cue3.webp" alt="Klaro on a sample course: a student's written answer, with what earns the marks from the mark scheme" width="1040" height="650" loading="lazy" decoding="async"></div>
         </div>
-        <div class="show-under">
-          <ol class="rec-cues" data-steps>
-            <li>Every paper handed in waits here, one card per paper.</li>
-            <li>Each answer comes back marked…</li>
-            <li>…with what earns the marks, so you can check it in seconds.</li>
-            <li>Each student’s mark adds up as you go.</li>
-          </ol>
-          <div class="show-actions" data-actions>
-            <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
-          </div>
-        </div>
-        <figcaption class="caption"><b>Sample course.</b> The marking queue, then one student's paper, marked.</figcaption>
+        <figcaption class="caption"><b>Sample course.</b> One written answer, with what earns its marks.</figcaption>
       </figure>
-    </div>
-  </div>
-</section>
-
-<!-- 3. Features: three stacked cards, each with a still of the real app or an illustration -->
-<section class="section" id="features">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 class="h2">Hand over the marking, keep the final say</h2>
-      <p class="section-sub">Your mark scheme decides every mark, and you decide when results go out.</p>
-    </div>
-    <div class="stack">
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Marked against your scheme</h3>
-          <p>Each question part is marked against the mark scheme you upload, with what earns the marks shown beside the answer. You can check an answer in seconds.</p>
-          <a class="tlink" href="../quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <figure class="stack-media rec" data-camera="0 .63 300 260">
-          <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen" data-nosnippet><img src="../../media/stills/marking-cue3.webp" alt="Klaro on a sample course: a student's written answer, with what earns the marks from the mark scheme" width="1040" height="650" loading="lazy" decoding="async"></div>
-            </div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> One written answer, with what earns its marks.</figcaption>
-        </figure>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Every mark adds up as you go</h3>
-          <p>Each paper shows the student's mark so far and the answers still waiting. One button takes you to the next student.</p>
-          <a class="tlink" href="../course-builder/">About the course builder <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <figure class="stack-media rec" data-camera="0 .57 400 420">
-          <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen" data-nosnippet><img src="../../media/stills/marking-cue4.webp" alt="Klaro on a sample course: a student's mark so far, the answers waiting, and a button to the next student" width="1140" height="712" loading="lazy" decoding="async"></div>
-            </div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> One student's mark so far, and the next paper.</figcaption>
-        </figure>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">You have the last word</h3>
-          <p>Change any mark, with a reason, before results go out. Your students then find their marks for every question part under Exam results, with their marked paper.</p>
-          <a class="tlink" href="../../students/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
-<section class="section" id="research">
-  <div class="wrap">
-    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards rcards--one">
-      <article class="rcard">
-        <div class="ill ill--contain" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        <div class="rcard-body">
-          <p class="rcard-source">Review of Educational Research, 2007</p>
-          <h3 class="rcard-title">Show students how they did against the goal</h3>
-          <p>Feedback is one of the strongest influences on learning, and it works best when learners can see how they did against a clear goal.</p>
-          <p class="small"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. <em>Review of Educational Research</em>, 77(1), 81–112. <a href="https://doi.org/10.3102/003465430298487" rel="noopener">doi.org/10.3102/003465430298487</a></p>
-          <a class="tlink" href="../../research/#feedback">How Klaro uses research <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <p class="rcard-in">In Klaro: each answer is marked against your own mark scheme, and students see their marks question by question.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 5. More of Klaro: the illustrated carousel, without this product -->
-<section class="section carousel" id="more" aria-labelledby="more-h">
-  <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2" id="more-h">More for tutors</h2></div>
-    <div class="carousel-nav" hidden>
-      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
-      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-    </div>
-  </div>
-  <ul class="carousel-track" role="list">
-    <li class="carousel-item"><a class="icard" href="../course-builder/"><div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Course builder</span><span class="icard-line">Upload what you already teach from. Set the order.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../quizzes/"><div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Quizzes and homework</span><span class="icard-line">Ask in plain words. Built from real past-paper questions.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../live-sessions/"><div class="ill" data-ph="img/ill/05-lamp-laptop.webp"><img src="../../img/ill/05-lamp-laptop.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Live sessions</span><span class="icard-line">Schedule a class. Your students join from Klaro.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your lecture, open at the page it explains.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../../students/"><div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">For your students</span><span class="icard-line">Your lectures, where they study.</span></span></a></li>
-  </ul>
-</section>
-
-<!-- 6. The deep panel: the tutors' motto line, the same on every tutor page -->
-<section class="section" id="promise">
-  <div class="wrap">
-    <div class="panel">
-      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-      <h2 class="h2">We don't make content. We connect yours.</h2>
-      <p class="panel-sub">Your lectures, your book and real past papers, linked to each other. Nothing in your course is made up.</p>
-      <ul class="panel-grid">
-        <li class="panel-item"><h3 class="panel-item-title">Your own lectures</h3><p>Students learn from your recordings, in the order you set.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Real past papers</h3><p>Every question comes from a real exam paper, and says which.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Checked before it's published</h3><p>The Klaro team checks every course before your students see it.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">You have the last word</h3><p>Change any mark before a result reaches a student.</p></li>
+      <ul class="pr-aside-cards" role="list">
+        <li><h3 class="h3">You have the last word</h3><p>Change any mark, with a reason. Nothing reaches a student until you send it: one result at a time, or every result that's ready at once.</p></li>
+        <li><h3 class="h3">What your students see</h3><p>A notification, then their marks for every question part under Exam results. They can download their marked paper.</p><a class="tlink" href="../../students/">Klaro for students <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
       </ul>
-      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
+    </div>
+    <div class="pr-finding pr-block-foot">
+      <p class="pr-finding-line"><a class="pr-finding-label" href="../../research/#feedback">Powered by research.</a> Feedback is one of the strongest influences on learning, and it works best when learners can see how they did against a clear goal.</p>
+      <p class="pr-cite">Hattie, J., &amp; Timperley, H. (2007). The power of feedback. <i>Review of Educational Research, 77</i>(1), 81–112. <a href="https://doi.org/10.3102/003465430298487" rel="noopener">https://doi.org/10.3102/003465430298487</a></p>
     </div>
   </div>
 </section>
 
-<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<!-- What you upload, on one screen (app-facts §1.1) -->
+<section class="section" id="upload" aria-labelledby="upload-h">
+  <div class="wrap">
+    <div class="pr-spec">
+      <div class="pr-spec-head">
+        <h2 class="h2" id="upload-h">One upload for the whole class</h2>
+        <p>The paper, its mark scheme and every student's answers, on one screen.</p>
+      </div>
+      <dl class="pr-spec-list">
+        <div><dt>The question paper</dt><dd>As a PDF. Or pick past-paper questions from Klaro's library, and Klaro puts the paper and its mark scheme together.</dd></div>
+        <div><dt>Your mark scheme</dt><dd>As a PDF, with the total marks. Every answer is marked against it.</dd></div>
+        <div><dt>Your students' papers</dt><dd>One PDF per student, scanned from their written paper. Klaro matches each file to the student it's named after.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (feeds the FAQPage JSON-LD) -->
 <section class="section" id="faq">
   <div class="wrap">
     <div class="faq">
       <div class="faq-head"><h2 class="h2">Questions about marking</h2></div>
       <div class="faq-list">
-        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What do I upload?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>The question paper, your mark scheme, the total marks and each student's scanned paper as one PDF. Klaro matches each file to the student it's named after.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Who marks the papers?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Klaro marks every answer against the mark scheme you upload, question part by question part. You check the marks, change any of them, and send the results.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I change a mark?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Change any mark and note the reason. Nothing reaches a student until you send it: one result at a time, or every result that's ready at once.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What do my students see?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>A notification in Klaro, then their marks for every question part under Exam results, with feedback. They can download their marked paper.</p></div></div></div>
       </div>
@@ -448,22 +365,19 @@
   </div>
 </section>
 
-<!-- 8. Closing call -->
-<section class="closing" aria-labelledby="closing-h">
-  <ul class="closing-tiles" aria-hidden="true">
-    <li class="ill closing-tile" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-  </ul>
-  <div class="closing-copy">
-    <h2 class="h2" id="closing-h">Your next papers, marked against your scheme.</h2>
-    <p class="lead">Klaro is in beta. Free to try.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
+<!-- Closing call: the tutors' motto on the deep field, this page's line, two related pages -->
+<section class="section" id="start" aria-labelledby="closing-h">
+  <div class="wrap">
+    <div class="panel pr-close">
+      <h2 class="h2" id="closing-h">We don't make content. We connect yours.</h2>
+      <p class="panel-sub">Your mark scheme, your students' papers, and the last word on every mark.</p>
+      <div class="hero-actions"><a class="btn btn-on-deep btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
+      <p class="pr-close-note">Klaro is in beta. Free to try.</p>
+      <ul class="pr-close-links" role="list" aria-label="More for tutors">
+        <li><a href="../quizzes/">Quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="../course-builder/">Course builder <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </section>
 

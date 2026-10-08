@@ -247,159 +247,90 @@
 
 <main id="top">
 
-<!-- 1. Hero: chip, H1 with the underline, the approved tutor line, one pill and a text link; the mosaic -->
+<!-- Course builder. Hero with one large illustration: there is no capture of the upload or the
+     set-up yet (it needs Omar's course-setup scene). Then what a tutor uploads (the app's own
+     limits), the clips the Klaro team links (a still of lives step 3 on plate P1, with the research
+     line), the tutor's course page (a still of lives step 2, media/stills/course-page.webp), the FAQ
+     and the closing call. -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg>Course builder <span class="chip-for">for tutors</span></span>
-      <h1 class="h1">Bring what you already <span class="uline">teach</span></h1>
+      <h1 class="h1">Bring what you already <span class="uline">teach</span>.</h1>
       <p class="lead">Upload your lectures, your books and your past papers. Klaro connects them: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.</p>
       <div class="hero-actions">
         <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
-        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="tlink" href="../study-view/">See what your students get <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
-    <div class="mosaic" aria-hidden="true">
-      <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+    <div class="ill pr-hero-ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="A book, a notebook, a film reel and exam papers tied together with gold string." width="1200" height="1200" fetchpriority="high" decoding="async"></div>
+  </div>
+</section>
+
+<!-- What you upload: the course builder's own limits (app-facts §5) -->
+<section class="section" id="upload" aria-labelledby="upload-h">
+  <div class="wrap">
+    <div class="pr-spec">
+      <div class="pr-spec-head">
+        <h2 class="h2" id="upload-h">What you upload</h2>
+        <p>The material you already teach from, as files. You can add new papers and lectures later.</p>
       </div>
-      <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" decoding="async"></div>
-      </div>
+      <dl class="pr-spec-list">
+        <div><dt>Your book or notes</dt><dd>PDF or Word, up to 100 MB a file. A book in several parts becomes one book.</dd></div>
+        <div><dt>Past papers and mark schemes</dt><dd>Drop each paper with its mark scheme and Klaro pairs them by name. Together they become your course's question bank.</dd></div>
+        <div><dt>Lecture videos</dt><dd>MP4, MOV or WebM, up to 1 GB each, in the order you teach them.</dd></div>
+        <div><dt>Klaro's question library</dt><dd>Past-paper questions for your subject, which you can switch on as well.</dd></div>
+      </dl>
     </div>
   </div>
 </section>
 
-<!-- 2. In action: what students get from the tutor's material (a real still of the study view;
-     a recording of a tutor setting up a course replaces it once it exists, redesign.md 7.7) -->
+<!-- What Klaro does with it: a lecture's clips, linked to the book (lives step 3) on plate P1 -->
 <section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
-        <h2 class="h3" id="in-action-h">One connected course, from your own material</h2>
-        <p>Your students open your lecture, your book and real past-paper questions on one screen, linked moment by moment. Tap a passage in the book, and the lecture plays where you explain it.</p>
-        <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <h2 class="h3" id="in-action-h">Linked for you, checked before it's published</h2>
+        <p>The Klaro team links your material: each clip of your lecture to the part of your book it explains, and to the past-paper questions on it. Nothing reaches your students until it has been checked and published.</p>
+        <div class="pr-finding">
+          <p class="pr-finding-line"><a class="pr-finding-label" href="../../research/#source">Powered by research.</a> People learn more when an explanation and the material it explains are shown together, close in space and in time.</p>
+          <p class="pr-cite">Ginns, P. (2006). Integrating information: A meta-analysis of the spatial contiguity and temporal contiguity effects. <i>Learning and Instruction, 16</i>(6), 511–525. <a href="https://doi.org/10.1016/j.learninstruc.2006.10.001" rel="noopener">https://doi.org/10.1016/j.learninstruc.2006.10.001</a></p>
+        </div>
       </div>
-      <figure class="rec" data-camera="0 .45 560 420">
+      <figure class="rec" data-camera="0 .75 1060 520">
         <div class="plate plate--device" data-plate="P1-evening-desk" data-ph="img/plates/P1-evening-desk.webp">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen" data-nosnippet><img src="../../img/study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" loading="lazy" decoding="async"></div>
+            <div class="device-screen" data-nosnippet><img src="../../media/stills/lives-cue3.webp" alt="Klaro on a sample course: a lecture's clips, some linked to the book and to questions" width="1440" height="900" loading="lazy" decoding="async"></div>
           </div>
         </div>
-        <figcaption class="caption"><b>Sample course.</b> What your students get from your material: the book, the lecture and the past-paper questions on one screen.</figcaption>
+        <figcaption class="caption"><b>Sample course.</b> A lecture's clips, with links to the book and to questions where they explain them.</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- 3. Features: three stacked cards, each with a still of the real app or an illustration -->
-<section class="section" id="features">
+<!-- The tutor's course page, whole, and two short facts under it -->
+<section class="section" id="your-course" aria-labelledby="course-h">
   <div class="wrap">
-    <div class="section-head">
-      <h2 class="h2">Everything you teach from, in one course</h2>
-      <p class="section-sub">Upload it once. Klaro links it, and the Klaro team checks it before your students see it.</p>
+    <div class="section-head section-head--start">
+      <h2 class="h2" id="course-h">Your course, in your order</h2>
+      <p class="section-sub">One page for the course: its lectures, its book and its questions, its students, and new material when you have it.</p>
     </div>
-    <div class="stack">
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">One upload for everything you teach from</h3>
-          <p>Add your book or notes, your past papers with their mark schemes, and your lecture videos. Your past papers also become the question bank for your quizzes and homework.</p>
-          <a class="tlink" href="../quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Clips linked to your book</h3>
-          <p>Each lecture is cut into clips by topic. A clip that explains part of your book opens it at that page, next to its past-paper questions.</p>
-          <a class="tlink" href="../live-sessions/">About live sessions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <figure class="stack-media rec" data-camera="0 .75 1060 520">
-          <div class="plate plate--device" data-plate="P1-evening-desk" data-ph="img/plates/P1-evening-desk.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen" data-nosnippet><img src="../../media/stills/lives-cue3.webp" alt="Klaro on a sample course: a lecture's clips, some linked to the book and to questions" width="1440" height="900" loading="lazy" decoding="async"></div>
-            </div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> A lecture's clips, with links to the book and to questions where they explain them.</figcaption>
-        </figure>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">One code, and your students are in</h3>
-          <p>Set the order your lectures run in, then share your course's join code. Your class joins at once, with your course on their home page.</p>
-          <a class="tlink" href="../../students/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-    </div>
+    <figure class="pr-shot pr-shot--wide">
+      <div class="pr-shot-field">
+        <div class="pr-shot-screen" data-nosnippet><img src="../../media/stills/course-page.webp" alt="A tutor's course page in Klaro on a sample Biology course: the students, the lectures, Add material, and the course content with its lectures, book and questions" width="1404" height="560" loading="lazy" decoding="async"></div>
+      </div>
+      <figcaption class="caption"><b>Sample course.</b> A tutor's course page: the course, its students, and its lectures, book and questions.</figcaption>
+    </figure>
+    <ul class="pr-legend pr-legend--two pr-block-foot" role="list">
+      <li><h3 class="h3">Your order</h3><p>Put your lectures in the order you teach them. Your students meet them in that order, and their Next up follows it.</p></li>
+      <li><h3 class="h3">One code for your class</h3><p>Share your course's join code and your students join at once. Or let them ask to join, and let them in yourself.</p></li>
+    </ul>
   </div>
 </section>
 
-<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
-<section class="section" id="research">
-  <div class="wrap">
-    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards rcards--one">
-      <article class="rcard">
-        <div class="ill ill--contain" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        <div class="rcard-body">
-          <p class="rcard-source">Learning and Instruction, 2006</p>
-          <h3 class="rcard-title">Show the explanation and its source together</h3>
-          <p>People learn better when related words and pictures are presented together, close in space and in time.</p>
-          <p class="small"><i>Ginns, P. (2006).</i> Integrating information: A meta-analysis of the spatial contiguity and temporal contiguity effects. <em>Learning and Instruction</em>, 16(6), 511–525.</p>
-          <a class="tlink" href="../../research/#source">How Klaro uses research <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <p class="rcard-in">In Klaro: each clip of your lecture is linked to the book page it teaches.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 5. More of Klaro: the illustrated carousel, without this product -->
-<section class="section carousel" id="more" aria-labelledby="more-h">
-  <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2" id="more-h">More for tutors</h2></div>
-    <div class="carousel-nav" hidden>
-      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
-      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-    </div>
-  </div>
-  <ul class="carousel-track" role="list">
-    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your lecture, open at the page it explains.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../live-sessions/"><div class="ill" data-ph="img/ill/05-lamp-laptop.webp"><img src="../../img/ill/05-lamp-laptop.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Live sessions</span><span class="icard-line">Schedule a class. Your students join from Klaro.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../quizzes/"><div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Quizzes and homework</span><span class="icard-line">Ask in plain words. Built from real past-paper questions.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../marking/"><div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Marking</span><span class="icard-line">Answers marked against your scheme. You have the last word.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../../students/"><div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">For your students</span><span class="icard-line">Your lectures, where they study.</span></span></a></li>
-  </ul>
-</section>
-
-<!-- 6. The deep panel: the tutors' motto line, the same on every tutor page -->
-<section class="section" id="promise">
-  <div class="wrap">
-    <div class="panel">
-      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-      <h2 class="h2">We don't make content. We connect yours.</h2>
-      <p class="panel-sub">Your lectures, your book and real past papers, linked to each other. Nothing in your course is made up.</p>
-      <ul class="panel-grid">
-        <li class="panel-item"><h3 class="panel-item-title">Your own lectures</h3><p>Students learn from your recordings, in the order you set.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Real past papers</h3><p>Every question comes from a real exam paper, and says which.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Checked before it's published</h3><p>The Klaro team checks every course before your students see it.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">You have the last word</h3><p>Change any mark before a result reaches a student.</p></li>
-      </ul>
-      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<!-- FAQ (feeds the FAQPage JSON-LD) -->
 <section class="section" id="faq">
   <div class="wrap">
     <div class="faq">
@@ -413,22 +344,19 @@
   </div>
 </section>
 
-<!-- 8. Closing call -->
-<section class="closing" aria-labelledby="closing-h">
-  <ul class="closing-tiles" aria-hidden="true">
-    <li class="ill closing-tile" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-  </ul>
-  <div class="closing-copy">
-    <h2 class="h2" id="closing-h">Your course, connected.</h2>
-    <p class="lead">Klaro is in beta. Free to try.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
+<!-- Closing call: the tutors' motto on the deep field, this page's line, two related pages -->
+<section class="section" id="start" aria-labelledby="closing-h">
+  <div class="wrap">
+    <div class="panel pr-close">
+      <h2 class="h2" id="closing-h">We don't make content. We connect yours.</h2>
+      <p class="panel-sub">Your lectures, your book and your past papers, linked into one course.</p>
+      <div class="hero-actions"><a class="btn btn-on-deep btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
+      <p class="pr-close-note">Klaro is in beta. Free to try.</p>
+      <ul class="pr-close-links" role="list" aria-label="More for tutors">
+        <li><a href="../quizzes/">Quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="../live-sessions/">Live sessions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </section>
 

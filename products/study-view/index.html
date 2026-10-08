@@ -96,7 +96,7 @@
   {
    "@type": "VideoObject",
    "@id": "https://learnklaro.com/products/study-view/#video-student-tutor",
-   "name": "Questions on the same screen",
+   "name": "Stuck on a question? Your tutor already explained it.",
    "thumbnailUrl": "https://learnklaro.com/media/student-tutor-poster.jpg",
    "uploadDate": "2026-10-08",
    "inLanguage": "en",
@@ -149,7 +149,7 @@
      "name": "Where do the lectures and questions come from?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "From your tutor's own course: their recorded lectures, their book and questions from real past papers. Klaro links them to each other, moment by moment."
+      "text": "From your tutor's own course: their recorded lectures, their book and questions from real past papers. Klaro links them to each other: lecture clips to the pages they explain, and questions to both."
      }
     },
     {
@@ -267,203 +267,141 @@
 
 <main id="top">
 
-<!-- 1. Hero: chip, H1 with the one underline, lead, one pill and a text link; the illustration mosaic -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div class="hero-copy">
-      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-study"/></svg>Study view <span class="chip-for">for students</span></span>
-      <h1 class="h1">Your tutor's lecture, open at the right <span class="uline">page</span>.</h1>
-      <p class="lead">The lecture, the course book and real past-paper questions on one screen. Tap a passage and the lecture plays the moment it's explained.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
-        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+<!-- Study view. The real study view is the hero: the copy centred, the live frame at full width,
+     handed to the visitor at once (Replay plays the story). Under 900px it is the phone recording
+     student-study-hero. Then what the three panes do (with the research line), a recording of a
+     question opening where the tutor explained it, two short cards, the FAQ and the closing call. -->
+<section class="hero pr-hero-stack">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-study"/></svg>Study view <span class="chip-for">for students</span></span>
+        <h1 class="h1">Your tutor's lecture, open at the right <span class="uline">page</span>.</h1>
+        <p class="lead">The lecture, the course book and real past-paper questions on one screen. Tap a passage and the lecture plays the moment it's explained.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
+        </div>
       </div>
     </div>
-    <div class="mosaic" aria-hidden="true">
-      <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+    <figure class="show pr-hero-media" id="in-action" data-showcase="student-study" data-play="free" data-app-width="1000" data-phone-recording="student-study-hero" data-title="Klaro sample workspace: the study view">
+      <div class="device device--browser">
+        <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+        <div class="device-screen show-screen" data-screen data-nosnippet><picture><source media="(max-width: 899px)" srcset="../../media/student-study-hero-poster.webp" width="780" height="1688"><img src="../../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" fetchpriority="high"></picture></div>
       </div>
-      <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      <div class="show-under">
+        <ol class="show-steps" data-steps="static">
+          <li>Tap any passage in your book.</li>
+          <li>Your tutor's lecture jumps to that moment and explains it.</li>
+          <li>The past-paper question on it is right there.</li>
+          <li>Your turn. Tap any part of the book.</li>
+        </ol>
+        <div class="show-actions" data-actions><a class="btn btn-secondary btn-sm show-try" href="../../try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
       </div>
+      <figcaption class="caption"><b>Sample course.</b> A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- What each pane does, and the finding the layout rests on -->
+<section class="section" id="panes" aria-labelledby="panes-h">
+  <div class="wrap">
+    <div class="section-head section-head--start">
+      <h2 class="h2" id="panes-h">Three panes, one course</h2>
+      <p class="section-sub">Open one, two or all three side by side. On a phone, one at a time.</p>
+    </div>
+    <ul class="pr-legend" role="list">
+      <li><h3 class="h3">The book</h3><p>Your tutor's course book, in full. Point at a passage to watch it explained, or to practise it.</p></li>
+      <li><h3 class="h3">The lecture</h3><p>Your tutor's recorded lecture, in clips. Each clip has an In the book button that opens the page it teaches.</p></li>
+      <li><h3 class="h3">The questions</h3><p>Real past-paper questions on the part you're studying. They follow the clip that's playing.</p></li>
+    </ul>
+    <div class="pr-finding pr-block-foot">
+      <p class="pr-finding-line"><a class="pr-finding-label" href="../../research/#source">Powered by research.</a> People learn more when an explanation and the material it explains are shown together, close in space and in time, instead of apart.</p>
+      <p class="pr-cite">Ginns, P. (2006). Integrating information: A meta-analysis of the spatial contiguity and temporal contiguity effects. <i>Learning and Instruction, 16</i>(6), 511–525. <a href="https://doi.org/10.1016/j.learninstruc.2006.10.001" rel="noopener">https://doi.org/10.1016/j.learninstruc.2006.10.001</a></p>
     </div>
   </div>
 </section>
 
-<!-- 2. In action: the live study view (student-study), handed to the visitor at once; Replay plays the story -->
-<section class="section" id="in-action" aria-labelledby="in-action-h">
+<!-- From a question to where the tutor explained it: Omar's student-tutor recording on plate P5 -->
+<section class="section" id="questions" aria-labelledby="questions-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
-        <h2 class="h3" id="in-action-h">Try it on a sample course</h2>
-        <p>This is the real study view, open on a sample Biology course. Tap any passage in the book: the lecture jumps to where your tutor explains it, and the questions on that passage sit beside it.</p>
+        <h2 class="h3" id="questions-h">Stuck on a question? Your tutor already explained it.</h2>
+        <p>Point at a past-paper question and Klaro shows where your own tutor explains it: the moment in the lecture, next to the page in your book.</p>
+        <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-      <figure class="show" data-showcase="student-study" data-play="free" data-app-width="1000" data-title="Klaro sample workspace: the study view">
+      <figure class="rec" data-recording="student-tutor" data-camera="0 .8 280 470; 2.2 .8 340 250; 5.5 .55 980 380; 9.9 .6 720 450">
         <div class="plate plate--device" data-plate="P5-dusk-window" data-ph="img/plates/P5-dusk-window.webp">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen show-screen" data-screen data-nosnippet><img src="../../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" loading="lazy" decoding="async"></div>
+            <div class="device-screen rec-screen" data-screen data-nosnippet>
+              <img src="../../media/student-tutor-poster.jpg" alt="Klaro's study view on a sample course: a past-paper question beside the lecture" width="1440" height="900" loading="lazy" decoding="async">
+              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a question, then where the tutor explained it"></video>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play: from a question to the tutor's explanation" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+            </div>
           </div>
         </div>
         <div class="show-under">
-          <ol class="show-steps" data-steps="static">
-            <li>Tap any passage in your book.</li>
-            <li>Your tutor's lecture jumps to that moment and explains it.</li>
-            <li>The past-paper question on it is right there.</li>
-            <li>Your turn. Tap any part of the book.</li>
+          <ol class="rec-cues" data-steps>
+            <li data-t="0">Stuck on a question? Point at it.</li>
+            <li data-t="2.3">Klaro shows where your own tutor explained it.</li>
+            <li data-t="5.67">Your own tutor's explanation. Not a random video.</li>
           </ol>
-          <div class="show-actions" data-actions><a class="btn btn-primary btn-sm show-try" href="../../try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+          <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
         </div>
-        <figcaption class="caption"><b>Sample course.</b> A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
+        <figcaption class="caption"><b>Sample course.</b> A past-paper question, then where your tutor explained it.</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- 3. Features: three stacked cards. Card 1 and 3 show an illustration until their stills are captured
-     (redesign.md 7.7: lives step 4, and the new student-home scene). -->
-<section class="section" id="features">
+<!-- Two short cards: the place kept, and the phone -->
+<section class="section" id="more" aria-label="More about the study view">
   <div class="wrap">
-    <div class="section-head"><h2 class="h2">Built around your tutor's lecture</h2><p class="section-sub">The book, the lecture and the questions stay together while you study.</p></div>
-    <div class="stack">
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">From the book to the lecture, and back</h3>
-          <p>Tap a passage to watch it explained. Each lecture clip has an In the book button that opens the page it teaches.</p>
-          <a class="tlink" href="../minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Questions on the same screen</h3>
-          <p>The past-paper questions sit next to the lecture. Point at one and Klaro shows where your tutor explained it.</p>
-          <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <figure class="stack-media rec" data-recording="student-tutor" data-camera="0 .8 280 470; 2.2 .8 340 250; 5.5 .55 980 380; 9.9 .6 720 450">
-          <div class="plate plate--device" data-plate="P5-dusk-window" data-ph="img/plates/P5-dusk-window.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen rec-screen" data-screen data-nosnippet>
-                <img src="../../media/student-tutor-poster.jpg" alt="Klaro's study view on a sample course: a past-paper question beside the lecture" width="1440" height="900" loading="lazy" decoding="async">
-                <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a question, then where the tutor explained it"></video>
-                <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
-              </div>
-            </div>
-          </div>
-          <div class="show-under">
-            <ol class="rec-cues" data-steps>
-              <li data-t="0">Stuck on a question? Point at it.</li>
-              <li data-t="2.3">Klaro shows where your own tutor explained it.</li>
-              <li data-t="5.67">Your own tutor's explanation. Not a random video.</li>
-            </ol>
-            <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> A past-paper question, then where your tutor explained it.</figcaption>
-        </figure>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Pick up where you stopped</h3>
-          <p>Klaro keeps your place in every lecture. Open the course and carry on from the minute you left.</p>
-          <a class="tlink" href="../progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-    </div>
+    <ul class="pr-duo" role="list">
+      <li>
+        <div class="ill pr-duo-ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <h2 class="h3">Pick up where you stopped</h2>
+        <p>Klaro keeps your place in every lecture. Open the course and carry on from the minute you left.</p>
+        <a class="tlink" href="../progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+      <li>
+        <div class="ill pr-duo-ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <h2 class="h3">On your phone, one pane at a time</h2>
+        <p>The study view works on a phone too. Tap a link to the book or the lecture, and Klaro switches to that pane.</p>
+        <a class="tlink" href="../minis/">Revise on your phone with minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+    </ul>
   </div>
 </section>
 
-<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
-<section class="section" id="research">
-  <div class="wrap">
-    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards rcards--one">
-      <article class="rcard">
-        <div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        <div class="rcard-body">
-          <p class="rcard-source">Learning and Instruction, 2006</p>
-          <h3 class="rcard-title">Keep the source next to the explanation</h3>
-          <p>People learn better when related words and pictures are shown together, close in space and in time, instead of apart on different pages or screens.</p>
-          <p class="small"><i>Ginns (2006).</i> Integrating information: a meta-analysis of the spatial contiguity and temporal contiguity effects. Learning and Instruction.</p>
-          <p class="rcard-in">In Klaro: the book page sits beside the lecture, at the moment it's explained.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 5. More of Klaro: the students' products, minus this one -->
-<section class="section carousel" id="more" aria-labelledby="more-h">
-  <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2" id="more-h">Everything for your course, in one place</h2></div>
-    <div class="carousel-nav" hidden>
-      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
-      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-    </div>
-  </div>
-  <ul class="carousel-track" role="list">
-    <li class="carousel-item"><a class="icard" href="../practice-questions/"><div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Practice questions</span><span class="icard-line">Real past-paper questions, checked as you answer.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../minis/"><div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Minis</span><span class="icard-line">Your weak spots, one short lecture moment a day.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../progress/"><div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Progress</span><span class="icard-line">Lectures finished, quiz marks and your streak.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../../try/"><div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Try it</span><span class="icard-line">A sample course, open in your browser. No account needed.</span></span></a></li>
-  </ul>
-</section>
-
-<!-- 6. The deep panel: the students' version, the same on every student page -->
-<section class="section" id="promise">
-  <div class="wrap">
-    <div class="panel">
-      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-      <h2 class="h2">Your tutor's explanation. Not a guess.</h2>
-      <p class="panel-sub">Everything you study comes from your tutor's own course: their lectures, their book and real past papers, linked to each other.</p>
-      <ul class="panel-grid">
-        <li class="panel-item"><h3 class="panel-item-title">Your tutor's own lectures</h3><p>You learn from your tutor's recordings, in the order they set.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Real past-paper questions</h3><p>Every question comes from a real exam paper, and says which.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">The page in your book, one tap away</h3><p>Each lecture clip opens your book at the part it explains.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">In English and Arabic</h3><p>Use Klaro in either language. Your course stays as your tutor wrote it.</p></li>
-      </ul>
-      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<!-- FAQ (feeds the FAQPage JSON-LD) -->
 <section class="section" id="faq">
   <div class="wrap">
     <div class="faq">
       <div class="faq-head"><h2 class="h2">Questions about the study view</h2></div>
       <div class="faq-list">
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What's on the study view screen?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Your tutor's lecture, the course book and real past-paper questions, side by side. Tap a passage in the book and the lecture plays the moment it's explained. Each lecture clip has an In the book button that opens the page it teaches.</p></div></div></div>
-        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Where do the lectures and questions come from?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>From your tutor's own course: their recorded lectures, their book and questions from real past papers. Klaro links them to each other, moment by moment.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Where do the lectures and questions come from?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>From your tutor's own course: their recorded lectures, their book and questions from real past papers. Klaro links them to each other: lecture clips to the pages they explain, and questions to both.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I try it before I join a course?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Try it opens a sample Biology course in your browser, with no account needed. To study your tutor's course, create an account and join with the code your tutor gives you.</p></div></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 8. Closing call -->
-<section class="closing" aria-labelledby="closing-h">
-  <ul class="closing-tiles" aria-hidden="true">
-    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-  </ul>
-  <div class="closing-copy">
-    <h2 class="h2" id="closing-h">Open your course in the study view.</h2>
-    <p class="lead">Create your account, then join with the code your tutor gives you.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+<!-- Closing call: the students' motto on the deep field, this page's line, two related pages -->
+<section class="section" id="start" aria-labelledby="closing-h">
+  <div class="wrap">
+    <div class="panel pr-close">
+      <h2 class="h2" id="closing-h">Your tutor's explanation. Not a guess.</h2>
+      <p class="panel-sub">Your tutor's lecture, your course book and real past papers, open side by side.</p>
+      <div class="hero-actions"><a class="btn btn-on-deep btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+      <p class="pr-close-note">Create your account, then join with the code your tutor gives you.</p>
+      <ul class="pr-close-links" role="list" aria-label="More for students">
+        <li><a href="../practice-questions/">Practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="../minis/">Minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </section>
 
