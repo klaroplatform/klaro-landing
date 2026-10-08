@@ -3,12 +3,14 @@
 Written 2026-10-08 by the illustration agent. Read with [redesign.md](redesign.md) §7.9, §8.2 and §8.3
 (the plan this list follows) and [arabic.md](arabic.md) (the register used for the Arabic alt text).
 
-**Status (2026-10-08, night): all 20 illustrations and all seven plates (P1 to P7) are done.**
-The plates follow the owner's approach: the device is drawn into the scene with a green screen,
-measured, and painted dark. Their boxes are in [Screen boxes](#screen-boxes-fill-in-after-measuring)
-and how they were made is in [Plate run notes](#plate-run-notes-2026-10-08-night). The page
-agents still need to copy the boxes into `site.css` (the `TODO(illustrations)` placeholders) and
-switch the three P2 slots to the phone frame.
+**Status (2026-10-09): all 20 illustrations and all seven plates (P1 to P7) are done and on the
+pages.** The plates follow the owner's approach: the device is drawn into the scene with a green
+screen, measured, and painted dark. Every page shows the **whole device** with some scene round it
+(4:3 pictures, P1 3:2). P4 and P5 were drawn again on 2026-10-09 because their laptop keyboards ran
+off the bottom of the first pictures. The boxes the pages use are in
+[Screen boxes](#screen-boxes-what-the-pages-use); how the plates were made is in
+[Plate run notes](#plate-run-notes-2026-10-08-night) and [P4 and P5, second
+run](#p4-and-p5-second-run-2026-10-09).
 
 ## Style and process
 
@@ -139,9 +141,13 @@ The page lays the real app UI exactly over the drawn screen. Plates keep **empty
   3. Paint the screen **`#1b1722`** in the published WebP, so a failed UI load shows a dark screen,
      not green.
   4. Keep the green original in `design/image-styles/originals/plates/` for re-measuring.
-- **Format:** generate at 16:9, then crop to **12:5 at 2000×833** for desktop. Also make a **4:3
-  phone crop at 1200×900**, centred on the device. Files: `img/plates/<slug>.webp` and
-  `<slug>-phone.webp`, each ≤ 180 KB. Screen boxes are measured in each final file.
+- **Format (since 2026-10-09):** the pages use **one picture per plate at every width, showing the
+  whole device**: 4:3 at 1200×900 (`<slug>-phone.webp`, `<slug>-full.webp` or
+  `<slug>-full2.webp`), or 3:2 at 1350×900 for P1. On phones `site.css` crops it round the device
+  (`--frac-sm`), never through it. The first run also made 12:5 desktop crops (2000×833,
+  `<slug>.webp`); they cut the devices and were deleted. For a new plate, generate at **4:3** with
+  the whole device in frame (Gemini's aspect menu has 4:3), so no crop is needed. Each file ≤ 180 KB;
+  the screen box is measured in the final file.
 - **Arabic:** the device is now in the picture, so **don't mirror the plate in RTL**. Mirroring would
   move the screen box. Keep the image as it is in both languages.
 
@@ -157,26 +163,49 @@ The page lays the real app UI exactly over the drawn screen. Plates keep **empty
 | P6 | `P6-library` | Monitor, 16:10 | `/students/` (weak spots), Minis ×1, Progress ×1: all `device--browser` | Library shelves (plain spines) with a reading lamp, a monitor on the reading desk |
 | P7 | `P7-sofa-corner` | Tablet, 4:3, landscape | `/students/` (your own tutor): `device--tablet` | Sofa corner with a cushion and an open book, the tablet propped on the cushion |
 
-No plate is used with two device types. The only conflict is **P2**: the owner wants a phone, but
-the three P2 slots on the pages are `device--browser` today. Once the plate exists, the page agents
-need to switch those to the phone frame.
+No plate is used with two device types. **P2** is a phone: its slots hold the app's phone layout
+(the Minis feed) in the phone frame.
 
-### Screen boxes (fill in after measuring)
+### Screen boxes (what the pages use)
 
-Write each box the way `site.css` reads it: unitless percentages of the picture. `--pa` is the
-picture aspect (width / height), `--sx --sy` the screen's top-left, `--sw --sh` its size, and `--sr`
-its corner radius as a percentage of the picture's width. `plate.py` prints `box_pct` and
-`radius_px`; `--sr` is `radius_px / width × 100`.
+Each box is written the way `site.css` reads it: unitless percentages of the picture. `--pa` is
+the picture aspect (width / height), `--sx --sy` the screen's top-left, `--sw --sh` its size, and
+`--sr` its corner radius as a percentage of the picture's width. `plate.py` prints `box_pct` and
+`radius_px`; `--sr` is `radius_px / width × 100`. `--frac-sm` is the share of the picture's width
+shown on phones (under 640px), centred on the screen: the device's own width plus a little scene.
+The page markup names the file in `data-plate` (site.js loads `img/plates/<data-plate>.webp`), and
+the `.plate[data-plate="…"]` rule in `site.css` holds the same values as this table, with `--drawn: 1`.
 
-| Plate | File | Size | Device | Box (px) | `--pa --sx --sy --sw --sh --sr` |
-|---|---|---|---|---|---|
-| P1 | `P1-evening-desk.webp` / `-phone.webp` | 2000×832 / 1200×900 | laptop (screen 1.44:1, square corners) | 420, 13, 1160×807 / 136, 127, 929×646 | `--pa: 2.4038; --sx: 21; --sy: 1.56; --sw: 58; --sh: 97; --sr: 0` / phone `--pa: 1.3333; --sx: 11.33; --sy: 14.11; --sw: 77.42; --sh: 71.78; --sr: 0` |
-| P2 | `P2-kitchen-tea.webp` / `-phone.webp` | 2000×833 / 1200×900 | phone (screen 0.451:1, radius 29px in the phone file) | desktop: screen cut by the 12:5 crop, don't use / 444, 103, 313×690 | phone (the one the pages use, `P2-kitchen-tea-phone`): `--pa: 1.3333; --sx: 37; --sy: 11.44; --sw: 26.08; --sh: 76.67; --sr: 2.42` |
-| P3 | `P3-chalkboard.webp` / `-phone.webp` | 2000×834 / 1200×900 | monitor (screen 1.573:1, square corners) | 420, 47, 1162×740 / 135, 147, 931×593 | `--pa: 2.3981; --sx: 21; --sy: 5.64; --sw: 58.1; --sh: 88.73; --sr: 0` / phone `--pa: 1.3333; --sx: 11.25; --sy: 16.33; --sw: 77.58; --sh: 65.89; --sr: 0` |
-| P4 | `P4-marked-papers.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop (screen 1.558:1, square corners) | 401, 31, 1200×771 / 120, 142, 960×617 | `--pa: 2.401; --sx: 20.05; --sy: 3.72; --sw: 60; --sh: 92.56; --sr: 0` / phone `--pa: 1.3333; --sx: 10; --sy: 15.78; --sw: 80; --sh: 68.56; --sr: 0` |
-| P5 | `P5-dusk-window.webp` / `-phone.webp` | 2000×834 / 1200×900 | laptop (screen 1.433:1, radius about 5px) | 430, 18, 1141×796 / 144, 155, 912×636 | `--pa: 2.3981; --sx: 21.5; --sy: 2.16; --sw: 57.05; --sh: 95.44; --sr: 0.25` / phone `--pa: 1.3333; --sx: 12; --sy: 17.22; --sw: 76; --sh: 70.67; --sr: 0.33` |
-| P6 | `P6-library.webp` / `-phone.webp` | 2000×834 / 1200×900 | monitor (screen 1.553:1, square corners) | 420, 44, 1161×748 / 136, 151, 930×599 | `--pa: 2.3981; --sx: 21; --sy: 5.28; --sw: 58.05; --sh: 89.69; --sr: 0` / phone `--pa: 1.3333; --sx: 11.33; --sy: 16.78; --sw: 77.5; --sh: 66.56; --sr: 0` |
-| P7 | `P7-sofa-corner.webp` / `-phone.webp` | 2000×834 / 1200×900 | tablet (screen 1.317:1, radius about 12px) | 471, 14, 1061×805 / 175, 128, 849×645 | `--pa: 2.3981; --sx: 23.55; --sy: 1.68; --sw: 53.05; --sh: 96.52; --sr: 0.6` / phone `--pa: 1.3333; --sx: 14.58; --sy: 14.22; --sw: 70.75; --sh: 71.67; --sr: 0.83` |
+Copied from `site.css` on 2026-10-09:
+
+| Plate | File (`data-plate`) | Size | Device | Box (px) | `--pa --sx --sy --sw --sh --sr` | `--frac-sm` | Pages |
+|---|---|---|---|---|---|---|---|
+| P1 | `P1-evening-desk-full` | 1350×900 (3:2) | laptop, whole (square corners) | 286, 118, 755×525 | `--pa: 1.5; --sx: 21.18; --sy: 13.15; --sw: 55.9; --sh: 58.33; --sr: 0` | .9 | `/`, Course builder, Live sessions |
+| P2 | `P2-kitchen-tea-phone` | 1200×900 | phone (screen 0.451:1) | 438, 99, 324×702 | `--pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3` | .4 | `/students/`, Minis |
+| P3 | `P3-chalkboard-phone` | 1200×900 | monitor (1.573:1, square corners) | 135, 147, 931×593 | `--pa: 1.3333; --sx: 11.25; --sy: 16.33; --sw: 77.58; --sh: 65.89; --sr: 0` | .88 | `/`, Practice questions |
+| P4 | `P4-marked-papers-full2` | 1200×900 | laptop, whole (1.549:1, square corners) | 321, 141, 558×360 | `--pa: 1.3333; --sx: 26.75; --sy: 15.67; --sw: 46.5; --sh: 40; --sr: 0` | .74 | `/`, Marking |
+| P5 | `P5-dusk-window-full2` | 1200×900 | laptop, whole (1.519:1, square corners) | 315, 208, 572×376 | `--pa: 1.3333; --sx: 26.25; --sy: 23.11; --sw: 47.67; --sh: 41.78; --sr: 0` | .82 | `/students/`, Study view |
+| P6 | `P6-library-full` | 1200×900 | monitor (1.553:1, square corners) | 180, 149, 836×538 | `--pa: 1.3333; --sx: 15.04; --sy: 16.54; --sw: 69.63; --sh: 59.77; --sr: 0` | .8 | `/students/`, Progress |
+| P7 | `P7-sofa-corner-phone` | 1200×900 | tablet (1.317:1, radius about 10px) | 175, 128, 849×645 | `--pa: 1.3333; --sx: 14.58; --sy: 14.22; --sw: 70.75; --sh: 71.67; --sr: .83` | .82 | `/students/` |
+
+Notes on the table:
+
+- **P2:** the box in `site.css` is a few pixels larger than the measured green (444, 103,
+  313×690, `--sr: 2.42`), so the phone layout covers the screen's anti-aliased rim.
+- **P1 and P6 `-full`** are wider crops of `<slug>-uncropped.png` than the first run's
+  pre-crop, so the whole laptop or monitor fits; their boxes were measured in those crops.
+- **P4 and P5 `-full2`** come from new pictures (see the second run below). The suffix is a new
+  file name so no browser or cache keeps the old picture.
+- **Unused:** none. All seven files in `img/plates/` are used, and nothing else is there. Deleted
+  on 2026-10-09 because no page, `site.css` or `site.js` used them (they are in git history,
+  commits 8936f78 and e06a153): the 12:5 desktop crops `P1-evening-desk`, `P2-kitchen-tea`,
+  `P3-chalkboard`, `P4-marked-papers`, `P5-dusk-window`, `P6-library` and `P7-sofa-corner`;
+  the 4:3 crops `P1-evening-desk-phone`, `P4-marked-papers-phone`, `P5-dusk-window-phone` and
+  `P6-library-phone`; and the superseded `P4-marked-papers-full` and `P5-dusk-window-full`
+  (keyboards cut).
+- **Green originals** stay in `design/image-styles/originals/plates/` (untracked, local). For P4
+  and P5 the files the pages use come from `<slug>-v2.png`. The first-run originals
+  (`<slug>.png`, `<slug>-uncropped.png`) are kept for reference only.
 
 ### Plate run notes (2026-10-08, night)
 
@@ -237,6 +266,44 @@ its corner radius as a percentage of the picture's width. `plate.py` prints `box
   this plate is upscaled the most (from 986px to 2000). Tablet in front of a deep-purple cushion
   on a lavender sofa, open book at the left, sofa arm at the right.
 
+### P4 and P5, second run (2026-10-09)
+
+The first P4 and P5 pictures cut the laptop's keyboard at the bottom edge, so the laptop could
+not be shown whole. Both were drawn again.
+
+- **Tool:** Gemini Images ("Flash") on the owner's second Google account
+  (`gemini.google.com/u/1/`), **4:3 chosen in the aspect menu**, a fresh chat per plate. Output is
+  1024×765. No reference images attached.
+- **Saving:** the generated image was shown at its natural size, one image pixel per screen pixel
+  (an overlay at half its size on a 2× screen), and captured as a lossless PNG. The capture's
+  extra bottom row was trimmed. Saved as `design/image-styles/originals/plates/<slug>-v2.png`
+  (1024×765, green screen).
+- **Prompt:** the plate prompt below, at 4:3, plus: the laptop in violet and grape purple paper
+  with a lavender keyboard base ("not black, not grey"), "it fills about 80% of the image
+  height", and "the WHOLE laptop is inside the frame: the top edge of the lid, the bezel, the
+  screen, the hinge, the complete keyboard and the front edge of the base are all fully visible,
+  with a clear empty margin … Nothing of the laptop is cut off by the image edges."
+- **P4:** take 3 of 3. Take 1 drew a black laptop with the screen at 41% of the width. Take 2 was an
+  edit of take 1 to make the laptop purple: right colours, but the same small size. Take 3 was a
+  fresh chat with the size and colour wording above: screen 46% of the width at 1.549:1, the whole
+  laptop with a trackpad, margins of 13% above and 7% below. Answer papers with abstract scribbles
+  at the left; at the right, a lavender sheet with a column of gold ticks and a purple
+  highlighter, its gold cap off.
+- **P5:** take 1 of 1, same wording: screen 47.5% of the width at 1.519:1, the whole laptop with
+  6% below its base. A lavender-framed window behind it: a crescent moon at the upper left, a low
+  skyline with gold lit windows, and a minaret with a small dome at the right.
+- **Made with:** `python3 -I design/image-styles/originals/plates/plate.py <slug>-v2.png
+  <scratch>.webp auto img/plates/<slug>-full2.webp`. The source is already 4:3, so the "phone"
+  crop is the whole picture (less 4px of its width), scaled to 1200×900. The 12:5 output is
+  thrown away. No green is left; the screen corners are square (`--sr: 0`).
+- **Screen size:** the price of a whole laptop. The screen is 46 to 48% of the picture's width,
+  against 74 to 77% in the cut `-full` crops. At 1440×900 the plate is 880px wide and the screen
+  about 410px; on a 375px phone the `--frac-sm` crop gives about 180 to 215px. Cropping the 4:3
+  window tighter (6% margins) would give about 51% but would cut the highlighter and the papers.
+- **Checked** headless at 1440×900 and 375×812 on `/`, Marking, `/students/` and Study view: the
+  app sits on the drawn screen to within 0.02px, and the whole laptop shows at both widths.
+  Screenshots: `design/review/plates-v2/` (local).
+
 ### Prompt (one per plate; for ChatGPT, attach 01, 09 and 14 as style references)
 
 `Wide landscape scene, 16:9, in exactly the same cut-paper style as the reference images. Subject:
@@ -249,10 +316,17 @@ scene are cut paper. Style recipe: <the recipe above, with "Wide 16:9." in place
 
 Regenerate (at most twice) if the screen isn't a clean, flat, axis-aligned green rectangle.
 
+Since 2026-10-09 the device must be shown whole. Choose **4:3** (not 16:9) and use "Landscape
+scene, 4:3" in place of "Wide landscape scene, 16:9". Add the whole-device and size wording from
+[P4 and P5, second run](#p4-and-p5-second-run-2026-10-09), and name the device's colours (purple
+and lavender paper), or Gemini may draw a black one.
+
 ### Measuring script
 
 Requires only `python3` and ffmpeg (no PIL). Run it as
-`python3 -I design/image-styles/originals/plates/plate.py <green.png> img/plates/<slug>.webp auto img/plates/<slug>-phone.webp`.
+`python3 -I design/image-styles/originals/plates/plate.py <green.png> <scratch>.webp auto img/plates/<slug>-<suffix>.webp`.
+The pages use only the last file (the 4:3 crop at 1200×900), so write the 12:5 output somewhere
+outside `img/plates/` and delete it.
 
 1. It decodes the image through ffmpeg.
 2. It finds the rows and columns that are mostly green (g > 150, r and b < 90), which skips
