@@ -82,7 +82,23 @@
    ],
    "breadcrumb": {
     "@id": "https://learnklaro.com/products/practice-questions/#breadcrumb"
-   }
+   },
+   "video": [
+    {
+     "@id": "https://learnklaro.com/products/practice-questions/#video-student-wrong"
+    }
+   ]
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/products/practice-questions/#video-student-wrong",
+   "name": "Know before you move on",
+   "thumbnailUrl": "https://learnklaro.com/media/student-wrong-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. Not quite: the right answer, then the page in the book and the moment in the lecture.",
+   "duration": "PT14S",
+   "contentUrl": "https://learnklaro.com/media/student-wrong.mp4"
   },
   {
    "@type": "BreadcrumbList",
@@ -104,6 +120,41 @@
      "@type": "ListItem",
      "position": 3,
      "name": "Practice questions"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://learnklaro.com/products/practice-questions/#faq",
+   "url": "https://learnklaro.com/products/practice-questions/",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Where do the questions come from?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "From real past papers. Each question shows the paper it came from: paper, year and series. The right answer comes from that paper's own mark scheme."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens when I get one wrong?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Multiple-choice answers are checked the moment you answer. Get one wrong and Klaro shows the right answer, then the page in your book and the moment in your tutor's lecture that explain it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does practice count towards my marks?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Practice never counts against you. You choose the chapters, the paper, year and series, how many questions, and a timer if you want one."
+     }
     }
    ]
   }
@@ -238,15 +289,15 @@
 </section>
 
 <!-- 2. In action: a live practice run (student-practice), handed to the visitor once it has drawn -->
-<section class="section" id="in-action">
+<section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
-        <h2 class="h3">Answer one wrong on purpose</h2>
+        <h2 class="h3" id="in-action-h">Answer one wrong on purpose</h2>
         <p>This is a real practice question from a sample Biology course. Pick a wrong answer to see what happens: the right answer, then the page in the book and the moment in the lecture that explain it.</p>
       </div>
-      <figure class="show" data-showcase="student-practice" data-play="free" data-title="Klaro sample workspace: practice questions">
-        <div class="plate" data-ph="img/plates/P3-chalkboard.webp">
+      <figure class="show" data-showcase="student-practice" data-play="free" data-app-width="1000" data-title="Klaro sample workspace: practice questions">
+        <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
             <div class="device-screen show-screen" data-screen data-nosnippet><img src="../../media/student-wrong-poster.jpg" alt="A past-paper question in Klaro's practice, on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async"></div>
@@ -274,8 +325,8 @@
           <p>Each question shows the paper it came from: paper, year and series. The right answer comes from that paper's own mark scheme.</p>
           <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec">
-          <div class="plate" data-ph="img/plates/P3-chalkboard.webp">
+        <figure class="stack-media rec" data-camera="0 .6 260 160">
+          <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
             <div class="device device--browser">
               <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
               <div class="device-screen"><img src="../../media/stills/student-wrong-source.webp" alt="A past-paper question in Klaro with its source line: 0610/12 May/June 2023" width="640" height="400" loading="lazy" decoding="async"></div>
@@ -290,8 +341,8 @@
           <p>Multiple-choice answers are checked the moment you answer. Get one wrong and Klaro shows the right answer, then the page in your book and the moment in your lecture.</p>
           <a class="tlink" href="../minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec" data-recording="student-wrong">
-          <div class="plate" data-ph="img/plates/P3-chalkboard.webp">
+        <figure class="stack-media rec" data-recording="student-wrong" data-camera="0 .8 250 420; 2.9 .8 250 520; 4.8 .85 280 720; 8.7 .5 600 420; 12.5 .6 720 450">
+          <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
             <div class="device device--browser">
               <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
               <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -320,7 +371,7 @@
           <a class="tlink" href="../progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="stack-media">
-          <div class="ill" data-ph="img/ill/17-compass.webp" style="--ar: 4 / 3"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+          <div class="ill" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
       </article>
     </div>
@@ -331,7 +382,7 @@
 <section class="section" id="research">
   <div class="wrap">
     <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto">
+    <div class="rcards rcards--one">
       <article class="rcard">
         <div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         <div class="rcard-body">
@@ -347,9 +398,9 @@
 </section>
 
 <!-- 5. More of Klaro: the students' products, minus this one -->
-<section class="section carousel" id="more">
+<section class="section carousel" id="more" aria-labelledby="more-h">
   <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2">Everything for your course, in one place</h2></div>
+    <div class="section-head section-head--start"><h2 class="h2" id="more-h">Everything for your course, in one place</h2></div>
     <div class="carousel-nav" hidden>
       <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
       <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
@@ -381,8 +432,22 @@
   </div>
 </section>
 
-<!-- 7. Closing -->
-<section class="closing">
+<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="faq">
+      <div class="faq-head"><h2 class="h2">Questions about practice</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Where do the questions come from?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>From real past papers. Each question shows the paper it came from: paper, year and series. The right answer comes from that paper's own mark scheme.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What happens when I get one wrong?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Multiple-choice answers are checked the moment you answer. Get one wrong and Klaro shows the right answer, then the page in your book and the moment in your tutor's lecture that explain it.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Does practice count towards my marks?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>No. Practice never counts against you. You choose the chapters, the paper, year and series, how many questions, and a timer if you want one.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Closing call -->
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -394,7 +459,7 @@
     <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">Practise with the questions your exam has asked before.</h2>
+    <h2 class="h2" id="closing-h">Practise with the questions your exam has asked before.</h2>
     <p class="lead">Create your account, then join with the code your tutor gives you.</p>
     <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
   </div>
@@ -407,7 +472,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../../">For tutors</a></h2><ul>

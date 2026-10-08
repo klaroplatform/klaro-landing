@@ -59,7 +59,6 @@
 
   "pages": {
     "": { "type": "home", "audience": ["teacher"] },
-    "ar/": { "type": "home", "audience": ["teacher"] },
     "students/": { "type": "home", "label": "For students and parents", "group": "students", "audience": ["student", "parent"] },
     "products/": { "label": "Products", "type": "hub" },
     "products/study-view/": { "label": "Study view", "group": "students", "audience": ["student", "teacher"] },

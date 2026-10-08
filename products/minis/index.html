@@ -82,7 +82,37 @@
    ],
    "breadcrumb": {
     "@id": "https://learnklaro.com/products/minis/#breadcrumb"
-   }
+   },
+   "video": [
+    {
+     "@id": "https://learnklaro.com/products/minis/#video-student-minis-phone"
+    },
+    {
+     "@id": "https://learnklaro.com/products/minis/#video-student-weak"
+    }
+   ]
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/products/minis/#video-student-minis-phone",
+   "name": "What a mini looks like",
+   "thumbnailUrl": "https://learnklaro.com/media/student-minis-phone-poster.webp",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. Minis on a phone: a moment of the tutor's lecture, then three checks from real past papers.",
+   "duration": "PT18S",
+   "contentUrl": "https://learnklaro.com/media/student-minis-phone.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/products/minis/#video-student-weak",
+   "name": "Your weak spots first",
+   "thumbnailUrl": "https://learnklaro.com/media/student-weak-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. What you got wrong, and where each one was explained.",
+   "duration": "PT7S",
+   "contentUrl": "https://learnklaro.com/media/student-weak.mp4"
   },
   {
    "@type": "BreadcrumbList",
@@ -104,6 +134,41 @@
      "@type": "ListItem",
      "position": 3,
      "name": "Minis"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://learnklaro.com/products/minis/#faq",
+   "url": "https://learnklaro.com/products/minis/",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a mini?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "One unit of your course book: the moment of your tutor's lecture that teaches it, then three questions on it from real past papers."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does Minis choose what to show?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It starts with the units you missed most in past-paper practice, weakest first. Until you have weak spots, Minis starts from the beginning of the book."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I see the page in my book?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Tap the page number beside the clip and your tutor's book opens at that page, with the passage marked. The clip pauses while you read."
+     }
     }
    ]
   }
@@ -237,41 +302,44 @@
   </div>
 </section>
 
-<!-- 2. In action: Omar's student-minis recording, in a browser frame until a phone-layout recording exists -->
-<section class="section" id="in-action">
+<!-- 2. In action: the Minis feed in its phone layout (student-minis-phone), in a phone on plate P2 -->
+<section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
-        <h2 class="h3">What a mini looks like</h2>
+        <h2 class="h3" id="in-action-h">What a mini looks like</h2>
         <p>Each mini is one unit of your book: the moment of your tutor's lecture that teaches it, then three questions from real past papers. Until you have weak spots, Minis starts from the beginning of the book.</p>
       </div>
-      <figure class="rec" data-recording="student-minis">
-        <div class="plate" data-ph="img/plates/P2-kitchen-tea.webp">
-          <div class="device device--browser">
-            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen rec-screen" data-screen data-nosnippet>
-              <img src="../../media/student-minis-poster.jpg" alt="Today's minis in Klaro on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async">
-              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a mini, from the lecture moment to the checks"></video>
-              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+      <figure class="rec" data-recording="student-minis-phone">
+        <div class="plate plate--device" data-plate="P2-kitchen-tea-phone" data-ph="img/plates/P2-kitchen-tea-phone.webp">
+          <div class="device device--phone">
+            <div class="device-body">
+              <div class="device-screen rec-screen" data-screen data-nosnippet>
+                <img src="../../media/student-minis-phone-poster.webp" alt="Minis in Klaro on a phone, on a sample Biology course: a moment of the tutor's lecture playing in the feed" width="780" height="1688" loading="lazy" decoding="async">
+                <video muted playsinline preload="none" aria-label="A recording of Klaro's Minis on a phone, on a sample course: a lecture moment, then three past-paper checks"></video>
+                <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+              </div>
             </div>
           </div>
         </div>
         <div class="show-under">
           <ol class="rec-cues" data-steps>
-            <li data-t="0">Revise in minis: short, one idea at a time.</li>
-            <li data-t="4.37">First, the moment your tutor explains it…</li>
-            <li data-t="7.57">…then quick checks on it, from real past papers.</li>
+          <li data-t="0">A mini: your tutor's own lecture, at the moment it explains one idea.</li>
+          <li data-t="3.4">Tap to pause. The book button opens the page it comes from.</li>
+          <li data-t="5.41">Swipe up for three past-paper checks on it.</li>
+          <li data-t="9.72">One tap answers it, and you know straight away.</li>
+          <li data-t="14.34">Three right, and that idea is cleared for today.</li>
           </ol>
-          <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+          <div class="show-actions" data-actions><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
         </div>
-        <figcaption class="caption"><b>Sample course.</b> A mini: the moment your tutor explains it, then quick checks.</figcaption>
+        <figcaption class="caption"><b>Sample course.</b> Minis on a phone: a moment of the tutor's lecture, then three checks from real past papers.</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- 3. Features: three stacked cards. Card 2 shows an illustration until the open book is captured
-     (redesign.md 7.7: student-minis after tapping the page number). -->
+<!-- 3. Features: three stacked cards. Cards 2 and 3 show an illustration until phone-layout stills
+     exist (the open book, a check); Minis is never shown in the desktop layout. -->
 <section class="section" id="features">
   <div class="wrap">
     <div class="section-head"><h2 class="h2">Revision that starts with what you miss</h2><p class="section-sub">Short, one idea at a time, from your own tutor's course.</p></div>
@@ -282,8 +350,8 @@
           <p>Minis lists the units you missed most in past-paper practice, weakest first. Every question you missed also opens where it was explained.</p>
           <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec" data-recording="student-weak">
-          <div class="plate" data-ph="img/plates/P6-library.webp">
+        <figure class="stack-media rec" data-recording="student-weak" data-camera="0 .9 240 440; 4.7 .9 250 380">
+          <div class="plate plate--device" data-plate="P6-library" data-ph="img/plates/P6-library.webp">
             <div class="device device--browser">
               <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
               <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -310,7 +378,7 @@
           <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="stack-media">
-          <div class="ill" data-ph="img/ill/02-book-passage.webp" style="--ar: 4 / 3"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+          <div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
       </article>
       <article class="stack-card">
@@ -319,15 +387,11 @@
           <p>Three past-paper questions on the same unit, each marked right or wrong. A unit you're still weak on stays on your list.</p>
           <a class="tlink" href="../progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec">
-          <div class="plate" data-ph="img/plates/P2-kitchen-tea.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen"><img src="../../media/stills/student-minis-check.webp" alt="The first check of a mini in Klaro: a question from past paper 0610/11 Oct/Nov 2022, answered correctly" width="640" height="400" loading="lazy" decoding="async"></div>
-            </div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> The first of three checks, from a real past paper.</figcaption>
-        </figure>
+        <!-- TODO(minis-phone-still): a phone-layout still of a check (student-minis-phone, about 11 s).
+             Minis is only ever shown in its phone UI, so the desktop still is gone until then. -->
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        </div>
       </article>
     </div>
   </div>
@@ -337,7 +401,7 @@
 <section class="section" id="research">
   <div class="wrap">
     <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto">
+    <div class="rcards rcards--one">
       <article class="rcard">
         <div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         <div class="rcard-body">
@@ -353,9 +417,9 @@
 </section>
 
 <!-- 5. More of Klaro: the students' products, minus this one -->
-<section class="section carousel" id="more">
+<section class="section carousel" id="more" aria-labelledby="more-h">
   <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2">Everything for your course, in one place</h2></div>
+    <div class="section-head section-head--start"><h2 class="h2" id="more-h">Everything for your course, in one place</h2></div>
     <div class="carousel-nav" hidden>
       <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
       <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
@@ -387,8 +451,22 @@
   </div>
 </section>
 
-<!-- 7. Closing -->
-<section class="closing">
+<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="faq">
+      <div class="faq-head"><h2 class="h2">Questions about minis</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What is a mini?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>One unit of your course book: the moment of your tutor's lecture that teaches it, then three questions on it from real past papers.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How does Minis choose what to show?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>It starts with the units you missed most in past-paper practice, weakest first. Until you have weak spots, Minis starts from the beginning of the book.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I see the page in my book?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Tap the page number beside the clip and your tutor's book opens at that page, with the passage marked. The clip pauses while you read.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Closing call -->
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -400,7 +478,7 @@
     <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">Start with what you get wrong.</h2>
+    <h2 class="h2" id="closing-h">Start with what you get wrong.</h2>
     <p class="lead">Create your account, then join with the code your tutor gives you.</p>
     <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
   </div>
@@ -413,7 +491,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../../">For tutors</a></h2><ul>

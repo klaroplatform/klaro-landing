@@ -282,7 +282,6 @@
    here: the numbered citation links, the three rules, the limits and the reference list.
    tools/site.py reads the references (.rs-cite: authors (year). title. <i>journal, volume</i>(issue),
    pages. DOI link) for the Article's citations, so keep that markup as it is. */
-.hero + .section { padding-block-start: 0; }
 
 /* The featured idea, in the page's one pale band */
 .rs-feature .ill { --ar: 16 / 10; border-radius: var(--radius-media); }
@@ -587,7 +586,7 @@
 </section>
 
 <!-- 7. Closing: see it in the app -->
-<section class="closing">
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/10-bookmark.webp"><img src="../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -599,7 +598,7 @@
     <li class="ill closing-tile" data-ph="img/ill/03-parcel.webp"><img src="../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">See these findings in the app</h2>
+    <h2 class="h2" id="closing-h">See these findings in the app</h2>
     <p class="lead">Open the sample course and tap any part of the book.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" href="../try/">Try it yourself</a>
@@ -615,7 +614,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../">For tutors</a></h2><ul>

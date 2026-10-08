@@ -335,15 +335,15 @@
           <div class="ill opening-tile"><img src="img/ill/03-parcel-480.webp" alt="" width="480" height="480" decoding="async"></div>
           <div class="ill opening-tile"><img src="img/ill/08-exam-clock-480.webp" alt="" width="480" height="480" decoding="async"></div>
         </div>
-        <figure class="show" data-showcase="study" data-title="Klaro sample workspace: the study view">
+        <figure class="show" data-showcase="study" data-phone-recording="study-hero" data-title="Klaro sample workspace: the study view">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
             <div class="device-screen show-screen" data-screen data-nosnippet>
-              <img src="img/study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" fetchpriority="high">
+              <picture><source media="(max-width: 899px)" srcset="media/study-hero-poster.webp" width="780" height="1688"><img src="img/study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" fetchpriority="high"></picture>
             </div>
           </div>
           <div class="show-under">
-            <ol class="show-steps only-wide" data-steps>
+            <ol class="show-steps" data-steps>
               <li>A student taps a passage in your book.</li>
               <li>Your lecture jumps to that moment and explains exactly that passage.</li>
               <li>The question on that passage is right there.</li>
@@ -370,8 +370,8 @@
       <li class="ill"><img src="img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
       <li class="ill"><img src="img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
       <li class="ill"><img src="img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-      <li class="ill" data-ph="img/ill/18-answer-sheet.webp"></li>
-      <li class="ill" data-ph="img/ill/19-fountain-pen.webp"></li>
+      <li class="ill" data-ph="img/ill/18-answer-sheet.webp"><img src="img/ill/18-answer-sheet.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+      <li class="ill" data-ph="img/ill/19-fountain-pen.webp"><img src="img/ill/19-fountain-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     </ul>
     <p class="strip-caption">For IGCSE, A Level and SAT tutors. In English and Arabic.</p>
   </div>
@@ -393,8 +393,8 @@
             <p>Afterwards the recording lands in your course, cut into clips and linked to your book.</p>
             <a class="tlink" href="products/live-sessions/">About live sessions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="lives" aria-label="Teach on Zoom from your schedule">
-            <div class="plate" data-ph="img/plates/P1-evening-desk.webp">
+          <figure class="rec" data-recording="lives" data-camera="0 .55 1020 440; 4.3 .8 1170 360; 7.6 .8 260 540; 9.8 .8 1150 520; 12 .9 1180 380">
+            <div class="plate plate--device" data-plate="P1-evening-desk" data-ph="img/plates/P1-evening-desk.webp">
               <div class="device device--browser">
                 <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
                 <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -423,8 +423,8 @@
             <p>It's written from real past-paper questions in your course, and sent once you've checked it.</p>
             <a class="tlink" href="products/quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="quiz" aria-label="Ask for homework in plain words">
-            <div class="plate" data-ph="img/plates/P3-chalkboard.webp">
+          <figure class="rec" data-recording="quiz" data-camera="0 .55 360 300; .6 .75 300 820; 4.1 .8 350 400; 8.4 .75 370 380; 11.1 .75 950 600; 11.7 .5 600 560; 13.9 .6 720 450">
+            <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
               <div class="device device--browser">
                 <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
                 <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -453,8 +453,8 @@
             <p>Upload the scanned papers with your mark scheme. Each student gets marks and feedback, and you check any mark before it's sent.</p>
             <a class="tlink" href="products/marking/">About marking <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="marking" aria-label="Answers come back marked">
-            <div class="plate" data-ph="img/plates/P4-marked-papers.webp">
+          <figure class="rec" data-recording="marking" data-camera="0 .85 260 420; 4.7 .7 270 430; 7.5 .7 270 430; 10.5 .7 450 360; 11.6 .5 860 405; 14.2 .6 720 360">
+            <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
               <div class="device device--browser">
                 <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
                 <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -576,7 +576,7 @@
 </section>
 
 <!-- 8. Closing call -->
-<section class="closing" aria-labelledby="closing-title">
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile"><img src="img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile"><img src="img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -585,10 +585,10 @@
     <li class="ill closing-tile"><img src="img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile"><img src="img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile"><img src="img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/20-night-window.webp"></li>
+    <li class="ill closing-tile" data-ph="img/ill/20-night-window.webp"><img src="img/ill/20-night-window.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2" id="closing-title">Bring your course to Klaro.</h2>
+    <h2 class="h2" id="closing-h">Bring your course to Klaro.</h2>
     <p class="lead">Klaro is in beta. Free to try.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
@@ -604,7 +604,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="./" aria-label="Klaro home"><img src="img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="./">For tutors</a></h2><ul>

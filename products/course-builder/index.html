@@ -274,7 +274,7 @@
 
 <!-- 2. In action: what students get from the tutor's material (a real still of the study view;
      a recording of a tutor setting up a course replaces it once it exists, redesign.md 7.7) -->
-<section id="in-action" aria-labelledby="in-action-h">
+<section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
@@ -282,8 +282,8 @@
         <p>Your students open your lecture, your book and real past-paper questions on one screen, linked moment by moment. Tap a passage in the book, and the lecture plays where you explain it.</p>
         <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
-      <figure class="rec">
-        <div class="plate" data-ph="img/plates/P1-evening-desk.webp">
+      <figure class="rec" data-camera="0 .45 560 420">
+        <div class="plate plate--device" data-plate="P1-evening-desk" data-ph="img/plates/P1-evening-desk.webp">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
             <div class="device-screen" data-nosnippet><img src="../../img/study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" loading="lazy" decoding="async"></div>
@@ -310,7 +310,7 @@
           <a class="tlink" href="../quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="stack-media">
-          <div class="ill" data-ph="img/ill/03-parcel.webp" style="--ar: 16 / 10"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+          <div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
       </article>
       <article class="stack-card">
@@ -319,8 +319,8 @@
           <p>Each lecture is cut into clips by topic. A clip that explains part of your book opens it at that page, next to its past-paper questions.</p>
           <a class="tlink" href="../live-sessions/">About live sessions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec">
-          <div class="plate" data-ph="img/plates/P1-evening-desk.webp">
+        <figure class="stack-media rec" data-camera="0 .75 1060 520">
+          <div class="plate plate--device" data-plate="P1-evening-desk" data-ph="img/plates/P1-evening-desk.webp">
             <div class="device device--browser">
               <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
               <div class="device-screen" data-nosnippet><img src="../../media/stills/lives-cue3.webp" alt="Klaro on a sample course: a lecture's clips, some linked to the book and to questions" width="1440" height="900" loading="lazy" decoding="async"></div>
@@ -336,7 +336,7 @@
           <a class="tlink" href="../../students/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="stack-media">
-          <div class="ill" data-ph="img/ill/12-raised-hand.webp" style="--ar: 16 / 10"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+          <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
       </article>
     </div>
@@ -347,9 +347,9 @@
 <section class="section" id="research">
   <div class="wrap">
     <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 760px; margin-inline: auto">
+    <div class="rcards rcards--one">
       <article class="rcard">
-        <div class="ill ill--contain" data-ph="img/ill/02-book-passage.webp" style="--ar: 5 / 2"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <div class="ill ill--contain" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         <div class="rcard-body">
           <p class="rcard-source">Learning and Instruction, 2006</p>
           <h3 class="rcard-title">Show the explanation and its source together</h3>
@@ -414,7 +414,7 @@
 </section>
 
 <!-- 8. Closing call -->
-<section class="section closing">
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -426,7 +426,7 @@
     <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">Your course, connected.</h2>
+    <h2 class="h2" id="closing-h">Your course, connected.</h2>
     <p class="lead">Klaro is in beta. Free to try.</p>
     <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
   </div>
@@ -439,7 +439,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../../">For tutors</a></h2><ul>

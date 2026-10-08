@@ -488,8 +488,8 @@ def citations(page, warn):
 
 def recordings(page, warn):
     """A VideoObject for each recording the page embeds (data-recording="<name>", with
-    media/<name>.json, .mp4 and -poster.jpg). Name and description come from the page's own text
-    next to it (a heading and the caption), so the markup says what the page says."""
+    media/<name>.json, .mp4 and -poster.jpg or -poster.webp). Name and description come from the
+    page's own text next to it (a heading and the caption), so the markup says what the page says."""
     out = []
     for el in page.tree.root.find(lambda n: n.attrs.get('data-recording')):
         name = el.attrs['data-recording']
@@ -499,13 +499,24 @@ def recordings(page, warn):
             continue
         with open(meta_path, encoding='utf-8') as f:
             info = json.load(f)
-        scope = next((a for a in [el, *el.ancestors()] if a.tag in ('figure', 'section', 'article')), el)
-        heading = next((n for n in scope.iter() if n.tag in ('h2', 'h3', 'h4')), None)
-        caption = next((n for n in scope.iter() if n.tag == 'figcaption'), None)
-        title = info.get('name') or (squash(heading.text()) if heading is not None else '') \
+        # The name: the first heading in the nearest figure, article or section round the
+        # recording that has one (the recording's own step, feature card or section). The
+        # description: the recording's own caption.
+        heading = None
+        for a in [el, *el.ancestors()]:
+            if a.tag in ('figure', 'article', 'section'):
+                heading = next((n for n in a.iter() if n.tag in ('h2', 'h3', 'h4')), None)
+                if heading is not None:
+                    break
+        figure = next((a for a in [el, *el.ancestors()] if a.tag == 'figure'), el)
+        caption = next((n for n in figure.iter() if n.tag == 'figcaption'), None)
+        # The page's heading first; a "name" in the JSON that is only the file's name says nothing.
+        json_name = info.get('name') if info.get('name') not in (None, '', name, name.split('/')[-1]) else ''
+        title = (squash(heading.text()) if heading is not None else '') or json_name \
             or el.attrs.get('aria-label', '')
-        poster = info.get('poster') or f'media/{name}-poster.jpg'
-        if not title or not os.path.exists(os.path.join(ROOT, poster)):
+        poster = info.get('poster') or next((f'media/{name}-poster.{ext}' for ext in ('jpg', 'webp')
+                                             if os.path.exists(os.path.join(ROOT, 'media', f'{name}-poster.{ext}'))), '')
+        if not title or not poster or not os.path.exists(os.path.join(ROOT, poster)):
             warn(page.rel, f'line {el.line}: recording "{name}" needs a heading next to it and a poster for VideoObject')
             continue
         video = f'media/{name}.mp4'

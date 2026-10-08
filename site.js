@@ -6,7 +6,8 @@
      3. Carousels (.carousel): arrows, keys, swipe, right to left
      4. Sticky step lists (.steps-sticky): the pinned titles beside the recordings
      5. The opening's scroll fallback (.opening) where CSS scroll-driven animations are missing
-     6. Illustration placeholders: a tile whose file is missing shows its name instead
+     6. Illustrations and scene plates: a missing file shows its name; a plate's drawn device
+        (img/plates/<data-plate>.webp) is loaded here and takes over from the CSS frame
      7. Scroll reveal, calm and once
    The showcase (live app frames and recordings) is showcase.js; this file never touches it. */
 (function () {
@@ -315,15 +316,39 @@
     update();
   });
 
-  /* ---------------------------------------------------------------- 6. Illustration placeholders */
+  /* ---------------------------------------------------------------- 6. Illustrations and scene plates */
   // A tile or plate whose image is missing (404) shows its data-ph file name instead of a broken image.
   function missing(img) {
     var box = img.closest('.ill, .plate');
     if (box) box.classList.add('is-missing');
   }
+  // A scene plate with a drawn device (.plate--device[data-plate="P4-marked-papers"]) loads its
+  // picture, img/plates/<name>.webp, here, so a page never links a plate that isn't drawn yet
+  // (tools/site.py fails on missing files). Once it has loaded, .is-drawn hides the CSS device
+  // frame and the real app sits on the drawn screen (site.css); until then, if the file is
+  // missing, or without JavaScript, the CSS frame stays in the same box.
+  var ROOT = (document.currentScript && document.currentScript.src || '').replace(/[^/]*$/, '') || '/';
+  document.querySelectorAll('.plate--device[data-plate]').forEach(function (plate) {
+    if (plate.querySelector('.plate-img')) return;
+    var img = document.createElement('img');
+    img.className = 'plate-img';
+    img.alt = '';
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    img.src = ROOT + 'img/plates/' + plate.dataset.plate + '.webp';
+    plate.insertBefore(img, plate.firstChild);
+  });
+  function drawn(img) {
+    var plate = img.closest('.plate--device');
+    if (plate) plate.classList.add('is-drawn');
+  }
   document.querySelectorAll('.ill > img, .ill > picture > img, .plate-img, .plate > picture > img').forEach(function (img) {
     if (img.complete && img.currentSrc && img.naturalWidth === 0) missing(img);
-    else img.addEventListener('error', function () { missing(img); }, { once: true });
+    else if (img.complete && img.naturalWidth) drawn(img);
+    else {
+      img.addEventListener('error', function () { missing(img); }, { once: true });
+      img.addEventListener('load', function () { drawn(img); }, { once: true });
+    }
   });
 
   /* ---------------------------------------------------------------- 7. Scroll reveal */

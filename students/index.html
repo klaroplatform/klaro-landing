@@ -117,7 +117,65 @@
      "@type": "EducationalAudience",
      "educationalRole": "parent"
     }
+   ],
+   "video": [
+    {
+     "@id": "https://learnklaro.com/students/#video-student-wrong"
+    },
+    {
+     "@id": "https://learnklaro.com/students/#video-student-weak"
+    },
+    {
+     "@id": "https://learnklaro.com/students/#video-student-minis-phone"
+    },
+    {
+     "@id": "https://learnklaro.com/students/#video-student-tutor"
+    }
    ]
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-wrong",
+   "name": "Got one wrong? See where it was explained.",
+   "thumbnailUrl": "https://learnklaro.com/media/student-wrong-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. A past-paper question answered wrong: the right answer, then where it was explained.",
+   "duration": "PT14S",
+   "contentUrl": "https://learnklaro.com/media/student-wrong.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-weak",
+   "name": "Find your weak spots before the exam does",
+   "thumbnailUrl": "https://learnklaro.com/media/student-weak-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. The end of a practice set: what you missed, each one a tap from its explanation.",
+   "duration": "PT7S",
+   "contentUrl": "https://learnklaro.com/media/student-weak.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-minis-phone",
+   "name": "Revise in minis",
+   "thumbnailUrl": "https://learnklaro.com/media/student-minis-phone-poster.webp",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. Minis on a phone: a moment of the tutor's lecture, then three checks from real past papers.",
+   "duration": "PT18S",
+   "contentUrl": "https://learnklaro.com/media/student-minis-phone.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-tutor",
+   "name": "Your own tutor's explanation",
+   "thumbnailUrl": "https://learnklaro.com/media/student-tutor-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. A past-paper question in the study view, and the moment of the lecture that explains it.",
+   "duration": "PT11S",
+   "contentUrl": "https://learnklaro.com/media/student-tutor.mp4"
   },
   {
    "@type": "FAQPage",
@@ -295,10 +353,10 @@
           <div class="ill opening-tile" data-ph="img/ill/02-book-passage-480.webp"><img src="../img/ill/02-book-passage-480.webp" alt="" width="480" height="480" decoding="async"></div>
           <div class="ill opening-tile" data-ph="img/ill/08-exam-clock-480.webp"><img src="../img/ill/08-exam-clock-480.webp" alt="" width="480" height="480" decoding="async"></div>
         </div>
-        <figure class="show" data-showcase="student-study" data-title="Klaro sample workspace: a student's study view">
+        <figure class="show" data-showcase="student-study" data-phone-recording="student-study-hero" data-title="Klaro sample workspace: a student's study view">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen show-screen" data-screen data-nosnippet><img src="../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course, as a student sees it: the book, the lecture and the past-paper questions" width="1440" height="900" fetchpriority="high"></div>
+            <div class="device-screen show-screen" data-screen data-nosnippet><picture><source media="(max-width: 899px)" srcset="../media/student-study-hero-poster.webp" width="780" height="1688"><img src="../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course, as a student sees it: the book, the lecture and the past-paper questions" width="1440" height="900" fetchpriority="high"></picture></div>
           </div>
           <div class="show-under">
             <ol class="show-steps" data-steps>
@@ -328,8 +386,8 @@
       <li class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
       <li class="ill" data-ph="img/ill/16-trolley.webp"><img src="../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
       <li class="ill" data-ph="img/ill/17-compass.webp"><img src="../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-      <li class="ill" data-ph="img/ill/18-answer-sheet.webp"></li>
-      <li class="ill" data-ph="img/ill/19-fountain-pen.webp"></li>
+      <li class="ill" data-ph="img/ill/18-answer-sheet.webp"><img src="../img/ill/18-answer-sheet.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+      <li class="ill" data-ph="img/ill/19-fountain-pen.webp"><img src="../img/ill/19-fountain-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     </ul>
     <p class="strip-caption">For IGCSE, A Level and SAT students. In English and Arabic.</p>
   </div>
@@ -351,8 +409,8 @@
             <p>Practise real past-paper questions. Miss one and Klaro shows the right answer, the page in your book and the moment in your lecture.</p>
             <a class="tlink" href="../products/practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="student-wrong">
-            <div class="plate" data-ph="img/plates/P5-dusk-window.webp">
+          <figure class="rec" data-recording="student-wrong" data-camera="0 .8 250 420; 2.9 .8 250 520; 4.8 .85 280 720; 8.7 .5 600 420; 12.5 .6 720 450">
+            <div class="plate plate--device" data-plate="P5-dusk-window" data-ph="img/plates/P5-dusk-window.webp">
               <div class="device device--browser">
                 <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
                 <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -381,8 +439,8 @@
             <p>Klaro keeps track of what you got wrong, and each one opens where it was explained.</p>
             <a class="tlink" href="../products/progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="student-weak">
-            <div class="plate" data-ph="img/plates/P6-library.webp">
+          <figure class="rec" data-recording="student-weak" data-camera="0 .9 240 440; 4.7 .9 250 380">
+            <div class="plate plate--device" data-plate="P6-library" data-ph="img/plates/P6-library.webp">
               <div class="device device--browser">
                 <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
                 <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -409,26 +467,29 @@
             <p>One idea at a time: the moment your tutor explains it, then quick checks from real past papers.</p>
             <a class="tlink" href="../products/minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="student-minis">
-            <div class="plate" data-ph="img/plates/P2-kitchen-tea.webp">
-              <div class="device device--browser">
-                <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-                <div class="device-screen rec-screen" data-screen data-nosnippet>
-                  <img src="../media/student-minis-poster.jpg" alt="Today's minis in Klaro: two lecture moments and six checks, on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async">
-                  <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a mini, the lecture moment and then quick checks"></video>
-                  <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+          <figure class="rec" data-recording="student-minis-phone">
+            <div class="plate plate--device" data-plate="P2-kitchen-tea-phone" data-ph="img/plates/P2-kitchen-tea-phone.webp">
+              <div class="device device--phone">
+                <div class="device-body">
+                  <div class="device-screen rec-screen" data-screen data-nosnippet>
+                    <img src="../media/student-minis-phone-poster.webp" alt="Minis in Klaro on a phone, on a sample Biology course: a moment of the tutor's lecture playing in the feed" width="780" height="1688" loading="lazy" decoding="async">
+                    <video muted playsinline preload="none" aria-label="A recording of Klaro's Minis on a phone, on a sample course: a lecture moment, then three past-paper checks"></video>
+                    <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="show-under">
               <ol class="rec-cues" data-steps>
-                <li data-t="0">Revise in minis: short, one idea at a time.</li>
-                <li data-t="4.37">First, the moment your tutor explains it…</li>
-                <li data-t="7.57">…then quick checks on it, from real past papers.</li>
+              <li data-t="0">A mini: your tutor's own lecture, at the moment it explains one idea.</li>
+              <li data-t="3.4">Tap to pause. The book button opens the page it comes from.</li>
+              <li data-t="5.41">Swipe up for three past-paper checks on it.</li>
+              <li data-t="9.72">One tap answers it, and you know straight away.</li>
+              <li data-t="14.34">Three right, and that idea is cleared for today.</li>
               </ol>
               <div class="show-actions" data-actions><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
             </div>
-            <figcaption class="caption"><b>Sample course.</b> A mini: the moment your tutor explains it, then quick checks.</figcaption>
+            <figcaption class="caption"><b>Sample course.</b> Minis on a phone: a moment of the tutor's lecture, then three checks from real past papers.</figcaption>
           </figure>
         </article>
 
@@ -438,8 +499,8 @@
             <p>Point at a question and Klaro shows where your tutor explained it, not a random video.</p>
             <a class="tlink" href="../products/study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           </div>
-          <figure class="rec" data-recording="student-tutor">
-            <div class="plate" data-ph="img/plates/P7-sofa-corner.webp">
+          <figure class="rec" data-recording="student-tutor" data-camera="0 .8 280 470; 2.2 .8 340 250; 5.5 .55 980 380; 9.9 .6 720 450">
+            <div class="plate plate--device" data-plate="P7-sofa-corner" data-ph="img/plates/P7-sofa-corner.webp">
               <div class="device device--tablet">
                 <div class="device-body">
                   <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -532,19 +593,19 @@
 </section>
 
 <!-- Closing call -->
-<section class="closing">
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/11-calendar.webp"><img src="../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/20-night-window.webp"></li>
+    <li class="ill closing-tile" data-ph="img/ill/20-night-window.webp"><img src="../img/ill/20-night-window.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/10-bookmark.webp"><img src="../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">Your tutor's course is waiting.</h2>
+    <h2 class="h2" id="closing-h">Your tutor's course is waiting.</h2>
     <p class="lead">Create your account, then join with the code your tutor gives you.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
@@ -560,7 +621,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../">For tutors</a></h2><ul>

@@ -9,8 +9,9 @@
      Header (.topbar, .nav, .mega, the phone sheet, .joinform)     Footer (.footer)
      Layout (.section, .section-head)    Chips (.chip, .chip-switch)    Hero (.hero, .mosaic)
      Illustrations (.ill, .ph, .strip)   Cards (.icard, .icard-grid, .carousel)
-     .split-card   .stack   .band   .rcard   .panel   .faq   .closing
-     Devices (.device, .plate)   The real app (.show, .rec, .caption)   .opening   .steps-sticky
+     .split-card and .stack   .band   .rcard (.rcards--one)   .panel   .faq   .closing
+     Devices (.device, .plate, .plate--device)   The real app (.show, .rec, .caption, .show--full)
+     .opening   .steps-sticky
      Utilities   Market support   Arabic   Motion */
 
 /* ======================================================================== Header */
@@ -105,7 +106,7 @@
 .footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding-block-end: 40px; border-block-end: 1px solid var(--line); }
 .footer-brand a { display: inline-flex; border-radius: 8px; }
 .footer-brand img { height: 30px; width: auto; }
-.footer-line { max-width: 24ch; font-size: var(--fs-h3); font-weight: 600; line-height: 1.2; letter-spacing: var(--tr-title); text-wrap: balance; }
+.footer-line { max-width: 34em; font-size: var(--fs-lead); font-weight: 500; line-height: 1.45; color: var(--text); text-wrap: pretty; }   /* a plain line about Klaro; the motto is the deep panel's */
 .footer-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 40px; padding-block: 40px 48px; }
 .footer-h { margin-block-end: 16px; font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
 .footer-h a { text-decoration: none; border-radius: 4px; }
@@ -147,6 +148,7 @@
 /* ======================================================================== Hero (product pages, hub, research) */
 /* Two columns, copy 5/12 and visual 7/12. .hero--center: one centred column (hub, research, 404). */
 .hero { padding-block: 64px var(--section); }
+.hero + .section { padding-block-start: 0; }   /* one section's space under a hero, not two */
 .hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: var(--s-8); }
 .hero-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
 .hero-copy .lead { max-width: 30em; }
@@ -232,25 +234,37 @@
 .carousel-item { flex: 0 0 var(--card-w); scroll-snap-align: start; }
 @media (max-width: 640px) { .carousel-track { gap: 16px; } .carousel-head { align-items: flex-start; } }
 
-/* ======================================================================== Split card ("in action") */
-/* One white card, radius 40: text on one side (an H2 at card size, 2–3 sentences, a text link),
-   the product on its plate on the other. .split-card--flip puts the text second. */
-.split-card { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: 16px; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); }
-.split-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; padding-block: 32px; padding-inline: 32px 16px; }
-.split-copy p { color: var(--text); }
-.split-card--flip .split-copy { order: 2; padding-inline: 16px 32px; }
-@media (max-width: 1024px) { .split-card { grid-template-columns: minmax(0, 1fr); } .split-copy, .split-card--flip .split-copy { order: 0; padding: 16px 8px 8px; } }
-
-/* ======================================================================== Stacked feature cards (product pages) */
-/* Up to five cards that stack as you scroll (desktop): each sticks 16px under the one before, and the
-   covered one settles back to 96%. A plain stack on phones and with reduced motion. */
+/* ======================================================================== Split card ("in action") and stacked feature cards */
+/* Product pages. One white card, radius 40: a row of words (the title on the inline start; the
+   two or three sentences and a text link beside it), then the product across the card's whole
+   width, so the real app is as large as the page allows (redesign.md §7.9: its text at ≥ 14px).
+   Phones and tablets: the words, then the product.
+     <div class="split-card"><div class="split-copy"><h2 class="h3">…</h2><p>…</p><a class="tlink">…</a></div><figure class="rec">…</figure></div>
+   .stack: the feature cards, the same card with an H3; up to five stack as you scroll (desktop),
+   each sticking 16px under the one before while the covered one settles back to 96%. A plain
+   stack on phones and with reduced motion. .stack-media holds a plate or an illustration
+   (shown whole on the paper colour, in the plates' shape). */
+.split-card, .stack-card { display: flex; flex-direction: column; gap: 8px; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); }
+.split-copy, .stack-copy { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-auto-flow: dense; align-items: start; gap: 0 var(--s-8); padding: 32px 32px 24px; }
+.split-copy > *, .stack-copy > * { grid-column: 2; justify-self: start; }
+.split-copy > * + *, .stack-copy > * + * { margin-block-start: 14px; }
+.split-copy > :is(h2, h3), .stack-copy > :is(h2, h3) { grid-column: 1; grid-row: 1 / span 9; }
+.split-copy > :is(h2, h3) + *, .stack-copy > :is(h2, h3) + * { margin-block-start: 0; }
+.split-copy p, .stack-copy p { color: var(--text); }
+.split-card > :is(.show, .rec) > :not(.plate), .stack-card .stack-media > :not(.plate, .ill) { padding-inline: 16px; }
+.split-card > :is(.show, .rec), .stack-media { padding-block-end: 8px; }
 .stack { display: grid; gap: 24px; }
-.stack-card { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: 16px; padding: 16px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-card); transform-origin: 50% 0; }
-.stack-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding-block: 32px; padding-inline: 32px 16px; }
-.stack-copy p { color: var(--text); }
+.stack-card { transform-origin: 50% 0; }
+.stack-media > .ill { --ar: var(--pa, 2.4); border-radius: var(--radius-media); }
+.stack-media > .ill > img { object-fit: contain; }
 .stack-card:nth-child(2) { --i: 1; } .stack-card:nth-child(3) { --i: 2; } .stack-card:nth-child(4) { --i: 3; } .stack-card:nth-child(5) { --i: 4; }
 @media (min-width: 1025px) and (prefers-reduced-motion: no-preference) { .stack-card { position: sticky; inset-block-start: calc(var(--sticky-top) + var(--i, 0) * 16px); } }
-@media (max-width: 1024px) { .stack-card { grid-template-columns: minmax(0, 1fr); } .stack-media { order: -1; } .stack-copy { padding: 16px 8px 8px; } }
+@media (max-width: 1024px) {
+  .split-copy, .stack-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; padding: 16px 8px 16px; }
+  .split-copy > * + *, .stack-copy > * + * { margin-block-start: 0; }
+  .split-card > :is(.show, .rec) > :not(.plate), .stack-card .stack-media > :not(.plate, .ill) { padding-inline: 8px; }
+}
+@media (max-width: 640px) { .stack-media > .ill { --ar: 4 / 3; } }
 
 /* ======================================================================== Band (one pale band per page) */
 .band { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: var(--s-8); padding: var(--s-8); background: var(--band); border-radius: var(--radius-card); }
@@ -268,6 +282,11 @@
 .rcard-body p:not(.rcard-source) { color: var(--text); }
 .rcard-in { margin-block-start: auto; padding-block-start: 16px; border-block-start: 1px solid var(--line); font-size: 15px; font-weight: 500; color: var(--ink); }
 @media (max-width: 1024px) { .rcards { grid-template-columns: minmax(0, 1fr); max-width: 640px; margin-inline: auto; } }
+/* One finding on its own (the product pages' "Powered by research"): one centred card, the
+   illustration shown whole in a wide strip. */
+.rcards--one { grid-template-columns: minmax(0, 1fr); max-width: 760px; margin-inline: auto; }
+.rcards--one .rcard > .ill { --ar: 5 / 2; }
+.rcards--one .rcard > .ill > img { object-fit: contain; }
 
 /* ======================================================================== The deep panel (the motto, as a promise) */
 /* SchoolAI's "Built on trust" slot: one per page, deep aubergine, radius 96, a white H2, one line,
@@ -385,6 +404,57 @@
   .device-bar > span { height: 12px; }
 }
 
+/* A scene plate with the device drawn in it (the owner's decision, 2026-10-08): the illustration
+   draws the laptop, phone or tablet facing the viewer, its screen a flat dark field, and the real
+   app (a recording, its poster, a still, or the live frame) sits exactly on that screen.
+     <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
+       <div class="device device--browser">…the usual bar and screen…</div>
+     </div>
+   site.js loads img/plates/<data-plate>.webp and adds .is-drawn once it has: the CSS frame's
+   chrome goes and the screen takes the drawn screen's corners. Until then (file not made yet,
+   missing, no JavaScript) the CSS frame stays, in the same box, so the app is the same size
+   either way and nothing moves when the picture arrives.
+   Each plate's box, measured on its picture, is set below as unitless percentages of the
+   picture: --sx, --sy (the screen's top left), --sw, --sh (its size), --sr (its corner radius,
+   in % of the picture's width), and --pa (the picture's aspect, width / height). The plate keeps
+   that aspect at every width; on phones (≤ 640px) it is cropped round the screen instead, so the
+   screen is 86% of the plate's width (--frac is the share of the picture shown, --x0 where the
+   crop starts), and the box follows the crop. Arabic: the picture mirrors (above) and the box is
+   placed from the inline start, so it mirrors with it. */
+.plate--device { --frac: 1; --x0: 0; display: block; padding: 0; aspect-ratio: calc(var(--pa) * var(--frac)); }
+.plate--device > .plate-img { inset-block: 0; inset-inline: auto; inset-inline-start: calc(-100% * var(--x0) / var(--frac)); width: calc(100% / var(--frac)); object-fit: fill; }
+.plate--device > .device { position: absolute; display: flex; flex-direction: column; margin: 0;
+  inset-block-start: calc(var(--sy) * 1%); inset-inline-start: calc((var(--sx) / 100 - var(--x0)) / var(--frac) * 100%);
+  width: calc(var(--sw) / var(--frac) * 1%); height: calc(var(--sh) * 1%); }
+.plate--device > .device--browser { box-shadow: var(--shadow-device); }
+.plate--device > .device .device-body { display: flex; flex-direction: column; height: 100%; }
+.plate--device > .device .device-screen { flex: 1; min-height: 0; aspect-ratio: auto; }
+.plate--device.is-drawn > .device { overflow: hidden; background: none; border: 0; border-radius: calc(var(--sr) * 1cqw / var(--frac)); box-shadow: none; }
+.plate--device.is-drawn > .device .device-bar { display: none; }
+.plate--device.is-drawn > .device .device-body { padding: 0; border-radius: inherit; background: none; box-shadow: none; }
+.plate--device.is-drawn > .device .device-body::before, .plate--device.is-drawn > .device .device-body::after { display: none; }
+.plate--device.is-drawn > .device .device-screen { border-radius: inherit; background: #1b1722; }
+@media (max-width: 640px) {
+  .plate--device[data-ph]::before { display: none; }   /* no room for the file name beside the device */
+  .plate--device { --frac: min(1, max(var(--sw) / 86, .5 / var(--pa))); --x0: clamp(0, (var(--sx) + var(--sw) / 2) / 100 - var(--frac) / 2, 1 - var(--frac)); }
+}
+/* The boxes. TODO(illustrations): placeholders until the illustration agent measures each plate
+   (design/brief/illustrations.md); replace the numbers, keep the names. Laptops are asked for at
+   least 55% of the plate's width; the pictures are 2000 × 833 (12:5); screens are 16:10 (laptop,
+   monitor), 4:3 (tablet) or 9:19.5 (phone), and the camera fills any shape. */
+.plate[data-plate] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+.plate[data-plate="P1-evening-desk"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+/* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). A phone in a
+   12:5 picture is small, so P2 uses the picture's 4:3 crop at every width, and is as tall as a
+   screen allows. */
+.plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; }
+.plate--device[data-plate="P2-kitchen-tea-phone"] { width: min(100%, 960px); margin-inline: auto; }
+.plate[data-plate="P3-chalkboard"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+.plate[data-plate="P4-marked-papers"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+.plate[data-plate="P5-dusk-window"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+.plate[data-plate="P6-library"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
+.plate[data-plate="P7-sofa-corner"] { --pa: 2.4; --sx: 42; --sy: 6; --sw: 48; --sh: 86.4; --sr: 1.2; }   /* a tablet, 4:3 landscape */
+
 /* ======================================================================== The real app: showcase frames and recordings */
 /* The markup is design/brief/showcase.md §11.1; showcase.js drives it and styles nothing. The
    classes it adds or toggles, and what they look like:
@@ -431,6 +501,11 @@
 .show-sheet-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 8px 16px; padding-block-start: max(8px, env(safe-area-inset-top, 0px));
   background: var(--card); border-block-end: 1px solid var(--line); font-size: 15px; font-weight: 600; color: var(--text); }
 .show-sheet iframe { flex: 1; width: 100%; border: 0; }
+/* A frame with no device that fills what its parent gives it (/try/): showcase.js's data-fit="fill"
+   draws the app at that size. The parent sets the height (a flex column). */
+.show--full { flex: 1; min-height: 0; gap: 0; }
+.show--full .show-screen { position: relative; flex: 1; min-height: 0; overflow: hidden; background: var(--surface); border-block-start: 1px solid var(--line); }
+.show--full .show-screen > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 0 0; }
 
 /* One plain caption under every picture of the real app: what it is, whose view, and that it is a
    sample course. <figcaption class="caption"><b>Sample course.</b> The tutor's marking queue…</figcaption> */
@@ -473,9 +548,9 @@
 .opening-collage { position: absolute; inset: 0 0 64px; z-index: 0; pointer-events: none; }
 .opening-tile { --ar: 1; position: absolute; inset-inline: 0; inset-block-start: 50%; width: 26%; margin: -13% auto 0;
   translate: calc(var(--fx) * var(--k-dir)) var(--fy); rotate: calc(var(--fr) * var(--k-dir)); box-shadow: 0 18px 40px -24px rgb(30 12 60 / .4); }
-.opening-tile:nth-child(1) { --fx: 165%; --fy: -150%; --fr: 6deg; --g0: 0vh; --g1: 50vh; --g0n: 0; }
-.opening-tile:nth-child(2) { --fx: -185%; --fy: 64%; --fr: -5deg; --g0: 6vh; --g1: 56vh; --g0n: 6; }
-.opening-tile:nth-child(3) { --fx: 178%; --fy: 80%; --fr: 4deg; --g0: 12vh; --g1: 62vh; --g0n: 12; }
+.opening-tile:nth-child(1) { --fx: 152%; --fy: -150%; --fr: 6deg; --g0: 0vh; --g1: 50vh; --g0n: 0; }
+.opening-tile:nth-child(2) { --fx: -158%; --fy: -75%; --fr: -5deg; --g0: 6vh; --g1: 56vh; --g0n: 6; }   /* upper left, half behind the frame: clear of the H1 and the captions, with or without motion */
+.opening-tile:nth-child(3) { --fx: 156%; --fy: 80%; --fr: 4deg; --g0: 12vh; --g1: 62vh; --g0n: 12; }
 .opening-marks { position: absolute; inset: 0; pointer-events: none; }
 .opening-marks > i { position: absolute; inset-inline: 0; height: 1px; inset-block-start: calc(50svh - var(--sticky-top) + var(--at, 0) * var(--pin-len)); }
 .opening-marks > i:nth-child(1) { --at: .15; } .opening-marks > i:nth-child(2) { --at: .35; } .opening-marks > i:nth-child(3) { --at: .6; } .opening-marks > i:nth-child(4) { --at: .85; }
@@ -496,6 +571,19 @@
   .opening-tile:nth-child(2) { --fx: -114%; --fy: 18%; }
   .opening-tile:nth-child(3) { --fx: 112%; --fy: 112%; }
 }
+/* A live scene with a phone recording (data-phone-recording): under 900px showcase.js plays that
+   recording of the app's phone layout instead of loading the app, so the browser frame turns into
+   a phone there (its poster is the <picture>'s phone source). */
+@media (max-width: 899px) {
+  .opening-stage > .show[data-phone-recording] { width: auto; align-items: center; }
+  .show[data-phone-recording] .device--browser { --device-w: min(72vw, calc((100svh - 200px) * 390 / 844 * .94)); width: var(--device-w); max-width: 100%;
+    padding: calc(var(--device-w) * .026); background: #151515; border: 0; border-radius: calc(var(--device-w) * .124); box-shadow: 0 24px 50px -28px rgb(30 12 60 / .4); }
+  .show[data-phone-recording] .device--browser::before { content: ""; position: absolute; z-index: 2; inset-inline: 0; inset-block-start: calc(var(--device-w) * .048);
+    width: 28%; height: calc(var(--device-w) * .074); margin-inline: auto; border-radius: var(--r-pill); background: #151515; }
+  .show[data-phone-recording] .device--browser .device-bar { display: none; }
+  .show[data-phone-recording] .device--browser .device-screen { --screen: 390 / 844; border-radius: calc(var(--device-w) * .098); }
+}
+@media (max-width: 899px) and (min-width: 641px) { .show[data-phone-recording] .device--browser { --device-w: 300px; } }
 @media (max-width: 1024px) and (min-width: 641px) {
   .opening-stage .device--phone { --device-w: 300px; }
   /* Tablets: a landscape device with room on both sides, so the tiles sit beside it, not under the caption. */
@@ -503,6 +591,11 @@
   .opening-tile:nth-child(1) { --fx: 175%; --fy: -80%; }
   .opening-tile:nth-child(2) { --fx: -175%; --fy: 10%; }
   .opening-tile:nth-child(3) { --fx: 175%; --fy: 70%; }
+}
+@media (max-width: 899px) and (min-width: 641px) {
+  /* Round the phone that plays the recording there, not a landscape frame. */
+  .opening:has(.show[data-phone-recording]) .opening-tile:nth-child(odd) { --fx: 140%; }
+  .opening:has(.show[data-phone-recording]) .opening-tile:nth-child(2) { --fx: -140%; }
 }
 
 /* ======================================================================== Sticky step list (/ and /students/, §7.8) */
@@ -535,7 +628,7 @@
 .steps-nav-bar > i { display: block; height: 100%; background: var(--purple); transform: scaleX(var(--p, 0)); transform-origin: 0 50%; transition: transform .3s linear; }
 [dir="rtl"] .steps-nav-bar > i { transform-origin: 100% 50%; }
 @media (min-width: 1025px) {
-  .steps-sticky.has-nav { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); align-items: start; gap: var(--s-8); }
+  .steps-sticky.has-nav { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); align-items: start; gap: var(--s-8); }   /* the recordings as wide as they can be (§7.9) */
   .steps-sticky.has-nav .steps-nav { position: sticky; inset-block-start: calc(var(--sticky-top) + 32px); display: flex; flex-direction: column; gap: 24px; margin: 0; padding: 0; list-style: none; }
   .steps-sticky.has-nav .steps-copy { display: none; }
   .steps-sticky.has-nav .steps-panels { gap: 160px; padding-block: 4vh 12vh; }
@@ -569,13 +662,12 @@
    the plate flip, the bar fills; --k-dir mirrors all horizontal motion). Rules are written
    .x:lang(ar), so English course material marked lang="en" keeps its English styling. */
 :is(.icard-title, .rcard-title, .panel-item-title, .steps-nav-title):lang(ar) { font-weight: 500; line-height: 1.45; }
-.footer-line:lang(ar) { line-height: 1.45; }
+.footer-line:lang(ar) { line-height: 1.75; }
 :is(.section-sub, .band-copy p, .panel-sub):lang(ar) { line-height: 1.75; }
 :is(.icard-line, .rcard-body p, .panel-item p, .steps-copy p, .steps-nav-body p, .answer p, .split-copy p, .stack-copy p):lang(ar) { line-height: 1.75; }
 :is(.faq-q, .show-steps > li, .rec-cues > li, .caption, .mega-text small, .strip-caption):lang(ar) { line-height: 1.6; }
 .mega-row:lang(ar) { line-height: 1.5; }
 .mega:lang(ar) { width: min(900px, 100%); }
-.footer-line:lang(ar) { max-width: 26ch; }
 .chip-switch-label:lang(ar) { padding-inline: 10px 6px; }
 
 /* ======================================================================== Motion */

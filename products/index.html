@@ -108,7 +108,6 @@
 /* Products hub only (hub-): the two audience groups of illustrated cards, four across on desktop.
    On phones each card becomes a row (a small illustration beside its name), like the Products menu,
    so eight products stay one short scroll. Everything else is site.css. */
-.hero + .section { padding-block-start: 0; }
 .hub-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; margin-block-end: 40px; }
 .hub-head > .section-head { margin-block-end: 0; }
 @media (min-width: 1025px) {
@@ -295,7 +294,7 @@
 </section>
 
 <!-- 4. Closing: one call per audience, illustration tiles round it -->
-<section class="closing">
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -307,7 +306,7 @@
     <li class="ill closing-tile" data-ph="img/ill/13-parent-tea.webp"><img src="../img/ill/13-parent-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">Your course, connected.</h2>
+    <h2 class="h2" id="closing-h">Your course, connected.</h2>
     <p class="lead">Students join with the code their tutor gives them. Every tutor account is reviewed before it opens.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
@@ -323,7 +322,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../">For tutors</a></h2><ul>

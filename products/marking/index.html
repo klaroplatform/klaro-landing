@@ -82,7 +82,23 @@
    ],
    "breadcrumb": {
     "@id": "https://learnklaro.com/products/marking/#breadcrumb"
-   }
+   },
+   "video": [
+    {
+     "@id": "https://learnklaro.com/products/marking/#video-marking"
+    }
+   ]
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/products/marking/#video-marking",
+   "name": "Answers come back marked, with feedback for each student",
+   "thumbnailUrl": "https://learnklaro.com/media/marking-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. The marking queue, then one student's paper, marked.",
+   "duration": "PT16S",
+   "contentUrl": "https://learnklaro.com/media/marking.mp4"
   },
   {
    "@type": "BreadcrumbList",
@@ -273,15 +289,15 @@
 </section>
 
 <!-- 2. In action: Omar's marking recording on its plate -->
-<section id="in-action" aria-labelledby="in-action-h">
+<section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
         <h2 class="h3" id="in-action-h">Answers come back marked, with feedback for each student</h2>
         <p>Every answer is marked question by question against the scheme you upload, with what earns the marks beside it. You check each paper, change any mark you disagree with, and send the results.</p>
       </div>
-      <figure class="rec" data-recording="marking">
-        <div class="plate" data-ph="img/plates/P4-marked-papers.webp">
+      <figure class="rec" data-recording="marking" data-camera="0 .85 260 420; 4.7 .7 270 430; 7.5 .7 270 430; 10.5 .7 450 360; 11.6 .5 860 405; 14.2 .6 720 360">
+        <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
             <div class="device-screen rec-screen" data-screen data-nosnippet>
@@ -322,8 +338,8 @@
           <p>Each question part is marked against the mark scheme you upload, with what earns the marks shown beside the answer. You can check an answer in seconds.</p>
           <a class="tlink" href="../quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec">
-          <div class="plate plate--bleed" data-ph="img/plates/P4-marked-papers.webp">
+        <figure class="stack-media rec" data-camera="0 .63 300 260">
+          <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
             <div class="device device--browser">
               <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
               <div class="device-screen" data-nosnippet><img src="../../media/stills/marking-cue3.webp" alt="Klaro on a sample course: a student's written answer, with what earns the marks from the mark scheme" width="1040" height="650" loading="lazy" decoding="async"></div>
@@ -338,8 +354,8 @@
           <p>Each paper shows the student's mark so far and the answers still waiting. One button takes you to the next student.</p>
           <a class="tlink" href="../course-builder/">About the course builder <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-        <figure class="stack-media rec">
-          <div class="plate plate--bleed" data-ph="img/plates/P4-marked-papers.webp">
+        <figure class="stack-media rec" data-camera="0 .57 400 420">
+          <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
             <div class="device device--browser">
               <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
               <div class="device-screen" data-nosnippet><img src="../../media/stills/marking-cue4.webp" alt="Klaro on a sample course: a student's mark so far, the answers waiting, and a button to the next student" width="1140" height="712" loading="lazy" decoding="async"></div>
@@ -355,7 +371,7 @@
           <a class="tlink" href="../../students/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="stack-media">
-          <div class="ill" data-ph="img/ill/07-red-pen.webp" style="--ar: 16 / 10"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+          <div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
       </article>
     </div>
@@ -366,9 +382,9 @@
 <section class="section" id="research">
   <div class="wrap">
     <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 760px; margin-inline: auto">
+    <div class="rcards rcards--one">
       <article class="rcard">
-        <div class="ill ill--contain" data-ph="img/ill/10-bookmark.webp" style="--ar: 5 / 2"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <div class="ill ill--contain" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         <div class="rcard-body">
           <p class="rcard-source">Review of Educational Research, 2007</p>
           <h3 class="rcard-title">Show students how they did against the goal</h3>
@@ -433,7 +449,7 @@
 </section>
 
 <!-- 8. Closing call -->
-<section class="section closing">
+<section class="closing" aria-labelledby="closing-h">
   <ul class="closing-tiles" aria-hidden="true">
     <li class="ill closing-tile" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
     <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -445,7 +461,7 @@
     <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
   </ul>
   <div class="closing-copy">
-    <h2 class="h2">Your next papers, marked against your scheme.</h2>
+    <h2 class="h2" id="closing-h">Your next papers, marked against your scheme.</h2>
     <p class="lead">Klaro is in beta. Free to try.</p>
     <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
   </div>
@@ -458,7 +474,7 @@
   <div class="wrap">
     <div class="footer-brand">
       <a href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-      <p class="footer-line">We don't make content. We connect yours.</p>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="../../">For tutors</a></h2><ul>

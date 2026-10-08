@@ -35,14 +35,16 @@
     data-play       "story" (the default when the scene has one; study and student-study do): the
                     camera story, then the visitor's turn. "steps": each <li> is a step of the
                     scene (<li data-step="n"> picks one), and there is no camera. "free": the
-                    visitor's turn at once (Try it, the Study view page). The visitor's turn only
+                    visitor's turn at once; on a scene with a story, Replay (or a step) plays the
+                    whole story on the clock and hands over again. The visitor's turn only
                     exists on study, student-study and student-practice; elsewhere the frame stays
                     read-only.
     data-story      A story by name (default: the scene's own). "none" means no camera.
-    data-fit        "fill": the frame fills the screen at its own size, in the app's own layout
-                    (phones get the phone layout), with no camera and no story (data-play defaults
-                    to "free"). Use it on /try/; it loads on phones too. The default draws the app
-                    at 1440 × 900, scaled to the screen.
+    data-fit        "fill": the frame fills the screen at its own size, in the app's own layout,
+                    with no camera and no story (data-play defaults to "free"), so the app's text
+                    is at its real size. On phones and with Save-Data it stays a poster like any
+                    scene, unless data-phone="live" (/try/, where phones get the phone layout).
+                    The default draws the app at 1440 × 900, scaled to the screen.
     data-phone-recording
                     On phones (< 900px) the page plays this recording instead of loading the live
                     app, stepped like the story: media/<name>.mp4 and media/<name>.json (one cue
@@ -51,6 +53,10 @@
                     own with <picture><source media="(max-width: 899px)" srcset="…">, or set
                     data-phone-poster. Without a phone recording, phones (and big screens with
                     Save-Data) keep the poster and the Try link.
+    data-app-width  The width the app is drawn at before it is scaled to the screen (default 1440,
+                    at least 1000, where the study view still has its three panes; the height
+                    follows at 16:10). A product page's frame uses 1000, so the app's text is
+                    about 45% larger on the same screen than at 1440.
     data-title      The frame's title (default "Klaro sample workspace").
     <li data-at>    Where the step starts in the opening's pin, from 0 to 1 (defaults: 0.15, 0.35,
                     0.6, 0.85). The study story's four <li> are the tap, the lecture, the question
@@ -79,9 +85,23 @@
                     media/ar/marking.mp4.
     <li data-t>     The cue's start, in seconds. Without it, the times come from media/<name>.json,
                     fetched once the video is near.
+    data-camera="0 .9 260 300; 4.8 .7 640 420"
+                    A camera over the video, keyed to the video's own time and independent of the
+                    captions (redesign.md §7.6, §7.9): from each time (seconds) it eases, over
+                    0.8 s, to show the point x, y (the recording's own pixels, 1440 × 900 for
+                    the desktop recordings) in the middle of the screen at the given scale (screen
+                    pixels per recording pixel: .9 shows the app's 14px text at about 13px). A big
+                    screen keeps the scale and shows more round the point; a small one shows less.
+                    It never zooms out past the whole recording, nor in more than 4×. The poster
+                    gets the first view, so it reads before the video plays. A still (a figure
+                    with data-camera and an <img>, no recording) gets the first view too; its
+                    pixels are the <img>'s width and height.
     <li data-cam="2.2 980 420">
-                    Zoom, x and y, in the recording's 1440 × 900 pixels. It moves a camera over the
-                    video. A "cam" in the JSON cue does the same.
+                    Older form, per caption: zoom (1 = the whole recording), x and y. A "cam" in
+                    the JSON cue does the same. data-camera wins when both are given.
+    The camera works in the recording's pixels from the top left of the screen, which is how
+    site.css fits it (object-fit: cover, object-position: 0 0), so a screen of any shape works
+    (the drawn screens on the scene plates are not exactly 16:10).
     The source is set only when the video comes within 200px of the screen. It plays when 60% of it
     is on screen and pauses when it leaves. With reduced motion or Save-Data it waits for Play.
 
@@ -233,6 +253,43 @@
   function readCam(text) {
     var v = (text || '').trim().split(/[\s,]+/).map(parseFloat);
     return v.length === 3 && v.every(isFinite) ? { z: v[0], x: v[1], y: v[2] } : null;
+  }
+  // data-camera: "t s x y; t s x y; …", sorted by time.
+  function readTrack(text) {
+    return (text || '').split(';').map(function (part) {
+      var v = part.trim().split(/[\s,]+/).map(parseFloat);
+      return v.length === 4 && v.every(isFinite) && v[1] > 0 ? { t: v[0], s: v[1], x: v[2], y: v[3] } : null;
+    }).filter(Boolean).sort(function (a, b) { return a.t - b.t; });
+  }
+  var CAM_EASE = 0.8, CAM_MAX = 4;
+  // A recording fills its screen like object-fit: cover from the top left (site.css): at zoom 1
+  // its pixels are drawn at `base`, and the camera's transform scales from there.
+  function coverBase(w, h, vw, vh) { return Math.max(w / vw, h / vh); }
+  // Lays a recording, its poster or a still out for the camera: the element is the whole
+  // picture at the cover scale (not the screen's box, which would clip what the camera pans to),
+  // its top left at the screen's, and the camera's transform on it. The screen clips. css ''
+  // gives the element back to site.css.
+  function lay(el, css, w, h, vw, vh) {
+    if (!el) return;
+    var st = el.style;
+    if (!css) {
+      if (st.transform) { st.transform = st.transformOrigin = st.width = st.height = st.left = st.top = st.right = st.bottom = st.objectFit = ''; }
+      return;
+    }
+    var b = coverBase(w, h, vw, vh);
+    st.left = st.top = '0';
+    st.right = st.bottom = 'auto';
+    st.width = (vw * b).toFixed(1) + 'px';
+    st.height = (vh * b).toFixed(1) + 'px';
+    st.objectFit = 'fill';
+    st.transformOrigin = '0 0';
+    if (st.transform !== css) st.transform = css;
+  }
+  function camTransform(w, h, vw, vh, z, x, y) {
+    var s = coverBase(w, h, vw, vh) * z;
+    var tx = Math.min(0, Math.max(w - vw * s, w / 2 - x * s));
+    var ty = Math.min(0, Math.max(h - vh * s, h / 2 - y * s));
+    return 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z.toFixed(4) + ')';
   }
   // Cue times (and cameras) from media/<name>.json, for the <li> that don't carry their own.
   function cuesFrom(name, times, cams, done) {
@@ -451,6 +508,9 @@
         else arm();
       },
       go: go,
+      // The visitor asked for the story (Replay, or a step): let the clock carry it on from there,
+      // even where it never started by itself (data-play="free").
+      wake: function () { on = true; },
       hold: function (v) { held = !!v; arm(); },
       cur: function () { return cur; },
       jump: function (i) { cur = i; mark(); },
@@ -565,10 +625,14 @@
     var screen = screenOf(fig);
     var api = { fig: fig, scene: scene };
     fig._showcase = api;
+    // The app's own size in the frame (data-app-width, 1440 by default; 16:10). Narrower draws the
+    // app larger on a small screen while it keeps its three panes (they need about 1000px).
+    var AW = Math.max(1000, +fig.getAttribute('data-app-width') || APP_W), AH = Math.round(AW * APP_H / APP_W);
 
     // Phones and Save-Data: no live app inline (it is the whole app, ~1.1 MB of code). Phones
-    // get the phone recording; a big screen on Save-Data keeps the poster.
-    if (!fill && (PHONE.matches || lean())) {
+    // get the phone recording; a big screen on Save-Data keeps the poster. Only /try/, where the
+    // app is the page, asks for it on phones too (data-phone="live").
+    if (fig.getAttribute('data-phone') !== 'live' && (PHONE.matches || lean())) {
       var rec = PHONE.matches && fig.getAttribute('data-phone-recording');
       if (rec) return Handset(fig, screen, rec, api);
       fig.setAttribute('data-mode', 'poster');
@@ -590,12 +654,17 @@
     var lis = fig.querySelectorAll('[data-steps] > li');
     var beats = story ? story.beats : mode === 'steps' ? stepBeats(Array.prototype.slice.call(lis)) : [];
     var n = beats.length;
-    var steps = Steps(fig.querySelector('[data-steps]'), function (k) {
-      if (!drawn || k >= n) return;
+    // A step or Replay, chosen by the visitor: the clock takes the story on from there, also where
+    // it never ran by itself (data-play="free" on a scene with a story), so it ends with the
+    // hand-over again instead of stopping after one beat.
+    function ask(k, how) {
+      if (!drawn || dead || k >= n) return;
       cond.hold(false);
-      cond.go(k, still() ? 'instant' : 'click');
-    });
-    var replay = action(fig, 'replay', WORDS.replay, function () { cond.hold(false); cond.go(0, still() ? 'instant' : 'replay'); });
+      cond.wake();
+      cond.go(k, still() ? 'instant' : how);
+    }
+    var steps = Steps(fig.querySelector('[data-steps]'), function (k) { ask(k, 'click'); });
+    var replay = action(fig, 'replay', WORDS.replay, function () { ask(0, 'replay'); });
     var tapped = fig.querySelector('[data-after-tap]');
 
     function state(s) { fig.setAttribute('data-state', s); api.state = s; }
@@ -640,14 +709,15 @@
       if (!p) return { x: WHOLE.x, y: WHOLE.y };
       var r = rects[p.from];
       if (r && r.w > 0) return { x: r.x + p.at[0] * r.w, y: r.y + p.at[1] * r.h };
-      return { x: dir < 0 ? APP_W - p.px[0] : p.px[0], y: p.px[1] };
+      return { x: dir < 0 ? AW - p.px[0] : p.px[0], y: p.px[1] };
     }
 
     // The camera: the app point at the centre of the screen, and a zoom, as one CSS transform.
     function fit() {
       Wd = screen.clientWidth;
-      Ht = screen.clientHeight || Math.round(Wd * APP_H / APP_W);
-      base = Wd / APP_W;
+      Ht = screen.clientHeight || Math.round(Wd * AH / AW);
+      // The app covers the screen whatever its shape (a drawn screen on a plate is not exactly 16:10).
+      base = coverBase(Wd, Ht, AW, AH);
       place(cam);
       placeHint();
     }
@@ -655,8 +725,8 @@
       var s = base * c.z;
       return {
         s: s,
-        tx: Math.min(0, Math.max(Wd - APP_W * s, Wd / 2 - c.x * s)),
-        ty: Math.min(0, Math.max(Ht - APP_H * s, Ht / 2 - c.y * s))
+        tx: Math.min(0, Math.max(Wd - AW * s, Wd / 2 - c.x * s)),
+        ty: Math.min(0, Math.max(Ht - AH * s, Ht / 2 - c.y * s))
       };
     }
     function place(c) {
@@ -840,12 +910,12 @@
       boxIn(screen);
       camEl = make('div', 'show-cam', fill
         ? 'position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;pointer-events:none;transition:opacity .4s'
-        : 'position:absolute;top:0;left:0;width:' + APP_W + 'px;height:' + APP_H + 'px;transform-origin:0 0;opacity:0;pointer-events:none;transition:opacity .4s');
+        : 'position:absolute;top:0;left:0;width:' + AW + 'px;height:' + AH + 'px;transform-origin:0 0;opacity:0;pointer-events:none;transition:opacity .4s');
       if (still()) camEl.style.transition = 'none';
       camEl.setAttribute('inert', '');
       frame = make('iframe', 'show-frame', fill
         ? 'display:block;width:100%;height:100%;border:0'
-        : 'display:block;width:' + APP_W + 'px;height:' + APP_H + 'px;border:0');
+        : 'display:block;width:' + AW + 'px;height:' + AH + 'px;border:0');
       frame.title = fig.getAttribute('data-title') || WORDS.frame;
       frame.setAttribute('tabindex', '-1');
       // Always the page's language: a frame without one opens in the last language used on the
@@ -897,7 +967,7 @@
     var cond = Conductor(fig, n, run, function (i) { return beats[i] ? beats[i].ms : 3000; }, function () { return true; });
     // Never before the page has loaded, and only when the scene is within a screen of view.
     afterLoad(function () { near(fig, '100% 0px', create); });
-    api.go = function (i) { if (drawn && !dead) { cond.hold(false); cond.go(i, still() ? 'instant' : 'click'); } };
+    api.go = function (i) { ask(i, 'click'); };
     api.replay = function () { replay.click(); };
     api.step = function () { return cond.cur(); };
     api.measure = measure;
@@ -1003,12 +1073,20 @@
     fig.setAttribute('data-state', 'poster');
 
     var loaded = false, ratio = 0, wanted = false, times = [], cams = [];
+    var track = readTrack(fig.getAttribute('data-camera'));
+    var poster = screen.querySelector('img');
     var steps = Steps(fig.querySelector('[data-steps]'), function (k) { start(times[k] || 0); });
     var n = steps.items.length;
     steps.items.forEach(function (li) {
       times.push(parseFloat(li.getAttribute('data-t')));
       cams.push(readCam(li.getAttribute('data-cam')));
     });
+    // The recording's own size: the video's once known, else the poster's (1440 × 900).
+    function size() {
+      if (video.videoWidth) return [video.videoWidth, video.videoHeight];
+      var w = poster && +poster.getAttribute('width'), h = poster && +poster.getAttribute('height');
+      return w && h ? [w, h] : [APP_W, APP_H];
+    }
     var playBtn = action(fig, 'play', WORDS.play, function () { start(api.ended ? 0 : null); });
     var replayBtn = action(fig, 'replay', WORDS.replay, function () { start(0); });
     function auto() { return !still() && !lean(); }
@@ -1035,27 +1113,39 @@
       return k;
     }
     function onTime(t) {
-      var d = video.duration || 0;
+      var d = video.duration || 0, k = n ? cueAt(t) : 0;
       if (n) {
-        var k = cueAt(t), a = times[k] || 0, b = isFinite(times[k + 1]) ? times[k + 1] : d || a + 1;
+        var a = times[k] || 0, b = isFinite(times[k + 1]) ? times[k + 1] : d || a + 1;
         steps.set(k, lin(t, a, b));
-        camera(k, t);
       }
+      camera(k, t);
       api.progress = api.ended ? 1 : d ? clamp(t / d, 0, 1) : 0;
       emit();
     }
-    // The optional camera per cue (redesign.md §7.6), eased in over 0.9 s after the cue starts.
+    // The camera (redesign.md §7.6, §7.9): data-camera on the figure, or the older per-cue cams.
+    function aim(css, w, h, d) {
+      lay(video, css, w, h, d && d[0], d && d[1]);
+      lay(poster, css, w, h, d && d[0], d && d[1]);
+    }
+    function trackView(t, w, h, vw, vh) {
+      var base = coverBase(w, h, vw, vh), i = 0;
+      for (var k = 0; k < track.length; k++) if (t >= track[k].t - 0.02) i = k;
+      function zoom(c) { return clamp(c.s / base, 1, CAM_MAX); }
+      var c = track[i], p = track[i > 0 ? i - 1 : 0];
+      var q = i > 0 ? smooth(t - c.t, 0, CAM_EASE) : 1;
+      return camTransform(w, h, vw, vh, mix(zoom(p), zoom(c), q), mix(p.x, c.x, q), mix(p.y, c.y, q));
+    }
     function camera(k, t) {
-      if (!cams[k] && !(k > 0 && cams[k - 1])) { if (video.style.transform) video.style.transform = ''; return; }
+      var w = screen.clientWidth, h = screen.clientHeight, d = size();
+      if (!w || !h) return;
+      if (track.length) { aim(trackView(t, w, h, d[0], d[1]), w, h, d); return; }
+      if (!cams[k] && !(k > 0 && cams[k - 1])) { aim(''); return; }
       var c = cams[k] || WHOLE, p = (k > 0 && cams[k - 1]) || WHOLE;
       var q = smooth(t - (times[k] || 0), 0, 0.9);
-      var z = mix(p.z, c.z, q), x = mix(p.x, c.x, q), y = mix(p.y, c.y, q);
-      var w = screen.clientWidth, h = screen.clientHeight, s = (w / APP_W) * z;
-      var tx = Math.min(0, Math.max(w - APP_W * s, w / 2 - x * s));
-      var ty = Math.min(0, Math.max(h - APP_H * (w / APP_W) * z, h / 2 - y * s));
-      video.style.transformOrigin = '0 0';
-      video.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z.toFixed(4) + ')';
+      aim(camTransform(w, h, d[0], d[1], mix(p.z, c.z, q), mix(p.x, c.x, q), mix(p.y, c.y, q)), w, h, d);
     }
+    // Before it plays (and with reduced motion, until Play), the poster shows the first view.
+    function rest() { if (!player.playing()) camera(cueAt(video.currentTime || 0), video.currentTime || 0); }
     function onEnd() {
       api.ended = true;
       api.progress = 1;
@@ -1089,7 +1179,11 @@
       emit();
     }
     if (n) steps.set(0, 0);
+    video.addEventListener('loadedmetadata', function () { guard(rest, 'camera')(); });
     afterLoad(function () {
+      guard(rest, 'camera')();
+      if (W.ResizeObserver) new ResizeObserver(guard(rest, 'camera')).observe(screen);
+      else W.addEventListener('resize', guard(rest, 'camera'));
       near(fig, '200px 0px', load);
       watch(screen, [0, 0.25, 0.6], function (e) { ratio = e.isIntersecting ? e.intersectionRatio : 0; look(); });
       if (!auto()) playBtn.hidden = false;
@@ -1103,6 +1197,24 @@
     api.go = function (k) { start(times[k] || 0); };
     api.video = video;
     return api;
+  }
+
+  // A still with a camera (<figure data-camera="0 .75 420 260">, no recording): the first view,
+  // the same way a recording's poster gets it, so a crop of the app reads at its real size.
+  function Still(fig) {
+    var screen = screenOf(fig), img = screen.querySelector('img'), track = readTrack(fig.getAttribute('data-camera'));
+    if (!img || !track.length) return;
+    fig._showcase = { fig: fig, still: true };
+    function aim() {
+      var w = screen.clientWidth, h = screen.clientHeight;
+      var vw = +img.getAttribute('width') || img.naturalWidth || APP_W, vh = +img.getAttribute('height') || img.naturalHeight || APP_H;
+      if (!w || !h) return;
+      var c = track[0], z = clamp(c.s / coverBase(w, h, vw, vh), 1, CAM_MAX);
+      lay(img, camTransform(w, h, vw, vh, z, c.x, c.y), w, h, vw, vh);
+    }
+    aim();
+    if (W.ResizeObserver) new ResizeObserver(guard(aim, 'still')).observe(screen);
+    else W.addEventListener('resize', guard(aim, 'still'));
   }
 
   // The sticky list of recordings (redesign.md §7.8): which one is on, and how far it has played.
@@ -1144,6 +1256,7 @@
     root = root || D;
     each(root.querySelectorAll('[data-showcase]'), function (fig) { if (!fig._showcase) guard(Live, 'scene')(fig); });
     each(root.querySelectorAll('[data-recording]'), function (fig) { if (!fig._showcase) guard(Recording, 'recording')(fig); });
+    each(root.querySelectorAll('[data-camera]:not([data-recording]):not([data-showcase])'), function (fig) { if (!fig._showcase) guard(Still, 'still')(fig); });
     each(root.querySelectorAll('[data-showcase-nav]'), function (list) {
       if (list._showcase) return;
       list._showcase = true;
