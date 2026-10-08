@@ -158,7 +158,9 @@ Notes:
 1. **Products, by audience.** The home page keeps two views, one for students and one for tutors,
    and each view shows the products that audience cares about. Course builder is for tutors; the
    study view is for both. The Products menu groups the products by audience. The join code is a
-   button in the menu, not a page.
+   button in the menu, not a page. Later the same day he added **Live sessions** for tutors: tutors
+   teach their students live from inside Klaro. It runs on a third-party video service, but the
+   site must not name it.
 2. **Klaro connects; it does not generate.** He answered with the motto itself. The approved tutor
    line: *"Upload your lectures, your books and your past papers. Klaro connects them: every moment
    of a lecture to its book page, every topic to its past-paper questions. Nothing generated."*

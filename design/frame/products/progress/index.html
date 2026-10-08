@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Progress · Klaro (frame)</title>
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../../../../klaro.css">
+<link rel="stylesheet" href="../../frame.css">
+<link rel="stylesheet" href="../../product.css">
+<style>
+/* Progress page only: the student's home page, a course's lectures, a quiz list and a week of streak days. */
+.p-home-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+.p-home-greet { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.p-home .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.p-home .media, .p-vis .media { pointer-events: none; }
+.media .pic.p-pic-short { aspect-ratio: 16 / 7; }
+.lec.p-done .n { background: var(--success-soft); color: var(--success); }
+.lec.p-done > svg { margin-inline-start: auto; color: var(--success); }
+.lec.p-next { border-color: var(--purple-line); box-shadow: var(--shadow-panel); }
+.lec.p-next .tag, .lec .p-when { margin-inline-start: auto; }
+.lec.p-later { color: var(--faint); }
+.lec .p-when { font-size: 11.5px; font-weight: 600; color: var(--muted); }
+.lec .p-when + svg { margin-inline-start: 0; }
+.file .p-sub { display: block; font-size: 11.5px; font-weight: 500; color: var(--muted); }
+.file .p-end { display: inline-flex; align-items: center; gap: 6px; }
+.mark.p-low { color: var(--warn); background: var(--warn-soft); }
+.file.p-later { color: var(--faint); }
+.p-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding-block: 4px; }
+.p-day { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--muted); }
+.p-day > span { width: 100%; max-width: 40px; aspect-ratio: 1; border-radius: 11px; display: grid; place-items: center; background: var(--surface); border: 1px dashed var(--border-strong); }
+.p-day.on > span { background: var(--gold-soft); border: 1px solid #f3dd8a; color: var(--gold-deep); }
+.p-day.today > span { box-shadow: 0 0 0 3px rgb(240 201 61 / .35); }
+.p-day.today { color: var(--ink); }
+@media (max-width: 760px) {
+  .p-home .shelf { grid-template-columns: minmax(0, 1fr); }
+  .p-home .media:nth-child(3) { display: none; }
+}
+</style>
+</head>
+<body data-frame="../../" data-site="../../../../">
+<div data-chrome="header"></div>
+
+<main id="top">
+
+<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
+<section class="p-hero">
+  <div class="wrap">
+    <a class="p-back" href="../../index.html#products"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
+    <div class="p-top">
+      <span class="p-chip"><span class="icon-tile teal"><svg class="i" width="16" height="16"><use href="#i-chart"/></svg></span>Progress<span class="p-for">For students</span></span>
+      <div class="p-head">
+        <h1 class="display">Know where you stand <span class="key">before the exam</span>.</h1>
+        <div class="p-head-side">
+          <p class="lead">Lectures finished, quiz marks and your streak for every course, on your home page. Each course shows what's next up, so you know where to start.</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-lg" data-signup href="#">Create a student account <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-secondary btn-lg" href="../../index.html#try">Try a lesson</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <div class="studio p-home" role="img" aria-label="A student's Klaro home page: a greeting with a five-day streak, and three courses, each showing lectures finished, quizzes done and the lecture that's next up.">
+        <div class="studio-head">
+          <span><i class="dot" style="background: var(--purple)"></i>Home</span>
+          <span class="grow"></span>
+          <span class="tag tag-neutral"><svg class="i" width="13" height="13"><use href="#i-code"/></svg>Join a course</span>
+        </div>
+        <div class="p-home-body">
+          <div class="p-home-greet">
+            <div>
+              <div class="card-title">Good evening, Mariam</div>
+              <div class="small">Pick up where you stopped.</div>
+            </div>
+            <!-- confirm: is the streak one number across all courses (shown here) or one per course? -->
+            <span class="tag tag-yellow"><svg class="i" width="13" height="13"><use href="#i-flame"/></svg>5-day streak</span>
+          </div>
+          <div class="shelf">
+            <div class="media"><div class="pic"><img src="../../../../img/course-biology.webp" alt="" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 11</div><div class="title">Biology 0610</div></div></div><div class="edge"><i style="width: 60%"></i></div><div class="figs"><span><b>6/10</b> lectures</span><span><b>3/5</b> quizzes</span></div><div class="foot"><span class="label">Next up</span><span>Active transport</span><span class="chev flip">›</span></div></div>
+            <div class="media"><div class="pic"><img src="../../../../img/course-chemistry.webp" alt="" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 10</div><div class="title">Chemistry 0620</div></div></div><div class="edge"><i style="width: 27%"></i></div><div class="figs"><span><b>3/11</b> lectures</span><span><b>1/4</b> quizzes</span></div><div class="foot"><span class="label">Next up</span><span>Electrolysis</span><span class="chev flip">›</span></div></div>
+            <div class="media"><div class="pic"><img src="../../../../img/course-physics.webp" alt="" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">A Level · Year 12</div><div class="title">Physics 9702</div></div></div><div class="edge"><i style="width: 14%"></i></div><div class="figs"><span><b>2/14</b> lectures</span><span><b>1/6</b> quizzes</span></div><div class="foot"><span class="label">Next up</span><span>Acceleration</span><span class="chev flip">›</span></div></div>
+          </div>
+        </div>
+      </div>
+      <p class="p-field-note">An example home page. The names, courses and marks are illustrative.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Proof line: the motto, said for this product -->
+<section class="p-proof">
+  <div class="wrap">
+    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Connected, not generated</span>
+    <!-- confirm: quizzes are made of the course's real past-paper questions, like practice questions -->
+    <p>Every lecture you finish is your tutor's. Every quiz comes from a real past paper. <span class="muted">Nothing generated to fill the bar.</span></p>
+  </div>
+</section>
+
+<!-- 3. How it works -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From a join code to a clear next step.</h2></div>
+    <div class="steps">
+      <div class="card card-pad step"><span class="num">1</span><h3 class="card-title">Join your tutor's course</h3><p>Enter the join code your tutor gives you. The course appears on your home page.</p></div>
+      <div class="card card-pad step"><span class="num">2</span><h3 class="card-title">Study and practise</h3><p>Watch your tutor's lectures and answer real past-paper questions. Klaro keeps your place.</p></div>
+      <div class="card card-pad step"><span class="num">3</span><h3 class="card-title">See where you stand</h3><p>Each course shows the lectures you've finished, your quiz marks and what's next up.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Feature rows -->
+<section class="section white">
+  <div class="wrap p-rows">
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Every course</span>
+        <h2>See every course you've joined in one place.</h2>
+        <p>Each course card shows the lectures you've finished and the one that's next up. Open it and carry on from where you stopped.</p>
+        <a class="tlink" href="../study-view/">About study view <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="p-vis teal">
+        <div class="p-stack" role="img" aria-label="A Chemistry 0620 course card with 3 of 11 lectures finished, and its lecture list: lecture 3 done, lecture 4 Electrolysis next up, lecture 5 still to come.">
+          <div class="media">
+            <div class="pic p-pic-short"><img src="../../../../img/course-chemistry.webp" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 10</div><div class="title">Chemistry 0620</div></div></div>
+            <div class="edge"><i style="width: 27%"></i></div>
+            <div class="figs"><span><b>3/11</b> lectures</span><span><b>1/4</b> quizzes</span></div>
+            <div class="foot"><span class="label">Next up</span><span>Electrolysis</span><span class="chev flip">›</span></div>
+          </div>
+          <div class="order">
+            <div class="lec p-done"><span class="n">3</span>Chemical bonding<svg class="i" width="15" height="15"><use href="#i-check"/></svg></div>
+            <div class="lec p-next"><span class="n">4</span>Electrolysis<span class="tag tag-purple">Next up</span></div>
+            <div class="lec p-later"><span class="n">5</span>Rates of reaction</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Quiz marks</span>
+        <h2>Your quiz marks show what to go over again.</h2>
+        <!-- confirm: a finished quiz can be taken again (the facts only say this of practice questions) -->
+        <p>Quizzes use real past-paper questions and are marked as you answer. You see what you got right and why, then you can try again.</p>
+        <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="p-vis amber">
+        <div class="p-ui" role="img" aria-label="The quizzes in Biology 0610: three done with marks of 8 out of 8, 6 out of 8 and 4 out of 8 with a try-again button, and one not taken yet.">
+          <div class="p-ui-head"><svg class="i" width="14" height="14" style="color: var(--amber)"><use href="#i-check"/></svg>Biology 0610 · Quizzes<span class="grow"></span><span class="tag tag-neutral">3/5 done</span></div>
+          <div class="files">
+            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Cells and tissues<span class="p-sub">8 questions · 2023 · Paper 1</span></span><span class="mark">8/8</span></div>
+            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Diffusion<span class="p-sub">8 questions · 2024 · Paper 2</span></span><span class="mark">6/8</span></div>
+            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Osmosis<span class="p-sub">8 questions · 2024 · Paper 1</span></span><span class="p-end"><span class="mark p-low">4/8</span><span class="tag tag-purple">Try again</span></span></div>
+            <div class="file p-later"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-clock"/></svg></span><span class="name">Active transport<span class="p-sub">After lecture 7</span></span><span class="tag tag-neutral">Not taken</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Streak</span>
+        <h2>Keep a streak going, one day at a time.</h2>
+        <!-- confirm: what counts as a study day for the streak (a lecture, a quiz, any question?) -->
+        <p>Your streak sits on your home page, next to your courses. It counts the days in a row you've studied.</p>
+      </div>
+      <div class="p-vis gold">
+        <div class="p-ui" role="img" aria-label="A five-day streak: Tuesday to Saturday are marked with a flame, Monday was missed and Sunday is still to come. Today's lecture, Diffusion, is finished.">
+          <div class="p-ui-head"><svg class="i" width="14" height="14" style="color: var(--gold-deep)"><use href="#i-flame"/></svg>Your streak<span class="grow"></span><span class="tag tag-yellow">5 days</span></div>
+          <div class="p-week">
+            <span class="p-day"><span></span>Mon</span>
+            <span class="p-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Tue</span>
+            <span class="p-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Wed</span>
+            <span class="p-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Thu</span>
+            <span class="p-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Fri</span>
+            <span class="p-day on today"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Sat</span>
+            <span class="p-day"><span></span>Sun</span>
+          </div>
+          <div class="lec p-done"><span class="n">6</span>Diffusion<span class="p-when">Today</span><svg class="i" width="15" height="15"><use href="#i-check"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. Who it's for -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">Made for students. Set up by tutors.</h2></div>
+    <div class="p-who">
+      <div class="card card-pad">
+        <span class="tag tag-purple">For students</span>
+        <h3>Know what to study next, in every course.</h3>
+        <ul>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Lectures finished and quiz marks for each course</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>What's next up, on every course card</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Your streak on your home page</li>
+        </ul>
+        <a class="btn btn-primary" data-signup-as="student" href="#">Create a student account</a>
+      </div>
+      <div class="card card-pad">
+        <span class="tag tag-slate">For tutors</span>
+        <h3>Give your students a clear next step.</h3>
+        <ul>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Students join with your join code</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Quizzes from your own past papers</li>
+          <!-- confirm: "next up" follows the lecture order the tutor sets -->
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Next up follows the order you set</li>
+        </ul>
+        <a class="btn btn-secondary" data-signup-as="tutor" href="#">Apply as a tutor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Powered by research: the finding this product is built on -->
+<section class="section white">
+  <div class="wrap">
+    <article class="card card-pad rcard p-research">
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Powered by research</span>
+        <h3>Tell students where they stand and where to go next.</h3>
+        <p>Useful feedback answers three questions for the learner: Where am I going? How am I going? Where to next?</p>
+      </div>
+      <div class="side">
+        <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--teal-dark)"><use href="#i-chart"/></svg>So every course shows what you've finished, how your quizzes went, and what's next up.</div>
+        <p class="cite"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research, 77(1), 81–112.</p>
+        <a class="tlink" href="../../index.html#research" style="font-size: 14px; font-weight: 700; color: var(--purple-dark); text-decoration: none">How Klaro uses research →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 7. Related products -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
+    <div class="p-related">
+      <a class="card lift p-rel" href="../study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="card lift p-rel" href="../practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="card lift p-rel" href="../klaro-market/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-market"/></svg></span><span><b>Klaro Market</b><small>Find a course and the tutor who teaches it</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Closer -->
+<section class="section" style="padding-top: 0">
+  <div class="wrap">
+    <div class="closer">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h2 class="closer-h">See what's next up in every course.</h2>
+      <p>Create your account, then join with the code your tutor gives you.</p>
+      <a class="btn btn-lg" data-signup href="#">Create a student account</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div data-chrome="footer"></div>
+<script src="../../chrome.js"></script>
+<script src="../../../../klaro.js"></script>
+<script src="../../frame.js"></script>
+</body>
+</html>
