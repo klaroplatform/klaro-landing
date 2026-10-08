@@ -21,8 +21,10 @@
 <style>
 /* Minis only: two phone screens from the app (a lecture moment and its first check), the day's list
    of units, the book sheet over a paused clip, and the day's summary. All static: nothing loops.
-   Inside a phone every size is in em, and the em is set from the phone's own width, so a screen
-   scales as one picture. The screen is 22em wide. Logical properties only. */
+   Inside a hero phone every size is in em, and the em is a plain clamp() of the viewport, so a
+   screen scales as one picture (the screen is 22em wide). Every picture is pinned with
+   position: absolute and object-fit, so the img's width/height attributes never size it.
+   Logical properties only. */
 .mn-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 .mn-flush { padding-block-start: 0; }
 .mn-list-reset { margin: 0; padding: 0; list-style: none; }
@@ -37,11 +39,15 @@
 @media (max-width: 720px) {
   .mn-stage { flex-direction: column; align-items: center; gap: 28px; }
   .mn-fig-side { width: min(300px, 100%); margin-block-start: 0; }
+  .mn-fig-side .mn-screen { font-size: clamp(10.5px, calc((100vw - 80px) / 22), 13px); }
 }
 
 /* The phone: a dark frame round a 9:16 screen */
-.mn-phone { width: 100%; container-type: inline-size; padding: 7px; border-radius: 30px; background: #0d0d10; box-shadow: var(--shadow-lift); }
-.mn-screen { position: relative; aspect-ratio: 9 / 16; border-radius: 23px; display: flex; flex-direction: column; font-size: 13px; font-size: calc(100cqi / 22); line-height: 1.3; }
+.mn-phone { width: 100%; padding: 7px; border-radius: 30px; background: #0d0d10; box-shadow: var(--shadow-lift); }
+/* 1em = the screen's width / 22: 13px on the 300px phone, smaller only when the viewport is too
+   narrow for 300px (the field's padding and the page gutter take about 80px). */
+.mn-screen { position: relative; aspect-ratio: 9 / 16; border-radius: 23px; display: flex; flex-direction: column; font-size: clamp(10.5px, calc((100vw - 80px) / 22), 13px); line-height: 1.3; }
+.mn-fig-side .mn-screen { font-size: 11.35px; } /* the 264px phone: a 250px screen */
 .mn-dark { overflow: hidden; color: #fff; background: radial-gradient(95% 50% at 50% 46%, rgb(240 201 61 / .12), transparent 72%), #050506; }
 .mn-light { background: var(--page); color: var(--ink); }
 .mn-ic { width: 1em; height: 1em; flex: none; }
@@ -67,8 +73,8 @@
 /* The reel: the unit, the lecture at its moment, the caption, the swipe cue; meta, rail and sound */
 .mn-reel { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: .9em; padding-block: .8em 6.6em; }
 .mn-unit { padding-inline: 1.4em; font-size: 1.85em; font-weight: 800; line-height: 1.08; letter-spacing: -.012em; text-shadow: 0 2px 18px rgb(0 0 0 / .5); }
-.mn-clip { flex: none; aspect-ratio: 16 / 10; background: #000; }
-.mn-clip img { width: 100%; height: 100%; object-fit: cover; }
+.mn-clip { position: relative; flex: none; aspect-ratio: 16 / 10; overflow: hidden; background: #000; }
+.mn-clip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .mn-caption { padding-inline: 1.5em; text-align: center; font-size: 1.1em; font-weight: 600; line-height: 1.55; }
 .mn-caption span { padding-inline: .45em; border-radius: .4em; background: rgb(0 0 0 / .55); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .mn-swipe { align-self: center; display: inline-flex; align-items: center; gap: .4em; padding-block: .65em; padding-inline: .8em 1.05em; border-radius: var(--r-pill); background: var(--yellow); color: var(--ink); font-size: .92em; font-weight: 800; white-space: nowrap; box-shadow: 0 .8em 2.2em rgb(0 0 0 / .45); }
@@ -125,26 +131,31 @@
 .mn-pill-miss { background: #fdeeee; color: #9b2c2c; }
 .mn-pill-start { background: var(--gold-soft); color: var(--gold-deep); }
 
-.mn-book { width: 100%; max-width: 420px; display: flex; flex-direction: column; }
-.mn-behind { display: flex; align-items: center; gap: 10px; padding-block: 12px 32px; padding-inline: 14px; border-start-start-radius: var(--r-card); border-start-end-radius: var(--r-card); background: #050506; color: rgb(255 255 255 / .8); font-size: 12px; font-weight: 600; }
-.mn-behind img { width: 54px; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 6px; opacity: .55; }
-.mn-behind .mn-paused { margin-inline-start: auto; display: inline-flex; align-items: center; gap: 6px; padding-block: 4px; padding-inline: 8px; border-radius: var(--r-pill); background: rgb(255 255 255 / .14); color: #fff; white-space: nowrap; }
-.mn-behind .mn-ic { width: 12px; height: 12px; }
-.mn-sheet { margin-block-start: -20px; border: 1px solid var(--border); border-radius: var(--r-card); background: var(--card); box-shadow: var(--shadow-lift); overflow: hidden; }
-.mn-sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding-block: 14px 12px; padding-inline: 16px 14px; border-block-end: 1px solid var(--border); }
-.mn-sheet-head b { display: block; margin-block-start: 3px; font-size: 18px; font-weight: 800; line-height: 1.2; }
-.mn-close { width: 32px; height: 32px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--surface); color: var(--ink-soft); }
-.mn-close .mn-ic { width: 15px; height: 15px; }
-.mn-desk { padding: 14px; background: var(--surface); }
-.mn-page { display: flex; flex-direction: column; gap: 9px; padding-block: 16px; padding-inline: 18px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
-.mn-page-h { font-size: 13px; font-weight: 700; color: var(--ink); }
-.mn-intag { align-self: flex-start; margin-block-end: -4px; padding-block: 3px; padding-inline: 7px; border-radius: 6px; background: var(--ink); color: #fff; font: 700 11px/1.2 var(--font); }
+/* Row (b): a phone; the paused clip fills its top, the book sheet covers its lower 70% */
+.mn-bphone { width: min(300px, 100%); }
+.mn-bscreen { position: relative; aspect-ratio: 3 / 5; overflow: hidden; border-radius: 23px; background: #050506; color: #fff; }
+.mn-bclip { position: absolute; inset-inline: 0; inset-block-start: 0; height: 46%; overflow: hidden; }
+.mn-bclip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.mn-bclip::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgb(10 10 14 / .35), rgb(10 10 14 / .5) 55%, #050506); }
+.mn-blabel { position: absolute; inset-block-start: 12px; inset-inline-start: 12px; padding-block: 4px; padding-inline: 9px; border-radius: var(--r-pill); background: rgb(0 0 0 / .5); font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.mn-bpause { position: absolute; inset-inline: 0; inset-block-start: 0; height: 30%; display: grid; place-items: center; }
+.mn-bpause span { display: inline-flex; align-items: center; gap: 6px; padding-block: 6px; padding-inline: 10px 12px; border-radius: var(--r-pill); background: rgb(255 255 255 / .18); font-size: 12px; font-weight: 700; }
+.mn-bpause .mn-ic { width: 12px; height: 12px; }
+.mn-sheet { position: absolute; inset-inline: 0; inset-block-end: 0; height: 70%; display: flex; flex-direction: column; overflow: hidden; border-start-start-radius: 18px; border-start-end-radius: 18px; background: var(--card); color: var(--ink); box-shadow: 0 -12px 30px rgb(0 0 0 / .35); }
+.mn-sheet-head { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding-block: 12px 10px; padding-inline: 14px 12px; border-block-end: 1px solid var(--border); }
+.mn-sheet-head .mn-eyebrow { font-size: 10px; }
+.mn-sheet-head b { display: block; margin-block-start: 3px; font-size: 16px; font-weight: 800; line-height: 1.2; }
+.mn-close { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--surface); color: var(--ink-soft); }
+.mn-close .mn-ic { width: 14px; height: 14px; }
+.mn-desk { flex: 1; min-height: 0; overflow: hidden; padding: 10px; background: var(--surface); }
+.mn-page { display: flex; flex-direction: column; gap: 7px; padding-block: 12px; padding-inline: 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font-size: 12px; line-height: 1.55; color: var(--ink-soft); }
+.mn-page-h { font-size: 12px; font-weight: 700; color: var(--ink); }
+.mn-intag { align-self: flex-start; margin-block-end: -3px; padding-block: 3px; padding-inline: 7px; border-radius: 6px; background: var(--ink); color: #fff; font: 700 10.5px/1.2 var(--font); }
 mark.mn-region { display: block; padding-block: 4px; padding-inline: 6px; margin-inline: -6px; border-radius: 4px; color: var(--ink); background: linear-gradient(#ffe9a3, #ffe9a3) no-repeat 0 50% / 100% 100%; }
-.mn-sheet-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 10px; padding-block: 10px 12px; padding-inline: 16px; border-block-start: 1px solid var(--border); }
+.mn-sheet-foot { flex: none; display: flex; align-items: center; padding-block: 8px 10px; padding-inline: 12px; border-block-start: 1px solid var(--border); }
 .mn-seg { display: inline-flex; padding: 2px; border-radius: 9px; background: var(--surface); font-size: 12px; font-weight: 700; color: var(--ink-soft); }
-.mn-seg span { padding-block: 5px; padding-inline: 10px; border-radius: 7px; }
+.mn-seg span { padding-block: 5px; padding-inline: 10px; border-radius: 7px; white-space: nowrap; }
 .mn-seg .mn-on { background: var(--card); color: var(--ink); box-shadow: var(--shadow-segment); }
-.mn-sheet-foot small { font-size: 11.5px; color: var(--muted); }
 
 .mn-res-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 700; color: var(--muted); }
 .mn-res-no { font-size: 15px; font-weight: 800; color: #9b2c2c; }
@@ -219,7 +230,7 @@ mark.mn-region { display: block; padding-block: 4px; padding-inline: 6px; margin
         <div class="mega-col">
           <p class="mega-head">For students</p>
           <a class="mega-item" href="../../products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span></a>
+          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
           <a class="mega-item" href="../../products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
           <a class="mega-item" href="../../products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
         </div>
@@ -238,7 +249,7 @@ mark.mn-region { display: block; padding-block: 4px; padding-inline: 6px; margin
       </div>
       <div class="mega-foot">
         <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden><input name="code" placeholder="K7Q-2PX" aria-label="Join code" autocomplete="off" maxlength="9"><button class="btn btn-primary" type="submit">Join</button></form>
+        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
         <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
       </div>
     </div>
@@ -415,29 +426,26 @@ mark.mn-region { display: block; padding-block: 4px; padding-inline: 6px; margin
         <a class="tlink" href="../study-view/">About study view <svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="p-vis teal">
-        <div class="mn-book" role="img" aria-label="The book open over a paused clip of lecture 4. Page 48, Osmosis: the passage the mini teaches, the definition of osmosis, is highlighted and tagged In this mini.">
-          <div class="mn-behind" aria-hidden="true">
-            <img src="../../img/lecture-osmosis.webp" alt="" loading="lazy" width="960" height="548">
-            <span>Lecture 4 · Osmosis</span>
-            <span class="mn-paused"><svg class="mn-ic" width="24" height="24"><use href="#mn-pause"/></svg>Paused</span>
-          </div>
-          <div class="mn-sheet" aria-hidden="true">
-            <div class="mn-sheet-head">
-              <div><span class="mn-eyebrow">The book · page 48</span><b>Osmosis</b></div>
-              <span class="mn-close"><svg class="mn-ic" width="24" height="24"><use href="#mn-x"/></svg></span>
-            </div>
-            <div class="mn-desk">
-              <div class="mn-page course-content">
-                <p class="mn-page-h">3.2 Osmosis</p>
-                <p>Water molecules move freely through a partially permeable membrane.</p>
-                <span class="mn-intag">In this mini</span>
-                <mark class="mn-region">Osmosis is the net movement of water from a dilute solution to a more concentrated one through such a membrane.</mark>
-                <p>A plant cell in pure water takes in water by osmosis and becomes turgid. Its cell wall stops it from bursting.</p>
+        <div class="mn-phone mn-bphone" role="img" aria-label="A phone showing a mini paused at lecture 4, from 06:12, with the book open over it as a sheet. Page 48, Osmosis: the passage the mini teaches, the definition of osmosis, is highlighted and tagged In this mini.">
+          <div class="mn-bscreen" aria-hidden="true">
+            <div class="mn-bclip"><img src="../../img/lecture-osmosis.webp" alt="" loading="lazy" width="960" height="548"></div>
+            <span class="mn-blabel">Lecture 4 · from 06:12</span>
+            <div class="mn-bpause"><span><svg class="mn-ic" width="24" height="24"><use href="#mn-pause"/></svg>Paused</span></div>
+            <div class="mn-sheet">
+              <div class="mn-sheet-head">
+                <div><span class="mn-eyebrow">The book · page 48</span><b>Osmosis</b></div>
+                <span class="mn-close"><svg class="mn-ic" width="24" height="24"><use href="#mn-x"/></svg></span>
               </div>
-            </div>
-            <div class="mn-sheet-foot">
-              <span class="mn-seg"><span>The passage</span><span class="mn-on">Whole page</span></span>
-              <small>Highlighted: what this mini teaches</small>
+              <div class="mn-desk">
+                <div class="mn-page course-content">
+                  <p class="mn-page-h">3.2 Osmosis</p>
+                  <p>Water molecules move freely through a partially permeable membrane.</p>
+                  <span class="mn-intag">In this mini</span>
+                  <mark class="mn-region">Osmosis is the net movement of water from a dilute solution to a more concentrated one through such a membrane.</mark>
+                  <p>A plant cell in pure water takes in water by osmosis and becomes turgid. Its cell wall stops it from bursting.</p>
+                </div>
+              </div>
+              <div class="mn-sheet-foot"><span class="mn-seg"><span>The passage</span><span class="mn-on">Whole page</span></span></div>
             </div>
           </div>
         </div>
@@ -552,20 +560,20 @@ mark.mn-region { display: block; padding-block: 4px; padding-inline: 6px; margin
       <p class="foot-motto">Enough AI slop.</p>
       <p class="small">We connect your content exactly how you intended it to look.</p>
     </div>
-    <div><h4>For students</h4><ul>
+    <div><h2 class="foot-h">For students</h2><ul>
           <li><a href="../../products/study-view/">Study view</a></li>
           <li><a href="../../products/practice-questions/">Practice questions</a></li>
           <li><a href="../../products/minis/">Minis</a></li>
           <li><a href="../../products/progress/">Progress</a></li>
     </ul></div>
-    <div><h4>For tutors</h4><ul>
+    <div><h2 class="foot-h">For tutors</h2><ul>
           <li><a href="../../products/course-builder/">Course builder</a></li>
           <li><a href="../../products/study-view/">Study view</a></li>
           <li><a href="../../products/live-sessions/">Live sessions</a></li>
           <li><a href="../../products/marking/">Marking</a></li>
           <li><a data-signup-as="tutor" href="#">Apply as a tutor</a></li>
     </ul></div>
-    <div><h4>Klaro</h4><ul>
+    <div><h2 class="foot-h">Klaro</h2><ul>
           <li><a href="../../research/">Research</a></li>
           <li><a href="../../#try">Try it</a></li>
           <li><a data-signin href="#">Sign in</a></li>
