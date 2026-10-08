@@ -4,493 +4,215 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<title>Live sessions: schedule a live class · Klaro</title>
-<meta name="description" content="Schedule a live class for your course and Klaro sets up the meeting. No links to send: students join from Klaro, get a reminder and are marked present.">
+<title>Live sessions: teach on Zoom, keep the recording · Klaro</title>
+<meta name="description" content="Schedule a live class and Klaro sets up the Zoom meeting. Students join from Klaro, and the recording lands in your course, cut into clips linked to your book.">
 <!-- chrome:meta -->
-<link rel="canonical" href="https://learnklaro.com/products/live-sessions/">
-<link rel="alternate" hreflang="en" href="https://learnklaro.com/products/live-sessions/">
-<link rel="alternate" hreflang="ar" href="https://learnklaro.com/ar/products/live-sessions/">
-<link rel="alternate" hreflang="x-default" href="https://learnklaro.com/products/live-sessions/">
-<meta name="klaro-app" content="https://app.klaroplatform.com">
-<meta name="theme-color" content="#f3f3f1">
-<link rel="icon" href="../../favicon.ico" sizes="32x32">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Klaro">
-<meta property="og:locale" content="en_GB">
-<meta property="og:locale:alternate" content="ar_AR">
-<meta property="og:url" content="https://learnklaro.com/products/live-sessions/">
-<meta property="og:title" content="Live sessions: schedule a live class">
-<meta property="og:description" content="Schedule a live class for your course and Klaro sets up the meeting. No links to send: students join from Klaro, get a reminder and are marked present.">
-<meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
-<meta property="og:image:width" content="960">
-<meta property="og:image:height" content="548">
-<meta property="og:image:alt" content="A Klaro lecture on osmosis, from an example course">
-<meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "Organization",
-   "@id": "https://learnklaro.com/#org",
-   "name": "Klaro",
-   "url": "https://learnklaro.com/",
-   "logo": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/apple-touch-icon.png",
-    "width": 180,
-    "height": 180
-   },
-   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
-   "slogan": "Enough AI slop."
-  },
-  {
-   "@type": "WebSite",
-   "@id": "https://learnklaro.com/#website",
-   "url": "https://learnklaro.com/",
-   "name": "Klaro",
-   "inLanguage": [
-    "en",
-    "ar"
-   ],
-   "publisher": {
-    "@id": "https://learnklaro.com/#org"
-   }
-  },
-  {
-   "@type": "WebPage",
-   "@id": "https://learnklaro.com/products/live-sessions/#webpage",
-   "url": "https://learnklaro.com/products/live-sessions/",
-   "name": "Live sessions: schedule a live class · Klaro",
-   "description": "Schedule a live class for your course and Klaro sets up the meeting. No links to send: students join from Klaro, get a reminder and are marked present.",
-   "inLanguage": "en",
-   "isPartOf": {
-    "@id": "https://learnklaro.com/#website"
-   },
-   "primaryImageOfPage": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/img/lecture-osmosis.webp",
-    "width": 960,
-    "height": 548
-   },
-   "dateModified": "2026-10-08",
-   "about": {
-    "@id": "https://learnklaro.com/#app"
-   },
-   "audience": [
-    {
-     "@type": "EducationalAudience",
-     "educationalRole": "teacher"
-    }
-   ],
-   "breadcrumb": {
-    "@id": "https://learnklaro.com/products/live-sessions/#breadcrumb"
-   }
-  },
-  {
-   "@type": "BreadcrumbList",
-   "@id": "https://learnklaro.com/products/live-sessions/#breadcrumb",
-   "itemListElement": [
-    {
-     "@type": "ListItem",
-     "position": 1,
-     "name": "Klaro",
-     "item": "https://learnklaro.com/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 2,
-     "name": "Products",
-     "item": "https://learnklaro.com/products/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 3,
-     "name": "Live sessions"
-    }
-   ]
-  }
- ]
-}
-</script>
 <!-- /chrome:meta -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="../../klaro.css">
 <link rel="stylesheet" href="../../site.css">
-<style>
-/* Live sessions only (ls-): the schedule form, a scheduled class, the tutor's and the student's
-   "coming up" lists, the reminder and the register. Logical properties only. */
-.ls-list { list-style: none; margin: 0; padding: 0; }
-.dot.ls-teal { background: var(--teal); }
-.ls-purple { color: var(--purple); }
-.ls-tealc { color: var(--teal-dark); }
-.ls-focus { background: var(--purple-tint); }
-/* Schedule a session */
-.ls-form { display: flex; flex-direction: column; gap: 10px; }
-.ls-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.ls-input { display: flex; align-items: center; gap: 8px; min-width: 0; height: 38px; padding-inline: 12px; border: 1px solid var(--border-strong); border-radius: var(--r-button); background: var(--card); font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; }
-.ls-input .i { color: var(--muted); }
-.ls-pair { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 8px; }
-.ls-seg { display: flex; gap: 2px; padding: 3px; border: 1px solid var(--border); border-radius: var(--r-button); background: var(--surface); }
-.ls-seg span { flex: 1; padding-block: 6px; border-radius: 7px; text-align: center; font-size: 12px; font-weight: 700; color: var(--ink-soft); }
-.ls-seg .on { background: var(--card); color: var(--purple-dark); box-shadow: var(--shadow-segment); }
-.ls-note { display: flex; align-items: flex-start; gap: 8px; font-size: 12.5px; color: var(--ink-soft); }
-.ls-note .i { color: var(--purple); margin-block-start: 2px; }
-.ls-form .btn, .ls-card .ls-acts { align-self: flex-start; }
-/* A class on the schedule */
-.ls-card { background: var(--card); border: 1px solid var(--purple-line); border-radius: var(--r-card); box-shadow: var(--shadow-panel); padding: 16px; display: flex; flex-direction: column; gap: 14px; }
-.ls-when { display: flex; align-items: center; gap: 12px; }
-.ls-date { width: 46px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding-block: 6px; border-radius: 10px; background: var(--purple-soft); color: var(--purple-dark); font-size: 11px; font-weight: 700; line-height: 1.2; }
-.ls-date b { font-size: 19px; }
-.ls-two { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.ls-two b { font-size: 14.5px; letter-spacing: -.015em; }
-.ls-two small { font-size: 12px; color: var(--muted); }
-.ls-ticks { display: flex; flex-direction: column; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
-.ls-ticks li { display: flex; align-items: center; gap: 8px; }
-.ls-ticks .i { color: var(--success); }
-.ls-acts { display: flex; flex-wrap: wrap; gap: 6px; }
-/* Coming up: the tutor's schedule and the student's Upcoming card */
-.ls-up { display: flex; flex-direction: column; gap: 8px; }
-.ls-item { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px; padding: 12px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--card); }
-.ls-item.on { border-color: var(--success-line); background: var(--success-soft); }
-.ls-item .btn, .ls-item .ls-end { margin-inline-start: auto; }
-.ls-end { font-size: 12px; font-weight: 600; color: var(--muted); }
-.ls-foot { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
-.ls-notif { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--card); box-shadow: var(--shadow-panel); font-size: 13px; font-weight: 600; }
-.ls-notif .i { color: var(--purple); margin-block-start: 2px; }
-.ls-notif small { display: block; font-size: 11.5px; font-weight: 600; color: var(--muted); }
-/* The register */
-.ls-reg li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding-block: 9px; border-block-start: 1px solid var(--border); font-size: 13px; font-weight: 600; }
-.ls-reg li:first-child { border-block-start: 0; padding-block-start: 2px; }
-.ls-reg small { display: block; font-size: 11.5px; font-weight: 500; color: var(--muted); }
-.ls-av { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 10.5px; font-weight: 700; background: var(--purple-soft); color: var(--purple-dark); }
-.ls-av.t { background: var(--teal-soft); color: var(--teal-dark); }
-.ls-av.a { background: var(--amber-soft); color: var(--warn); }
-.ls-av.g { background: var(--gold-soft); color: var(--gold-deep); }
-.tag.ls-out { background: #fdeeee; color: #9b2c2c; }
-</style>
 </head>
 <body data-site="../../" data-default-as="tutor">
 <!-- chrome:sprite -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
-  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
-  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
-  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
-  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
-  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
-  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
-  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
-  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
-  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
-</defs></svg>
 <!-- /chrome:sprite -->
 <!-- chrome:header -->
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-    <nav class="nav" aria-label="Main">
-      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
-      <a class="nav-btn" href="../../research/">Research</a>
-      <a class="nav-btn" href="../../#try">Try it</a>
-    </nav>
-    <span class="spacer"></span>
-    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="../../ar/products/live-sessions/" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-    <a class="btn btn-glass" data-signup href="https://app.klaroplatform.com/sign-up?as=tutor">Get started</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
-  </div>
-  <div class="mega-wrap">
-    <nav class="mega" id="products-menu" aria-label="Products" hidden>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <p class="mega-head">For students</p>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
-          <a class="mega-item" href="../../products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
-          <a class="mega-item" href="../../products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
-        </div>
-        <div class="mega-col">
-          <p class="mega-head">For tutors</p>
-          <a class="mega-item" href="../../products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="../../products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class. Klaro sets up the meeting.</small></span></a>
-          <a class="mega-item" href="../../products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
-        </div>
-      </div>
-      <div class="mega-links">
-        <a class="nav-btn" href="../../products/">All products</a>
-        <a class="nav-btn" href="../../research/">Research</a>
-        <a class="nav-btn" href="../../#try">Try it</a>
-        <a class="nav-btn" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-      </div>
-      <div class="mega-foot">
-        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=tutor">Get started</a>
-      </div>
-    </nav>
-  </div>
-</header>
 <!-- /chrome:header -->
 
 <main id="top">
 
-<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
-<section class="p-hero">
-  <div class="wrap">
-    <a class="p-back" href="../"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
-    <div class="p-top">
-      <span class="p-chip"><span class="icon-tile teal"><svg class="i" width="16" height="16"><use href="#i-live"/></svg></span>Live sessions<span class="p-for">For tutors</span></span>
-      <div class="p-head">
-        <h1 class="display">Schedule a live class. <span class="key">Klaro sets up the rest.</span></h1>
-        <div class="p-head-side">
-          <p class="lead">Pick a time for your course and Klaro sets up the meeting, so there are no links to send. Your students join from Klaro, get a reminder 30 minutes before, and are marked present when they join.</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-secondary btn-lg" href="../course-builder/">See the course builder</a>
-          </div>
-        </div>
+<!-- 1. Hero: chip, H1 with the underline, lead, one pill and a text link; the illustration mosaic -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-live"/></svg>Live sessions <span class="chip-for">for tutors</span></span>
+      <h1 class="h1">Schedule a live class. Klaro sets up the <span class="uline">rest</span>.</h1>
+      <p class="lead">Pick the course, the time and how long it runs, and Klaro sets up the Zoom meeting. Afterwards, the recording lands in your course, cut into clips linked to your book.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
+        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
+    <div class="mosaic" aria-hidden="true">
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/05-lamp-laptop.webp"><img src="../../img/ill/05-lamp-laptop.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="p-field">
-      <div data-nosnippet class="studio" role="img" aria-label="A tutor's Schedule in Klaro: a form to schedule a session for Biology 0610 on Sunday at 7:00 pm for 60 minutes, online, and beside it the class on the schedule, with a Join button for students, a reminder 30 minutes before and attendance marked on joining.">
-        <div class="studio-head" aria-hidden="true">
-          <span><i class="dot ls-teal"></i>Schedule</span>
-          <span class="grow"></span>
-          <span class="tag tag-slate">Cairo time</span>
-        </div>
-        <div class="panes two" aria-hidden="true">
-          <div class="pane">
-            <div class="pane-label">Schedule a session</div>
-            <div class="ls-form">
-              <div class="ls-field"><span class="small">Course</span><span class="ls-input">Biology 0610 · IGCSE</span></div>
-              <div class="ls-field"><span class="small">Title</span><span class="ls-input">Revision: diffusion and osmosis</span></div>
-              <div class="ls-pair">
-                <div class="ls-field"><span class="small">When</span><span class="ls-input"><svg class="i" width="14" height="14"><use href="#i-calendar"/></svg>Sun 11 Oct · 7:00 pm</span></div>
-                <div class="ls-field"><span class="small">Length</span><span class="ls-input"><svg class="i" width="14" height="14"><use href="#i-clock"/></svg>60 min</span></div>
-              </div>
-              <span class="ls-seg"><span class="on">Online</span><span>In person</span></span>
-              <p class="ls-note"><svg class="i" width="14" height="14"><use href="#i-info"/></svg>Klaro sets up the meeting when you save. No link to paste.</p>
-              <span class="btn btn-primary">Save</span>
-            </div>
-          </div>
-          <div class="pane ls-focus">
-            <div class="pane-label">On the schedule</div>
-            <div class="ls-card">
-              <div class="ls-when"><span class="ls-date">Oct<b>11</b></span><span class="ls-two"><b>Revision: diffusion and osmosis</b><small>Sunday · 7:00–8:00 pm · Biology 0610</small></span></div>
-              <ul class="ls-ticks ls-list">
-                <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Your students get a Join button in Klaro</li>
-                <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>A reminder 30 minutes before</li>
-                <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Joining marks them present</li>
-              </ul>
-              <div class="ls-acts"><span class="btn btn-secondary">Edit</span><span class="btn btn-secondary">Call it off</span></div>
+<!-- 2. In action: Omar's live-class recording on its plate -->
+<section id="in-action" aria-labelledby="in-action-h">
+  <div class="wrap">
+    <div class="split-card">
+      <div class="split-copy">
+        <h2 class="h3" id="in-action-h">Teach on Zoom, and the recording lands in your course</h2>
+        <p>Your class sits on your teaching calendar, next to your quizzes and homework, and you start it on Zoom from there. Afterwards, the recording is cut into clips, each one linked to the part of your book you explained.</p>
+        <a class="tlink" href="../study-view/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="rec" data-recording="lives">
+        <div class="plate" data-ph="img/plates/P1-tutor-desk.webp">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen rec-screen" data-screen data-nosnippet>
+              <img src="../../media/lives-poster.jpg" alt="Klaro's teaching calendar on a sample course: classes, quizzes and homework, with the classes coming up" width="1440" height="900" loading="lazy" decoding="async">
+              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the tutor's teaching calendar, then a class recording in the course, cut into clips linked to the book"></video>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
             </div>
           </div>
         </div>
-      </div>
-      <p class="p-field-note">An example class, as its tutor schedules it.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 2. Proof line: the motto, said for this product -->
-<section class="p-proof">
-  <div class="wrap">
-    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Connected, not generated</span>
-    <p>Your voice, live. Your own lectures and book, linked. <span class="muted">All of it yours.</span></p>
-  </div>
-</section>
-
-<!-- 3. How it works -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From a time on the schedule to a full class.</h2></div>
-    <ol class="steps ls-list">
-      <li class="card card-pad step"><span class="num" aria-hidden="true">1</span><h3 class="card-title">Schedule a class</h3><p>Pick the course, the time and how long it runs. Klaro sets up the meeting when you save.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">2</span><h3 class="card-title">Your students are told</h3><p>Everyone in the course gets an announcement, then a reminder 30 minutes before.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">3</span><h3 class="card-title">Teach, and see who came</h3><p>Students press Join in Klaro and the class opens in its own tab. Joining marks them present.</p></li>
-    </ol>
-  </div>
-</section>
-
-<!-- 4. Feature rows -->
-<section class="section white">
-  <div class="wrap p-rows">
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">No links to send</span>
-        <h2>Schedule it once. Klaro sets up the meeting.</h2>
-        <p>Choose the course, the time and the length, then save. There's no meeting link to paste or send round, and only students in that course get the Join button.</p>
-      </div>
-      <div data-nosnippet class="p-vis teal" role="img" aria-label="A tutor's coming-up list on the Klaro Schedule: a revision class on now with a Start class button, a past-paper class later in the week, and an in-person class in Room 2.">
-        <div class="p-ui" aria-hidden="true">
-          <div class="p-ui-head"><svg class="i ls-tealc" width="14" height="14"><use href="#i-calendar"/></svg>Schedule · Coming up<span class="grow"></span><span class="tag tag-slate">This week</span></div>
-          <ul class="ls-up ls-list">
-            <li class="ls-item on"><span class="tag tag-green">● Now</span><span class="ls-two"><b>Revision: diffusion and osmosis</b><small>Biology 0610 · 7:00–8:00 pm</small></span><span class="btn btn-primary">Start class</span></li>
-            <li class="ls-item"><span class="ls-two"><b>Past-paper practice: enzymes</b><small>Biology 0610 · Wed · 6:00 pm · Online</small></span><span class="ls-end">Scheduled</span></li>
-            <li class="ls-item"><span class="ls-two"><b>Electrolysis questions</b><small>Chemistry 0620 · Thu · 5:00 pm</small></span><span class="ls-end">In person · Room 2</span></li>
-          </ul>
-          <div class="ls-foot"><svg class="i ls-purple" width="15" height="15"><use href="#i-link"/></svg>No link to paste: Klaro sets up the meeting for each online class.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">For your students</span>
-        <h2>Students join from Klaro.</h2>
-        <p>The class shows in the Upcoming card on their home page, with a reminder 30 minutes before. They press Join, and the class opens in its own tab.</p>
-        <a class="tlink" href="../progress/">About progress <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div data-nosnippet class="p-vis amber" role="img" aria-label="A student's Klaro home page: a reminder that the revision class starts in 30 minutes, and the Upcoming card with the class live now and a Join button, then a later class that opens 15 minutes before it starts.">
-        <div class="p-stack" aria-hidden="true">
-          <div class="ls-notif"><svg class="i" width="16" height="16"><use href="#i-clock"/></svg><span><small>From Klaro · 6:30 pm</small>Revision: diffusion and osmosis starts in 30 minutes</span></div>
-          <div class="p-ui">
-            <div class="p-ui-head"><svg class="i ls-purple" width="14" height="14"><use href="#i-calendar"/></svg>Upcoming<span class="grow"></span><span class="tag tag-neutral">Home</span></div>
-            <ul class="ls-up ls-list">
-              <li class="ls-item on"><span class="tag tag-green">● Live now</span><span class="ls-two"><b>Revision: diffusion and osmosis</b><small>Biology 0610 · until 8:00 pm</small></span><span class="btn btn-primary">Join</span></li>
-              <li class="ls-item"><span class="ls-two"><b>Past-paper practice: enzymes</b><small>Biology 0610 · Wed · 6:00 pm</small></span><span class="ls-end">Opens at 5:45 pm</span></li>
-            </ul>
+        <div class="show-under">
+          <ol class="rec-cues" data-steps>
+            <li>Your live class is on your schedule. Start it on Zoom from here.</li>
+            <li>Afterwards, the recording lands in your course…</li>
+            <li>…cut into clips, each one linked to your book.</li>
+            <li>One tap on “In the book” and the book opens at the part you explained.</li>
+          </ol>
+          <div class="show-actions" data-actions>
+            <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
           </div>
         </div>
-      </div>
+        <figcaption class="caption"><b>Sample course.</b> Your teaching calendar, then a class recording in the course, cut into clips.</figcaption>
+      </figure>
     </div>
+  </div>
+</section>
 
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Attendance</span>
-        <h2>Joining marks them present.</h2>
-        <p>When a student presses Join, Klaro marks them present, and it counts in their progress. You keep the last word on the register: Here, Not here or Excused.</p>
-      </div>
-      <div data-nosnippet class="p-vis gold" role="img" aria-label="The register for the revision class: two students marked Here because they joined, one Not here, and one Excused by the tutor.">
-        <div class="p-ui" aria-hidden="true">
-          <div class="p-ui-head"><svg class="i ls-purple" width="14" height="14"><use href="#i-users"/></svg>Register · Revision: diffusion and osmosis</div>
-          <ul class="ls-reg ls-list">
-            <li><span class="ls-av">AH</span><span>Ahmed H.<small>Joined at 6:58 pm</small></span><span class="tag tag-green">Here</span></li>
-            <li><span class="ls-av t">MS</span><span>Mariam S.<small>Joined at 7:02 pm</small></span><span class="tag tag-green">Here</span></li>
-            <li><span class="ls-av a">NK</span><span>Nour K.<small>Didn't join</small></span><span class="tag ls-out">Not here</span></li>
-            <li><span class="ls-av g">YR</span><span>Youssef R.<small>Set by you</small></span><span class="tag tag-neutral">Excused</span></li>
-          </ul>
+<!-- 3. Features: three stacked cards, each with a still of the real app or an illustration -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h2">Your class, from the calendar to the course</h2>
+      <p class="section-sub">No links to send, and every recorded class becomes part of what your students study.</p>
+    </div>
+    <div class="stack">
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Start it on Zoom from here</h3>
+          <p>Klaro sets up the meeting when you schedule the class, so there are no links to send. Your students get a reminder 30 minutes before, and joining marks them present.</p>
+          <a class="tlink" href="../quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
+        <figure class="stack-media rec">
+          <div class="plate plate--bleed" data-ph="img/plates/P1-tutor-desk.webp">
+            <div class="device device--browser">
+              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+              <div class="device-screen" data-nosnippet><img src="../../media/stills/lives-cue1.webp" alt="Klaro on a sample course: classes coming up, each with Start on Zoom and Take the register" width="1024" height="640" loading="lazy" decoding="async"></div>
+            </div>
+          </div>
+          <figcaption class="caption"><b>Sample course.</b> Classes coming up, each started from your calendar.</figcaption>
+        </figure>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">The recording lands in your course</h3>
+          <p>After the class, it's cut into clips by topic. A clip that explains part of your book opens it at that page, next to the questions on it.</p>
+          <a class="tlink" href="../course-builder/">About the course builder <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <figure class="stack-media rec">
+          <div class="plate" data-ph="img/plates/P1-tutor-desk.webp">
+            <div class="device device--browser">
+              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+              <div class="device-screen" data-nosnippet><img src="../../media/stills/lives-cue3.webp" alt="Klaro on a sample course: a lecture's clips, some linked to the book and to questions" width="1440" height="900" loading="lazy" decoding="async"></div>
+            </div>
+          </div>
+          <figcaption class="caption"><b>Sample course.</b> A recording as clips, linked to the book and to past-paper questions.</figcaption>
+        </figure>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Your students join from Klaro</h3>
+          <p>The class shows on their home page with a Join button, and only students in the course get it. You keep the last word on the register.</p>
+          <a class="tlink" href="../../students/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/12-raised-hand.webp" style="--ar: 16 / 10"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. More of Klaro: the illustrated carousel, without this product -->
+<section class="section carousel" id="more" aria-labelledby="more-h">
+  <div class="wrap carousel-head">
+    <div class="section-head section-head--start"><h2 class="h2" id="more-h">More for tutors</h2></div>
+    <div class="carousel-nav" hidden>
+      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+  <ul class="carousel-track" role="list">
+    <li class="carousel-item"><a class="icard" href="../course-builder/"><div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Course builder</span><span class="icard-line">Upload what you already teach from. Set the order.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../quizzes/"><div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Quizzes and homework</span><span class="icard-line">Ask in plain words. Built from real past-paper questions.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../marking/"><div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Marking</span><span class="icard-line">Answers marked against your scheme. You have the last word.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your lecture, open at the page it explains.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../../students/"><div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">For your students</span><span class="icard-line">Your lectures, where they study.</span></span></a></li>
+  </ul>
+</section>
+
+<!-- 5. The deep panel: the tutors' motto line, the same on every tutor page -->
+<section class="section" id="promise">
+  <div class="wrap">
+    <div class="panel">
+      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+      <h2 class="h2">We don't make content. We connect yours.</h2>
+      <p class="panel-sub">Your lectures, your book and real past papers, linked to each other. Nothing in your course is made up.</p>
+      <ul class="panel-grid">
+        <li class="panel-item"><h3 class="panel-item-title">Your own lectures</h3><p>Students learn from your recordings, in the order you set.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Real past papers</h3><p>Every question comes from a real exam paper, and says which.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Checked before it's published</h3><p>The Klaro team checks every course before your students see it.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">You have the last word</h3><p>Change any mark before a result reaches a student.</p></li>
+      </ul>
+      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
+    </div>
+  </div>
+</section>
+
+<!-- 6. FAQ (feeds the FAQPage JSON-LD) -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="faq">
+      <div class="faq-head"><h2 class="h2">Questions about live sessions</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Do I need to send a meeting link?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>No. Klaro sets up the Zoom meeting when you schedule the class. Your students join from Klaro, and only students in that course get the Join button.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What happens to the recording?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>It lands in your course, cut into clips. Each clip that explains part of your book is linked to that page, so your students can watch the moment and read the page together.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How is attendance taken?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Joining from Klaro marks a student present. You have the last word on the register: here, not here or excused.</p></div></div></div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- 5. Who it's for -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">The same course, from both sides.</h2></div>
-    <div class="p-who">
-      <div class="card card-pad">
-        <span class="tag tag-slate">For tutors</span>
-        <h3>Teach live, without sending a single link.</h3>
-        <ul>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Schedule a class and Klaro sets up the meeting</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Only your course's students get the Join button</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Attendance marked when students join</li>
-        </ul>
-        <a class="btn btn-primary" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
-      </div>
-      <div class="card card-pad">
-        <span class="tag tag-purple">For students</span>
-        <h3>Your tutor's live classes, on your home page.</h3>
-        <ul>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Join from the Upcoming card on your home page</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>A reminder 30 minutes before each class</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Marked present when you join</li>
-        </ul>
-        <a class="btn btn-secondary" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
-      </div>
-    </div>
+<!-- 7. Closing call -->
+<section class="section closing">
+  <ul class="closing-tiles" aria-hidden="true">
+    <li class="ill closing-tile" data-ph="img/ill/05-lamp-laptop.webp"><img src="../../img/ill/05-lamp-laptop.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/11-calendar.webp"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+  </ul>
+  <div class="closing-copy">
+    <h2 class="h2">Teach your next class from Klaro.</h2>
+    <p class="lead">Klaro is in beta. Free to try.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
   </div>
 </section>
 
-<!-- 6. Research: left out on this page -->
-
-<!-- 7. Related products -->
-<section class="section white">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
-    <div class="p-related">
-      <a class="card lift p-rel" href="../course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-      <a class="card lift p-rel" href="../study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-      <a class="card lift p-rel" href="../marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-    </div>
-  </div>
-</section>
-
-<!-- 8. Closer -->
-<section class="section">
-  <div class="wrap">
-    <div class="closer">
-      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
-      <h2 class="closer-h">Your own course, taught live by you.</h2>
-      <p>Apply as a tutor, schedule your first class, and let Klaro set up the rest.</p>
-      <a class="btn btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
-    </div>
-  </div>
-</section>
 </main>
 
 <!-- chrome:footer -->
-<footer class="foot2">
-  <div class="wrap">
-    <div class="brandcol">
-      <img src="../../img/klaro-wordmark.svg" alt="Klaro" width="93" height="28">
-      <p class="foot-motto">Enough AI slop.</p>
-      <p class="small">We connect your content exactly how you intended it to look.</p>
-    </div>
-    <div><h2 class="foot-h">For students</h2><ul>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/practice-questions/">Practice questions</a></li>
-          <li><a href="../../products/minis/">Minis</a></li>
-          <li><a href="../../products/progress/">Progress</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">For tutors</h2><ul>
-          <li><a href="../../products/course-builder/">Course builder</a></li>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/live-sessions/">Live sessions</a></li>
-          <li><a href="../../products/marking/">Marking</a></li>
-          <li><a data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">Klaro</h2><ul>
-          <li><a href="../../research/">Research</a></li>
-          <li><a href="../../#try">Try it</a></li>
-          <li><a href="../../market/">Browse courses</a></li>
-          <li><a data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
-          <li><a href="../../ar/products/live-sessions/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
-    </ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
-  </div>
-</footer>
 <!-- /chrome:footer -->
 <script src="../../klaro.js"></script>
 <script src="../../site.js"></script>
+<script src="../../showcase.js" defer></script>
 </body>
 </html>

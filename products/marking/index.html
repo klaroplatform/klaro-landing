@@ -4,590 +4,234 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<title>Marking: scanned papers against your mark scheme · Klaro</title>
-<meta name="description" content="Scan your students' handwritten papers and upload them with your mark scheme. Klaro marks every answer; you check the marks and send the results.">
+<title>Marking: papers marked against your scheme · Klaro</title>
+<meta name="description" content="Upload your students' scanned papers with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it.">
 <!-- chrome:meta -->
-<link rel="canonical" href="https://learnklaro.com/products/marking/">
-<link rel="alternate" hreflang="en" href="https://learnklaro.com/products/marking/">
-<link rel="alternate" hreflang="ar" href="https://learnklaro.com/ar/products/marking/">
-<link rel="alternate" hreflang="x-default" href="https://learnklaro.com/products/marking/">
-<meta name="klaro-app" content="https://app.klaroplatform.com">
-<meta name="theme-color" content="#f3f3f1">
-<link rel="icon" href="../../favicon.ico" sizes="32x32">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Klaro">
-<meta property="og:locale" content="en_GB">
-<meta property="og:locale:alternate" content="ar_AR">
-<meta property="og:url" content="https://learnklaro.com/products/marking/">
-<meta property="og:title" content="Marking: scanned papers against your mark scheme">
-<meta property="og:description" content="Scan your students' handwritten papers and upload them with your mark scheme. Klaro marks every answer; you check the marks and send the results.">
-<meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
-<meta property="og:image:width" content="960">
-<meta property="og:image:height" content="548">
-<meta property="og:image:alt" content="A Klaro lecture on osmosis, from an example course">
-<meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "Organization",
-   "@id": "https://learnklaro.com/#org",
-   "name": "Klaro",
-   "url": "https://learnklaro.com/",
-   "logo": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/apple-touch-icon.png",
-    "width": 180,
-    "height": 180
-   },
-   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
-   "slogan": "Enough AI slop."
-  },
-  {
-   "@type": "WebSite",
-   "@id": "https://learnklaro.com/#website",
-   "url": "https://learnklaro.com/",
-   "name": "Klaro",
-   "inLanguage": [
-    "en",
-    "ar"
-   ],
-   "publisher": {
-    "@id": "https://learnklaro.com/#org"
-   }
-  },
-  {
-   "@type": "WebPage",
-   "@id": "https://learnklaro.com/products/marking/#webpage",
-   "url": "https://learnklaro.com/products/marking/",
-   "name": "Marking: scanned papers against your mark scheme · Klaro",
-   "description": "Scan your students' handwritten papers and upload them with your mark scheme. Klaro marks every answer; you check the marks and send the results.",
-   "inLanguage": "en",
-   "isPartOf": {
-    "@id": "https://learnklaro.com/#website"
-   },
-   "primaryImageOfPage": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/img/lecture-osmosis.webp",
-    "width": 960,
-    "height": 548
-   },
-   "dateModified": "2026-10-08",
-   "about": {
-    "@id": "https://learnklaro.com/#app"
-   },
-   "audience": [
-    {
-     "@type": "EducationalAudience",
-     "educationalRole": "teacher"
-    }
-   ],
-   "breadcrumb": {
-    "@id": "https://learnklaro.com/products/marking/#breadcrumb"
-   }
-  },
-  {
-   "@type": "BreadcrumbList",
-   "@id": "https://learnklaro.com/products/marking/#breadcrumb",
-   "itemListElement": [
-    {
-     "@type": "ListItem",
-     "position": 1,
-     "name": "Klaro",
-     "item": "https://learnklaro.com/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 2,
-     "name": "Products",
-     "item": "https://learnklaro.com/products/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 3,
-     "name": "Marking"
-    }
-   ]
-  }
- ]
-}
-</script>
 <!-- /chrome:meta -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="../../klaro.css">
 <link rel="stylesheet" href="../../site.css">
-<style>
-/* Marking page only, every class prefixed mk-: the scanned answer and its review, the marks per
-   question part, the "Change this mark" dialog and the student's results. Logical properties only.
-   The words in the visuals are the app's own (Scanned exams, Ready for review, Automatic,
-   Change this mark, Send results, Exam results). */
-
-/* Small shared pieces */
-.mk-dot-amber { background: var(--amber); }
-.mk-dot-purple { background: var(--purple); }
-.mk-dot-teal { background: var(--teal); }
-.mk-ico { color: var(--purple); }
-.mk-ico-teal { color: var(--teal-dark); }
-.mk-ico-amber { color: var(--warn); }
-[role="img"] .btn { cursor: default; } /* buttons drawn inside a picture are not buttons */
-.mk-btn-sm { block-size: 34px; padding-inline: 13px; font-size: 12px; }
-.mk-q { min-inline-size: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.mk-score { font: 800 14px/1 var(--font); font-variant-numeric: tabular-nums; letter-spacing: -.01em; color: var(--ink); white-space: nowrap; }
-.mk-row { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
-.mk-row .mk-score { margin-inline-start: auto; }
-
-/* Hero: the exam's line, a row of student answers, then one answer and its review */
-.mk-exam { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 14px 16px; border-block-end: 1px solid var(--border); }
-.mk-exam-title { display: flex; flex-direction: column; gap: 3px; margin-inline-end: auto; min-inline-size: 0; }
-.mk-exam-title b { font-size: 15px; letter-spacing: -.015em; }
-.mk-board { list-style: none; margin: 0; padding: 12px 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; background: var(--band); border-block-end: 1px solid var(--border); }
-.mk-board li { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-inline-size: 0; padding: 8px 10px; border: 1px solid var(--border); border-radius: var(--r-button); background: var(--card); font-size: 12.5px; font-weight: 600; }
-.mk-board li.on { border-color: var(--purple-line); background: var(--purple-tint); box-shadow: 0 0 0 3px var(--purple-soft); }
-.mk-board li.on .mk-name { color: var(--purple-dark); }
-.mk-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-/* The scanned page: the printed question, then the student's handwriting on ruled lines */
-.mk-paper { display: flex; flex-direction: column; gap: 8px; padding: 18px 20px 14px; background: #fffdf7; border: 1px solid #e8e2d3; border-radius: 4px;
-  box-shadow: 0 1px 2px rgb(23 23 23 / .06), 0 14px 28px -18px rgb(23 23 23 / .35); rotate: -.4deg; }
-.mk-print { font: 400 13px/1.55 Arial, "Helvetica Neue", Helvetica, sans-serif; color: #232323; }
-.mk-print b { margin-inline-end: 6px; }
-.mk-hand { min-block-size: 128px; font-family: "Bradley Hand", "Segoe Print", "Noteworthy", "Ink Free", cursive; font-size: 17px; line-height: 32px; color: #24397d;
-  background: repeating-linear-gradient(to bottom, transparent 0 31px, #d6d0c1 31px 32px); }
-.mk-hand s { color: #55639a; text-decoration-thickness: 1.5px; }
-.mk-avail { align-self: flex-end; font: 700 13px/1 Arial, "Helvetica Neue", Helvetica, sans-serif; color: #232323; }
-
-/* The review: one card per question part, the open one with its marking scheme */
-.mk-parts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.mk-part { display: flex; flex-direction: column; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--r-control); }
-.mk-part.on { border-color: var(--purple-line); background: var(--purple-tint); }
-.mk-part .mk-btn-sm { align-self: flex-start; }
-.mk-scheme { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--r-button); background: var(--card); }
-.mk-scheme-head { display: flex; justify-content: space-between; gap: 8px; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--muted); }
-.mk-scheme ol { margin: 0; padding-inline-start: 18px; font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
-.mk-scheme li + li { margin-block-start: 3px; }
-
-/* Feature: each question part, what the scheme gives marks for, and the mark */
-.mk-table { list-style: none; margin: 0; padding: 0; }
-.mk-table li { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding-block: 10px; border-block-end: 1px solid var(--border); font-size: 13px; }
-.mk-table li:last-child { border-block-end: 0; }
-.mk-table .mk-th { padding-block-start: 0; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--muted); }
-.mk-table .mk-th span:last-child { text-align: end; }
-.mk-pts { font-size: 12.5px; line-height: 1.45; color: var(--ink-soft); }
-.mk-got { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-.mk-foot { display: flex; align-items: center; gap: 8px; }
-
-/* Feature: the "Change this mark" dialog, drawn as a still picture */
-.mk-dialog { gap: 14px; box-shadow: var(--shadow-lift); }
-.mk-dialog-q { font-size: 13px; color: var(--ink-soft); }
-.mk-field { display: flex; flex-direction: column; gap: 6px; }
-.mk-label { font-size: 12px; font-weight: 700; color: var(--ink); }
-.mk-input { display: flex; align-items: center; gap: 10px; min-block-size: 40px; padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: var(--r-button); background: var(--card); font-size: 13px; color: var(--ink); }
-.mk-input.mk-focus { border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
-.mk-mark-line { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.mk-num { inline-size: 64px; justify-content: center; font: 800 15px/1 var(--font); }
-.mk-of { font-size: 13px; font-weight: 600; color: var(--muted); }
-.mk-was { margin-inline-start: auto; font-size: 12px; color: var(--muted); }
-.mk-area { align-items: flex-start; min-block-size: 72px; line-height: 1.5; }
-.mk-actions { display: flex; justify-content: flex-end; gap: 8px; }
-
-/* Feature: the student's Exam results */
-.mk-lead { font-size: 12.5px; color: var(--muted); }
-.mk-result { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--surface); }
-.mk-result b { font-size: 15px; letter-spacing: -.015em; }
-.mk-total { font: 800 20px/1 var(--font); letter-spacing: -.02em; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.mk-total small { font-size: 12px; font-weight: 600; letter-spacing: 0; color: var(--muted); }
-.mk-results { list-style: none; margin: 0; padding: 0; }
-.mk-results li { padding-block: 8px; border-block-end: 1px solid var(--border); }
-.mk-results li:last-child { border-block-end: 0; }
-.mk-dl { align-self: flex-start; block-size: auto; min-block-size: 34px; padding-block: 9px; white-space: normal; line-height: 1.3; text-align: start; }
-
-/* Page sections: steps and related products as lists, the research card, the closer */
-.mk-steps, .mk-related { list-style: none; margin: 0; padding: 0; }
-.mk-related > li { display: flex; }
-.mk-related .p-rel { flex: 1; }
-.mk-research-copy { display: flex; flex-direction: column; gap: 12px; }
-.mk-research-h { font-size: clamp(22px, 2.4vw, 28px); font-weight: 700; line-height: 1.25; letter-spacing: -.025em; text-wrap: balance; }
-.mk-doi { color: var(--purple-dark); overflow-wrap: anywhere; text-underline-offset: 2px; }
-.mk-research-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--purple-dark); text-decoration: none; }
-.mk-research-link:hover { text-decoration: underline; text-underline-offset: 3px; }
-.mk-closer-section { padding-block-start: 0; }
-
-@media (max-width: 900px) {
-  .mk-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 640px) {
-  .mk-board li { flex-direction: column; align-items: flex-start; gap: 5px; }
-  .mk-paper { padding: 14px 14px 12px; }
-  .mk-hand { font-size: 16px; }
-  .mk-was { margin-inline-start: 0; inline-size: 100%; }
-}
-</style>
 </head>
 <body data-site="../../" data-default-as="tutor">
 <!-- chrome:sprite -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
-  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
-  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
-  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
-  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
-  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
-  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
-  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
-  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
-  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
-</defs></svg>
 <!-- /chrome:sprite -->
 <!-- chrome:header -->
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-    <nav class="nav" aria-label="Main">
-      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
-      <a class="nav-btn" href="../../research/">Research</a>
-      <a class="nav-btn" href="../../#try">Try it</a>
-    </nav>
-    <span class="spacer"></span>
-    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="../../ar/products/marking/" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-    <a class="btn btn-glass" data-signup href="https://app.klaroplatform.com/sign-up?as=tutor">Get started</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
-  </div>
-  <div class="mega-wrap">
-    <nav class="mega" id="products-menu" aria-label="Products" hidden>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <p class="mega-head">For students</p>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
-          <a class="mega-item" href="../../products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
-          <a class="mega-item" href="../../products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
-        </div>
-        <div class="mega-col">
-          <p class="mega-head">For tutors</p>
-          <a class="mega-item" href="../../products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="../../products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class. Klaro sets up the meeting.</small></span></a>
-          <a class="mega-item" href="../../products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
-        </div>
-      </div>
-      <div class="mega-links">
-        <a class="nav-btn" href="../../products/">All products</a>
-        <a class="nav-btn" href="../../research/">Research</a>
-        <a class="nav-btn" href="../../#try">Try it</a>
-        <a class="nav-btn" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-      </div>
-      <div class="mega-foot">
-        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=tutor">Get started</a>
-      </div>
-    </nav>
-  </div>
-</header>
 <!-- /chrome:header -->
 
 <main id="top">
 
-<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
-<section class="p-hero">
-  <div class="wrap">
-    <a class="p-back" href="../"><svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-back"/></svg>All products</a>
-    <div class="p-top">
-      <span class="p-chip"><span class="icon-tile amber"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-pen"/></svg></span>Marking<span class="p-for">For tutors</span></span>
-      <div class="p-head">
-        <h1 class="display">Upload your students' papers. <span class="key">Klaro marks them.</span></h1>
-        <div class="p-head-side">
-          <p class="lead">Scan your students' handwritten papers and upload them with your mark scheme. Klaro marks every answer, question by question; you check, change any mark, and send the results.</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor <svg class="i flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-secondary btn-lg" href="../course-builder/">See the course builder</a>
-          </div>
-        </div>
+<!-- 1. Hero: chip, H1 with the underline, lead, one pill and a text link; the illustration mosaic -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Marking <span class="chip-for">for tutors</span></span>
+      <h1 class="h1">Upload the papers. Get them back <span class="uline">marked</span>.</h1>
+      <p class="lead">Scan your students' written papers and upload them with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
+        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
+    <div class="mosaic" aria-hidden="true">
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="p-field">
-      <!-- A still picture made from the app's pieces. In the app the marking scheme opens in its own
-           "View marking scheme" window; here it sits under the open question part. -->
-      <div data-nosnippet class="studio" role="img" aria-label="An example of Klaro's Scanned exams screen for a Biology mock exam. A row of student answers shows each one's status: Sent, Ready for review or Marking. Below it, Laila M.'s scanned handwritten answer to question 4(b), on why a potato cylinder loses mass in a concentrated sugar solution. Beside it, the review: Klaro has marked 4(b) 2 out of 3 against the four points of the marking scheme, with a Change this mark button, and a Send results button for the exam.">
-        <div class="studio-head">
-          <span><i class="dot mk-dot-amber"></i>Student answers</span>
-          <span><i class="dot mk-dot-purple"></i>Answer PDF</span>
-          <span><i class="dot mk-dot-teal"></i>Review</span>
-          <span class="grow"></span>
-          <span class="tag tag-slate">Biology 0610 · IGCSE</span>
-        </div>
-        <div class="mk-exam">
-          <div class="mk-exam-title"><b>Mock exam · Paper 4</b><span class="small">Marking: 11 of 12 answers done · 4 results ready to send</span></div>
-          <span class="btn btn-primary mk-btn-sm"><svg class="i" width="14" height="14" aria-hidden="true"><use href="#i-send"/></svg>Send results</span>
-        </div>
-        <ul class="mk-board">
-          <li><span class="mk-name">Omar S.</span><span class="tag tag-green">Sent</span></li>
-          <li><span class="mk-name">Youssef A.</span><span class="tag tag-purple">Ready for review</span></li>
-          <li class="on"><span class="mk-name">Laila M.</span><span class="tag tag-purple">Ready for review</span></li>
-          <li><span class="mk-name">Karim T.</span><span class="tag tag-neutral">Marking</span></li>
-        </ul>
-        <div class="panes two">
-          <div class="pane">
-            <div class="pane-label"><i class="dot mk-dot-purple"></i>Laila M. · Answer PDF · p. 7</div>
-            <div class="mk-paper course-content">
-              <p class="mk-print"><b>(b)</b>A potato cylinder is left in a concentrated sugar solution for 30 minutes. Its mass decreases.</p>
-              <p class="mk-print">Explain why.</p>
-              <p class="mk-hand">Water <s>goes</s> leaves the potato cells by osmosis, so the potato loses mass. Sugar moves into the cells.</p>
-              <span class="mk-avail">[3]</span>
+<!-- 2. In action: Omar's marking recording on its plate -->
+<section id="in-action" aria-labelledby="in-action-h">
+  <div class="wrap">
+    <div class="split-card">
+      <div class="split-copy">
+        <h2 class="h3" id="in-action-h">Answers come back marked, with feedback for each student</h2>
+        <p>Every answer is marked question by question against the scheme you upload, with what earns the marks beside it. You check each paper, change any mark you disagree with, and send the results.</p>
+      </div>
+      <figure class="rec" data-recording="marking">
+        <div class="plate" data-ph="img/plates/P4-answer-scripts.webp">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen rec-screen" data-screen data-nosnippet>
+              <img src="../../media/marking-poster.jpg" alt="Klaro's marking queue on a sample course: each paper handed in, one card per paper" width="1440" height="900" loading="lazy" decoding="async">
+              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the tutor's marking queue, then one student's paper, marked"></video>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
             </div>
           </div>
-          <div class="pane">
-            <div class="pane-label"><i class="dot mk-dot-teal"></i>Review · Question 4</div>
-            <ul class="mk-parts">
-              <li class="mk-part"><div class="mk-row"><span class="mk-q">4(a)</span><span class="tag tag-neutral">Automatic</span><span class="mk-score">2 / 2</span></div></li>
-              <li class="mk-part on">
-                <div class="mk-row"><span class="mk-q">4(b)</span><span class="tag tag-neutral">Automatic</span><span class="mk-score">2 / 3</span></div>
-                <div class="mk-scheme course-content">
-                  <div class="mk-scheme-head"><span>Marking scheme · 4(b)</span><span>Max 3</span></div>
-                  <ol>
-                    <li>water moves out of the potato cells</li>
-                    <li>by osmosis</li>
-                    <li>from a higher to a lower water potential</li>
-                    <li>through a partially permeable membrane</li>
-                  </ol>
-                </div>
-                <span class="btn btn-secondary mk-btn-sm"><svg class="i" width="14" height="14" aria-hidden="true"><use href="#i-pen"/></svg>Change this mark</span>
-              </li>
-              <li class="mk-part"><div class="mk-row"><span class="mk-q">4(c)</span><span class="tag tag-neutral">Automatic</span><span class="mk-score">1 / 2</span></div></li>
-            </ul>
+        </div>
+        <div class="show-under">
+          <ol class="rec-cues" data-steps>
+            <li>Every paper handed in waits here, one card per paper.</li>
+            <li>Each answer comes back marked…</li>
+            <li>…with what earns the marks, so you can check it in seconds.</li>
+            <li>Each student’s mark adds up as you go.</li>
+          </ol>
+          <div class="show-actions" data-actions>
+            <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
           </div>
         </div>
-      </div>
-      <p class="p-field-note">One example exam, with example students and marks.</p>
+        <figcaption class="caption"><b>Sample course.</b> The marking queue, then one student's paper, marked.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- 2. Proof line: the motto, said for this product. Klaro writes nothing for students: it marks
-     against the tutor's own scheme, and the tutor sends every result. -->
-<section class="p-proof">
+<!-- 3. Features: three stacked cards, each with a still of the real app or an illustration -->
+<section class="section" id="features">
   <div class="wrap">
-    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Your scheme, your final say</span>
-    <p>Your mark scheme. Your students' handwriting. <span class="muted">Klaro marks to your scheme, and nothing goes out until you send it.</span></p>
-  </div>
-</section>
-
-<!-- 3. How it works -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From scanned papers to sent results.</h2></div>
-    <ol class="steps mk-steps">
-      <li class="card card-pad step"><span class="num" aria-hidden="true">1</span><h3 class="card-title">Upload the papers and your scheme</h3><p>Add the question paper, your mark scheme, the total marks and each student's scanned paper as one PDF. Klaro matches each file to the student it's named after.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">2</span><h3 class="card-title">Klaro marks every answer</h3><p>Klaro reads the handwriting and marks each question part against your mark scheme. You can leave the page once the uploads finish.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">3</span><h3 class="card-title">Check, change and send</h3><p>Look over the marks and change any of them, with a reason. Send one result at a time, or every result that's ready with one button.</p></li>
-    </ol>
-  </div>
-</section>
-
-<!-- 4. Feature rows -->
-<section class="section white">
-  <div class="wrap p-rows">
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Your mark scheme</span>
-        <h2>Marked against your scheme, question by question.</h2>
-        <p>Klaro marks every question part against the mark scheme you uploaded with the exam, and checks that it adds up to the total marks you entered. You can open the marking scheme it works from at any time.</p>
-      </div>
-      <div data-nosnippet class="p-vis teal" role="img" aria-label="An example review of Youssef A.'s mock exam. For each question part, what the mark scheme gives marks for, and the mark Klaro gave: 1(a) 1 out of 1, 2(a) 1 out of 2, 3(b) 2 out of 2, 4(b) 2 out of 3, each marked Automatic. Under the list, a View marking scheme button.">
-        <div class="p-ui">
-          <div class="p-ui-head"><svg class="i mk-ico-teal" width="14" height="14" aria-hidden="true"><use href="#i-doc"/></svg>Review · Youssef A.<span class="grow"></span><span class="tag tag-neutral">Mock exam · Paper 4</span></div>
-          <ul class="mk-table course-content">
-            <li class="mk-th"><span>Part</span><span>Your mark scheme</span><span>Mark</span></li>
-            <li><span class="mk-q">1(a)</span><span class="mk-pts">cell membrane</span><span class="mk-got"><span class="mk-score">1 / 1</span><span class="tag tag-neutral">Automatic</span></span></li>
-            <li><span class="mk-q">2(a)</span><span class="mk-pts">diffusion; from a higher to a lower concentration</span><span class="mk-got"><span class="mk-score">1 / 2</span><span class="tag tag-neutral">Automatic</span></span></li>
-            <li><span class="mk-q">3(b)</span><span class="mk-pts">the enzyme is denatured; its active site changes shape</span><span class="mk-got"><span class="mk-score">2 / 2</span><span class="tag tag-neutral">Automatic</span></span></li>
-            <li><span class="mk-q">4(b)</span><span class="mk-pts">water moves out; by osmosis; down a water potential gradient; through a partially permeable membrane (max 3)</span><span class="mk-got"><span class="mk-score">2 / 3</span><span class="tag tag-neutral">Automatic</span></span></li>
-          </ul>
-          <div class="mk-foot"><span class="btn btn-secondary mk-btn-sm"><svg class="i" width="14" height="14" aria-hidden="true"><use href="#i-doc"/></svg>View marking scheme</span></div>
+    <div class="section-head">
+      <h2 class="h2">Hand over the marking, keep the final say</h2>
+      <p class="section-sub">Your mark scheme decides every mark, and you decide when results go out.</p>
+    </div>
+    <div class="stack">
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Marked against your scheme</h3>
+          <p>Each question part is marked against the mark scheme you upload, with what earns the marks shown beside the answer. You can check an answer in seconds.</p>
+          <a class="tlink" href="../quizzes/">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-      </div>
-    </div>
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Your decision</span>
-        <h2>You have the last word on every mark.</h2>
-        <p>Change any mark Klaro gave and note the reason; marks held for your decision come first. Nothing reaches a student until you send it.</p>
-      </div>
-      <div data-nosnippet class="p-vis amber" role="img" aria-label="An example Change this mark window for Hana R.'s answer to question 4(b). The awarded mark is changed to 3 of 3 from an automatic mark of 2 of 3, and the tutor's reason fills the Reason for this mark field, above Cancel and Save buttons.">
-        <div class="p-ui mk-dialog">
-          <div class="p-ui-head"><svg class="i mk-ico" width="14" height="14" aria-hidden="true"><use href="#i-pen"/></svg>Change this mark<span class="grow"></span><span class="tag tag-neutral">Hana R. · 4(b)</span></div>
-          <p class="mk-dialog-q course-content">Explain why the potato cylinder's mass decreases. [3]</p>
-          <div class="mk-field">
-            <span class="mk-label">Awarded mark</span>
-            <div class="mk-mark-line"><span class="mk-input mk-num">3</span><span class="mk-of">of 3</span><span class="mk-was">Automatic mark: 2 / 3</span></div>
+        <figure class="stack-media rec">
+          <div class="plate plate--bleed" data-ph="img/plates/P4-answer-scripts.webp">
+            <div class="device device--browser">
+              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+              <div class="device-screen" data-nosnippet><img src="../../media/stills/marking-cue3.webp" alt="Klaro on a sample course: a student's written answer, with what earns the marks from the mark scheme" width="1040" height="650" loading="lazy" decoding="async"></div>
+            </div>
           </div>
-          <div class="mk-field">
-            <span class="mk-label">Reason for this mark</span>
-            <span class="mk-input mk-area mk-focus">She gives the gradient in her own words: water moves from the dilute cell sap to the stronger solution.</span>
+          <figcaption class="caption"><b>Sample course.</b> One written answer, with what earns its marks.</figcaption>
+        </figure>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Every mark adds up as you go</h3>
+          <p>Each paper shows the student's mark so far and the answers still waiting. One button takes you to the next student.</p>
+          <a class="tlink" href="../course-builder/">About the course builder <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <figure class="stack-media rec">
+          <div class="plate plate--bleed" data-ph="img/plates/P4-answer-scripts.webp">
+            <div class="device device--browser">
+              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+              <div class="device-screen" data-nosnippet><img src="../../media/stills/marking-cue4.webp" alt="Klaro on a sample course: a student's mark so far, the answers waiting, and a button to the next student" width="1140" height="712" loading="lazy" decoding="async"></div>
+            </div>
           </div>
-          <div class="mk-actions"><span class="btn btn-secondary mk-btn-sm">Cancel</span><span class="btn btn-primary mk-btn-sm">Save</span></div>
+          <figcaption class="caption"><b>Sample course.</b> One student's mark so far, and the next paper.</figcaption>
+        </figure>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">You have the last word</h3>
+          <p>Change any mark, with a reason, before results go out. Your students then find their marks for every question part under Exam results, with their marked paper.</p>
+          <a class="tlink" href="../../students/">What your students see <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-      </div>
-    </div>
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Results</span>
-        <h2>Results your students can open.</h2>
-        <p>When you send a result, the student is notified in Klaro and finds it under Exam results, with the marks for every question part. They can download the marking sheet and their marked paper.</p>
-      </div>
-      <div data-nosnippet class="p-vis gold" role="img" aria-label="An example of a student's Exam results page in Klaro: Mock exam, Paper 4, 61 out of 80 marks, then the marks per question part, 1(a) 1 out of 1 Automatic, 2(a) 2 out of 2 Automatic, 4(b) 3 out of 3 Tutor reviewed, 5(c) 0 out of 2 Unattempted, and a button to download the marking sheet and marked paper.">
-        <div class="p-ui">
-          <div class="p-ui-head"><svg class="i mk-ico" width="14" height="14" aria-hidden="true"><use href="#i-chart"/></svg>Exam results<span class="grow"></span><span class="tag tag-slate">Biology 0610</span></div>
-          <p class="mk-lead">Results your tutor has sent you for scanned answer scripts.</p>
-          <div class="mk-result"><b>Mock exam · Paper 4</b><span class="mk-total">61 / 80 <small>marks</small></span></div>
-          <ul class="mk-results">
-            <li class="mk-row"><span class="mk-q">1(a)</span><span class="tag tag-neutral">Automatic</span><span class="mk-score">1 / 1</span></li>
-            <li class="mk-row"><span class="mk-q">2(a)</span><span class="tag tag-neutral">Automatic</span><span class="mk-score">2 / 2</span></li>
-            <li class="mk-row"><span class="mk-q">4(b)</span><span class="tag tag-purple">Tutor reviewed</span><span class="mk-score">3 / 3</span></li>
-            <li class="mk-row"><span class="mk-q">5(c)</span><span class="tag tag-neutral">Unattempted</span><span class="mk-score">0 / 2</span></li>
-          </ul>
-          <span class="btn btn-secondary mk-btn-sm mk-dl"><svg class="i" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Download marking sheet and marked paper</span>
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/07-red-pen.webp" style="--ar: 16 / 10"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- 5. Who it's for -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">You check the marks. Your students get the results.</h2></div>
-    <div class="p-who">
-      <div class="card card-pad">
-        <span class="tag tag-slate">For tutors</span>
-        <h3>Hand over the marking. Keep the final say.</h3>
-        <p>Spend your time on the answers that need you.</p>
-        <ul>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Your own question paper and mark scheme for every exam</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Every mark open to change, with a reason</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Results sent when you choose: one at a time, or every ready one with one button</li>
-        </ul>
-        <a class="btn btn-primary" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
-      </div>
-      <div class="card card-pad">
-        <span class="tag tag-purple">For your students</span>
-        <h3>Marks per question, on their own paper.</h3>
-        <p>Nothing reaches them until their tutor sends it.</p>
-        <ul>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>A notification in Klaro when a result is sent</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Marks for every question part, under Exam results</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Their marked paper, ready to download</li>
-        </ul>
-        <a class="btn btn-secondary" href="../practice-questions/">See practice questions</a>
-      </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- 6. Powered by research: the finding this product is built on -->
-<section class="section white">
+<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
+<section class="section" id="research">
   <div class="wrap">
-    <article class="card card-pad rcard p-research">
-      <div class="mk-research-copy">
-        <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Powered by research</span>
-        <h2 class="mk-research-h">Show students how they did against the goal.</h2>
-        <p>Feedback is one of the strongest influences on learning, and it works best when learners can see how they did against a clear goal.</p>
-      </div>
-      <div class="side">
-        <div class="in-klaro"><svg class="i mk-ico" width="16" height="16" aria-hidden="true"><use href="#i-pen"/></svg>In Klaro, each answer is marked against your own mark scheme, and students see their marks question by question.</div>
-        <p class="cite"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. <em>Review of Educational Research</em>, 77(1), 81–112. <a class="mk-doi" href="https://doi.org/10.3102/003465430298487" rel="noopener">doi.org/10.3102/003465430298487</a></p>
-        <a class="mk-research-link" href="../../research/#feedback">How Klaro uses research <svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- 7. Related products -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
-    <ul class="p-related mk-related">
-      <li><a class="card lift p-rel" href="../course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span><svg class="i chev flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      <li><a class="card lift p-rel" href="../practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, filed under your course book's chapters</small></span><svg class="i chev flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-      <li><a class="card lift p-rel" href="../live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class; your students join from Klaro</small></span><svg class="i chev flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
-    </ul>
-  </div>
-</section>
-
-<!-- 8. Closer -->
-<section class="section mk-closer-section">
-  <div class="wrap">
-    <div class="closer">
-      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
-      <h2 class="closer-h">Written papers, marked against your scheme.</h2>
-      <p>Apply as a tutor. The Klaro team reviews every tutor account before it opens.</p>
-      <a class="btn btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
+    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
+    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 760px; margin-inline: auto">
+      <article class="rcard">
+        <div class="ill ill--contain" data-ph="img/ill/10-bookmark.webp" style="--ar: 5 / 2"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <div class="rcard-body">
+          <p class="rcard-source">Review of Educational Research, 2007</p>
+          <h3 class="rcard-title">Show students how they did against the goal</h3>
+          <p>Feedback is one of the strongest influences on learning, and it works best when learners can see how they did against a clear goal.</p>
+          <p class="small"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. <em>Review of Educational Research</em>, 77(1), 81–112. <a href="https://doi.org/10.3102/003465430298487" rel="noopener">doi.org/10.3102/003465430298487</a></p>
+          <a class="tlink" href="../../research/#feedback">How Klaro uses research <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <p class="rcard-in">In Klaro: each answer is marked against your own mark scheme, and students see their marks question by question.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
+
+<!-- 5. More of Klaro: the illustrated carousel, without this product -->
+<section class="section carousel" id="more" aria-labelledby="more-h">
+  <div class="wrap carousel-head">
+    <div class="section-head section-head--start"><h2 class="h2" id="more-h">More for tutors</h2></div>
+    <div class="carousel-nav" hidden>
+      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+  <ul class="carousel-track" role="list">
+    <li class="carousel-item"><a class="icard" href="../course-builder/"><div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Course builder</span><span class="icard-line">Upload what you already teach from. Set the order.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../quizzes/"><div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Quizzes and homework</span><span class="icard-line">Ask in plain words. Built from real past-paper questions.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../live-sessions/"><div class="ill" data-ph="img/ill/05-lamp-laptop.webp"><img src="../../img/ill/05-lamp-laptop.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Live sessions</span><span class="icard-line">Schedule a class. Your students join from Klaro.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your lecture, open at the page it explains.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../../students/"><div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">For your students</span><span class="icard-line">Your lectures, where they study.</span></span></a></li>
+  </ul>
+</section>
+
+<!-- 6. The deep panel: the tutors' motto line, the same on every tutor page -->
+<section class="section" id="promise">
+  <div class="wrap">
+    <div class="panel">
+      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+      <h2 class="h2">We don't make content. We connect yours.</h2>
+      <p class="panel-sub">Your lectures, your book and real past papers, linked to each other. Nothing in your course is made up.</p>
+      <ul class="panel-grid">
+        <li class="panel-item"><h3 class="panel-item-title">Your own lectures</h3><p>Students learn from your recordings, in the order you set.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Real past papers</h3><p>Every question comes from a real exam paper, and says which.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Checked before it's published</h3><p>The Klaro team checks every course before your students see it.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">You have the last word</h3><p>Change any mark before a result reaches a student.</p></li>
+      </ul>
+      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
+    </div>
+  </div>
+</section>
+
+<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="faq">
+      <div class="faq-head"><h2 class="h2">Questions about marking</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What do I upload?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>The question paper, your mark scheme, the total marks and each student's scanned paper as one PDF. Klaro matches each file to the student it's named after.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I change a mark?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Change any mark and note the reason. Nothing reaches a student until you send it: one result at a time, or every result that's ready at once.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What do my students see?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>A notification in Klaro, then their marks for every question part under Exam results, with feedback. They can download their marked paper.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Closing call -->
+<section class="section closing">
+  <ul class="closing-tiles" aria-hidden="true">
+    <li class="ill closing-tile" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+  </ul>
+  <div class="closing-copy">
+    <h2 class="h2">Your next papers, marked against your scheme.</h2>
+    <p class="lead">Klaro is in beta. Free to try.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a></div>
+  </div>
+</section>
+
 </main>
 
 <!-- chrome:footer -->
-<footer class="foot2">
-  <div class="wrap">
-    <div class="brandcol">
-      <img src="../../img/klaro-wordmark.svg" alt="Klaro" width="93" height="28">
-      <p class="foot-motto">Enough AI slop.</p>
-      <p class="small">We connect your content exactly how you intended it to look.</p>
-    </div>
-    <div><h2 class="foot-h">For students</h2><ul>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/practice-questions/">Practice questions</a></li>
-          <li><a href="../../products/minis/">Minis</a></li>
-          <li><a href="../../products/progress/">Progress</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">For tutors</h2><ul>
-          <li><a href="../../products/course-builder/">Course builder</a></li>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/live-sessions/">Live sessions</a></li>
-          <li><a href="../../products/marking/">Marking</a></li>
-          <li><a data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">Klaro</h2><ul>
-          <li><a href="../../research/">Research</a></li>
-          <li><a href="../../#try">Try it</a></li>
-          <li><a href="../../market/">Browse courses</a></li>
-          <li><a data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
-          <li><a href="../../ar/products/marking/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
-    </ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
-  </div>
-</footer>
 <!-- /chrome:footer -->
 <script src="../../klaro.js"></script>
 <script src="../../site.js"></script>
+<script src="../../showcase.js" defer></script>
 </body>
 </html>
