@@ -49,8 +49,9 @@
   border: 1px solid var(--line); border-radius: var(--r-pill); box-shadow: 0 10px 30px -18px rgb(30 12 60 / .3); }
 
 /* The Products menu (desktop) and, at 1024px and under, the whole-screen menu sheet. One panel:
-   .mega-main (sheet rows) · .mega-products (two columns by audience) · .mega-foot (join code; on
-   the sheet also Sign in and Try it free). site.js sets data-view="main" | "products" on the sheet. */
+   .mega-main (sheet rows) · .mega-products (two columns by audience) · .mega-foot (the join code:
+   on desktop only its field, when the bar's Join code opened the panel; on the sheet also Sign in
+   and Try it free). site.js sets data-view="main" | "products" on the sheet. */
 .mega-wrap { position: absolute; inset-inline: 0; inset-block-start: 100%; display: flex; justify-content: center; padding-inline: var(--gutter); pointer-events: none; }
 .mega { pointer-events: auto; width: min(840px, 100%); margin-block-start: 8px; padding: 12px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-media); box-shadow: var(--shadow-float); }
 .mega-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -74,7 +75,12 @@
 .joinform input:focus { outline: none; }   /* the form shows the focus instead */
 .joinform input::placeholder { color: var(--faint); }
 .joinform .btn { height: 40px; }
-@media (min-width: 1025px) { .mega-main, .mega-back, .mega-sheet-only { display: none; } }
+@media (min-width: 1025px) {
+  .mega-main, .mega-back, .mega-sheet-only { display: none; }
+  /* One join-code entry on desktop: the bar's "Join code" button, which opens this panel with the
+     field showing. The panel's own "Have a join code?" is for the phone sheet only. */
+  .mega-foot > [data-joincode], .mega-foot:has(> .joinform[hidden]) { display: none; }
+}
 @media (max-width: 1024px) {
   .nav, .topbar-wide { display: none; }
   .menu-btn { display: grid; }
@@ -135,11 +141,11 @@
 /* A grey pill: icon + label, hero only. <span class="chip"><svg class="i">…</svg>Marking <span class="chip-for">for tutors</span></span> */
 .chip { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding-inline: 12px 16px; border-radius: var(--r-pill); background: var(--chip); font: 500 14px/1 var(--font); color: var(--ink); white-space: nowrap; }
 .chip .i { width: 18px; height: 18px; color: var(--muted); }
-.chip-for { padding-inline-start: 8px; border-inline-start: 1px solid var(--border-strong); color: var(--muted); }
+.chip-for { padding-inline-start: 8px; border-inline-start: 1px solid var(--border-strong); color: var(--chip-muted); }
 /* The audience switch: "Klaro for… [Tutors] [Students and parents]", links to the two homes; the
    current page is a dark pill (aria-current="page"). */
 .chip-switch { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px; padding: 4px; border-radius: 22px; background: var(--chip); font: 500 14px/1 var(--font); }
-.chip-switch-label { padding-inline: 10px 6px; color: var(--muted); }
+.chip-switch-label { padding-inline: 10px 6px; color: var(--chip-muted); }
 .chip-switch a { display: inline-flex; align-items: center; height: 32px; padding-inline: 14px; border-radius: var(--r-pill); color: var(--ink); text-decoration: none; transition: background-color .15s var(--ease-out); }
 .chip-switch a:hover { background: rgb(23 23 23 / .06); }
 .chip-switch a[aria-current="page"] { background: var(--ink); color: #fff; }
@@ -176,22 +182,21 @@
 
 /* ======================================================================== Illustrations */
 /* A tile holding one illustration (radius 28, the paper colour behind it). --ar sets the shape
-   (1 by default; 4 / 5, 4 / 3, 16 / 10…). data-ph names the file: until the file exists the tile
-   shows that name in a grey box, so pages are never blocked by a missing illustration:
+   (1 by default; 4 / 5, 4 / 3, 16 / 10…). data-ph names the file, so pages are never blocked by a
+   missing illustration: until the file exists the tile is a plain paper-coloured box.
      <figure class="ill" data-ph="img/ill/02-book-passage.webp"><img src="…" alt="…"></figure>  (site.js marks it .is-missing if the file 404s)
-     <div class="ill" data-ph="img/ill/02-book-passage.webp"></div>                             (no file yet: passes tools/site.py --check) */
+     <div class="ill" data-ph="img/ill/02-book-passage.webp"></div>                             (no file yet: passes tools/site.py --check)
+   File names are for us, never for visitors: they show only with ?ph in the address (site.js
+   then adds html.ph-on), on tiles, placeholder boxes and plates alike. */
 .ill { position: relative; display: block; margin: 0; overflow: hidden; aspect-ratio: var(--ar, 1); border-radius: var(--radius-tile); background: var(--paper); }
 .ill > img, .ill > picture > img { width: 100%; height: 100%; object-fit: cover; }
 .ill--contain > img { object-fit: contain; }
 .ill.is-missing > img { visibility: hidden; }
 /* Any placeholder box: <div class="ph" data-ph="what will go here"></div> */
 .ph { position: relative; display: block; aspect-ratio: var(--ar, auto); border-radius: inherit; background: var(--ph); }
-.ph::before, .ill.is-missing::before { content: attr(data-ph); position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; padding: 12px;
+html.ph-on :is(.ph, .ill.is-missing, .ill:not(:has(img, picture, video)))::before { content: attr(data-ph); position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; padding: 12px;
   border: 1px dashed #c9c8c1; border-radius: inherit; background: var(--ph); color: var(--muted); font: 500 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
   text-align: center; overflow-wrap: anywhere; letter-spacing: 0; }
-.ill:not(:has(img, picture, video))::before { content: attr(data-ph); position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; padding: 12px;
-  border: 1px dashed #c9c8c1; border-radius: inherit; background: var(--ph); color: var(--muted); font: 500 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace;
-  text-align: center; overflow-wrap: anywhere; }
 /* Subjects strip: one row of six 4:3 tiles and a one-line caption (three across on phones). */
 .strip-tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
 .strip-tiles > .ill { --ar: 4 / 3; }
@@ -265,6 +270,19 @@
   .split-card > :is(.show, .rec) > :not(.plate), .stack-card .stack-media > :not(.plate, .ill) { padding-inline: 8px; }
 }
 @media (max-width: 640px) { .stack-media > .ill { --ar: 4 / 3; } }
+/* A feature card with no picture of the app (its .stack-media holds only an .ill): the words and
+   one small square illustration beside them, not a wide box that would letterbox a square drawing
+   into a "missing screenshot". The markup is the same; phones put the tile above the words. */
+.stack-card:has(> .stack-media > .ill:only-child) { flex-direction: row; align-items: center; gap: 0; }
+.stack-card:has(> .stack-media > .ill:only-child) > .stack-copy { flex: 1; min-width: 0; }
+.stack-media:has(> .ill:only-child) { flex: 0 0 auto; width: 216px; padding: 16px; }
+.stack-media > .ill:only-child { --ar: 1; }
+.stack-media > .ill:only-child > img { object-fit: cover; }
+@media (max-width: 1024px) { .stack-media:has(> .ill:only-child) { width: 176px; padding: 8px; } }
+@media (max-width: 640px) {
+  .stack-card:has(> .stack-media > .ill:only-child) { flex-direction: column; align-items: stretch; }
+  .stack-media:has(> .ill:only-child) { order: -1; width: 136px; padding: 8px 8px 0; }
+}
 
 /* ======================================================================== Band (one pale band per page) */
 .band { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: center; gap: var(--s-8); padding: var(--s-8); background: var(--band); border-radius: var(--radius-card); }
@@ -325,21 +343,23 @@
 
 /* ======================================================================== Closing call */
 /* A centred H2, one line, buttons; up to eight illustration tiles float round it (four a side,
-   placed by order). Phones: the first four in a row above the words. */
+   placed by order). The upper tiles hang from the top and the lower ones stand on the bottom, each
+   clear of the edge by more than its drift (--depth, px), so none is ever cut by the section's
+   edge, whatever its height. Phones: the first four in a row above the words. */
 .closing { position: relative; padding-block: var(--section); overflow: clip; }
 .closing-copy { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 20px; max-width: 640px; margin-inline: auto; padding-inline: var(--gutter); text-align: center; }
 .closing-copy .lead { margin-inline: auto; }
 .closing-copy .hero-actions { justify-content: center; }
 .closing-tiles { position: absolute; inset: 0; width: min(1440px, 100%); margin: 0 auto; padding: 0; list-style: none; pointer-events: none; }
 .closing-tile { position: absolute; width: var(--w, 140px); --ar: 1; }
-.closing-tile:nth-child(1) { --w: 150px; --depth: 28; inset-inline-start: 3%; inset-block-start: 8%; rotate: -4deg; }
-.closing-tile:nth-child(2) { --w: 118px; --depth: 14; inset-inline-start: 16%; inset-block-start: 32%; rotate: 3deg; }
-.closing-tile:nth-child(3) { --w: 168px; --depth: 36; inset-inline-start: 4%; inset-block-start: 56%; rotate: 2deg; }
-.closing-tile:nth-child(4) { --w: 124px; --depth: 20; inset-inline-start: 18%; inset-block-start: 74%; rotate: -3deg; }
-.closing-tile:nth-child(5) { --w: 140px; --depth: 24; inset-inline-end: 4%; inset-block-start: 6%; rotate: 3deg; }
-.closing-tile:nth-child(6) { --w: 120px; --depth: 34; inset-inline-end: 17%; inset-block-start: 28%; rotate: -2deg; }
-.closing-tile:nth-child(7) { --w: 164px; --depth: 18; inset-inline-end: 3%; inset-block-start: 54%; rotate: -4deg; }
-.closing-tile:nth-child(8) { --w: 126px; --depth: 30; inset-inline-end: 19%; inset-block-start: 76%; rotate: 2deg; }
+.closing-tile:nth-child(1) { --w: 150px; --depth: 28; inset-inline-start: 3%; inset-block-start: calc(2% + 28px); rotate: -4deg; }
+.closing-tile:nth-child(2) { --w: 118px; --depth: 14; inset-inline-start: 16%; inset-block-start: 34%; rotate: 3deg; }
+.closing-tile:nth-child(3) { --w: 168px; --depth: 36; inset-inline-start: 4%; inset-block-end: calc(2% + 40px); rotate: 2deg; }
+.closing-tile:nth-child(4) { --w: 124px; --depth: 20; inset-inline-start: 18%; inset-block-end: calc(2% + 24px); rotate: -3deg; }
+.closing-tile:nth-child(5) { --w: 140px; --depth: 24; inset-inline-end: 4%; inset-block-start: calc(2% + 24px); rotate: 3deg; }
+.closing-tile:nth-child(6) { --w: 120px; --depth: 34; inset-inline-end: 17%; inset-block-start: 31%; rotate: -2deg; }
+.closing-tile:nth-child(7) { --w: 164px; --depth: 18; inset-inline-end: 3%; inset-block-end: calc(2% + 22px); rotate: -4deg; }
+.closing-tile:nth-child(8) { --w: 126px; --depth: 30; inset-inline-end: 19%; inset-block-end: calc(2% + 34px); rotate: 2deg; }
 @media (max-width: 1240px) { .closing-tile:nth-child(even) { display: none; } }
 @media (max-width: 900px) {
   .closing-tiles { position: static; display: flex; justify-content: center; gap: 12px; margin-block-end: 32px; padding-inline: var(--gutter); }
@@ -376,9 +396,9 @@
 
 /* A scene plate: a wide illustration behind a device, the device at the inline end where the
    illustration leaves room (§7.9). The plate is flipped in Arabic so that room stays at the
-   inline end; the device is not. Until the plate exists it is a flat lavender field with its file
-   name (data-ph). --plate-ar sets the shape (16 / 10 by default; --plate-ar-sm under 640px, 4 / 3),
-   --plate-pos the crop, --device-share the device's width.
+   inline end; the device is not. Until the plate exists it is a flat lavender field (its file
+   name, data-ph, shows only with ?ph). --plate-ar sets the shape (16 / 10 by default;
+   --plate-ar-sm under 640px, 4 / 3), --plate-pos the crop, --device-share the device's width.
      <div class="plate" data-ph="img/plates/P4-marking.webp"><img class="plate-img" src="…" alt=""> <div class="device …">…</div></div>
    .plate--center centres the device; .plate--bleed lets it run off the bottom and inline-end edges. */
 .plate { position: relative; isolation: isolate; container-type: size; display: flex; align-items: center; justify-content: flex-end; aspect-ratio: var(--plate-ar, 16 / 10);
@@ -394,7 +414,7 @@
 .plate--bleed { align-items: flex-end; padding-block-end: 0; padding-inline-end: 0; }
 .plate--bleed > .device--browser { width: 92%; margin-block-end: -6%; margin-inline-end: -6%; }
 .plate.is-missing > .plate-img { visibility: hidden; }
-.plate[data-ph].is-missing::before, .plate[data-ph]:not(:has(.plate-img, picture))::before { content: attr(data-ph); position: absolute; z-index: 0; inset-block-start: 14px; inset-inline-start: 14px;
+html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, picture)))::before { content: attr(data-ph); position: absolute; z-index: 0; inset-block-start: 14px; inset-inline-start: 14px;
   max-width: 44%; padding: 6px 10px; border: 1px dashed rgb(46 23 88 / .3); border-radius: 10px; color: rgb(46 23 88 / .72);
   font: 500 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; overflow-wrap: anywhere; }
 @media (max-width: 640px) {
@@ -410,21 +430,25 @@
      <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
        <div class="device device--browser">…the usual bar and screen…</div>
      </div>
-   site.js loads img/plates/<data-plate>.webp and adds .is-drawn once it has: the CSS frame's
-   chrome goes and the screen takes the drawn screen's corners. Until then (file not made yet,
-   missing, no JavaScript) the CSS frame stays, in the same box, so the app is the same size
-   either way and nothing moves when the picture arrives.
    Each plate's box, measured on its picture, is set below as unitless percentages of the
    picture: --sx, --sy (the screen's top left), --sw, --sh (its size), --sr (its corner radius,
    in % of the picture's width), and --pa (the picture's aspect, width / height). The plate keeps
    that aspect at every width; on phones (≤ 640px) it is cropped round the screen instead, so the
    screen is 86% of the plate's width (--frac is the share of the picture shown, --x0 where the
    crop starts), and the box follows the crop. Arabic: the picture mirrors (above) and the box is
-   placed from the inline start, so it mirrors with it. */
-.plate--device { --frac: 1; --x0: 0; display: block; padding: 0; aspect-ratio: calc(var(--pa) * var(--frac)); }
-.plate--device > .plate-img { inset-block: 0; inset-inline: auto; inset-inline-start: calc(-100% * var(--x0) / var(--frac)); width: calc(100% / var(--frac)); object-fit: fill; }
+   placed from the inline start, so it mirrors with it.
+   The opt-in: a plate's picture is used only once its rule below says --drawn: 1 (0 by default).
+   With 1, site.js loads img/plates/<data-plate>.webp and adds .is-drawn once it has: the CSS
+   frame's chrome goes and the screen takes the drawn screen's corners; until then (still loading,
+   file missing, no JavaScript) the CSS frame waits in the same box, so nothing moves when the
+   picture arrives. With 0 (no picture yet, or its box not measured) the page never asks for the
+   file, and the CSS frame sits centred on the plain field (--bx, --by), at the box's size. */
+.plate--device { --frac: 1; --x0: 0; --drawn: 0; display: block; padding: 0; aspect-ratio: calc(var(--pa) * var(--frac));
+  --bx: calc(var(--sx) * var(--drawn) + (100 - var(--sw)) / 2 * (1 - var(--drawn)));
+  --by: calc(var(--sy) * var(--drawn) + (100 - var(--sh)) / 2 * (1 - var(--drawn))); }
+.plate--device > .plate-img { inset-block: 0; inset-inline: auto; inset-inline-start: calc(-100% * var(--x0) / var(--frac)); width: calc(100% / var(--frac)); max-width: none; object-fit: fill; }   /* wider than the plate on phones (the crop): not capped by img { max-width: 100% } */
 .plate--device > .device { position: absolute; display: flex; flex-direction: column; margin: 0;
-  inset-block-start: calc(var(--sy) * 1%); inset-inline-start: calc((var(--sx) / 100 - var(--x0)) / var(--frac) * 100%);
+  inset-block-start: calc(var(--by) * 1%); inset-inline-start: calc((var(--bx) / 100 - var(--x0)) / var(--frac) * 100%);
   width: calc(var(--sw) / var(--frac) * 1%); height: calc(var(--sh) * 1%); }
 .plate--device > .device--browser { box-shadow: var(--shadow-device); }
 .plate--device > .device .device-body { display: flex; flex-direction: column; height: 100%; }
@@ -435,19 +459,22 @@
 .plate--device.is-drawn > .device .device-body::before, .plate--device.is-drawn > .device .device-body::after { display: none; }
 .plate--device.is-drawn > .device .device-screen { border-radius: inherit; background: #1b1722; }
 @media (max-width: 640px) {
-  .plate--device[data-ph]::before { display: none; }   /* no room for the file name beside the device */
-  .plate--device { --frac: min(1, max(var(--sw) / 86, .5 / var(--pa))); --x0: clamp(0, (var(--sx) + var(--sw) / 2) / 100 - var(--frac) / 2, 1 - var(--frac)); }
+  html.ph-on .plate--device[data-ph]::before { display: none; }   /* no room for the file name beside the device */
+  .plate--device { --frac: min(1, max(var(--sw) / 86, .5 / var(--pa))); --x0: clamp(0, (var(--bx) + var(--sw) / 2) / 100 - var(--frac) / 2, 1 - var(--frac)); }
 }
-/* The boxes. TODO(illustrations): placeholders until the illustration agent measures each plate
-   (design/brief/illustrations.md); replace the numbers, keep the names. Laptops are asked for at
-   least 55% of the plate's width; the pictures are 2000 × 833 (12:5); screens are 16:10 (laptop,
-   monitor), 4:3 (tablet) or 9:19.5 (phone), and the camera fills any shape. */
+/* The boxes, measured on each final picture (design/brief/illustrations.md, "Screen boxes"):
+   replace the numbers, keep the names. TODO(illustrations): every box still at the placeholder
+   numbers (--sx: 38; --sy: 6; --sw: 56; --sh: 84) is unmeasured. Once a box is measured and
+   checked at 1440 and 375, add --drawn: 1 to its line: that one change makes the pages load the
+   picture (site.js) and place the app on its screen. Without it a plate never requests its file.
+   The pictures are 2000 × 833 (12:5); screens are 16:10 (laptop, monitor), 4:3 (tablet) or
+   9:19.5 (phone), and the camera fills any shape. */
 .plate[data-plate] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
 .plate[data-plate="P1-evening-desk"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
 /* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). A phone in a
    12:5 picture is small, so P2 uses the picture's 4:3 crop at every width, and is as tall as a
    screen allows. */
-.plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; }
+.plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; --drawn: 1; }
 .plate--device[data-plate="P2-kitchen-tea-phone"] { width: min(100%, 960px); margin-inline: auto; }
 .plate[data-plate="P3-chalkboard"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
 .plate[data-plate="P4-marked-papers"] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
@@ -646,7 +673,7 @@
 .p-top { display: flex; flex-direction: column; gap: 18px; padding-block-start: 28px; }
 .p-chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; height: 36px; padding-inline: 5px 14px; border-radius: var(--r-pill); background: var(--chip); font: 500 14px/1 var(--font); }
 .p-chip .icon-tile { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--card); color: var(--muted); }
-.p-chip .p-for { padding-inline-start: 9px; border-inline-start: 1px solid var(--border-strong); color: var(--muted); }
+.p-chip .p-for { padding-inline-start: 9px; border-inline-start: 1px solid var(--border-strong); color: var(--chip-muted); }
 .p-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: end; gap: 24px 56px; }
 .p-head-side { display: flex; flex-direction: column; gap: 20px; padding-block-end: 6px; }
 .p-draft { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px dashed #f0b58c; border-radius: var(--r-pill); background: #fff0e6; font-size: 12px; font-weight: 600; color: #a5521b; }

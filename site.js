@@ -6,8 +6,9 @@
      3. Carousels (.carousel): arrows, keys, swipe, right to left
      4. Sticky step lists (.steps-sticky): the pinned titles beside the recordings
      5. The opening's scroll fallback (.opening) where CSS scroll-driven animations are missing
-     6. Illustrations and scene plates: a missing file shows its name; a plate's drawn device
-        (img/plates/<data-plate>.webp) is loaded here and takes over from the CSS frame
+     6. Illustrations and scene plates: a plate's drawn device (img/plates/<data-plate>.webp)
+        is loaded here, only once site.css opts it in, and takes over from the CSS frame;
+        ?ph shows the placeholders' file names
      7. Scroll reveal, calm and once
    The showcase (live app frames and recordings) is showcase.js; this file never touches it. */
 (function () {
@@ -317,19 +318,25 @@
   });
 
   /* ---------------------------------------------------------------- 6. Illustrations and scene plates */
-  // A tile or plate whose image is missing (404) shows its data-ph file name instead of a broken image.
+  // ?ph in the address shows each placeholder's file name (data-ph) on tiles and plates, for us
+  // while pictures are being made (site.css, html.ph-on). Visitors never see them.
+  if (/[?&]ph(?:[=&]|$)/.test(location.search)) root.classList.add('ph-on');
+  // A tile or plate whose image is missing (404) keeps its plain field instead of a broken image.
   function missing(img) {
     var box = img.closest('.ill, .plate');
     if (box) box.classList.add('is-missing');
   }
   // A scene plate with a drawn device (.plate--device[data-plate="P4-marked-papers"]) loads its
-  // picture, img/plates/<name>.webp, here, so a page never links a plate that isn't drawn yet
-  // (tools/site.py fails on missing files). Once it has loaded, .is-drawn hides the CSS device
-  // frame and the real app sits on the drawn screen (site.css); until then, if the file is
-  // missing, or without JavaScript, the CSS frame stays in the same box.
+  // picture, img/plates/<name>.webp, here, so the HTML never links a plate that isn't drawn yet
+  // (tools/site.py fails on missing files). Only plates opted in with --drawn: 1 in their site.css
+  // box rule are loaded: the opt-in sits next to the measured box, so a picture dropped into
+  // img/plates/ changes nothing until its box is measured, and no page asks for a missing file.
+  // Once loaded, .is-drawn hides the CSS device frame and the real app sits on the drawn screen;
+  // until then, if the file is missing, or without JavaScript, the CSS frame stays in the same box.
   var ROOT = (document.currentScript && document.currentScript.src || '').replace(/[^/]*$/, '') || '/';
   document.querySelectorAll('.plate--device[data-plate]').forEach(function (plate) {
     if (plate.querySelector('.plate-img')) return;
+    if (getComputedStyle(plate).getPropertyValue('--drawn').trim() !== '1') return;
     var img = document.createElement('img');
     img.className = 'plate-img';
     img.alt = '';
