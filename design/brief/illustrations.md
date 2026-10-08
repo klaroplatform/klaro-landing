@@ -3,16 +3,12 @@
 Written 2026-10-08 by the illustration agent. Read with [redesign.md](redesign.md) §7.9, §8.2 and §8.3
 (the plan this list follows) and [arabic.md](arabic.md) (the register used for the Arabic alt text).
 
-**Status (2026-10-08, evening): all 20 illustrations are done. The seven plates (P1 to P7) are
-still missing.** Both image tools ran out before the plate run:
-- Gemini stopped sending prompts. It sent nothing, with no error message, on both the Pro and Flash
-  models.
-- ChatGPT's free plan hit its image limit ("You're out of images"). It resets at about 19:10
-  tomorrow (2026-10-09).
-
-The plates now follow the owner's new approach: the device is drawn into the scene with a green
-screen. The full spec, device types and measuring script are in
-[Scene plates](#scene-plates-imgplates-missing).
+**Status (2026-10-08, night): all 20 illustrations and all seven plates (P1 to P7) are done.**
+The plates follow the owner's approach: the device is drawn into the scene with a green screen,
+measured, and painted dark. Their boxes are in [Screen boxes](#screen-boxes-fill-in-after-measuring)
+and how they were made is in [Plate run notes](#plate-run-notes-2026-10-08-night). The page
+agents still need to copy the boxes into `site.css` (the `TODO(illustrations)` placeholders) and
+switch the three P2 slots to the phone frame.
 
 ## Style and process
 
@@ -113,14 +109,12 @@ Card titles and lines stay as drafted in §8.3. In Arabic, use the product names
 The tiles reuse the alt text of their parent image. Inside a decorative collage, use `alt=""` if
 a caption next to the tile already says the same thing.
 
-## Scene plates (`img/plates/`): missing
+## Scene plates (`img/plates/`)
 
-**Not made yet.** Gemini wouldn't send any prompt (Pro or Flash, no error shown), and ChatGPT's free
-image limit was used up by 18 to 20 and two draft plates. Those two drafts used the old empty-space
-design and are superseded; they're kept for reference only, in
-`design/image-styles/originals/plates/P1-evening-desk-nodevice-superseded.png` and
-`P2-kitchen-tea-nodevice-superseded.png`. Next try: ChatGPT after its reset (about 19:10 on
-2026-10-09), or Gemini once it sends again.
+All seven made on 2026-10-08 (night) with Gemini on the owner's second account; see the run notes
+below. Two earlier ChatGPT drafts used the old empty-space design and are superseded; they're kept
+for reference only, in `design/image-styles/originals/plates/P1-evening-desk-nodevice-superseded.png`
+and `P2-kitchen-tea-nodevice-superseded.png`.
 
 ### The approach (owner's decision, 2026-10-08)
 
@@ -176,13 +170,72 @@ its corner radius as a percentage of the picture's width. `plate.py` prints `box
 
 | Plate | File | Size | Device | Box (px) | `--pa --sx --sy --sw --sh --sr` |
 |---|---|---|---|---|---|
-| P1 | `P1-evening-desk.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | not made yet | — |
-| P2 | `P2-kitchen-tea.webp` / `-phone.webp` | 2000×833 / 1200×900 | phone | not made yet | — |
-| P3 | `P3-chalkboard.webp` / `-phone.webp` | 2000×833 / 1200×900 | monitor | not made yet | — |
-| P4 | `P4-marked-papers.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | not made yet | — |
-| P5 | `P5-dusk-window.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop | not made yet | — |
-| P6 | `P6-library.webp` / `-phone.webp` | 2000×833 / 1200×900 | monitor | not made yet | — |
-| P7 | `P7-sofa-corner.webp` / `-phone.webp` | 2000×833 / 1200×900 | tablet | not made yet | — |
+| P1 | `P1-evening-desk.webp` / `-phone.webp` | 2000×832 / 1200×900 | laptop (screen 1.44:1, square corners) | 420, 13, 1160×807 / 136, 127, 929×646 | `--pa: 2.4038; --sx: 21; --sy: 1.56; --sw: 58; --sh: 97; --sr: 0` / phone `--pa: 1.3333; --sx: 11.33; --sy: 14.11; --sw: 77.42; --sh: 71.78; --sr: 0` |
+| P2 | `P2-kitchen-tea.webp` / `-phone.webp` | 2000×833 / 1200×900 | phone (screen 0.451:1, radius 29px in the phone file) | desktop: screen cut by the 12:5 crop, don't use / 444, 103, 313×690 | phone (the one the pages use, `P2-kitchen-tea-phone`): `--pa: 1.3333; --sx: 37; --sy: 11.44; --sw: 26.08; --sh: 76.67; --sr: 2.42` |
+| P3 | `P3-chalkboard.webp` / `-phone.webp` | 2000×834 / 1200×900 | monitor (screen 1.573:1, square corners) | 420, 47, 1162×740 / 135, 147, 931×593 | `--pa: 2.3981; --sx: 21; --sy: 5.64; --sw: 58.1; --sh: 88.73; --sr: 0` / phone `--pa: 1.3333; --sx: 11.25; --sy: 16.33; --sw: 77.58; --sh: 65.89; --sr: 0` |
+| P4 | `P4-marked-papers.webp` / `-phone.webp` | 2000×833 / 1200×900 | laptop (screen 1.558:1, square corners) | 401, 31, 1200×771 / 120, 142, 960×617 | `--pa: 2.401; --sx: 20.05; --sy: 3.72; --sw: 60; --sh: 92.56; --sr: 0` / phone `--pa: 1.3333; --sx: 10; --sy: 15.78; --sw: 80; --sh: 68.56; --sr: 0` |
+| P5 | `P5-dusk-window.webp` / `-phone.webp` | 2000×834 / 1200×900 | laptop (screen 1.433:1, radius about 5px) | 430, 18, 1141×796 / 144, 155, 912×636 | `--pa: 2.3981; --sx: 21.5; --sy: 2.16; --sw: 57.05; --sh: 95.44; --sr: 0.25` / phone `--pa: 1.3333; --sx: 12; --sy: 17.22; --sw: 76; --sh: 70.67; --sr: 0.33` |
+| P6 | `P6-library.webp` / `-phone.webp` | 2000×834 / 1200×900 | monitor (screen 1.553:1, square corners) | 420, 44, 1161×748 / 136, 151, 930×599 | `--pa: 2.3981; --sx: 21; --sy: 5.28; --sw: 58.05; --sh: 89.69; --sr: 0` / phone `--pa: 1.3333; --sx: 11.33; --sy: 16.78; --sw: 77.5; --sh: 66.56; --sr: 0` |
+| P7 | `P7-sofa-corner.webp` / `-phone.webp` | 2000×834 / 1200×900 | tablet (screen 1.317:1, radius about 12px) | 471, 14, 1061×805 / 175, 128, 849×645 | `--pa: 2.3981; --sx: 23.55; --sy: 1.68; --sw: 53.05; --sh: 96.52; --sr: 0.6` / phone `--pa: 1.3333; --sx: 14.58; --sy: 14.22; --sw: 70.75; --sh: 71.67; --sr: 0.83` |
+
+### Plate run notes (2026-10-08, night)
+
+- **Tool:** Gemini Images on the owner's second Google account, 16:9 chosen in the aspect menu,
+  a fresh chat per plate (in one chat, follow-ups come back as edits of the last image). "Pro" and
+  "Flash" both used; Pro sometimes falls back to Flash on its own, and once answered "I am currently
+  unable to generate images" (Flash still worked). Output is 1376×768 JPEG. No style references were attached: uploading needs Gemini's "Creating content
+  from images and files" agreement, which wasn't accepted, so the prompt relies on the written recipe.
+- **Saving:** the full-size image was shown 1:1 on screen and captured losslessly (PNG). The capture
+  is kept as `<slug>-uncropped.png`.
+- **Screens came out smaller than asked** (41 to 57% of the width; Gemini draws about 0.75 of the
+  size it is told, so asking for "about 70% of the width and 70% of the height" works best). To
+  reach the >56% rule, the capture is cropped to a 16:9 window around the screen:
+  `python3 -I design/image-styles/originals/plates/precrop.py <slug>-uncropped.png <slug>.png <pct>`
+  (window width = screen width / pct, centred on the screen, lossless). That window is
+  `<slug>.png`, the file `plate.py` runs on. The cost is resolution: the 2000-wide plate is
+  upscaled from 1100 to 1310px.
+- **Screen shape:** 16:10 is 1.6:1; the screens came out between 1.44:1 (P1) and 1.57:1. A 16:10
+  recording in a narrower box is letterboxed or slightly cropped. A screen of aspect `a` can't be
+  wider than `a × 41.7%` of a 12:5 plate and still fit its height (60% at 1.44:1).
+- **`plate.py` changes:** (1) the box test takes `g > 150` (was 200), because Flash once drew the
+  screen a flat `#03C324`-ish green instead of `#00FF00` (P4); (2) the paint test for the
+  anti-aliased rim is looser (`g > r+15 and g > b-30`, only inside the box + 4px; safe for this
+  palette), which removed a faint green line round the screen; (3) the radius is taken from the
+  four corners (minimum), because a screen tilted by a fraction of a degree made the old one-row
+  estimate read 105px for a square corner. All plates were re-run with the final script, so
+  re-running it on `<slug>.png` gives the boxes in the table.
+- **P1:** take 3 of 3 (Pro gave 41%, the two Flash retakes 47%). Square screen corners, so `--sr: 0`.
+  The desktop crop is tight: the screen is 97% of the plate's height, the lamp and mug sit at the
+  right, the papers at the left.
+- **P2:** take 3 of 3, no pre-crop. Take 1 drifted (a busy kitchen with green plants and wood);
+  take 2 (a prompt asking for a plain off-white ground and "no brown, no wood, no orange, no green
+  paper") matched the set but drew an old phone with a chin (screen 0.52:1, 62% of the height);
+  take 3 was an edit of take 2 asking for an edge-to-edge phone. The screen is 76% of the picture's
+  height and 0.451:1 (9:19.5 is 0.462). The phone is too tall for the 12:5 desktop crop (it cuts
+  1% off the screen's top and bottom), so `P2-kitchen-tea.webp` exists but only the 4:3
+  `-phone.webp` should be used, as the pages already do.
+- **P3:** take 2 of 2. Take 1 (screen asked at 60%) came out at 47%. Take 2 asked for "about 70%
+  of the width and 70% of the height" and got 55% at 1.573:1, near 16:10; pre-cropped to 58%,
+  which keeps the clock (tick marks only) whole at the right. Chalkboard blank, square corners.
+- **P4:** take 2 of 2, Flash (Pro refused). Take 1: 45%, 1.40:1. Take 2 asked for the lid to nearly
+  reach the top and the screen "1.6 times as wide as tall, 72% of the width" and got 57% at
+  1.558:1, but in a flat `#03C324` green instead of `#00FF00` (flat and clean, so it measures and
+  paints the same). Pre-cropped to 60%. Answer papers with abstract scribbles at the left, a purple
+  marker with its gold cap off on a lavender sheet of gold ticks at the right.
+- **P5:** take 1, Flash, same size wording as P4 take 2: 55% at 1.433:1, pre-cropped to 57%. Window
+  at dusk behind the laptop: crescent moon, low skyline with gold lit windows, a minaret with a small
+  dome (right). The 12:5 crop keeps only the bottom of the moon; the 4:3 crop keeps the whole scene.
+- **P6:** take 1, Flash: 52% at 1.553:1, pre-cropped to 58%. Monitor on a pale desk in front of
+  full shelves of plain spines (purple, lavender, gold bands, no lettering) and a gold-shaded reading
+  lamp at the right, partly cut off. Busier than the illustration set (the shelves fill the
+  background) but the same papers and palette.
+- **P7:** take 3 of 3, Flash, pre-cropped to 53%. **A 4:3 screen can't pass 56% of a 12:5 plate:**
+  its height would overflow the plate (the ceiling is 41.7% × 1.317 = 55%), so 53% is the most
+  that fits with a thin margin. Take 1 (45%) had the open book lying over the screen's bottom-left
+  corner and the tablet off-centre; take 2 was clean and centred but small (36%); take 3 was an
+  edit of take 2 ("zoom in"): the tablet grew to 38%, still centred, nothing over the screen. So
+  this plate is upscaled the most (from 986px to 2000). Tablet in front of a deep-purple cushion
+  on a lavender sofa, open book at the left, sofa arm at the right.
 
 ### Prompt (one per plate; for ChatGPT, attach 01, 09 and 14 as style references)
 
@@ -202,10 +255,10 @@ Requires only `python3` and ffmpeg (no PIL). Run it as
 `python3 -I design/image-styles/originals/plates/plate.py <green.png> img/plates/<slug>.webp auto img/plates/<slug>-phone.webp`.
 
 1. It decodes the image through ffmpeg.
-2. It finds the rows and columns that are mostly `#00FF00` (g > 200, r and b < 90), which skips
+2. It finds the rows and columns that are mostly green (g > 150, r and b < 90), which skips
    anti-aliased edges.
-3. It estimates the corner radius from the top row of the box.
-4. It paints every greenish pixel in the box (plus 4px) `#1b1722`.
+3. It estimates the corner radius from the four corners of the box (the smallest).
+4. It paints every greenish pixel in the box (plus 4px) `#1b1722` (g > r + 15 and g > b − 30).
 5. It crops 12:5 centred on the screen, scales to 2000 wide and encodes WebP at quality 82. The
    4:3 phone crop is also centred on the screen, at 1200×900.
 6. It prints both boxes in px and %.

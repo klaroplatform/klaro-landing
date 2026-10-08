@@ -16,7 +16,10 @@ def decode(path):
     return w, h, bytearray(raw)
 
 def is_green(r, g, b, strict=True):
-    return (g > 200 and r < 90 and b < 90) if strict else (g > r + 50 and g > b + 50)
+    # loose test (used only inside the box + 4px) catches the anti-aliased rim, including green mixed
+    # with the bezel; safe for this palette (purple, lavender and gold have g < r,
+    # the off-white paper has r = g = b)
+    return (g > 150 and r < 90 and b < 90) if strict else (g > r + 15 and g > b - 30)
 
 def measure(w, h, px):
     rows = [0] * h; cols = [0] * w
@@ -33,11 +36,30 @@ def measure(w, h, px):
     ys = [y for y in range(h) if rows[y] > 0.5 * rmax]
     xs = [x for x in range(w) if cols[x] > 0.5 * cmax]
     x0, x1, y0, y1 = xs[0], xs[-1], ys[0], ys[-1]
-    # corner radius: how far in from the left the green starts on the top row of the box
-    o = y0 * w * 3
-    r = 0
-    while r < (x1 - x0) // 2 and not is_green(*px[o + (x0 + r) * 3: o + (x0 + r) * 3 + 3]):
-        r += 1
+    # corner radius: at each corner, count the rows (from the box edge inwards) whose green starts
+    # more than 1px in from the box side. A slight tilt adds rows at two corners, so take the minimum.
+    def inset(y, side):
+        o = y * w * 3
+        k = 0
+        while k < (x1 - x0) // 2:
+            x = x0 + k if side == 'l' else x1 - k
+            if is_green(*px[o + x * 3: o + x * 3 + 3]):
+                return k
+            k += 1
+        return k
+    lim = (y1 - y0) // 4
+    corners = []
+    for ys_, side in ((range(y0, y0 + lim), 'l'), (range(y0, y0 + lim), 'r'),
+                      (range(y1, y1 - lim, -1), 'l'), (range(y1, y1 - lim, -1), 'r')):
+        n = 0
+        for y in ys_:
+            if inset(y, side) <= 1:
+                break
+            n += 1
+        corners.append(n)
+    n = min(corners)
+    # a circular corner of radius r keeps its inset above 1px for about r - sqrt(2r) rows
+    r = round(n + 1 + (2 * n) ** 0.5) if n else 0
     return x0, y0, x1 - x0 + 1, y1 - y0 + 1, r
 
 def paint(w, h, px, box, pad=4, colour=(0x1b, 0x17, 0x22)):
