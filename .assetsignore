@@ -7,3 +7,4 @@ wrangler.jsonc
 _config.yml
 README.md
 design
+worker.js

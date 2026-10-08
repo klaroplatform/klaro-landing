@@ -3,3 +3,4 @@ exclude:
   - README.md
   - design
   - wrangler.jsonc
+  - worker.js

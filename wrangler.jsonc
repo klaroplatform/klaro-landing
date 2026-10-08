@@ -1,11 +1,15 @@
 {
-  // The landing site is plain static files, served by Cloudflare. No build step and no Worker code.
+  // The landing site is plain static files, served by Cloudflare, with no build step. The one bit
+  // of Worker code (worker.js) runs only for the videos, to answer Range requests.
   // Deploy: npx wrangler deploy (from this folder). .assetsignore keeps the notes and designs out.
   "$schema": "https://unpkg.com/wrangler/config-schema.json",
   "name": "klaro-landing",
   "compatibility_date": "2026-09-11",
+  "main": "worker.js",
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/demo/*", "/media/*"]
   },
   // Cloudflare creates the DNS records and certificates for these. learnklaro.com lives in the
   // owner's second account for now, so deploy with CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca.
