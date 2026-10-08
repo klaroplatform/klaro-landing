@@ -31,10 +31,10 @@
     "ar": "family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700"
   },
   "srcset": {
-    "_about": "When on, tools/site.py gives every <img> of a full-size illustration (img/ill/NN-name.webp, 1200px) a srcset of its -480 and -800 versions and these sizes ('auto' lets Chrome use the drawn size of a lazy image; other browsers take the rest). Off until the page branches are merged, so it doesn't collide with their edits: then set on to true and run the tool.",
+    "_about": "When on, tools/site.py gives every <img> of a full-size illustration (img/ill/NN-name.webp, 1200px) a srcset of its -480 and -800 versions and these sizes; a lazy image's sizes start with 'auto', so Chrome uses its drawn size (never on an eager image: Chrome then takes the full width). Off until the page branches are merged, so it doesn't collide with their edits: then set on to true and run the tool.",
     "on": false,
     "widths": [480, 800],
-    "sizes": "auto, (max-width: 640px) 45vw, 360px"
+    "sizes": "(max-width: 640px) 60vw, 400px"
   },
   "logo": {
     "_todo": "A square 512x512 PNG of the K mark is wanted (img/klaro-logo-512.png). Until then, the touch icon.",

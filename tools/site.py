@@ -394,13 +394,15 @@ def fill_srcset(html):
         width = re.search(r'\swidth="(\d+)"', tag)
         if not width or re.search(r'-\d+$', name):
             return tag
-        sizes = [w for w in conf['widths'] if w < int(width.group(1))
-                 and os.path.exists(os.path.join(ROOT, 'img', 'ill', f'{name}-{w}.webp'))]
-        if not sizes:
+        widths = [w for w in conf['widths'] if w < int(width.group(1))
+                  and os.path.exists(os.path.join(ROOT, 'img', 'ill', f'{name}-{w}.webp'))]
+        if not widths:
             return tag
-        srcset = ', '.join([f'{prefix}{name}-{w}.webp {w}w' for w in sizes] + [f'{prefix}{name}.webp {width.group(1)}w'])
+        srcset = ', '.join([f'{prefix}{name}-{w}.webp {w}w' for w in widths] + [f'{prefix}{name}.webp {width.group(1)}w'])
         tag = re.sub(r'\s(?:srcset|sizes)="[^"]*"', '', tag)
-        return tag[:-1].rstrip('/').rstrip() + f' srcset="{srcset}" sizes="{conf["sizes"]}">'
+        # 'auto' (the drawn size) only on a lazy image: on an eager one Chrome takes 100vw.
+        sizes = ('auto, ' if re.search(r'\sloading="lazy"', tag) else '') + conf['sizes']
+        return tag[:-1].rstrip('/').rstrip() + f' srcset="{srcset}" sizes="{sizes}">'
     return ILL_IMG.sub(fix, html)
 
 
