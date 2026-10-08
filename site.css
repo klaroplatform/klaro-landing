@@ -1021,8 +1021,9 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
   .pr-compare > div + div { border-inline-start: 0; border-block-start: 1px solid var(--line); }
 }
 
-/* The closing call on the deep field: the motto, one line for this product, the button, two
-   related pages. On product pages it replaces the separate panel, carousel and floating tiles. */
+/* The closing call on the deep field: this product's line and the motto (the motto leads where it
+   is the product itself: Course builder, Study view), the button, two related pages. On product
+   pages it replaces the separate panel, carousel and floating tiles. */
 .pr-close .h2 { max-width: 18ch; }
 .pr-close .hero-actions { justify-content: center; margin-block-start: 8px; }
 .pr-close-note { font-size: 15px; font-weight: 500; color: var(--on-deep); }
