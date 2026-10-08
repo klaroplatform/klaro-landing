@@ -913,7 +913,7 @@ ARABIC = re.compile(r'[\u0600-\u06ff]')
 LATIN = re.compile(r'[A-Za-z]')
 EASTERN_DIGITS = re.compile(r'[\u0660-\u0669\u06f0-\u06f9]')
 HARAKAT = re.compile(r'[\u064b-\u0652\u0640]')
-AI_WORDS = re.compile(r'(?<![A-Za-z])AI(?![A-Za-z])|(?i:artificial intelligence)|ذكاء\s*(?:ال)?اصطناعي')
+AI_WORDS = re.compile(r'(?<![A-Za-z])AI(?![A-Za-z])|(?i:artificial intelligence|chatbot|\bassistant\b|\bGPT\b)|ذكاء\s*(?:ال)?اصطناعي')
 TEXT_ATTRS = ('alt', 'aria-label', 'title', 'placeholder')
 
 
