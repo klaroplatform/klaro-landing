@@ -32,13 +32,17 @@ The plan:
 
 | Setting | Value |
 |---|---|
-| Live deployment | Version **`6fd94dd8-23d8-4d96-9a50-6d1a1a068155`** at 100%, uploaded by hand with `wrangler deploy` on 2026-10-03. This is the **old one-page site**, and the version to roll back to if go-live goes wrong |
-| Preview versions | **`20285892-94de-47af-9713-38a657d18c28`**: the new site at `d8c89e7` (English and Arabic), alias `new-site`, uploaded 2026-10-08, **not deployed** (§3). Earlier preview uploads, superseded: `bbb297dd-…` (`688c24b`) and `04b3477e-…` (`4c8bfa9`) |
+| Live deployment | Version **`e5660ed5-6e6b-4bba-957c-99bb5178c205`** at 100%: **Omar's landing** from `main`, deployed by hand on 2026-10-08 at 12:28 UTC (a first try, `6820e291-…`, went out at 12:26). Before that: `6fd94dd8-23d8-4d96-9a50-6d1a1a068155`, the old one-page site, deployed 2026-10-03. `e5660ed5` is the version to roll back to if the redesign's go-live goes wrong |
+| Preview versions | **`bd595b7b-5e0a-44cd-a838-97c18060cc3c`**: the `redesign` branch at `f90ab83` with the showcase headers (§2.3), alias `new-site`, uploaded 2026-10-08, **not deployed** (§3). Superseded preview uploads: `20285892-…` (`new-site` `d8c89e7`, English and Arabic), `bbb297dd-…`, `04b3477e-…`. Three range tests, never aliased or deployed: `958b0aaa-…`, `1e5a2451-…`, `d94c8408-…` (§3.1) |
 | Custom domains | `learnklaro.com` and `www.learnklaro.com`, both → `klaro-landing` (production) |
 | workers.dev route | Off |
-| Version URLs (`preview_urls`) | Were **off**. Turned **on** on 2026-10-08, for this Worker only, with the owner's go-ahead. Done with one API call (`POST …/workers/scripts/klaro-landing/subdomain` with `{"enabled": false, "previews_enabled": true}`), which touches nothing else. learnklaro.com was checked before and after: still the old site. `preview_urls: true` in `wrangler.jsonc` keeps it on at every deploy |
+| Version URLs (`preview_urls`) | Were **off**. Turned **on** on 2026-10-08, for this Worker only, with the owner's go-ahead. Done with one API call (`POST …/workers/scripts/klaro-landing/subdomain` with `{"enabled": false, "previews_enabled": true}`), which touches nothing else. learnklaro.com was checked before and after. **Omar's deploy from `main` at 12:26 UTC switched them off again**: `main`'s old `wrangler.jsonc` has no `preview_urls`, and Wrangler then sets Version URLs to match workers.dev (off). Switched back on the same way before the redesign preview. Every deploy from a config without `preview_urls: true` turns them off; ours has it |
 
 ### 1.3 What each address serves (curl, 2026-10-08)
+
+Until 12:26 UTC on 2026-10-08 (the table below). Since then learnklaro.com serves **Omar's landing**
+(title "Klaro · Spend your time teaching") from `e5660ed5`, with `main`'s minimal config: still no
+https or www redirect, no `_headers`, and `/ar/` is the old Arabic one-pager.
 
 | URL | Answer | Notes |
 |---|---|---|
@@ -95,17 +99,26 @@ Cloudflare reads this file; it is never served. GitHub Pages ignores it.
 
 | URL pattern | Headers | Why |
 |---|---|---|
-| `/*` | `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: SAMEORIGIN`, `Permissions-Policy` turning off camera, microphone, geolocation, payment, USB, motion sensors and Topics | Basic hardening. No page uses any of these features or embeds the site in a frame |
-| `https://:version.:subdomain.workers.dev/*` | `X-Robots-Tag: noindex` | Keeps Version URLs and any workers.dev copy out of search. Cloudflare's documented pattern; `_headers` can match on host |
-| `/*.css`, `/*.js` | `Cache-Control: public, max-age=300, must-revalidate` | Not fingerprinted, so 5 minutes only |
+| `/*` | `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: SAMEORIGIN`, `Permissions-Policy` turning off camera, microphone, geolocation, payment, USB, motion sensors and Topics | Basic hardening. `SAMEORIGIN` lets our own pages frame the showcase and nobody else; the showcase uses none of the blocked features (`showcase.md` §7.3) |
+| `https://:version.:subdomain.workers.dev/*` | `X-Robots-Tag: noindex` | Keeps Version URLs and any workers.dev copy out of search. Cloudflare's documented pattern; `_headers` can match on host. Cloudflare also adds `noindex` to Version URLs by itself (seen on versions with no `_headers`), so this is a second layer |
+| The landing's own CSS and JS **by name**: `/klaro.css`, `/site.css`, `/klaro.js`, `/site.js`, `/showcase.js`, `/market/market.css`, `/market/market.js`, `/v1/klaro.css` | `Cache-Control: public, max-age=300, must-revalidate` | Not fingerprinted, so 5 minutes only. Listed by name since the redesign: `/*.css` and `/*.js` would also match the showcase's hashed files, and two `Cache-Control` values get joined. An unlisted CSS/JS file gets the HTML default, which is safe |
+| `/showcase/*` | `X-Robots-Tag: noindex` | The showcase (the real app on sample data) is not for search; `showcase.html` also has a noindex meta |
+| `/showcase/assets/*` | `public, max-age=31536000, immutable` | Every file name carries a hash |
+| `/demo/*` | `X-Robots-Tag: noindex`; `public, max-age=86400, stale-while-revalidate=86400` (a day) | The sample world's lectures and book, asked for at root paths by the showcase |
+| `/media/*` | a day, as `/demo/*` | The landing's recordings, posters, caption cues. Rename to change |
+| `/brand/*`, `/illustrations/*` | a week, as `/img/*` | The app's logo and illustrations, at the root because the showcase asks for them there |
+| `/v1/*` | `X-Robots-Tag: noindex` | The frozen previous landing (`v1/index.html` also has a noindex meta) |
 | `/img/*` | `public, max-age=604800, stale-while-revalidate=86400` (a week) | To change an image, give it a new file name |
 | `/fonts/*` | one year, `immutable` | Only if fonts are ever self-hosted (today they come from Google Fonts) |
 | favicons | one day | |
 | HTML, robots.txt, sitemap.xml, llms.txt | No `Cache-Control` set: Cloudflare's default `public, max-age=0, must-revalidate` plus an ETag | A deploy shows at once |
 | `/robots.txt`, `/llms.txt` | `Content-Type: text/plain; charset=utf-8` | Cloudflare sends `.txt` as plain `text/plain` with no charset (seen on the preview); llms.txt may carry Arabic. HTML pages declare UTF-8 in `<meta charset>`. Confirmed on the `20285892` preview |
 
-- **No Content-Security-Policy.** The pages use inline styles, inline JSON-LD and Google Fonts; a CSP
-  needs its own careful pass.
+- **No Content-Security-Policy.** The pages use inline styles, inline JSON-LD and Google Fonts, and the
+  showcase needs frame, media, worker and connect sources (`showcase.md` §7.3); a CSP needs its own
+  careful pass.
+- **Reserved root names** since the redesign: `/showcase/`, `/demo/`, `/media/`, `/brand/` and
+  `/illustrations/` (the showcase asks for its files at those root paths).
 - **No HSTS yet.** It is switched on later in the dashboard (§5, step 8).
 - **Careful when editing:** if two blocks match one URL and set the same header, Cloudflare joins
   the values with a comma. Never set `Cache-Control` in two blocks that can match one URL.
@@ -130,53 +143,75 @@ Checked on a clean snapshot of `new-site` (`68b0a8c`), using `wrangler deploy --
 
 ## 3. The preview URL
 
-### 3.1 The preview (2026-10-08)
+### 3.1 The preview (2026-10-08): the redesign
 
 **https://new-site-klaro-landing.learnklaro.workers.dev**
 
 - It is the `new-site` alias, and always shows the latest upload made with `--preview-alias new-site`.
-- This exact version is also at https://20285892-klaro-landing.learnklaro.workers.dev.
-- It was uploaded from a clean snapshot of `new-site` at `d8c89e7`, which has the full Arabic site:
-  version `20285892-94de-47af-9713-38a657d18c28`, **not deployed**.
-- learnklaro.com still serves `6fd94dd8`, the old site (checked after the upload).
+- This exact version is also at https://bd595b7b-klaro-landing.learnklaro.workers.dev.
+- It was uploaded from a clean snapshot of the **`redesign`** branch at `f90ab83`, plus the new
+  `_headers` (§2.3, not committed when uploaded): version `bd595b7b-5e0a-44cd-a838-97c18060cc3c`,
+  **not deployed**.
+- It holds 357 files. The largest is `demo/lectures/lecture-bio-01.mp4`, at 8.92 MB, under the
+  25 MiB limit per file.
+- learnklaro.com still serves `e5660ed5` (Omar's landing), checked after the upload.
 
 Checked with curl:
 
 | Check | Result |
 |---|---|
-| English: `/`, `/products/`, `/products/minis/`, `/research/`, `/market/` | 200 |
-| Arabic: `/ar/`, `/ar/products/`, all 7 `/ar/products/<name>/` pages, `/ar/research/` | 200; Arabic titles; `<html lang="ar" dir="rtl">` |
-| `/ar/products/minis` (no slash) | 307 → `/ar/products/minis/` |
-| `/does-not-exist` | **404 with the English 404 page** ("Page not found · Klaro") |
-| `/ar/nope/`, `/ar/products/nope/` | **404 with the Arabic 404 page** ("الصفحة غير موجودة · Klaro"): Cloudflare serves the nearest `404.html`, which is `ar/404.html` |
-| `/robots.txt`, `/llms.txt` | 200, `text/plain; charset=utf-8` (llms.txt now carries non-ASCII text) |
-| `/sitemap.xml` | 200, `application/xml` |
-| `/design/`, `/tools/`, `/partials/`, `/README.md`, `/CLAUDE.md` (and, on the earlier preview, `_config.yml`, `wrangler.jsonc`, `_headers`, `.assetsignore`, `.git/config`) | 404 |
-| `x-robots-tag` on the alias and version URLs | `noindex` (the `_headers` host rule works) |
-| `x-robots-tag` on learnklaro.com | none (the real site stays indexable) |
-| Security headers, cache rules | As in §2.3: CSS 5 minutes, images a week, HTML `max-age=0` |
+| `/`, `/students/`, `/products/`, `/products/marking/`, `/products/quizzes/`, `/research/`, `/try/`, `/market/`, `/v1/` | 200 |
+| `/showcase/showcase.html?scene=study&lang=en` | 307 → `/showcase/showcase?scene=study&lang=en`: **the query is kept**, then 200. It costs one round trip before the frame starts; `showcase.md` §1.1 suggests `showcase/index.html` and `/showcase/?scene=…` to avoid it |
+| `/showcase/assets/*.js` (and the `.css`, and the pdf.js `.mjs`) | `cache-control: public, max-age=31536000, immutable`, `text/javascript` |
+| `/site.css`, `/showcase.js` | `public, max-age=300, must-revalidate`: one value each, no joined header |
+| `/media/*.mp4`, `/demo/*` | `public, max-age=86400, stale-while-revalidate=86400`; `/demo/*` also `x-robots-tag: noindex` |
+| `/v1/` | 200, `x-robots-tag: noindex` |
+| `/does-not-exist` | 404 with the 404 page |
+| `/ar/` | 404 (Arabic is out for now) |
+| `/design/`, `/tools/`, `/partials/`, `/README.md`, `/CLAUDE.md` | 404 |
+| `x-robots-tag` on the preview host | `noindex` on every path |
+| **Range request** on `/media/marking.mp4` | **200 with the whole file on the preview, not 206.** See below |
+
+**Byte ranges.** On Version URLs, Range requests get the whole file (200) unless the version is the
+one deployed to production. Tests on 2026-10-08:
+
+| Version | `_headers` | Deployed? | `curl -r 1000-1999 …/media/marking.mp4` |
+|---|---|---|---|
+| `e5660ed5` (Omar, live) | none | yes | **206**, `accept-ranges: bytes` |
+| `6820e291` (Omar, deployed for two minutes, then replaced) | none | no | 200, whole file |
+| `1e5a2451` (redesign, test) | none | no | 200, whole file |
+| `d94c8408` (redesign, test) | one rule, not matching `/media/` | no | 200, whole file |
+| `958b0aaa` (redesign, test) | ours, without the `/media` and `/demo` cache rules | no | 200, whole file |
+| `bd595b7b` (redesign, the preview) | ours | no | 200, whole file |
+| learnklaro.com (= `e5660ed5`) | none | yes | **206** |
+
+- So the 200 comes from previewing a version that isn't deployed. It isn't caused by `_headers` or the
+  cache rules. Browsers still play a video sent whole, but seeking waits for the download, and Safari
+  is strict about ranges.
+- **After go-live, check:**
+  `curl -s -o /dev/null -r 0-1023 -w '%{http_code}\n' https://learnklaro.com/media/marking.mp4`
+  should print `206`. Then play the hero and a recording on a real iPhone (`showcase.md` §7.2).
+- If it prints 200, the first thing to try is removing the `Cache-Control` lines of `/media/*` and
+  `/demo/*`. That can only be tested on the deployed version.
 
 Notes:
 
-- **Wait about a minute after an upload before checking the alias.** Right after this upload, for a
-  few seconds the alias answered some URLs from the previous version: old `/ar/`, and 404s for the
-  new Arabic pages. The version URL was right at once, and the alias caught up within a minute.
-  The version URL (`<8 chars>-klaro-landing…`) is the one to check first.
-- A brand-new workers.dev subdomain takes a minute or two to resolve. On the first upload the
-  preview didn't answer at all for the first couple of minutes.
+- **Wait about a minute after an upload before checking the alias.** For a few seconds after an
+  upload the alias can answer some URLs from the previous version. The version URL
+  (`<8 chars>-klaro-landing…`) is right at once, so check it first.
+- A brand-new workers.dev subdomain takes a minute or two to resolve.
 - `/404.html` itself redirects to `/404`; unknown URLs get the page with status 404, which is what
   matters.
-- Navigation links are relative (`products/…`, `../../research/`, `/products/…` on the 404 page), so
-  clicking around the preview stays on the preview.
-- The canonical, `og:url`, hreflang, sitemap and robots.txt URLs point at `https://learnklaro.com/…`,
-  as they should. Until go-live, those addresses still serve the old site.
+- Navigation links are relative, so clicking around the preview stays on the preview. The
+  canonical, `og:url`, hreflang, sitemap and robots.txt URLs point at `https://learnklaro.com/…`, as
+  they should.
 
 ### 3.2 How to upload a preview
 
 This uploads a version but doesn't deploy it, so learnklaro.com keeps what it serves.
 
 1. Make a clean snapshot, because other agents may be editing the working tree:
-   `git worktree add <scratch>/cf-preview new-site --detach`.
+   `git worktree add <scratch>/cf-preview <branch or commit> --detach`.
 2. In that folder, run:
    ```sh
    CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler versions upload --profile learnklaro --preview-alias new-site --message "new-site preview"
@@ -369,8 +404,9 @@ seconds.
   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deployments list   # find the good version id
   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler rollback <version-id> -m "why"
   ```
-  With no id, `wrangler rollback` goes back to the previous version. To go back to the old one-page
-  site after the first go-live, roll back to `6fd94dd8-23d8-4d96-9a50-6d1a1a068155`.
+  With no id, `wrangler rollback` goes back to the previous version. If the redesign's go-live goes
+  wrong, roll back to `e5660ed5-6e6b-4bba-957c-99bb5178c205` (Omar's landing, live since 2026-10-08).
+  The old one-page site is `6fd94dd8-23d8-4d96-9a50-6d1a1a068155`.
 - **Then fix `main`.** With Builds connected, the next push to `main` deploys whatever `main` holds.
   Revert the bad commit (`git revert <sha>`, push) so the rollback doesn't get undone.
 - **What a rollback covers:**

@@ -7,8 +7,10 @@
 # never set the same header (Cache-Control above all) in two blocks that can match one URL.
 # At most 100 blocks. Check after a change: curl -sI <preview URL>/<path>
 
-# Security headers on every response. No Content-Security-Policy: the pages use inline styles,
-# inline JSON-LD and Google Fonts, and a CSP would need care to not break them.
+# Security headers on every response. SAMEORIGIN lets our own pages frame the showcase and nobody
+# else. No Content-Security-Policy: the pages use inline styles, inline JSON-LD and Google Fonts, and
+# the showcase needs frame, media, worker and connect sources (showcase.md §7.3), so a CSP needs its
+# own careful pass.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -22,16 +24,68 @@ https://:version.:subdomain.workers.dev/*
 
 # Caching. HTML gets Cloudflare's default (public, max-age=0, must-revalidate, plus an ETag), so a
 # deploy shows at once; nothing below matches an HTML URL.
-# CSS and JS are not fingerprinted (no hash in the file name), so they are cached for 5 minutes only:
-# after a deploy, a returning visitor can get new HTML with old CSS for at most that long.
-/*.css
+# The landing's own CSS and JS are not fingerprinted (no hash in the file name), so they are cached
+# for 5 minutes only: after a deploy, a returning visitor can get new HTML with old CSS for at most
+# that long. They are listed by name, NOT as /*.css and /*.js: those would also match the
+# showcase's hashed files, and two Cache-Control values on one URL get joined. A new CSS or JS file
+# that isn't listed here simply gets the HTML default (always revalidated), which is safe.
+/klaro.css
   Cache-Control: public, max-age=300, must-revalidate
 
-/*.js
+/site.css
   Cache-Control: public, max-age=300, must-revalidate
 
-# Images are cached for a week. They are not fingerprinted either: to change an image, give the new
-# one a new file name rather than overwriting it.
+/klaro.js
+  Cache-Control: public, max-age=300, must-revalidate
+
+/site.js
+  Cache-Control: public, max-age=300, must-revalidate
+
+/showcase.js
+  Cache-Control: public, max-age=300, must-revalidate
+
+/market/market.css
+  Cache-Control: public, max-age=300, must-revalidate
+
+/market/market.js
+  Cache-Control: public, max-age=300, must-revalidate
+
+/v1/klaro.css
+  Cache-Control: public, max-age=300, must-revalidate
+
+# The showcase: the real app on sample data, built into /showcase/ (design/brief/showcase.md §7).
+# It is not for search results (showcase.html also carries a noindex meta). Its assets have a hash
+# in every file name and never change in place, so they are cached for a year.
+/showcase/*
+  X-Robots-Tag: noindex
+
+/showcase/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The sample world's lectures and book, asked for by the showcase at these root paths: not for
+# search results. Cached for a day; to change a file, give it a new name.
+/demo/*
+  X-Robots-Tag: noindex
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+# The landing's recordings, posters and caption cues. Cached for a day; to change one, give it a
+# new name.
+/media/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+# The app's logo and illustrations, at the root because the showcase asks for them there.
+/brand/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/illustrations/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# The previous one-page landing, kept frozen for reference: not for search results.
+/v1/*
+  X-Robots-Tag: noindex
+
+# Images (including img/ill/) are cached for a week. They are not fingerprinted either: to change an
+# image, give the new one a new file name rather than overwriting it.
 /img/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
