@@ -425,28 +425,36 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 }
 
 /* A scene plate with the device drawn in it (the owner's decision, 2026-10-08): the illustration
-   draws the laptop, phone or tablet facing the viewer, its screen a flat dark field, and the real
-   app (a recording, its poster, a still, or the live frame) sits exactly on that screen.
-     <div class="plate plate--device" data-plate="P4-marked-papers" data-ph="img/plates/P4-marked-papers.webp">
+   draws the laptop, monitor, phone or tablet facing the viewer, its screen a flat dark field, and
+   the real app (a recording, its poster, a still, or the live frame) sits exactly on that screen.
+     <div class="plate plate--device" data-plate="P4-marked-papers-full" data-ph="img/plates/P4-marked-papers-full.webp">
        <div class="device device--browser">…the usual bar and screen…</div>
      </div>
+   The whole device is always in the picture, with some of the scene round it (the owner: a cut
+   laptop gains nothing). So the pictures are 4:3 (P1 3:2), never the 12:5 files, at every width, and
+   the plate is as large as its column and the screen's height allow: --plate-room is the height
+   kept for the header and the words under the plate.
    Each plate's box, measured on its picture, is set below as unitless percentages of the
    picture: --sx, --sy (the screen's top left), --sw, --sh (its size), --sr (its corner radius,
-   in % of the picture's width), and --pa (the picture's aspect, width / height). The plate keeps
-   that aspect at every width; on phones (≤ 640px) it is cropped round the screen instead, so the
-   screen is 86% of the plate's width (--frac is the share of the picture shown, --x0 where the
-   crop starts), and the box follows the crop. Arabic: the picture mirrors (above) and the box is
-   placed from the inline start, so it mirrors with it.
+   in % of the picture's width), and --pa (the picture's aspect, width / height). A plate may crop
+   its picture round the screen (--frac is the share of the picture's width shown, --x0 where the
+   crop starts; the box follows the crop), but only where the device stays whole: the Minis hero,
+   and on phones each plate's --frac-sm (the device's own width plus a little of the scene).
+   Arabic: the picture is not mirrored (that would move the box).
    The opt-in: a plate's picture is used only once its rule below says --drawn: 1 (0 by default).
    With 1, site.js loads img/plates/<data-plate>.webp and adds .is-drawn once it has: the CSS
    frame's chrome goes and the screen takes the drawn screen's corners; until then (still loading,
    file missing, no JavaScript) the CSS frame waits in the same box, so nothing moves when the
    picture arrives. With 0 (no picture yet, or its box not measured) the page never asks for the
    file, and the CSS frame sits centred on the plain field (--bx, --by), at the box's size. */
-.plate--device { --frac: 1; --x0: 0; --drawn: 0; display: block; padding: 0; aspect-ratio: calc(var(--pa) * var(--frac));
+.plate--device { --frac: 1; --x0: clamp(0, (var(--sx) + var(--sw) / 2) / 100 - var(--frac) / 2, 1 - var(--frac)); --drawn: 0; --plate-room: 240px;
+  display: block; width: min(100%, calc((100vh - var(--plate-room)) * var(--pa) * var(--frac))); width: min(100%, calc((100svh - var(--plate-room)) * var(--pa) * var(--frac)));
+  margin-inline: auto; padding: 0; aspect-ratio: calc(var(--pa) * var(--frac));
   --bx: calc(var(--sx) * var(--drawn) + (100 - var(--sw)) / 2 * (1 - var(--drawn)));
   --by: calc(var(--sy) * var(--drawn) + (100 - var(--sh)) / 2 * (1 - var(--drawn))); }
-.plate--device > .plate-img { inset-block: 0; inset-inline: auto; inset-inline-start: calc(-100% * var(--x0) / var(--frac)); width: calc(100% / var(--frac)); max-width: none; object-fit: fill; }   /* wider than the plate on phones (the crop): not capped by img { max-width: 100% } */
+.plate--device > .plate-img { inset-block: 0; inset-inline: auto; inset-inline-start: calc(-100% * var(--x0) / var(--frac)); width: calc(100% / var(--frac)); max-width: none; object-fit: fill; }   /* wider than the plate when it is cropped: not capped by img { max-width: 100% } */
+[dir="rtl"] .plate--device { direction: ltr; }   /* the picture is never mirrored, so the box is placed from its left */
+[dir="rtl"] .plate--device > .plate-img { scale: none; }
 .plate--device > .device { position: absolute; display: flex; flex-direction: column; margin: 0;
   inset-block-start: calc(var(--by) * 1%); inset-inline-start: calc((var(--bx) / 100 - var(--x0)) / var(--frac) * 100%);
   width: calc(var(--sw) / var(--frac) * 1%); height: calc(var(--sh) * 1%); }
@@ -460,27 +468,22 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .plate--device.is-drawn > .device .device-screen { border-radius: inherit; background: #1b1722; }
 @media (max-width: 640px) {
   html.ph-on .plate--device[data-ph]::before { display: none; }   /* no room for the file name beside the device */
-  .plate--device { --frac: min(1, max(var(--sw) / 86, .5 / var(--pa))); --x0: clamp(0, (var(--bx) + var(--sw) / 2) / 100 - var(--frac) / 2, 1 - var(--frac)); }
+  .plate--device { --frac: var(--frac-sm, 1); }
 }
-/* The boxes, measured on each final picture (design/brief/illustrations.md, "Screen boxes"):
-   replace the numbers, keep the names. TODO(illustrations): every box still at the placeholder
-   numbers (--sx: 38; --sy: 6; --sw: 56; --sh: 84) is unmeasured. Once a box is measured and
-   checked at 1440 and 375, add --drawn: 1 to its line: that one change makes the pages load the
-   picture (site.js) and place the app on its screen. Without it a plate never requests its file.
-   The pictures are 2000 × 833 (12:5); screens are 16:10 (laptop, monitor), 4:3 (tablet) or
-   9:19.5 (phone), and the camera fills any shape. */
-.plate[data-plate] { --pa: 2.4; --sx: 38; --sy: 6; --sw: 56; --sh: 84; --sr: .8; }
-.plate[data-plate="P1-evening-desk"] { --pa: 2.4038; --sx: 21; --sy: 1.56; --sw: 58; --sh: 97; --sr: 0; --drawn: 1; }
-/* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). A phone in a
-   12:5 picture is small, so P2 uses the picture's 4:3 crop at every width, and is as tall as a
-   screen allows. */
-.plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; --drawn: 1; }
-.plate--device[data-plate="P2-kitchen-tea-phone"] { width: min(100%, 960px); margin-inline: auto; }
-.plate[data-plate="P3-chalkboard"] { --pa: 2.3981; --sx: 21; --sy: 5.64; --sw: 58.1; --sh: 88.73; --sr: 0; --drawn: 1; }
-.plate[data-plate="P4-marked-papers"] { --pa: 2.401; --sx: 20.05; --sy: 3.72; --sw: 60; --sh: 92.56; --sr: 0; --drawn: 1; }
-.plate[data-plate="P5-dusk-window"] { --pa: 2.3981; --sx: 21.5; --sy: 2.16; --sw: 57.05; --sh: 95.44; --sr: .25; --drawn: 1; }
-.plate[data-plate="P6-library"] { --pa: 2.3981; --sx: 21; --sy: 5.28; --sw: 58.05; --sh: 89.69; --sr: 0; --drawn: 1; }
-.plate[data-plate="P7-sofa-corner"] { --pa: 2.3981; --sx: 23.55; --sy: 1.68; --sw: 53.05; --sh: 96.52; --sr: .6; --drawn: 1; }   /* a tablet, 4:3 landscape */
+/* The boxes, measured on each picture (design/brief/illustrations.md, "Screen boxes"; the -full
+   files are new crops of the uncropped originals, so the whole laptop or monitor is in them).
+   Replace the numbers, keep the names; --drawn: 1 opts a plate in (site.js then loads it). The
+   screens are 1.43–1.57:1 (laptops, monitors), 1.32:1 (the tablet) or 0.45:1 (the phone), and
+   the camera fills any shape. */
+.plate[data-plate] { --pa: 1.3333; --sx: 12; --sy: 15; --sw: 76; --sh: 70; --sr: .8; }
+.plate[data-plate="P1-evening-desk-full"] { --pa: 1.5; --sx: 21.18; --sy: 13.15; --sw: 55.9; --sh: 58.33; --sr: 0; --drawn: 1; }   /* laptop, 3:2: the keyboard reaches the picture's edges at 4:3 */
+/* P2 is a phone (9:19.5), only ever holding the app's phone layout (the Minis feed). */
+.plate[data-plate="P2-kitchen-tea-phone"] { --pa: 1.3333; --sx: 36.5; --sy: 11; --sw: 27; --sh: 78; --sr: 3; --frac-sm: .4; --drawn: 1; }
+.plate[data-plate="P3-chalkboard-phone"] { --pa: 1.3333; --sx: 11.25; --sy: 16.33; --sw: 77.58; --sh: 65.89; --sr: 0; --frac-sm: .88; --drawn: 1; }   /* monitor */
+.plate[data-plate="P4-marked-papers-full"] { --pa: 1.3333; --sx: 11.72; --sy: 18.36; --sw: 76.66; --sh: 65.62; --sr: 0; --frac-sm: .88; --drawn: 1; }   /* laptop: its keyboard is cut in the original too */
+.plate[data-plate="P5-dusk-window-full"] { --pa: 1.3333; --sx: 13.57; --sy: 19.79; --sw: 73.63; --sh: 68.49; --sr: .29; --frac-sm: .9; --drawn: 1; }   /* laptop: its keyboard is cut in the original too */
+.plate[data-plate="P6-library-full"] { --pa: 1.3333; --sx: 15.04; --sy: 16.54; --sw: 69.63; --sh: 59.77; --sr: 0; --frac-sm: .8; --drawn: 1; }   /* monitor */
+.plate[data-plate="P7-sofa-corner-phone"] { --pa: 1.3333; --sx: 14.58; --sy: 14.22; --sw: 70.75; --sh: 71.67; --sr: .83; --frac-sm: .82; --drawn: 1; }   /* a tablet, 4:3 landscape */
 
 /* ======================================================================== The real app: showcase frames and recordings */
 /* The markup is design/brief/showcase.md §11.1; showcase.js drives it and styles nothing. The
@@ -655,7 +658,9 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .steps-nav-bar > i { display: block; height: 100%; background: var(--purple); transform: scaleX(var(--p, 0)); transform-origin: 0 50%; transition: transform .3s linear; }
 [dir="rtl"] .steps-nav-bar > i { transform-origin: 100% 50%; }
 @media (min-width: 1025px) {
-  .steps-sticky.has-nav { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); align-items: start; gap: var(--s-8); }   /* the recordings as wide as they can be (§7.9) */
+  /* The recordings as large as they can be (§7.9): the plate's column is as wide as a 4:3 plate
+     that fits the screen's height (with the words under it), up to 78%; the titles take the rest. */
+  .steps-sticky.has-nav { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, min(78%, calc((100svh - 240px) * 4 / 3))); align-items: start; gap: var(--s-8); }
   .steps-sticky.has-nav .steps-nav { position: sticky; inset-block-start: calc(var(--sticky-top) + 32px); display: flex; flex-direction: column; gap: 24px; margin: 0; padding: 0; list-style: none; }
   .steps-sticky.has-nav .steps-copy { display: none; }
   .steps-sticky.has-nav .steps-panels { gap: 160px; padding-block: 4vh 12vh; }
@@ -969,7 +974,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 /* Minis: the drawn phone of plate P2, cropped round the phone so it is as large as the hero allows
    (--frac: the share of the picture's width shown; --x0: where the crop starts). */
 .hero-grid > .pr-hero-phone { width: 100%; max-width: 500px; margin-inline-start: auto; }
-.pr-hero-phone .plate--device { --frac: .52; --x0: clamp(0, (var(--sx) + var(--sw) / 2) / 100 - var(--frac) / 2, 1 - var(--frac)); width: 100%; }
+.pr-hero-phone .plate--device { --frac: .52; }
 .pr-hero-phone .plate-img { max-width: none; }   /* klaro.css caps every img at 100%, which would undo the crop's wider picture */
 @media (max-width: 1024px) { .hero-grid > .pr-hero-phone { max-width: 460px; margin-inline: auto; } }
 @media (max-width: 640px) { .pr-hero-phone .plate--device { --frac: .4; } }

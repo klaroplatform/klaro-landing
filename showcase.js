@@ -273,10 +273,13 @@
     if (!el) return;
     var st = el.style;
     if (!css) {
-      if (st.transform) { st.transform = st.transformOrigin = st.width = st.height = st.left = st.top = st.right = st.bottom = st.objectFit = ''; }
+      if (st.transform) { st.transform = st.transformOrigin = st.width = st.height = st.left = st.top = st.right = st.bottom = st.objectFit = st.maxWidth = st.maxHeight = ''; }
       return;
     }
     var b = coverBase(w, h, vw, vh);
+    // Wider than the screen when the screen is narrower than the picture (every drawn screen is):
+    // klaro.css caps img and video at 100%, which would squeeze the picture and leave a dark band.
+    st.maxWidth = st.maxHeight = 'none';
     st.left = st.top = '0';
     st.right = st.bottom = 'auto';
     st.width = (vw * b).toFixed(1) + 'px';
