@@ -46,6 +46,13 @@ App links. The href of every link marked data-signup, data-signup-as, data-signi
 set to its real address in the app (site.json "app"), so it works without JavaScript; klaro.js
 and site.js still refine them for the audience switch. Partials may write href="#" for these.
 
+Fonts. The Google Fonts links are the tool's: it writes them at the end of the meta block, for the
+page's language (site.json "fonts": Readex Pro, the Arabic face, only on Arabic pages), and removes
+any font link a page writes in its own <head>.
+
+Illustration sizes. With site.json "srcset" on, every <img> of a full-size illustration
+(img/ill/NN-name.webp) gets srcset (its -480 and -800 versions, where they exist) and sizes.
+
 The same run writes sitemap.xml (indexable pages, lastmod from git, hreflang alternates) and
 llms.txt (llmstxt.org format). A page is indexable unless site.json says "index": false or
 .assetsignore keeps it off the site. lastmod is the date of the last commit that changed the page
@@ -350,6 +357,64 @@ def fill_app_links(html, page):
     return APP_LINK.sub(fix, html)
 
 
+# ---------------------------------------------------------------- fonts and illustration sizes
+
+FONT_LINK = re.compile(r'[ \t]*<link\b[^>]*\bhref="https://fonts\.(?:googleapis|gstatic)\.com[^"]*"[^>]*>[ \t]*\n?')
+
+
+def font_links(page):
+    """The Google Fonts links for the page's language (site.json "fonts"), for its meta block."""
+    families = SITE['fonts'].get(page.lang) or SITE['fonts']['en']
+    return ['<link rel="preconnect" href="https://fonts.googleapis.com">',
+            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+            f'<link rel="stylesheet" href="{attr("https://fonts.googleapis.com/css2?" + families + "&display=swap")}">']
+
+
+def outside_chrome(html, fn):
+    """Apply fn to the parts of html outside the chrome blocks."""
+    out, last = [], 0
+    for m in BLOCK.finditer(html):
+        out += [fn(html[last:m.start()]), m.group(0)]
+        last = m.end()
+    return ''.join(out) + fn(html[last:])
+
+
+ILL_IMG = re.compile(r'<img\b[^>]*\ssrc="((?:[^"]*/)?img/ill/)(\d\d-[a-z0-9-]+?)\.webp"[^>]*>')
+
+
+def fill_srcset(html):
+    """site.json "srcset": every <img> of a full-size illustration (img/ill/NN-name.webp) whose
+    smaller versions exist gets srcset and sizes, so a 150px tile doesn't download 1200px."""
+    conf = SITE.get('srcset') or {}
+    if not conf.get('on'):
+        return html
+
+    def fix(m):
+        tag, prefix, name = m.group(0), m.group(1), m.group(2)
+        width = re.search(r'\swidth="(\d+)"', tag)
+        if not width or re.search(r'-\d+$', name):
+            return tag
+        widths = [w for w in conf['widths'] if w < int(width.group(1))
+                  and os.path.exists(os.path.join(ROOT, 'img', 'ill', f'{name}-{w}.webp'))]
+        if not widths:
+            return tag
+        srcset = ', '.join([f'{prefix}{name}-{w}.webp {w}w' for w in widths] + [f'{prefix}{name}.webp {width.group(1)}w'])
+        tag = re.sub(r'\s(?:srcset|sizes)="[^"]*"', '', tag)
+        # 'auto' (the drawn size) only on a lazy image: on an eager one Chrome takes 100vw.
+        sizes = ('auto, ' if re.search(r'\sloading="lazy"', tag) else '') + conf['sizes']
+        return tag[:-1].rstrip('/').rstrip() + f' srcset="{srcset}" sizes="{sizes}">'
+    return ILL_IMG.sub(fix, html)
+
+
+def fill_page(html, page):
+    """What the tool writes outside the chrome blocks: the app links, illustration srcsets, and no
+    font links (they live in the meta block, per language)."""
+    html = fill_app_links(html, page)
+    if '<!-- chrome:meta -->' in html:
+        html = outside_chrome(html, lambda part: FONT_LINK.sub('', part))
+    return outside_chrome(html, fill_srcset)
+
+
 # ---------------------------------------------------------------- JSON-LD
 
 def ref(i):
@@ -632,6 +697,7 @@ def meta_block(page, pages, lastmod, warn):
             '<meta name="twitter:card" content="summary_large_image">']
     if page.indexable:
         out.append('<script type="application/ld+json">\n' + graph(page, pages, lastmod, warn) + '\n</script>')
+    out += font_links(page)
     return '\n'.join(out)
 
 
@@ -692,7 +758,7 @@ def stamp(page, pages, lastmods, warn):
             for key, value in values.items():
                 body = body.replace(key, value)
         return f'{m.group(1)}\n{body}\n{m.group(4)}'
-    return fill_app_links(BLOCK.sub(fill, page.html), page)
+    return fill_page(BLOCK.sub(fill, page.html), page)
 
 
 # ---------------------------------------------------------------- sitemap.xml and llms.txt
@@ -960,10 +1026,11 @@ def check_page(page, pages, problem, warn, missing):
     # Links: no "#" placeholders, and every internal link, asset and fragment resolves.
     own_ids = ids(page.tree)
     for n in root.iter():
-        for key in ('href', 'src', 'poster'):
-            if key not in n.attrs or (n.tag == 'link' and n.attrs.get('rel') in ('preconnect', 'dns-prefetch')):
+        links = [(key, n.attrs[key]) for key in ('href', 'src', 'poster') if key in n.attrs]
+        links += [('srcset', c.split()[0]) for c in n.attrs.get('srcset', '').split(',') if c.strip()]
+        for key, link in links:
+            if n.tag == 'link' and n.attrs.get('rel') in ('preconnect', 'dns-prefetch'):
                 continue
-            link = n.attrs[key]
             if n.tag == 'a' and link == '#':
                 problem(rel, f'line {n.line}: <a href="#"> ({squash(n.text())[:40]})')
                 continue
@@ -1044,12 +1111,12 @@ def main():
             print(f'{p.url}{flag}\n  title ({len(p.title)}): {p.title}\n  description ({len(p.description)}): {p.description}')
         return
 
-    lastmods = {p.rel: last_modified(p, fill_app_links(p.html, p)) for p in pages}
+    lastmods = {p.rel: last_modified(p, fill_page(p.html, p)) for p in pages}
     stale = []
     for p in pages:
         if p.frozen:
             continue
-        out = stamp(p, pages, lastmods, warn) if '<!-- chrome:' in p.html else fill_app_links(p.html, p)
+        out = stamp(p, pages, lastmods, warn) if "<!-- chrome:" in p.html else fill_page(p.html, p)
         if out != p.html and (not only or p.rel in only):
             stale.append(p.rel)
             if not check:

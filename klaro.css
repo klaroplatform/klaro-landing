@@ -40,6 +40,7 @@
   --on-deep: rgb(255 255 255 / .74);
   --band: #efe6fb;            /* the one flat pale band per page */
   --chip: #e9e8e3;            /* grey chips and the audience switch */
+  --chip-muted: #5f5e63;      /* quiet words on a chip: 5.2:1 on --chip (--muted is 4.4:1, under AA) */
   --paper: #efeeea;           /* the illustrations' paper; also behind them while they load */
   --plate: #ddd0f2;           /* a scene plate before its illustration exists */
   --ph: #e6e5e0;              /* placeholder boxes */

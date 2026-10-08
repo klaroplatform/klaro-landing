@@ -16,14 +16,25 @@
   "locales": { "en": "en_GB", "ar": "ar_AR" },
 
   "image": {
-    "_todo": "A 1200x630 PNG or JPG share image is wanted (img/og/klaro.png). Until then, the lecture still.",
-    "path": "img/lecture-osmosis.webp",
-    "width": 960,
-    "height": 548,
+    "_about": "The share image (og:image) of every page: 1200x630 (1.91:1), a JPG because every link preview reads JPG. A centre crop of illustration 01. A page-specific image can come later.",
+    "path": "img/ill/01-connected-og.jpg",
+    "width": 1200,
+    "height": 630,
     "alt": {
-      "en": "A Klaro lecture on osmosis, from an example course",
-      "ar": "محاضرة على Klaro عن Osmosis، من كورس مثال"
+      "en": "An open course book, a film strip and an exam paper, joined by one gold thread.",
+      "ar": "كتاب كورس مفتوح وشريط فيلم وورقة امتحان، يربطها خيط ذهبي واحد."
     }
+  },
+  "fonts": {
+    "_about": "Google Fonts families per language, written by tools/site.py into every page's meta block. Readex Pro (the Arabic face) only on Arabic pages.",
+    "en": "family=Manrope:wght@400;500;600;700",
+    "ar": "family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700"
+  },
+  "srcset": {
+    "_about": "When on, tools/site.py gives every <img> of a full-size illustration (img/ill/NN-name.webp, 1200px) a srcset of its -480 and -800 versions and these sizes; a lazy image's sizes start with 'auto', so Chrome uses its drawn size (never on an eager image: Chrome then takes the full width). Off until the page branches are merged, so it doesn't collide with their edits: then set on to true and run the tool.",
+    "on": false,
+    "widths": [480, 800],
+    "sizes": "(max-width: 640px) 60vw, 400px"
   },
   "logo": {
     "_todo": "A square 512x512 PNG of the K mark is wanted (img/klaro-logo-512.png). Until then, the touch icon.",
@@ -69,7 +80,7 @@
     "products/live-sessions/": { "label": "Live sessions", "group": "tutors", "audience": ["teacher"] },
     "products/quizzes/": { "label": "Quizzes and homework", "group": "tutors", "audience": ["teacher"] },
     "products/marking/": { "label": "Marking", "group": "tutors", "audience": ["teacher"] },
-    "try/": { "label": "Try it", "audience": ["student"] },
+    "try/": { "label": "Live demo", "audience": ["student"] },
     "research/": { "label": "Powered by research", "type": "article" },
     "market/": {
       "_index": "The one switch for the market's indexing. false = noindex, and out of sitemap.xml and llms.txt.",
