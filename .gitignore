@@ -1,3 +1,5 @@
 .DS_Store
 node_modules/
 .wrangler/
+# Internal chat screenshots behind the brief; the repository is public.
+design/brief/refs/
