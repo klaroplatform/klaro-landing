@@ -263,7 +263,9 @@
 
 <main id="top">
 
-<!-- 1. Hero: chip, H1 with the one underline, lead, one pill and a text link; the illustration mosaic -->
+<!-- Progress. Hero with the illustration mosaic (no capture of the Progress page exists yet: it
+     needs a student-progress scene). Then two cards in the app's own words, Omar's student-weak
+     recording on plate P6 with the research line, the FAQ and the closing call. -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
@@ -272,23 +274,48 @@
       <p class="lead">Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak.</p>
       <div class="hero-actions">
         <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
-        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
     <div class="mosaic" aria-hidden="true">
       <div class="mosaic-col">
         <div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/20-night-window.webp"><img src="../../img/ill/20-night-window.webp" alt="" width="1200" height="1200" decoding="async"></div>
       </div>
       <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/13-parent-tea.webp"><img src="../../img/ill/13-parent-tea.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/11-calendar.webp"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" decoding="async"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 2. In action: Omar's student-weak recording (the closest to progress until a student-progress scene exists) -->
+<!-- Course by course: two cards, with the words the Progress page itself uses -->
+<section class="section" id="courses" aria-labelledby="courses-h">
+  <div class="wrap">
+    <div class="section-head section-head--start">
+      <h2 class="h2" id="courses-h">Course by course</h2>
+      <p class="section-sub">What you've finished, how your quizzes went and what's next, in your tutor's order.</p>
+    </div>
+    <ul class="pr-duo" role="list">
+      <li>
+        <span class="pr-duo-icon" aria-hidden="true"><svg class="i"><use href="#i-chart"/></svg></span>
+        <h3 class="h3">Every course in one place</h3>
+        <p>Each course shows what you've finished and what's next up, in your tutor's lecture order. Open it and carry on from where you stopped.</p>
+        <ul class="pr-words" role="list" aria-label="What each course shows">
+          <li>Lectures finished</li><li>Quizzes handed in</li><li>Average mark</li><li>Next up</li>
+        </ul>
+        <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </li>
+      <li>
+        <span class="pr-duo-icon" aria-hidden="true"><svg class="i"><use href="#i-flame"/></svg></span>
+        <h3 class="h3">A streak for the days you study</h3>
+        <p>Your streak counts the days in a row you've studied, across all your courses. A day counts when you watch a lecture or answer a question.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- What to go over again: Omar's student-weak recording on plate P6, and the research line -->
 <section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
@@ -296,6 +323,10 @@
         <h2 class="h3" id="in-action-h">See what to go over again</h2>
         <p>After practice, Klaro keeps the questions you missed. Each one opens in the study view, next to the book page and the lecture moment that explain it.</p>
         <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <div class="pr-finding">
+          <p class="pr-finding-line"><a class="pr-finding-label" href="../../research/#feedback">Powered by research.</a> Useful feedback answers three questions for the learner: where am I going, how am I going, and where to next?</p>
+          <p class="pr-cite">Hattie, J., &amp; Timperley, H. (2007). The power of feedback. <i>Review of Educational Research, 77</i>(1), 81–112. <a href="https://doi.org/10.3102/003465430298487" rel="noopener">https://doi.org/10.3102/003465430298487</a></p>
+        </div>
       </div>
       <figure class="rec" data-recording="student-weak" data-camera="0 .9 240 440; 4.7 .9 250 380">
         <div class="plate plate--device" data-plate="P6-library" data-ph="img/plates/P6-library.webp">
@@ -304,7 +335,7 @@
             <div class="device-screen rec-screen" data-screen data-nosnippet>
               <img src="../../media/student-weak-poster.jpg" alt="A practice summary in Klaro on a sample course: the questions worth another look" width="1440" height="900" loading="lazy" decoding="async">
               <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the questions you missed, each opening where it was explained"></video>
-              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play: the questions you missed" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
             </div>
           </div>
         </div>
@@ -321,101 +352,7 @@
   </div>
 </section>
 
-<!-- 3. Features: three stacked cards. Illustrations stand in until the student-home and
-     student-progress scenes exist (redesign.md 7.7). The streak is never drawn as a screen. -->
-<section class="section" id="features">
-  <div class="wrap">
-    <div class="section-head"><h2 class="h2">Where you stand, course by course</h2><p class="section-sub">What you've finished, how your quizzes went and what's next, in your tutor's order.</p></div>
-    <div class="stack">
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Every course in one place</h3>
-          <p>Each course card shows the lectures you've finished and the one that's next up, in your tutor's order. Open it and carry on from where you stopped.</p>
-          <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/03-parcel.webp"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Every quiz, with its mark</h3>
-          <p>Your tutor sets quizzes from the course's questions. Your marks add up to an average for the course, so you can see what to go over again.</p>
-          <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/07-red-pen.webp"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Keep a streak going</h3>
-          <p>Your streak counts the days in a row you've studied, across all your courses. A day counts when you watch a lecture or answer a question.</p>
-          <a class="tlink" href="../minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/11-calendar.webp"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
-<section class="section" id="research">
-  <div class="wrap">
-    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards rcards--one">
-      <article class="rcard">
-        <div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        <div class="rcard-body">
-          <p class="rcard-source">Review of Educational Research, 2007</p>
-          <h3 class="rcard-title">Tell students where they stand and where to go next</h3>
-          <p>Useful feedback answers three questions for the learner: Where am I going? How am I going? Where to next?</p>
-          <p class="small"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research, 77(1), 81–112.</p>
-          <p class="rcard-in">In Klaro: every course shows what you've finished, how your quizzes went, and what's next up.</p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- 5. More of Klaro: the students' products, minus this one -->
-<section class="section carousel" id="more" aria-labelledby="more-h">
-  <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2" id="more-h">Everything for your course, in one place</h2></div>
-    <div class="carousel-nav" hidden>
-      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
-      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-    </div>
-  </div>
-  <ul class="carousel-track" role="list">
-    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your tutor's lecture, open at the page it explains.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../practice-questions/"><div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Practice questions</span><span class="icard-line">Real past-paper questions, checked as you answer.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../minis/"><div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Minis</span><span class="icard-line">Your weak spots, one short lecture moment a day.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../../try/"><div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Try it</span><span class="icard-line">A sample course, open in your browser. No account needed.</span></span></a></li>
-  </ul>
-</section>
-
-<!-- 6. The deep panel: the students' version, the same on every student page -->
-<section class="section" id="promise">
-  <div class="wrap">
-    <div class="panel">
-      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-      <h2 class="h2">Your tutor's explanation. Not a guess.</h2>
-      <p class="panel-sub">Everything you study comes from your tutor's own course: their lectures, their book and real past papers, linked to each other.</p>
-      <ul class="panel-grid">
-        <li class="panel-item"><h3 class="panel-item-title">Your tutor's own lectures</h3><p>You learn from your tutor's recordings, in the order they set.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Real past-paper questions</h3><p>Every question comes from a real exam paper, and says which.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">The page in your book, one tap away</h3><p>Each lecture clip opens your book at the part it explains.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">In English and Arabic</h3><p>Use Klaro in either language. Your course stays as your tutor wrote it.</p></li>
-      </ul>
-      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<!-- FAQ (feeds the FAQPage JSON-LD) -->
 <section class="section" id="faq">
   <div class="wrap">
     <div class="faq">
@@ -429,22 +366,19 @@
   </div>
 </section>
 
-<!-- 8. Closing call -->
-<section class="closing" aria-labelledby="closing-h">
-  <ul class="closing-tiles" aria-hidden="true">
-    <li class="ill closing-tile" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/11-calendar.webp"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-  </ul>
-  <div class="closing-copy">
-    <h2 class="h2" id="closing-h">See what's next up in every course.</h2>
-    <p class="lead">Create your account, then join with the code your tutor gives you.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+<!-- Closing call: the students' motto on the deep field, this page's line, two related pages -->
+<section class="section" id="start" aria-labelledby="closing-h">
+  <div class="wrap">
+    <div class="panel pr-close">
+      <h2 class="h2" id="closing-h">Your tutor's explanation. Not a guess.</h2>
+      <p class="panel-sub">Lectures finished, quiz marks and what's next up, in your tutor's order.</p>
+      <div class="hero-actions"><a class="btn btn-on-deep btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+      <p class="pr-close-note">Create your account, then join with the code your tutor gives you.</p>
+      <ul class="pr-close-links" role="list" aria-label="More for students">
+        <li><a href="../study-view/">Study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="../practice-questions/">Practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </section>
 

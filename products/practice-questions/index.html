@@ -92,7 +92,7 @@
   {
    "@type": "VideoObject",
    "@id": "https://learnklaro.com/products/practice-questions/#video-student-wrong",
-   "name": "Know before you move on",
+   "name": "Get one wrong, and see where it was explained",
    "thumbnailUrl": "https://learnklaro.com/media/student-wrong-poster.jpg",
    "uploadDate": "2026-10-08",
    "inLanguage": "en",
@@ -263,7 +263,10 @@
 
 <main id="top">
 
-<!-- 1. Hero: chip, H1 with the one underline, lead, one pill and a text link; the illustration mosaic -->
+<!-- Practice questions. Hero with the illustration mosaic (one of two product pages that keep it).
+     Then a question to get wrong: the live practice scene on desktop, Omar's student-wrong recording
+     under 900px (the live frame is only a poster there), with the research line; the source line of
+     a question; the practice builder's choices in the page's pale band; the FAQ and the closing. -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
@@ -272,31 +275,37 @@
       <p class="lead">Every question shows the paper it came from. Get one wrong and Klaro shows the right answer and where it was explained.</p>
       <div class="hero-actions">
         <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
-        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="tlink" href="../../try/?scene=student-practice">Try a question <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
     <div class="mosaic" aria-hidden="true">
       <div class="mosaic-col">
         <div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" decoding="async"></div>
-        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/19-fountain-pen.webp"><img src="../../img/ill/19-fountain-pen.webp" alt="" width="1200" height="1200" decoding="async"></div>
       </div>
       <div class="mosaic-col">
-        <div class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" decoding="async"></div>
         <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/18-answer-sheet.webp"><img src="../../img/ill/18-answer-sheet.webp" alt="" width="1200" height="1200" decoding="async"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 2. In action: a live practice run (student-practice), handed to the visitor once it has drawn -->
+<!-- In action. Desktop: the live practice run on plate P3, the visitor's turn at once. Phones: the
+     student-wrong recording on the same plate. Each frame has its own words; one is hidden. -->
 <section class="section" id="in-action" aria-labelledby="in-action-h">
   <div class="wrap">
     <div class="split-card">
       <div class="split-copy">
-        <h2 class="h3" id="in-action-h">Answer one wrong on purpose</h2>
-        <p>This is a real practice question from a sample Biology course. Pick a wrong answer to see what happens: the right answer, then the page in the book and the moment in the lecture that explain it.</p>
+        <h2 class="h3" id="in-action-h">Get one wrong, and see where it was explained</h2>
+        <p class="only-wide">This is a real practice question from a sample Biology course. Pick a wrong answer on purpose: Klaro shows the right one, then the page in the book and the moment in the lecture that explain it.</p>
+        <p class="only-narrow">A real practice question from a sample Biology course: a wrong answer, the right one, then the page in the book and the moment in the lecture that explain it.</p>
+        <div class="pr-finding">
+          <p class="pr-finding-line"><a class="pr-finding-label" href="../../research/#testing">Powered by research.</a> Students who practised recalling a passage remembered more of it a week later than students who read it again.</p>
+          <p class="pr-cite">Roediger, H. L., &amp; Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. <i>Psychological Science, 17</i>(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x" rel="noopener">https://doi.org/10.1111/j.1467-9280.2006.01693.x</a></p>
+        </div>
       </div>
-      <figure class="show" data-showcase="student-practice" data-play="free" data-app-width="1000" data-title="Klaro sample workspace: practice questions">
+      <figure class="show only-wide" data-showcase="student-practice" data-play="free" data-app-width="1000" data-title="Klaro sample workspace: practice questions">
         <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
           <div class="device device--browser">
             <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
@@ -305,134 +314,76 @@
         </div>
         <div class="show-under">
           <ol class="show-steps" data-steps="static"><li>Your turn. Answer one wrong on purpose.</li></ol>
-          <div class="show-actions" data-actions><a class="btn btn-primary btn-sm show-try" href="../../try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a></div>
+          <div class="show-actions" data-actions><a class="btn btn-secondary btn-sm show-try" href="../../try/?scene=student-practice"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a></div>
         </div>
         <figcaption class="caption"><b>Sample course.</b> Answer a past-paper question; get one wrong to see where it's explained.</figcaption>
+      </figure>
+      <figure class="rec only-narrow" data-recording="student-wrong" data-camera="0 .8 250 420; 2.9 .8 250 520; 4.8 .85 280 720; 8.7 .5 600 420; 12.5 .6 720 450">
+        <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen rec-screen" data-screen data-nosnippet>
+              <img src="../../media/student-wrong-poster.jpg" alt="A practice question in Klaro on a sample course" width="1440" height="900" loading="lazy" decoding="async">
+              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a wrong answer, then where it was explained"></video>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play: a wrong answer, then where it was explained" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="show-under">
+          <ol class="rec-cues" data-steps>
+            <li data-t="0">Practise past-paper questions from your course.</li>
+            <li data-t="3">Not quite. Klaro shows the right answer…</li>
+            <li data-t="4.9">…and where it was explained: the page in your book and the moment in your lecture.</li>
+            <li data-t="8.87">One tap, and your tutor explains it.</li>
+          </ol>
+          <div class="show-actions" data-actions><a class="btn btn-secondary btn-sm show-try" href="../../try/?scene=student-practice"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+        </div>
+        <figcaption class="caption"><b>Sample course.</b> Not quite: the right answer, then the page in the book and the moment in the lecture.</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- 3. Features: three stacked cards. Card 3 shows an illustration until the practice set-up is
-     captured (redesign.md 7.7: the new student-practice-setup scene). -->
-<section class="section" id="features">
+<!-- The source line: a crop of a real question, read at its own size -->
+<section class="section" id="source" aria-labelledby="source-h">
   <div class="wrap">
-    <div class="section-head"><h2 class="h2">Practice that shows you where to look</h2><p class="section-sub">Real questions, checked straight away, with the explanation one tap away.</p></div>
-    <div class="stack">
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Questions from real papers, with their source</h3>
-          <p>Each question shows the paper it came from: paper, year and series. The right answer comes from that paper's own mark scheme.</p>
-          <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="pr-feature">
+      <div class="pr-feature-copy">
+        <h2 class="h2" id="source-h">Every question says where it's from</h2>
+        <p class="lead">Paper, year and series, on every question. The right answer comes from that paper's own mark scheme.</p>
+        <p>Questions are filed under your course book's chapters, so you can practise what you've just studied.</p>
+        <a class="tlink" href="../study-view/">Practise beside the lecture in the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="pr-shot pr-shot--bleed" data-camera="0 .9 0 200">
+        <div class="pr-shot-field">
+          <div class="pr-shot-screen" data-nosnippet><img src="../../media/stills/student-wrong-source.webp" alt="A past-paper question in Klaro with its source line: 0610/12 May/June 2023" width="640" height="400" loading="lazy" decoding="async"></div>
         </div>
-        <figure class="stack-media rec" data-camera="0 .6 260 160">
-          <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen"><img src="../../media/stills/student-wrong-source.webp" alt="A past-paper question in Klaro with its source line: 0610/12 May/June 2023" width="640" height="400" loading="lazy" decoding="async"></div>
-            </div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> Each question shows the paper it came from.</figcaption>
-        </figure>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Know before you move on</h3>
-          <p>Multiple-choice answers are checked the moment you answer. Get one wrong and Klaro shows the right answer, then the page in your book and the moment in your lecture.</p>
-          <a class="tlink" href="../minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <figure class="stack-media rec" data-recording="student-wrong" data-camera="0 .8 250 420; 2.9 .8 250 520; 4.8 .85 280 720; 8.7 .5 600 420; 12.5 .6 720 450">
-          <div class="plate plate--device" data-plate="P3-chalkboard" data-ph="img/plates/P3-chalkboard.webp">
-            <div class="device device--browser">
-              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-              <div class="device-screen rec-screen" data-screen data-nosnippet>
-                <img src="../../media/student-wrong-poster.jpg" alt="A practice question in Klaro on a sample course" width="1440" height="900" loading="lazy" decoding="async">
-                <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a wrong answer, then where it was explained"></video>
-                <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
-              </div>
-            </div>
-          </div>
-          <div class="show-under">
-            <ol class="rec-cues" data-steps>
-              <li data-t="0">Practise past-paper questions from your course.</li>
-              <li data-t="3">Not quite. Klaro shows the right answer…</li>
-              <li data-t="4.9">…and where it was explained: the page in your book and the moment in your lecture.</li>
-              <li data-t="8.87">One tap, and your tutor explains it.</li>
-            </ol>
-            <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
-          </div>
-          <figcaption class="caption"><b>Sample course.</b> Not quite: the right answer, then the page in the book and the moment in the lecture.</figcaption>
-        </figure>
-      </article>
-      <article class="stack-card">
-        <div class="stack-copy">
-          <h3 class="h3">Choose what to practise</h3>
-          <p>Pick chapters of your course book, the paper, year and series, how many questions and a timer if you want one. Practice never counts against you.</p>
-          <a class="tlink" href="../progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
-        <div class="stack-media">
-          <div class="ill" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        </div>
-      </article>
+        <figcaption class="caption"><b>Sample course.</b> A multiple-choice question and the paper it came from.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
-<section class="section" id="research">
+<!-- The practice builder's choices, in the page's one pale band -->
+<section class="section" id="choose" aria-labelledby="choose-h">
   <div class="wrap">
-    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
-    <div class="rcards rcards--one">
-      <article class="rcard">
-        <div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-        <div class="rcard-body">
-          <p class="rcard-source">Psychological Science, 2006</p>
-          <h3 class="rcard-title">Testing yourself beats reading it again</h3>
-          <p>Students who practised recalling a passage remembered more of it a week later than students who studied it again.</p>
-          <p class="small"><i>Roediger &amp; Karpicke (2006).</i> Test-enhanced learning: taking memory tests improves long-term retention. Psychological Science, 17(3), 249–255.</p>
-          <p class="rcard-in">In Klaro: your course comes with real past-paper questions to practise on.</p>
-        </div>
-      </article>
+    <div class="band pr-spec">
+      <div class="pr-spec-head">
+        <h2 class="h2" id="choose-h">Build your own set</h2>
+        <p>Choose what to practise and how. Practice never counts against you.</p>
+      </div>
+      <dl class="pr-spec-list">
+        <div><dt>Chapters</dt><dd>Any chapters and sections of your course book.</dd></div>
+        <div><dt>Papers</dt><dd>The exam paper, the year and the series.</dd></div>
+        <div><dt>How many</dt><dd>5, 10 or 20 questions, or keep going.</dd></div>
+        <div><dt>A timer</dt><dd>If you want one.</dd></div>
+        <div><dt>Where to look</dt><dd>After each answer, the page in your book and the moment in your lecture. On unless you turn it off.</dd></div>
+      </dl>
     </div>
   </div>
 </section>
 
-<!-- 5. More of Klaro: the students' products, minus this one -->
-<section class="section carousel" id="more" aria-labelledby="more-h">
-  <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2" id="more-h">Everything for your course, in one place</h2></div>
-    <div class="carousel-nav" hidden>
-      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
-      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
-    </div>
-  </div>
-  <ul class="carousel-track" role="list">
-    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your tutor's lecture, open at the page it explains.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../minis/"><div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Minis</span><span class="icard-line">Your weak spots, one short lecture moment a day.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../progress/"><div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Progress</span><span class="icard-line">Lectures finished, quiz marks and your streak.</span></span></a></li>
-    <li class="carousel-item"><a class="icard" href="../../try/"><div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Try it</span><span class="icard-line">A sample course, open in your browser. No account needed.</span></span></a></li>
-  </ul>
-</section>
-
-<!-- 6. The deep panel: the students' version, the same on every student page -->
-<section class="section" id="promise">
-  <div class="wrap">
-    <div class="panel">
-      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
-      <h2 class="h2">Your tutor's explanation. Not a guess.</h2>
-      <p class="panel-sub">Everything you study comes from your tutor's own course: their lectures, their book and real past papers, linked to each other.</p>
-      <ul class="panel-grid">
-        <li class="panel-item"><h3 class="panel-item-title">Your tutor's own lectures</h3><p>You learn from your tutor's recordings, in the order they set.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">Real past-paper questions</h3><p>Every question comes from a real exam paper, and says which.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">The page in your book, one tap away</h3><p>Each lecture clip opens your book at the part it explains.</p></li>
-        <li class="panel-item"><h3 class="panel-item-title">In English and Arabic</h3><p>Use Klaro in either language. Your course stays as your tutor wrote it.</p></li>
-      </ul>
-      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
-    </div>
-  </div>
-</section>
-
-<!-- 7. FAQ (feeds the FAQPage JSON-LD) -->
+<!-- FAQ (feeds the FAQPage JSON-LD) -->
 <section class="section" id="faq">
   <div class="wrap">
     <div class="faq">
@@ -446,22 +397,19 @@
   </div>
 </section>
 
-<!-- 8. Closing call -->
-<section class="closing" aria-labelledby="closing-h">
-  <ul class="closing-tiles" aria-hidden="true">
-    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
-  </ul>
-  <div class="closing-copy">
-    <h2 class="h2" id="closing-h">Practise with the questions your exam has asked before.</h2>
-    <p class="lead">Create your account, then join with the code your tutor gives you.</p>
-    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+<!-- Closing call: the students' motto on the deep field, this page's line, two related pages -->
+<section class="section" id="start" aria-labelledby="closing-h">
+  <div class="wrap">
+    <div class="panel pr-close">
+      <h2 class="h2" id="closing-h">Your tutor's explanation. Not a guess.</h2>
+      <p class="panel-sub">Real past-paper questions from your course, with the page and the lecture moment that explain each one.</p>
+      <div class="hero-actions"><a class="btn btn-on-deep btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+      <p class="pr-close-note">Create your account, then join with the code your tutor gives you.</p>
+      <ul class="pr-close-links" role="list" aria-label="More for students">
+        <li><a href="../study-view/">Study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        <li><a href="../minis/">Minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+      </ul>
+    </div>
   </div>
 </section>
 
