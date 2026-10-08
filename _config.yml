@@ -3,4 +3,6 @@ exclude:
   - README.md
   - CLAUDE.md
   - design
+  - partials
+  - tools
   - wrangler.jsonc

@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Practice questions · Klaro</title>
+<meta name="description" content="Practise on questions from the real past papers your tutor uploads. See what you got right and why, then try again.">
+<link rel="canonical" href="https://learnklaro.com/products/practice-questions/">
+<meta property="og:title" content="Practice questions · Klaro">
+<meta property="og:description" content="Practise on questions from the real past papers your tutor uploads. See what you got right and why, then try again.">
+<meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
+<meta property="og:type" content="website">
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../../klaro.css">
+<link rel="stylesheet" href="../../site.css">
+<style>
+  /* Practice questions only: static answer states (nothing loops), the hero's question pane and the lecture strip */
+  .p-field .linked, .p-vis .linked { animation: none; }
+  .p-field .book mark, .p-vis .book mark { animation: none; background-size: 100% 100%; }
+  .opt.pq-right { background: var(--success-soft); border-color: var(--success-line); color: var(--success); font-weight: 600; }
+  .opt.pq-wrong { background: #fdeeee; border-color: #f1c4c4; color: #9b2c2c; font-weight: 600; }
+  .opt.pq-right b, .opt.pq-wrong b { background: rgb(255 255 255 / .75); color: inherit; }
+  .opt .pq-mark { margin-inline-start: auto; }
+  .tag.pq-tag-wrong { background: #fdeeee; color: #9b2c2c; }
+  .pq-panes { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .pq-qpane { padding: 22px; gap: 12px; }
+  .pq-qhead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pq-qhead .grow { flex: 1; }
+  .pq-qpane .q { font-size: 16px; max-width: 34em; }
+  .pq-qpane .opt { font-size: 14px; padding: 11px 13px; }
+  .pq-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .pq-row .linked { align-self: center; }
+  .pq-lecwrap { margin-top: auto; display: flex; flex-direction: column; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border); }
+  .pq-lec { display: flex; align-items: center; gap: 10px; padding: 8px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--card); }
+  .pq-thumb { width: 72px; aspect-ratio: 16 / 10; border-radius: 8px; overflow: hidden; flex-shrink: 0; background: var(--teal-soft); }
+  .pq-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .pq-lec b { display: block; font-size: 12.5px; }
+  .pq-lec small { display: block; font-size: 11.5px; color: var(--muted); }
+  .pq-lec .i { margin-inline-start: auto; color: var(--purple); }
+  .pq-thread { width: 0; height: 24px; margin-block: -12px; margin-inline-start: 26px; border-inline-start: 2px dashed var(--amber); }
+  .pq-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .pq-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .pq-pair .p-ui { padding: 14px; }
+  .pq-why { padding: 12px; border: 1px solid var(--border); border-radius: var(--r-control); background: var(--surface); }
+  @media (max-width: 640px) {
+    .pq-panes { grid-template-columns: minmax(0, 1fr); }
+    .pq-qpane { padding: 16px; }
+  }
+</style>
+</head>
+<body data-site="../../">
+<!-- chrome:sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
+  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
+  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
+</defs></svg>
+<!-- /chrome:sprite -->
+<!-- chrome:header -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+    <nav class="nav" aria-label="Main">
+      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
+      <a class="nav-btn" href="../../research/">Research</a>
+      <a class="nav-btn" href="../../#try">Try it</a>
+    </nav>
+    <span class="spacer"></span>
+    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
+    <a class="btn btn-quiet" href="../../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a>
+    <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
+    <a class="btn btn-glass" data-signup href="#">Get started</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
+  </div>
+  <div class="mega-wrap">
+    <div class="mega" id="products-menu" hidden>
+      <div class="mega-cols">
+        <div class="mega-col">
+          <p class="mega-head">For students</p>
+          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
+          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span></a>
+          <a class="mega-item" href="../../products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
+          <a class="mega-item" href="../../products/klaro-market/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-market"/></svg></span><span><b>Klaro Market</b><small>Find a course and the tutor who teaches it</small></span></a>
+        </div>
+        <div class="mega-col">
+          <p class="mega-head">For tutors</p>
+          <a class="mega-item" href="../../products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
+          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
+          <a class="mega-item" href="../../products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Teach your students live, straight from your Klaro course</small></span></a>
+          <a class="mega-item" href="../../products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Review papers against the mark scheme and release results</small></span></a>
+        </div>
+      </div>
+      <div class="mega-links">
+        <a class="nav-btn" href="../../research/">Research</a>
+        <a class="nav-btn" href="../../#try">Try it</a>
+        <a class="nav-btn" data-signin href="#">Sign in</a>
+      </div>
+      <div class="mega-foot">
+        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
+        <form class="joinform" data-joinform hidden><input name="code" placeholder="K7Q-2PX" aria-label="Join code" autocomplete="off" maxlength="9"><button class="btn btn-primary" type="submit">Join</button></form>
+        <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- /chrome:header -->
+
+<main id="top">
+
+<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
+<section class="p-hero">
+  <div class="wrap">
+    <a class="p-back" href="../../#products"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
+    <div class="p-top">
+      <span class="p-chip"><span class="icon-tile amber"><svg class="i" width="16" height="16"><use href="#i-check"/></svg></span>Practice questions<span class="p-for">For students</span></span>
+      <div class="p-head">
+        <h1 class="display">Real past-paper questions, <span class="key">marked as you answer</span>.</h1>
+        <div class="p-head-side">
+          <p class="lead">Practise on questions from the real past papers your tutor uploads. See what you got right and why, then try again.</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-lg" data-signup href="#">Create a student account <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-secondary btn-lg" href="../../#try">Try a lesson</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <!-- confirm: the app shows each question's source (year · paper) and links it to a book page ("Explained on p. 48") -->
+      <div class="studio" role="img" aria-label="A Klaro practice question from a 2024 past paper on osmosis, answered correctly, with the book page and the lecture that explain it.">
+        <div class="studio-head">
+          <span><i class="dot" style="background: var(--amber)"></i>Questions</span>
+          <span><i class="dot" style="background: var(--teal)"></i>Book</span>
+          <span><i class="dot" style="background: var(--purple)"></i>Lecture</span>
+          <span class="grow"></span>
+          <span class="tag tag-slate">Biology 0610 · IGCSE</span>
+        </div>
+        <div class="panes pq-panes">
+          <div class="pane pq-qpane">
+            <div class="pq-qhead">
+              <div class="pane-label"><i class="dot" style="background: var(--amber)"></i>Question 3 of 8</div>
+              <span class="grow"></span>
+              <span class="tag tag-purple">Osmosis</span>
+              <span class="tag tag-neutral">2024 · Paper 1</span>
+            </div>
+            <p class="q course-content">Four pieces of potato of equal mass are each placed in a different solution for 30 minutes. In which solution does the potato gain mass?</p>
+            <div class="opt pq-right"><b>A</b>Distilled water<svg class="i pq-mark" width="16" height="16"><use href="#i-check"/></svg></div>
+            <div class="opt"><b>B</b>0.5 mol/dm³ sucrose solution</div>
+            <div class="opt"><b>C</b>1.0 mol/dm³ sucrose solution</div>
+            <div class="opt"><b>D</b>2.0 mol/dm³ sucrose solution</div>
+            <div class="pq-row">
+              <span class="tag tag-green">Correct</span>
+              <span class="linked"><svg class="star" viewBox="112.56 0 103.11 103.11" width="12" height="12" aria-hidden="true"><use href="#spark" fill="currentColor"/></svg>Explained on p. 48</span>
+            </div>
+          </div>
+          <div class="pane book">
+            <div class="pane-label"><i class="dot" style="background: var(--teal)"></i>Book · p. 48</div>
+            <p class="course-content">Water molecules move freely through a partially permeable membrane. <mark>Osmosis is the net movement of water from a dilute solution to a more concentrated one</mark> through such a membrane.</p>
+            <div class="pq-lecwrap">
+              <div class="pane-label"><i class="dot" style="background: var(--purple)"></i>Lecture 4</div>
+              <div class="pq-lec">
+                <span class="pq-thumb"><img src="../../img/lecture-osmosis.webp" alt="" width="960" height="548"></span>
+                <span><b>Osmosis</b><small>Explained from 06:12</small></span>
+                <svg class="i" width="16" height="16"><use href="#i-video"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="p-field-note">One question from an example course, with the book page and the lecture it links to.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Proof line: the motto, said for this product -->
+<section class="p-proof">
+  <div class="wrap">
+    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Connected, not generated</span>
+    <p>Every question is from a real past paper for the exam you'll sit. <span class="muted">Not one of them is generated.</span></p>
+  </div>
+</section>
+
+<!-- 3. How it works -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From your tutor's past papers to your screen.</h2></div>
+    <div class="steps">
+      <div class="card card-pad step"><span class="num">1</span><h3 class="card-title">Your tutor uploads the papers</h3><p>The past papers and mark schemes they already teach from, alongside their lectures and book.</p></div>
+      <div class="card card-pad step"><span class="num">2</span><h3 class="card-title">Klaro links them to topics</h3><p>Every topic in the course is linked to its past-paper questions, so each lecture has questions to go with it.</p></div>
+      <div class="card card-pad step"><span class="num">3</span><h3 class="card-title">You answer and see why</h3><p>Each answer is marked as you go. See what you got right and why, then try again.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Feature rows -->
+<section class="section white">
+  <div class="wrap p-rows">
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Real papers</span>
+        <h2>Every question comes from a real past paper.</h2>
+        <!-- confirm: students see each question's year, paper and topic -->
+        <p>Your tutor uploads the papers they teach from, and each question keeps its year, paper and topic. None of them is generated.</p>
+      </div>
+      <div class="p-vis gold">
+        <div class="p-stack">
+          <div class="file" style="background: var(--card)">
+            <span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span>
+            <span class="name">Past paper 2023 P2.pdf</span>
+            <span class="tag tag-neutral">Question 14</span>
+          </div>
+          <div class="pq-thread" aria-hidden="true"></div>
+          <div class="p-ui">
+            <div class="p-ui-head"><i class="dot" style="background: var(--amber)"></i>Question 14<span class="grow"></span><span class="tag tag-neutral">2023 · Paper 2</span></div>
+            <p class="q course-content">Red blood cells are placed in distilled water. What happens to the cells?</p>
+            <div class="opt"><b>A</b>Water leaves and the cells shrink.</div>
+            <div class="opt"><b>B</b>Water enters and the cells burst.</div>
+            <div class="opt"><b>C</b>Salts enter and the cells swell.</div>
+            <div class="opt"><b>D</b>The cells stay the same size.</div>
+            <div class="pq-row"><span class="tag tag-purple">Topic · Osmosis</span><span class="tag tag-slate">Biology 0610 · IGCSE</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Marking</span>
+        <h2>Know whether you're right before you move on.</h2>
+        <p>Each answer is marked as you give it, so you see what you got right and why. Your quiz marks go into your progress for the course.</p>
+        <a class="tlink" href="../progress/">About progress <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="p-vis amber">
+        <div class="p-stack">
+          <div class="p-ui">
+            <div class="p-ui-head"><i class="dot" style="background: var(--amber)"></i>Question 5 of 10<span class="grow"></span><span class="tag tag-slate">Physics 9702 · A Level</span></div>
+            <p class="q course-content">A car accelerates uniformly from 12 m/s to 30 m/s in 6.0 s. How far does it travel in this time?</p>
+            <div class="pq-grid">
+              <div class="opt"><b>A</b>72 m</div>
+              <div class="opt"><b>B</b>108 m</div>
+              <div class="opt"><b>C</b>126 m</div>
+              <div class="opt"><b>D</b>180 m</div>
+            </div>
+          </div>
+          <div class="pq-pair">
+            <div class="p-ui">
+              <div class="p-ui-head">If you choose C</div>
+              <div class="opt pq-right"><b>C</b>126 m<svg class="i pq-mark" width="15" height="15"><use href="#i-check"/></svg></div>
+              <div class="pq-row"><span class="tag tag-green">Correct</span><span class="small">Why: book p. 24</span></div>
+            </div>
+            <div class="p-ui">
+              <div class="p-ui-head">If you choose D</div>
+              <div class="opt pq-wrong"><b>D</b>180 m<svg class="i pq-mark" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div class="pq-row"><span class="tag pq-tag-wrong">Not quite</span><span class="small">Read p. 24, try again</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Try again</span>
+        <h2>A wrong answer points you to the page that explains it.</h2>
+        <!-- confirm: after a wrong answer the app shows the linked book line (not the answer) and lets the student retry -->
+        <p>When you get one wrong, Klaro shows the line in your tutor's book that covers it. Read it, then answer again.</p>
+        <a class="tlink" href="../study-view/">About the study view <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="p-vis teal">
+        <div class="p-ui">
+          <div class="p-ui-head"><i class="dot" style="background: var(--amber)"></i>Question 2 of 6<span class="grow"></span><span class="tag tag-slate">Chemistry 0620 · IGCSE</span></div>
+          <p class="q course-content">Molten lead(II) bromide is electrolysed. What forms at the cathode?</p>
+          <div class="pane-label">First try</div>
+          <div class="opt pq-wrong"><b>A</b>Bromine<svg class="i pq-mark" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+          <div class="pane book pq-why">
+            <div class="pane-label"><i class="dot" style="background: var(--teal)"></i>Book · p. 112</div>
+            <p class="course-content">In electrolysis, an ionic compound that is molten or dissolved is broken down by an electric current. <mark>Positive ions move to the cathode, where they gain electrons</mark> and are discharged.</p>
+          </div>
+          <div class="pane-label">Second try</div>
+          <div class="opt pq-right"><b>B</b>Lead<svg class="i pq-mark" width="15" height="15"><use href="#i-check"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. Who it's for -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">The same past papers, from both sides of the course.</h2></div>
+    <div class="p-who">
+      <div class="card card-pad">
+        <span class="tag tag-purple">For students</span>
+        <h3>Revise with the questions your exam has asked before.</h3>
+        <ul>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Real past-paper questions for each topic</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Marked as you answer, with the reason</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Another try once you've read why</li>
+        </ul>
+        <a class="btn btn-primary" data-signup-as="student" href="#">Create a student account</a>
+      </div>
+      <div class="card card-pad">
+        <span class="tag tag-slate">For tutors</span>
+        <h3>Your own past papers, in front of your students.</h3>
+        <ul>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>The past papers and mark schemes you already use</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Each question linked to the topic it tests</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Nothing added that you didn't choose</li>
+        </ul>
+        <a class="btn btn-secondary" data-signup-as="tutor" href="#">Apply as a tutor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Powered by research: the finding this product is built on -->
+<section class="section white">
+  <div class="wrap">
+    <article class="card card-pad rcard p-research">
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Powered by research</span>
+        <h3>Testing yourself beats reading it again.</h3>
+        <p>Students who practised recalling a passage remembered more of it a week later than students who studied it again.</p>
+      </div>
+      <div class="side">
+        <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--purple)"><use href="#i-check"/></svg>So every lecture comes with past-paper questions.</div>
+        <p class="cite"><i>Roediger &amp; Karpicke (2006).</i> Test-enhanced learning: taking memory tests improves long-term retention. Psychological Science, 17(3), 249–255.</p>
+        <a class="tlink" href="../../research/" style="font-size: 14px; font-weight: 700; color: var(--purple-dark); text-decoration: none">How Klaro uses research →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 7. Related products -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
+    <div class="p-related">
+      <a class="card lift p-rel" href="../study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="card lift p-rel" href="../progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="card lift p-rel" href="../marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Review papers against the mark scheme and release results</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Closer -->
+<section class="section" style="padding-top: 0">
+  <div class="wrap">
+    <div class="closer">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h2 class="closer-h">Real past papers. Not made-up questions.</h2>
+      <p>Create your account, then join with the code your tutor gives you.</p>
+      <a class="btn btn-lg" data-signup href="#">Create a student account</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- chrome:footer -->
+<footer class="foot2">
+  <div class="wrap">
+    <div class="brandcol">
+      <img src="../../img/klaro-wordmark.svg" alt="Klaro" width="93" height="28">
+      <p class="foot-motto">Enough AI slop.</p>
+      <p class="small">We connect your content exactly how you intended it to look.</p>
+    </div>
+    <div><h4>For students</h4><ul>
+          <li><a href="../../products/study-view/">Study view</a></li>
+          <li><a href="../../products/practice-questions/">Practice questions</a></li>
+          <li><a href="../../products/progress/">Progress</a></li>
+          <li><a href="../../products/klaro-market/">Klaro Market</a></li>
+    </ul></div>
+    <div><h4>For tutors</h4><ul>
+          <li><a href="../../products/course-builder/">Course builder</a></li>
+          <li><a href="../../products/study-view/">Study view</a></li>
+          <li><a href="../../products/live-sessions/">Live sessions</a></li>
+          <li><a href="../../products/marking/">Marking</a></li>
+          <li><a data-signup-as="tutor" href="#">Apply as a tutor</a></li>
+    </ul></div>
+    <div><h4>Klaro</h4><ul>
+          <li><a href="../../research/">Research</a></li>
+          <li><a href="../../#try">Try it</a></li>
+          <li><a href="../../market/">Browse courses</a></li>
+          <li><a data-signin href="#">Sign in</a></li>
+          <li><a href="../../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
+    </ul></div>
+    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="#">Terms</a><a data-legal="privacy" href="#">Privacy</a></div>
+  </div>
+</footer>
+<!-- /chrome:footer -->
+<script src="../../klaro.js"></script>
+<script src="../../site.js"></script>
+</body>
+</html>
