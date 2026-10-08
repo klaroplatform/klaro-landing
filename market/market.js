@@ -1,8 +1,17 @@
-/* Klaro Market, the public page: example courses, the header and footer, the course card, and
-   the course drawer. Enroll leads to sign-up with the course attached.
-   Every course, tutor and price here is an example until the market's back end exists. */
+/* Klaro Market (/market/): the example courses, the course card, search and filters, and the course
+   drawer. Enroll leads to student sign-up with the course attached: <app>/sign-up?as=student&course=<id>.
+   Every course, tutor and price here is an example until the market's back end exists.
+
+   The header, footer and icon sprite are the site's own (stamped by tools/chrome.py), run by
+   klaro.js and site.js. This file stays out of their way: it uses km- classes only, never .seg
+   (klaro.js drives every .seg as the student/tutor switch) and never [data-signup]. */
 (function () {
-  var APP = 'https://app.klaroplatform.com';
+  // The app's address comes from the page, as in klaro.js, so staging and production differ by one line.
+  var meta = document.querySelector('meta[name="klaro-app"]');
+  var APP = (meta && meta.content) || 'https://app.klaroplatform.com';
+  var LANG = document.documentElement.lang === 'ar' ? '&lang=ar' : '';
+  var RTL = document.documentElement.dir === 'rtl';
+  var SITE = document.body.dataset.site; if (SITE == null) SITE = '../';
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var TUTORS = {
@@ -23,7 +32,7 @@
     'SAT Reading and Writing': ['Words in context', 'Text structure', 'Command of evidence', 'Transitions', 'Grammar and punctuation']
   };
   var C = function (id, title, subject, level, year, tutor, lectures, quizzes, hours, students, price, per, img, flag) {
-    return { id: id, title: title, subject: subject, level: level, year: year, tutor: tutor, lectures: lectures, quizzes: quizzes, hours: hours, students: students, price: price, per: per, img: '../img/course-' + img + '.webp', flag: flag };
+    return { id: id, title: title, subject: subject, level: level, year: year, tutor: tutor, lectures: lectures, quizzes: quizzes, hours: hours, students: students, price: price, per: per, img: SITE + 'img/course-' + img + '.webp', flag: flag };
   };
   var COURSES = [
     C('bio-0610', 'Biology 0610', 'Biology', 'IGCSE', 'Year 11', 'mona', 18, 9, 14, 320, 450, 'month', 'biology', 'Popular'),
@@ -39,102 +48,93 @@
     C('math-9709', 'Mathematics 9709', 'Mathematics', 'A Level', 'Year 12', 'salma', 32, 16, 27, 140, 600, 'month', 'mathematics', 'New'),
     C('eng-0510', 'English 0510', 'English', 'IGCSE', 'Year 9', 'nour', 14, 7, 10, 175, 350, 'month', 'english')
   ];
+  function byId(id) { return COURSES.filter(function (x) { return x.id === id; })[0]; }
+
+  var ICON_CLOSE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 
   function money(n) { return 'EGP ' + n.toLocaleString('en'); }
-  function priceHTML(c) { return '<span class="price"><b>' + money(c.price) + '</b><span>/ ' + c.per + '</span></span>'; }
-  function avatar(t, size) { return '<span class="avatar" style="background: linear-gradient(135deg, ' + t.hue + ', #c58be8 70%, #f0c93d)' + (size ? '; width: ' + size + 'px; height: ' + size + 'px; font-size: ' + Math.round(size * .36) + 'px' : '') + '">' + t.initials + '</span>'; }
+  function priceHTML(c) { return '<span class="km-price"><b>' + money(c.price) + '</b><span>/ ' + c.per + '</span></span>'; }
+  function avatar(t, large) { return '<span class="km-avatar' + (large ? ' lg' : '') + '" style="--h: ' + t.hue + '" aria-hidden="true">' + t.initials + '</span>'; }
   function flagTag(c) { return c.flag ? '<span class="tag ' + (c.flag === 'New' ? 'tag-purple' : c.flag === 'Popular' ? 'tag-green' : 'tag-yellow') + '">' + c.flag + '</span>' : ''; }
-  function chrome() { return document.body.dataset.chrome || 'public'; }
+  function enrollHref(c) { return APP + '/sign-up?as=student&course=' + encodeURIComponent(c.id) + LANG; }
 
-  /** One market course card: the media card, the tutor, two figures, the price and Enroll. */
-  function card(c, extra) {
+  /** One course card: the kit's media card, the tutor, three figures, the price and Enroll. */
+  function card(c) {
     var t = TUTORS[c.tutor];
-    return '<a class="media mcard lift ' + (extra || '') + '" href="#c-' + c.id + '" data-course="' + c.id + '">' +
-      '<div class="pic"><img src="' + c.img + '" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-slate" style="background: rgb(255 255 255 / .9)">' + c.level + '</span>' + flagTag(c) + '</div>' +
-      '<div class="scrim"><div class="eyebrow">' + c.level + ' · ' + c.year + '</div><div class="title">' + c.title + '</div></div></div>' +
-      '<div class="tutor">' + avatar(t) + t.name + '</div>' +
+    return '<a class="media km-card lift" href="#c-' + c.id + '" data-course="' + c.id + '">' +
+      '<div class="pic"><img src="' + c.img + '" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-slate">' + c.level + '</span>' + flagTag(c) + '</div>' +
+      '<div class="scrim"><div class="eyebrow">' + c.level + ' · ' + c.year + '</div><h3 class="title">' + c.title + '</h3></div></div>' +
+      '<div class="km-tutor">' + avatar(t) + t.name + '</div>' +
       '<div class="figs"><span><b>' + c.lectures + '</b> lectures</span><span><b>' + c.quizzes + '</b> quizzes</span><span><b>' + c.students + '</b> students</span></div>' +
-      '<div class="foot">' + priceHTML(c) + '<span class="btn btn-primary btn-sm">Enroll</span></div></a>';
-  }
-
-  // ---------- chrome: the public header and footer, or the app's top bar ----------
-  var ICON = {
-    search: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
-    bell: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>',
-    menu: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
-    close: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
-    cart: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg>'
-  };
-  function chromeHTML() {
-    return '<header class="topbar pub-only"><div class="wrap"><a class="brand" href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a><span class="spacer"></span>' +
-      '<a class="btn btn-quiet hide-sm" href="../#tutor">For tutors</a><a class="btn btn-quiet hide-sm" href="' + APP + '/sign-in">Sign in</a>' +
-      '<a class="btn btn-glass" href="' + APP + '/sign-up?as=student">Get started</a></div></header>';
-  }
-  function footerHTML() {
-    return '<footer class="footer pub-only"><div class="wrap"><img src="../img/klaro-icon.svg" alt="Klaro" width="19" height="22"><span>© 2026 Klaro</span><a href="' + APP + '/terms">Terms</a><a href="' + APP + '/privacy">Privacy</a><span class="example">Courses, tutors and prices on this page are examples.</span></div></footer>';
+      '<div class="foot">' + priceHTML(c) + '<span class="btn btn-primary km-btn-sm">Enroll</span></div></a>';
   }
 
   // ---------- the course drawer ----------
-  var drawer, lastFocus;
+  var drawer = document.querySelector('.km-drawer');
+  var lastFocus;
   function drawerHTML(c) {
     var t = TUTORS[c.tutor], L = LESSONS[c.subject];
-    var pub = chrome() === 'public';
-    return '<div class="pic"><img src="' + c.img + '" alt=""><button class="close" type="button" aria-label="Close" data-close>' + ICON.close + '</button>' +
-      '<div class="scrim"><div class="eyebrow">' + c.level + ' · ' + c.year + ' · ' + c.subject + '</div><h2 id="drawer-title">' + c.title + '</h2></div></div>' +
-      '<div class="body" id="drawer-body">' +
-        '<div style="display: flex; align-items: center; gap: 12px">' + avatar(t, 44) + '<div><div style="font-weight: 700">' + t.name + '</div><div class="small">' + t.bio + '</div></div></div>' +
-        '<dl class="facts" style="margin: 0"><div><dt>Lectures</dt><dd>' + c.lectures + '</dd></div><div><dt>Quizzes</dt><dd>' + c.quizzes + '</dd></div><div><dt>Hours</dt><dd>' + c.hours + '</dd></div></dl>' +
-        '<div style="display: flex; flex-direction: column; gap: 10px"><span class="kicker">What you get</span>' +
-          '<div style="display: flex; flex-wrap: wrap; gap: 6px"><span class="tag tag-purple">Lectures</span><span class="tag" style="background: var(--teal-soft); color: var(--teal-dark)">The book, linked</span><span class="tag" style="background: var(--amber-soft); color: var(--warn)">Practice questions</span><span class="tag tag-neutral">Past papers</span><span class="tag tag-neutral">Progress</span></div></div>' +
-        '<div style="display: flex; flex-direction: column; gap: 10px"><span class="kicker">The first lectures</span><ol class="lessons">' +
+    return '<div class="pic"><img src="' + c.img + '" alt=""><div class="corner"><span class="p-draft">Example course</span></div>' +
+        '<button class="km-close" type="button" aria-label="Close" data-close>' + ICON_CLOSE + '</button>' +
+        '<div class="scrim"><div class="eyebrow">' + c.level + ' · ' + c.year + ' · ' + c.subject + '</div><h2 id="km-drawer-title">' + c.title + '</h2></div></div>' +
+      '<div class="km-drawer-body">' +
+        '<div class="km-who">' + avatar(t, true) + '<div><b>' + t.name + '</b><p class="small">' + t.bio + '</p></div></div>' +
+        '<dl class="km-facts"><div><dt>Lectures</dt><dd>' + c.lectures + '</dd></div><div><dt>Quizzes</dt><dd>' + c.quizzes + '</dd></div><div><dt>Hours</dt><dd>' + c.hours + '</dd></div></dl>' +
+        '<div class="km-block"><span class="kicker">What you get</span><div class="km-tags">' +
+          '<span class="tag tag-purple">Lectures</span><span class="tag km-tag-teal">The book, linked</span><span class="tag km-tag-amber">Practice questions</span><span class="tag tag-neutral">Past papers</span><span class="tag tag-neutral">Progress</span></div></div>' +
+        '<div class="km-block"><span class="kicker">The first lectures</span><ol class="km-lessons">' +
           L.map(function (l, i) { return '<li><span class="n">' + (i + 1) + '</span>' + l + '</li>'; }).join('') +
-          '<li class="more"><span class="n" style="background: var(--surface); color: var(--muted)">+</span>' + (c.lectures - L.length) + ' more lectures</li></ol></div>' +
-        '<p class="small">' + c.students + ' students study this course. ' + (c.per === 'month' ? 'Paid monthly; stop any month.' : 'One payment for the whole course.') + '</p>' +
+          '<li class="more"><span class="n">+</span>' + (c.lectures - L.length) + ' more lectures</li></ol></div>' +
+        '<p class="small">' + c.students + ' students study this course. ' + (c.per === 'month' ? 'Paid monthly.' : 'One payment for the whole course.') + '</p>' +
       '</div>' +
-      '<div class="buy">' + priceHTML(c) + (pub
-        ? '<a class="btn btn-primary btn-lg" href="' + APP + '/sign-up?as=student&course=' + c.id + '">Create an account to enroll</a>'
-        : '<button class="btn btn-primary btn-lg" type="button" data-checkout="' + c.id + '">Enroll</button>') + '</div>';
+      '<div class="km-buy">' + priceHTML(c) + '<a class="btn btn-primary btn-lg" href="' + enrollHref(c) + '">Create an account to enroll</a></div>';
   }
-  function checkoutHTML(c) {
-    return '<div class="checkout"><span class="kicker">Enroll</span><h3 class="card-title">' + c.title + ' with ' + TUTORS[c.tutor].name + '</h3>' +
-      '<div class="line"><span>' + (c.per === 'month' ? 'Monthly price' : 'Course price') + '</span><span>' + money(c.price) + '</span></div>' +
-      '<div class="line"><span>Access</span><span>' + (c.per === 'month' ? 'Renews monthly' : 'Until the exam') + '</span></div>' +
-      '<div class="line total"><span>Due today</span><span>' + money(c.price) + '</span></div>' +
-      '<button class="btn btn-primary btn-lg" type="button" data-pay>Continue to payment</button>' +
-      '<button class="btn btn-quiet" type="button" data-back>Back to the course</button></div>';
-  }
+  function isOpen() { return document.body.classList.contains('km-open'); }
   function openCourse(id) {
-    var c = COURSES.filter(function (x) { return x.id === id; })[0];
-    if (!c) return;
-    lastFocus = document.activeElement;
+    var c = byId(id);
+    if (!c || !drawer) return;
+    if (!isOpen()) lastFocus = document.activeElement;
     drawer.innerHTML = drawerHTML(c);
-    document.body.classList.add('drawer-open');
+    document.body.classList.add('km-open');
     try { history.replaceState(null, '', '#c-' + id); } catch (e) {}
     setTimeout(function () { var x = drawer.querySelector('[data-close]'); if (x) x.focus({ preventScroll: true }); }, 50);
   }
   function closeCourse() {
-    document.body.classList.remove('drawer-open');
-    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+    if (!isOpen()) return;
+    document.body.classList.remove('km-open');
+    try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
     if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
   }
-  var toastEl, toastT;
-  function toast(msg) {
-    toastEl.textContent = msg; toastEl.classList.add('on');
-    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove('on'); }, 3200);
-  }
+
+  document.addEventListener('click', function (e) {
+    var open = e.target.closest('[data-course]');
+    if (open) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button) return; // let a new tab open the course's own link
+      e.preventDefault(); openCourse(open.dataset.course); return;
+    }
+    if (e.target.closest('[data-close]')) closeCourse();
+  });
+  // Escape closes; Tab stays inside the open drawer.
+  document.addEventListener('keydown', function (e) {
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { closeCourse(); return; }
+    if (e.key !== 'Tab') return;
+    var f = drawer.querySelectorAll('a[href], button:not([disabled])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], at = document.activeElement;
+    if (!drawer.contains(at)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && at === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && at === last) { e.preventDefault(); first.focus(); }
+  });
 
   // ---------- small shared behaviours ----------
+  /** The level control's sliding pill. It sits at the inline start, so in RTL it moves the other way. */
   function placePill(seg) {
-    var pill = seg.querySelector('.seg-pill'), on = seg.querySelector('button[aria-pressed="true"]');
+    var pill = seg.querySelector('.km-pill'), on = seg.querySelector('button[aria-pressed="true"]');
     if (!pill || !on) return;
+    var x = RTL ? on.offsetLeft + on.offsetWidth - seg.clientWidth : on.offsetLeft;
     pill.style.width = on.offsetWidth + 'px';
-    pill.style.translate = on.offsetLeft + 'px 0';
-  }
-  function initSegs(root) {
-    (root || document).querySelectorAll('.seg').forEach(function (seg) {
-      if (!seg.querySelector('.seg-pill')) { var p = document.createElement('span'); p.className = 'seg-pill'; p.setAttribute('aria-hidden', 'true'); seg.prepend(p); }
-      placePill(seg);
-    });
+    pill.style.translate = x + 'px 0';
   }
   /** Animate items from their old place to their new one (FLIP), after `change` moves them. */
   function flip(items, change) {
@@ -150,44 +150,105 @@
       if (dx || dy) el.animate([{ translate: dx + 'px ' + dy + 'px' }, { translate: '0 0' }], { duration: 480, easing: 'cubic-bezier(.22,1.12,.36,1)' });
     });
   }
-  function setChrome(mode) {
-    document.body.dataset.chrome = mode;
-    try { localStorage.setItem('klaro.market.chrome', mode); } catch (e) {}
-    document.querySelectorAll('.chromeswitch button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.mode === mode)); });
-    document.dispatchEvent(new CustomEvent('chrome', { detail: mode }));
-    setTimeout(function () { document.querySelectorAll('.seg').forEach(placePill); }, 0);
+
+  // ---------- the catalogue: search, level, subjects, sort ----------
+  var grid = document.getElementById('grid');
+  if (grid) {
+    var state = { level: 'all', subject: 'all', q: '', sort: 'popular' };
+    var SUBJECTS = ['all', 'Biology', 'Chemistry', 'Physics', 'Mathematics', 'English', 'SAT'];
+    var group = function (c) { return c.level === 'SAT' ? 'SAT' : c.subject; };
+    var level = document.getElementById('level');
+    var subjects = document.getElementById('subjects');
+    var sort = document.getElementById('sort');
+    var input = document.getElementById('q');
+
+    grid.innerHTML = COURSES.map(card).join('') +
+      '<div class="km-empty" id="km-empty" hidden><img src="' + SITE + 'img/empty-no-courses.webp" alt="" width="150" height="150">' +
+      '<h3 class="card-title">No course matches that</h3><p class="small">Try another subject or level.</p>' +
+      '<button class="btn btn-primary" type="button" data-clear>Clear the filters</button></div>';
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.km-card'));
+    var empty = document.getElementById('km-empty');
+
+    // Subject buttons are built once and updated in place, so keyboard focus stays where it was.
+    subjects.innerHTML = SUBJECTS.map(function (s) {
+      return '<button class="km-chip" type="button" data-sub="' + s + '" aria-pressed="' + (s === 'all') + '">' + (s === 'all' ? 'All subjects' : s) + '<span class="km-count"></span></button>';
+    }).join('');
+
+    var matches = function (c, ignoreSubject) {
+      var hay = (c.title + ' ' + c.subject + ' ' + c.level + ' ' + TUTORS[c.tutor].name).toLowerCase();
+      return (state.level === 'all' || c.level === state.level) &&
+        (ignoreSubject || state.subject === 'all' || group(c) === state.subject) &&
+        (!state.q || state.q.toLowerCase().split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; }));
+    };
+    var updateSubjects = function () {
+      subjects.querySelectorAll('.km-chip').forEach(function (b) {
+        var s = b.dataset.sub;
+        var n = COURSES.filter(function (c) { return matches(c, true) && (s === 'all' || group(c) === s); }).length;
+        b.setAttribute('aria-pressed', String(state.subject === s));
+        b.querySelector('.km-count').textContent = n;
+      });
+    };
+    var apply = function () {
+      updateSubjects();
+      var shown = 0;
+      var order = COURSES.slice().sort(function (a, b) {
+        return state.sort === 'price' ? (a.per === b.per ? a.price - b.price : a.per === 'month' ? -1 : 1)
+          : state.sort === 'lectures' ? b.lectures - a.lectures : b.students - a.students;
+      });
+      flip(cards, function () {
+        order.forEach(function (c) {
+          var el = grid.querySelector('[data-course="' + c.id + '"]');
+          el.hidden = !matches(c); if (!el.hidden) shown++;
+          grid.insertBefore(el, empty);
+        });
+      });
+      document.getElementById('count').textContent = shown;
+      document.getElementById('noun').textContent = shown === 1 ? 'course' : 'courses';
+      document.getElementById('what').textContent = state.q ? 'for “' + state.q + '”' : '';
+      empty.hidden = shown > 0;
+    };
+    var setLevel = function (v) {
+      state.level = v;
+      level.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.v === v)); });
+      placePill(level);
+    };
+
+    var pill = document.createElement('span');
+    pill.className = 'km-pill'; pill.setAttribute('aria-hidden', 'true');
+    level.prepend(pill);
+    placePill(level);
+    requestAnimationFrame(function () { level.classList.add('ready'); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placePill(level); });
+    window.addEventListener('resize', function () { placePill(level); });
+
+    level.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      setLevel(b.dataset.v); apply();
+    });
+    subjects.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      state.subject = b.dataset.sub; apply();
+    });
+    sort.addEventListener('change', function () { state.sort = sort.value; apply(); });
+    var typing;
+    input.addEventListener('input', function () {
+      state.q = input.value.trim();
+      clearTimeout(typing); typing = setTimeout(apply, 120);
+    });
+    grid.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-clear]')) return;
+      state.subject = 'all'; state.q = ''; input.value = '';
+      setLevel('all'); apply(); input.focus();
+    });
+
+    sort.value = state.sort;
+    apply();
+    // Announce the count only after the first render, so the page doesn't speak on load.
+    document.getElementById('result').setAttribute('aria-live', 'polite');
   }
 
-  window.KM = { APP: APP, still: still, COURSES: COURSES, TUTORS: TUTORS, LESSONS: LESSONS, money: money, priceHTML: priceHTML, avatar: avatar, card: card, openCourse: openCourse, toast: toast, flip: flip, initSegs: initSegs, placePill: placePill, ICON: ICON, chrome: chrome };
+  // A shared link to one course (#c-bio-0610) opens its drawer.
+  if (location.hash.indexOf('#c-') === 0) openCourse(location.hash.slice(3));
 
-  // ---------- boot ----------
-  document.body.dataset.chrome = 'public';
-  document.body.insertAdjacentHTML('afterbegin', chromeHTML());
-  document.body.insertAdjacentHTML('beforeend', footerHTML() +
-    '<div class="scrim-bg" data-close></div><aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title"></aside><div class="toast" role="status"></div>');
-  drawer = document.querySelector('.drawer'); toastEl = document.querySelector('.toast');
-
-  document.addEventListener('click', function (e) {
-    var open = e.target.closest('[data-course]');
-    if (open && !e.target.closest('[data-stop]')) { e.preventDefault(); openCourse(open.dataset.course); return; }
-    if (e.target.closest('[data-close]')) { closeCourse(); return; }
-    var co = e.target.closest('[data-checkout]');
-    if (co) { var c = COURSES.filter(function (x) { return x.id === co.dataset.checkout; })[0]; document.getElementById('drawer-body').innerHTML = checkoutHTML(c); drawer.querySelector('.buy').hidden = true; return; }
-    if (e.target.closest('[data-back]')) { openCourse(location.hash.slice(3)); return; }
-    if (e.target.closest('[data-pay]')) { toast('Payment comes next. It is not built yet; this is where it starts.'); return; }
-  });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && document.body.classList.contains('drawer-open')) closeCourse(); });
-
-  document.addEventListener('DOMContentLoaded', function () {
-    initSegs();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { document.querySelectorAll('.seg').forEach(placePill); });
-    window.addEventListener('resize', function () { document.querySelectorAll('.seg').forEach(placePill); });
-    var bar = function () { document.querySelectorAll('.topbar').forEach(function (t) { t.classList.toggle('scrolled', window.scrollY > 8); }); };
-    window.addEventListener('scroll', bar, { passive: true }); bar();
-    if (!still && 'IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }); });
-      document.querySelectorAll('.reveal').forEach(function (el) { if (el.getBoundingClientRect().top > window.innerHeight) io.observe(el); });
-    }
-    if (location.hash.indexOf('#c-') === 0) openCourse(location.hash.slice(3));
-  });
+  window.KM = { APP: APP, COURSES: COURSES, TUTORS: TUTORS, open: openCourse, close: closeCourse };
 })();
