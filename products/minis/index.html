@@ -7,688 +7,221 @@
 <title>Minis: your weak spots, one lecture moment at a time · Klaro</title>
 <meta name="description" content="Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.">
 <!-- chrome:meta -->
-<link rel="canonical" href="https://learnklaro.com/products/minis/">
-<link rel="alternate" hreflang="en" href="https://learnklaro.com/products/minis/">
-<link rel="alternate" hreflang="ar" href="https://learnklaro.com/ar/products/minis/">
-<link rel="alternate" hreflang="x-default" href="https://learnklaro.com/products/minis/">
-<meta name="klaro-app" content="https://app.klaroplatform.com">
-<meta name="theme-color" content="#f3f3f1">
-<link rel="icon" href="../../favicon.ico" sizes="32x32">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Klaro">
-<meta property="og:locale" content="en_GB">
-<meta property="og:locale:alternate" content="ar_AR">
-<meta property="og:url" content="https://learnklaro.com/products/minis/">
-<meta property="og:title" content="Minis: your weak spots, one lecture moment at a time">
-<meta property="og:description" content="Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.">
-<meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
-<meta property="og:image:width" content="960">
-<meta property="og:image:height" content="548">
-<meta property="og:image:alt" content="A Klaro lecture on osmosis, from an example course">
-<meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "Organization",
-   "@id": "https://learnklaro.com/#org",
-   "name": "Klaro",
-   "url": "https://learnklaro.com/",
-   "logo": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/apple-touch-icon.png",
-    "width": 180,
-    "height": 180
-   },
-   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
-   "slogan": "Enough AI slop."
-  },
-  {
-   "@type": "WebSite",
-   "@id": "https://learnklaro.com/#website",
-   "url": "https://learnklaro.com/",
-   "name": "Klaro",
-   "inLanguage": [
-    "en",
-    "ar"
-   ],
-   "publisher": {
-    "@id": "https://learnklaro.com/#org"
-   }
-  },
-  {
-   "@type": "WebPage",
-   "@id": "https://learnklaro.com/products/minis/#webpage",
-   "url": "https://learnklaro.com/products/minis/",
-   "name": "Minis: your weak spots, one lecture moment at a time · Klaro",
-   "description": "Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.",
-   "inLanguage": "en",
-   "isPartOf": {
-    "@id": "https://learnklaro.com/#website"
-   },
-   "primaryImageOfPage": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/img/lecture-osmosis.webp",
-    "width": 960,
-    "height": 548
-   },
-   "dateModified": "2026-10-08",
-   "about": {
-    "@id": "https://learnklaro.com/#app"
-   },
-   "audience": [
-    {
-     "@type": "EducationalAudience",
-     "educationalRole": "student"
-    }
-   ],
-   "breadcrumb": {
-    "@id": "https://learnklaro.com/products/minis/#breadcrumb"
-   }
-  },
-  {
-   "@type": "BreadcrumbList",
-   "@id": "https://learnklaro.com/products/minis/#breadcrumb",
-   "itemListElement": [
-    {
-     "@type": "ListItem",
-     "position": 1,
-     "name": "Klaro",
-     "item": "https://learnklaro.com/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 2,
-     "name": "Products",
-     "item": "https://learnklaro.com/products/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 3,
-     "name": "Minis"
-    }
-   ]
-  }
- ]
-}
-</script>
 <!-- /chrome:meta -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="../../klaro.css">
 <link rel="stylesheet" href="../../site.css">
-<style>
-/* Minis only: two phone screens from the app (a lecture moment and its first check), the day's list
-   of units, the book sheet over a paused clip, and the day's summary. All static: nothing loops.
-   Inside a hero phone every size is in em, and the em is a plain clamp() of the viewport, so a
-   screen scales as one picture (the screen is 22em wide). Every picture is pinned with
-   position: absolute and object-fit, so the img's width/height attributes never size it.
-   Logical properties only. */
-.mn-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-.mn-flush { padding-block-start: 0; }
-.mn-list-reset { margin: 0; padding: 0; list-style: none; }
-
-/* Hero: the lecture moment and its first check, side by side; stacked on a phone */
-.mn-stage { display: flex; justify-content: center; align-items: flex-start; gap: clamp(24px, 5vw, 72px); }
-.mn-fig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
-.mn-fig-main { width: min(300px, 100%); }
-.mn-fig-side { width: min(264px, 100%); margin-block-start: 64px; }
-.mn-fig figcaption { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-align: center; }
-.mn-fig figcaption b { width: 22px; height: 22px; flex: none; border-radius: 50%; background: var(--ink); color: #fff; display: grid; place-items: center; font-size: 11px; }
-@media (max-width: 720px) {
-  .mn-stage { flex-direction: column; align-items: center; gap: 28px; }
-  .mn-fig-side { width: min(300px, 100%); margin-block-start: 0; }
-  .mn-fig-side .mn-screen { font-size: clamp(10.5px, calc((100vw - 80px) / 22), 13px); }
-}
-
-/* The phone: a dark frame round a 9:16 screen */
-.mn-phone { width: 100%; padding: 7px; border-radius: 30px; background: #0d0d10; box-shadow: var(--shadow-lift); }
-/* 1em = the screen's width / 22: 13px on the 300px phone, smaller only when the viewport is too
-   narrow for 300px (the field's padding and the page gutter take about 80px). */
-.mn-screen { position: relative; aspect-ratio: 9 / 16; border-radius: 23px; display: flex; flex-direction: column; font-size: clamp(10.5px, calc((100vw - 80px) / 22), 13px); line-height: 1.3; }
-.mn-fig-side .mn-screen { font-size: 11.35px; } /* the 264px phone: a 250px screen */
-.mn-dark { overflow: hidden; color: #fff; background: radial-gradient(95% 50% at 50% 46%, rgb(240 201 61 / .12), transparent 72%), #050506; }
-.mn-light { background: var(--page); color: var(--ink); }
-.mn-ic { width: 1em; height: 1em; flex: none; }
-
-/* The feed's header: "Minis", the course, checks answered today, one ribbon segment per mini */
-.mn-head { flex: none; padding-block: .8em .65em; padding-inline: 1.1em; }
-.mn-dark .mn-head { background: #000; }
-.mn-head-row { display: flex; align-items: center; gap: .7em; }
-.mn-head-name { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.mn-head-name b { font-size: 1.3em; font-weight: 800; line-height: 1.12; letter-spacing: -.01em; }
-.mn-head-name span { font-size: .92em; line-height: 1.3; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mn-dark .mn-head-name span { color: rgb(255 255 255 / .7); }
-.mn-count { flex: none; padding-block: .3em; padding-inline: .75em; border-radius: var(--r-pill); background: var(--surface); color: var(--ink-soft); font-size: .92em; font-weight: 700; font-variant-numeric: tabular-nums; }
-.mn-dark .mn-count { background: rgb(255 255 255 / .15); color: #fff; }
-.mn-ribbon { display: flex; gap: .3em; margin-block-start: .6em; }
-.mn-ribbon i { flex: 1; height: .45em; border-radius: .25em; background: var(--border-strong); }
-.mn-ribbon i.mn-done { background: rgb(240 201 61 / .45); }
-.mn-ribbon i.mn-now { background: var(--yellow); }
-.mn-dark .mn-ribbon i { background: rgb(255 255 255 / .25); }
-.mn-dark .mn-ribbon i.mn-done { background: rgb(255 255 255 / .6); }
-.mn-dark .mn-ribbon i.mn-now { background: #fff; }
-
-/* The reel: the unit, the lecture at its moment, the caption, the swipe cue; meta, rail and sound */
-.mn-reel { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: .9em; padding-block: .8em 6.6em; }
-.mn-unit { padding-inline: 1.4em; font-size: 1.85em; font-weight: 800; line-height: 1.08; letter-spacing: -.012em; text-shadow: 0 2px 18px rgb(0 0 0 / .5); }
-.mn-clip { position: relative; flex: none; aspect-ratio: 16 / 10; overflow: hidden; background: #000; }
-.mn-clip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.mn-caption { padding-inline: 1.5em; text-align: center; font-size: 1.1em; font-weight: 600; line-height: 1.55; }
-.mn-caption span { padding-inline: .45em; border-radius: .4em; background: rgb(0 0 0 / .55); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-.mn-swipe { align-self: center; display: inline-flex; align-items: center; gap: .4em; padding-block: .65em; padding-inline: .8em 1.05em; border-radius: var(--r-pill); background: var(--yellow); color: var(--ink); font-size: .92em; font-weight: 800; white-space: nowrap; box-shadow: 0 .8em 2.2em rgb(0 0 0 / .45); }
-.mn-swipe .mn-ic { width: 1.2em; height: 1.2em; }
-.mn-sound { position: absolute; inset-block-start: .8em; inset-inline-end: .9em; width: 2.6em; height: 2.6em; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .15); }
-.mn-sound .mn-ic { width: 1.35em; height: 1.35em; }
-.mn-meta { position: absolute; inset-inline: 1.1em 5.2em; inset-block-end: 1.5em; display: flex; flex-direction: column; align-items: flex-start; gap: .55em; }
-.mn-missed { display: inline-flex; align-items: center; gap: .55em; padding-block: .3em; padding-inline: .55em .75em; border-radius: var(--r-pill); background: rgb(255 77 109 / .18); color: #ff95a8; font-size: .88em; font-weight: 700; white-space: nowrap; }
-.mn-pips { display: flex; gap: 2px; }
-.mn-pips i { width: .32em; height: .85em; border-radius: 2px; background: #34d399; }
-.mn-pips i.mn-miss { background: #ff4d6d; }
-.mn-from { font-size: 1.04em; line-height: 1.4; color: rgb(255 255 255 / .9); white-space: nowrap; }
-.mn-rail { position: absolute; inset-inline-end: .7em; inset-block-end: 1.2em; display: flex; flex-direction: column; align-items: center; gap: 1.2em; font-size: .9em; font-weight: 700; }
-.mn-rail > span { display: flex; flex-direction: column; align-items: center; gap: .2em; }
-.mn-rail .mn-ic { width: 2.4em; height: 2.4em; filter: drop-shadow(0 2px 6px rgb(0 0 0 / .45)); }
-.mn-progress { position: absolute; inset-inline: 0; inset-block-end: 0; height: 2px; background: rgb(255 255 255 / .25); }
-.mn-progress i { display: block; width: 38%; height: 100%; background: #fff; }
-
-/* A check: replay, which check, the past-paper question, its answer marked, what comes next */
-.mn-check { flex: 1; display: flex; flex-direction: column; gap: .7em; padding-block: .8em; padding-inline: 1.1em; }
-.mn-check-top { display: flex; align-items: center; justify-content: space-between; gap: .6em; }
-.mn-replay { min-width: 0; display: inline-flex; align-items: center; gap: .45em; padding-block: .3em; padding-inline: .3em .7em; border-radius: var(--r-pill); background: var(--surface); color: var(--ink-soft); font-size: .85em; }
-.mn-replay > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mn-replay i { width: 1.75em; height: 1.75em; flex: none; border-radius: 50%; background: var(--yellow); color: var(--ink); display: grid; place-items: center; }
-.mn-replay i .mn-ic { width: .95em; height: .95em; }
-.mn-step { flex: none; font-size: .85em; font-weight: 700; color: var(--muted); white-space: nowrap; }
-.mn-qcard { display: flex; flex-direction: column; gap: .7em; padding: 1em; border-radius: 1.2em; border: 1px solid var(--border); background: var(--card); }
-.mn-paper { display: flex; align-items: center; justify-content: space-between; gap: .5em; font-size: .88em; color: var(--muted); }
-.mn-paper code { padding-block: .3em; padding-inline: .5em; border-radius: .4em; background: var(--surface); color: var(--ink-soft); font: 600 .95em/1 ui-monospace, Menlo, monospace; }
-.mn-stem { font-size: 1.05em; font-weight: 600; line-height: 1.38; }
-.mn-opts { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .42em; }
-.mn-opts li { display: flex; align-items: center; gap: .7em; padding-block: .45em; padding-inline: .5em .7em; border: 1px solid var(--border); border-radius: .85em; background: var(--card); font-weight: 600; line-height: 1.25; }
-.mn-opts b { width: 1.85em; height: 1.85em; flex: none; display: grid; place-items: center; border: 1px solid var(--border); border-radius: .5em; font: 600 .9em/1 ui-monospace, Menlo, monospace; }
-.mn-opts li.mn-dim { opacity: .45; }
-.mn-opts li.mn-right { border-color: var(--success-line); background: var(--success-soft); }
-.mn-opts li.mn-right b { border-color: var(--success); background: var(--success); color: #fff; }
-.mn-opts li .mn-ic { width: 1.3em; height: 1.3em; margin-inline-start: auto; color: var(--success); }
-.mn-verdict { display: flex; flex-direction: column; gap: .7em; padding-block: .85em; padding-inline: 1em; border-radius: 1.2em; background: var(--surface); }
-.mn-verdict p { font-size: 1.12em; font-weight: 800; color: var(--success); }
-.mn-verdict-btns { display: flex; gap: .5em; }
-.mn-verdict-btns span { display: inline-flex; align-items: center; gap: .4em; padding-block: .5em; padding-inline: .85em; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--card); font-size: .95em; font-weight: 700; }
-.mn-verdict-btns span + span { margin-inline-start: auto; border-color: var(--ink); background: var(--ink); color: #fff; }
-
-/* Feature rows: the day's list, the book sheet, the summary */
-.mn-eyebrow { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-deep); }
-.mn-day-head { display: flex; flex-direction: column; gap: 4px; }
-.mn-day-title { font-size: 20px; font-weight: 800; line-height: 1.12; letter-spacing: -.02em; text-wrap: balance; }
-.mn-day-sub { font-size: 13px; line-height: 1.45; color: var(--ink-soft); }
-.mn-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
-.mn-list li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding-block: 6px; border-block-start: 1px solid var(--border); font-size: 13.5px; }
-.mn-list li > b, .mn-list li > span:nth-child(2) b { display: block; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.mn-n { width: 24px; height: 24px; border-radius: 7px; background: rgb(240 201 61 / .3); display: grid; place-items: center; font: 600 11px/1 ui-monospace, Menlo, monospace; }
-.mn-pill { display: inline-flex; align-items: center; height: 22px; padding-inline: 8px; border-radius: var(--r-pill); font-size: 11px; font-weight: 700; white-space: nowrap; }
-.mn-pill-miss { background: #fdeeee; color: #9b2c2c; }
-.mn-pill-start { background: var(--gold-soft); color: var(--gold-deep); }
-
-/* Row (b): a phone; the paused clip fills its top, the book sheet covers its lower 70% */
-.mn-bphone { width: min(300px, 100%); }
-.mn-bscreen { position: relative; aspect-ratio: 3 / 5; overflow: hidden; border-radius: 23px; background: #050506; color: #fff; }
-.mn-bclip { position: absolute; inset-inline: 0; inset-block-start: 0; height: 46%; overflow: hidden; }
-.mn-bclip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.mn-bclip::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgb(10 10 14 / .35), rgb(10 10 14 / .5) 55%, #050506); }
-.mn-blabel { position: absolute; inset-block-start: 12px; inset-inline-start: 12px; padding-block: 4px; padding-inline: 9px; border-radius: var(--r-pill); background: rgb(0 0 0 / .5); font-size: 11.5px; font-weight: 700; white-space: nowrap; }
-.mn-bpause { position: absolute; inset-inline: 0; inset-block-start: 0; height: 30%; display: grid; place-items: center; }
-.mn-bpause span { display: inline-flex; align-items: center; gap: 6px; padding-block: 6px; padding-inline: 10px 12px; border-radius: var(--r-pill); background: rgb(255 255 255 / .18); font-size: 12px; font-weight: 700; }
-.mn-bpause .mn-ic { width: 12px; height: 12px; }
-.mn-sheet { position: absolute; inset-inline: 0; inset-block-end: 0; height: 70%; display: flex; flex-direction: column; overflow: hidden; border-start-start-radius: 18px; border-start-end-radius: 18px; background: var(--card); color: var(--ink); box-shadow: 0 -12px 30px rgb(0 0 0 / .35); }
-.mn-sheet-head { flex: none; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; padding-block: 12px 10px; padding-inline: 14px 12px; border-block-end: 1px solid var(--border); }
-.mn-sheet-head .mn-eyebrow { font-size: 10px; }
-.mn-sheet-head b { display: block; margin-block-start: 3px; font-size: 16px; font-weight: 800; line-height: 1.2; }
-.mn-close { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--surface); color: var(--ink-soft); }
-.mn-close .mn-ic { width: 14px; height: 14px; }
-.mn-desk { flex: 1; min-height: 0; overflow: hidden; padding: 10px; background: var(--surface); }
-.mn-page { display: flex; flex-direction: column; gap: 7px; padding-block: 12px; padding-inline: 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); font-size: 12px; line-height: 1.55; color: var(--ink-soft); }
-.mn-page-h { font-size: 12px; font-weight: 700; color: var(--ink); }
-.mn-intag { align-self: flex-start; margin-block-end: -3px; padding-block: 3px; padding-inline: 7px; border-radius: 6px; background: var(--ink); color: #fff; font: 700 10.5px/1.2 var(--font); }
-mark.mn-region { display: block; padding-block: 4px; padding-inline: 6px; margin-inline: -6px; border-radius: 4px; color: var(--ink); background: linear-gradient(#ffe9a3, #ffe9a3) no-repeat 0 50% / 100% 100%; }
-.mn-sheet-foot { flex: none; display: flex; align-items: center; padding-block: 8px 10px; padding-inline: 12px; border-block-start: 1px solid var(--border); }
-.mn-seg { display: inline-flex; padding: 2px; border-radius: 9px; background: var(--surface); font-size: 12px; font-weight: 700; color: var(--ink-soft); }
-.mn-seg span { padding-block: 5px; padding-inline: 10px; border-radius: 7px; white-space: nowrap; }
-.mn-seg .mn-on { background: var(--card); color: var(--ink); box-shadow: var(--shadow-segment); }
-
-.mn-res-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; font-weight: 700; color: var(--muted); }
-.mn-res-no { font-size: 15px; font-weight: 800; color: #9b2c2c; }
-.mn-res-score { padding-block-start: 10px; border-block-start: 1px solid var(--border); font-size: 13.5px; font-weight: 700; color: var(--ink-soft); }
-.mn-list small { display: block; font-size: 12px; font-weight: 600; }
-.mn-st-ok { color: var(--success); }
-.mn-st-near { color: var(--warn); }
-.mn-st-weak { color: #9b2c2c; }
-.mn-dots { display: flex; gap: 4px; }
-.mn-dots i { width: 8px; height: 8px; border-radius: 50%; background: #c24141; }
-.mn-dots i.mn-ok { background: var(--success); }
-
-/* Research card: its title is this section's heading */
-.mn-rmain { display: flex; flex-direction: column; gap: 12px; }
-.mn-rh { font-size: clamp(22px, 2.4vw, 28px); font-weight: 700; line-height: 1.25; letter-spacing: -.025em; }
-.rcard .in-klaro .mn-ic { width: 16px; height: 16px; color: var(--purple); }
-.mn-doi { color: var(--purple-dark); overflow-wrap: anywhere; }
-.mn-rlink { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--purple-dark); text-decoration: none; }
-.mn-rlink:hover { text-decoration: underline; text-underline-offset: 3px; }
-</style>
 </head>
 <body data-site="../../">
 <!-- chrome:sprite -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
-  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
-  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
-  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
-  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
-  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
-  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
-  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
-  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
-  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
-</defs></svg>
 <!-- /chrome:sprite -->
 <!-- chrome:header -->
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-    <nav class="nav" aria-label="Main">
-      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
-      <a class="nav-btn" href="../../research/">Research</a>
-      <a class="nav-btn" href="../../#try">Try it</a>
-    </nav>
-    <span class="spacer"></span>
-    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="../../ar/products/minis/" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-    <a class="btn btn-glass" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
-  </div>
-  <div class="mega-wrap">
-    <nav class="mega" id="products-menu" aria-label="Products" hidden>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <p class="mega-head">For students</p>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
-          <a class="mega-item" href="../../products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
-          <a class="mega-item" href="../../products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
-        </div>
-        <div class="mega-col">
-          <p class="mega-head">For tutors</p>
-          <a class="mega-item" href="../../products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="../../products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class. Klaro sets up the meeting.</small></span></a>
-          <a class="mega-item" href="../../products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
-        </div>
-      </div>
-      <div class="mega-links">
-        <a class="nav-btn" href="../../products/">All products</a>
-        <a class="nav-btn" href="../../research/">Research</a>
-        <a class="nav-btn" href="../../#try">Try it</a>
-        <a class="nav-btn" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-      </div>
-      <div class="mega-foot">
-        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
-      </div>
-    </nav>
-  </div>
-</header>
 <!-- /chrome:header -->
 
 <main id="top">
 
-<!-- This page's own icons, drawn as the app draws them -->
-<svg class="mn-defs" aria-hidden="true"><defs>
-  <symbol id="mn-book-open" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></g></symbol>
-  <symbol id="mn-heart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></g></symbol>
-  <symbol id="mn-sound" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M16 9a5 5 0 0 1 0 6"/><path d="M19.4 18.4a9 9 0 0 0 0-12.8"/></g></symbol>
-  <symbol id="mn-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></g></symbol>
-  <symbol id="mn-replay" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></g></symbol>
-  <symbol id="mn-ok" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></g></symbol>
-  <symbol id="mn-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></g></symbol>
-  <symbol id="mn-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g></symbol>
-</defs></svg>
+<!-- 1. Hero: chip, H1 with the one underline, lead, one pill and a text link; the illustration mosaic -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-minis"/></svg>Minis <span class="chip-for">for students</span></span>
+      <h1 class="h1">Your weak spots, one lecture <span class="uline">moment</span> at a time.</h1>
+      <p class="lead">Minis picks the book units you miss most in practice and shows the moment of your tutor's lecture that teaches each one, then three quick checks.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
+        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <div class="mosaic" aria-hidden="true">
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/13-parent-tea.webp"><img src="../../img/ill/13-parent-tea.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
-<section class="p-hero">
+<!-- 2. In action: Omar's student-minis recording, in a browser frame until a phone-layout recording exists -->
+<section class="section" id="in-action">
   <div class="wrap">
-    <a class="p-back" href="../"><svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-back"/></svg>All products</a>
-    <div class="p-top">
-      <span class="p-chip"><span class="icon-tile"><svg class="i" width="16" height="16" aria-hidden="true"><use href="#i-minis"/></svg></span>Minis<span class="p-for">For students</span></span>
-      <div class="p-head">
-        <h1 class="display">Your weak spots, <span class="key">one lecture moment</span> at a time.</h1>
-        <div class="p-head-side">
-          <p class="lead">Every day, Minis picks the book units you miss most in past-paper practice. For each one, you watch the moment of your tutor's lecture that teaches it, then answer three past-paper checks.</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Create a student account <svg class="i flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-secondary btn-lg" href="../../#try">Try a lesson</a>
+    <div class="split-card">
+      <div class="split-copy">
+        <h2 class="h3">What a mini looks like</h2>
+        <p>Each mini is one unit of your book: the moment of your tutor's lecture that teaches it, then three questions from real past papers. Until you have weak spots, Minis starts from the beginning of the book.</p>
+      </div>
+      <figure class="rec" data-recording="student-minis">
+        <div class="plate" data-ph="img/plates/P2-kitchen-table.webp">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen rec-screen" data-screen data-nosnippet>
+              <img src="../../media/student-minis-poster.jpg" alt="Today's minis in Klaro on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async">
+              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a mini, from the lecture moment to the checks"></video>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="p-field">
-      <div data-nosnippet class="mn-stage">
-        <figure class="mn-fig mn-fig-main">
-          <div class="mn-phone" role="img" aria-label="A mini on a phone. The header reads Minis, Biology 0610, with 12 of 27 checks answered today and the fifth of nine minis under way. The unit is Osmosis, missed 3 of 5 times in past-paper practice. Lecture 4 plays from 06:12 with a caption from the lecture under it. On the side are a book button for page 48 and a like button, and at the bottom a button reads Swipe up, 3 questions.">
-            <div class="mn-screen mn-dark" aria-hidden="true">
-              <div class="mn-head">
-                <div class="mn-head-row">
-                  <span class="mn-head-name"><b>Minis</b><span>Biology 0610 · IGCSE</span></span>
-                  <span class="mn-count">12/27</span>
-                </div>
-                <div class="mn-ribbon"><i class="mn-done"></i><i class="mn-done"></i><i class="mn-done"></i><i class="mn-done"></i><i class="mn-now"></i><i></i><i></i><i></i><i></i></div>
-              </div>
-              <div class="mn-reel">
-                <span class="mn-sound"><svg class="mn-ic" width="24" height="24"><use href="#mn-sound"/></svg></span>
-                <p class="mn-unit">Osmosis</p>
-                <div class="mn-clip"><img src="../../img/lecture-osmosis.webp" alt="" width="960" height="548"></div>
-                <p class="mn-caption"><span>So water moves from the dilute side to the concentrated side.</span></p>
-                <span class="mn-swipe"><svg class="mn-ic" width="24" height="24"><use href="#mn-up"/></svg>Swipe up · 3 questions</span>
-                <div class="mn-meta">
-                  <span class="mn-missed"><span class="mn-pips"><i class="mn-miss"></i><i class="mn-miss"></i><i class="mn-miss"></i><i></i><i></i></span>Missed 3 of 5</span>
-                  <span class="mn-from">Lecture 4 · from 06:12</span>
-                </div>
-                <div class="mn-rail">
-                  <span><svg class="mn-ic" width="24" height="24"><use href="#mn-book-open"/></svg>p. 48</span>
-                  <span><svg class="mn-ic" width="24" height="24"><use href="#mn-heart"/></svg>18</span>
-                </div>
-                <span class="mn-progress"><i></i></span>
-              </div>
-            </div>
-          </div>
-          <figcaption><b>1</b>The lecture moment</figcaption>
-        </figure>
-
-        <figure class="mn-fig mn-fig-side">
-          <div class="mn-phone" role="img" aria-label="The first of three checks on Osmosis, from a 2023 past paper. A plant cell is put in a concentrated sugar solution: which way does water move? The answer, out of the cell, is marked correct, with buttons to replay the clip or go on.">
-            <div class="mn-screen mn-light" aria-hidden="true">
-              <div class="mn-head">
-                <div class="mn-head-row">
-                  <span class="mn-head-name"><b>Minis</b><span>Biology 0610 · IGCSE</span></span>
-                  <span class="mn-count">13/27</span>
-                </div>
-                <div class="mn-ribbon"><i class="mn-done"></i><i class="mn-done"></i><i class="mn-done"></i><i class="mn-done"></i><i class="mn-now"></i><i></i><i></i><i></i><i></i></div>
-              </div>
-              <div class="mn-check">
-                <div class="mn-check-top">
-                  <span class="mn-replay"><i><svg class="mn-ic" width="24" height="24"><use href="#mn-replay"/></svg></i><span>From Osmosis · replay clip</span></span>
-                  <span class="mn-step">Check 1/3</span>
-                </div>
-                <div class="mn-qcard">
-                  <div class="mn-paper"><span>Past paper</span><code>2023 · Paper 2</code></div>
-                  <p class="mn-stem">A plant cell is put in a concentrated sugar solution. Which way does water move?</p>
-                  <ol class="mn-opts">
-                    <li class="mn-dim"><b>A</b>Into the cell</li>
-                    <li class="mn-right"><b>B</b>Out of the cell<svg class="mn-ic" width="24" height="24"><use href="#mn-ok"/></svg></li>
-                    <li class="mn-dim"><b>C</b>No net movement</li>
-                    <li class="mn-dim"><b>D</b>Into the vacuole</li>
-                  </ol>
-                </div>
-                <div class="mn-verdict">
-                  <p>Correct</p>
-                  <div class="mn-verdict-btns">
-                    <span><svg class="mn-ic" width="24" height="24"><use href="#mn-replay"/></svg>Replay clip</span>
-                    <span>Next<svg class="mn-ic" width="24" height="24"><use href="#i-down"/></svg></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <figcaption><b>2</b>Three past-paper checks</figcaption>
-        </figure>
-      </div>
-      <p class="p-field-note">An example mini; the units and counts are illustrative. In Klaro, the captions come from the lecture itself.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 2. Proof line: the motto, said for this product -->
-<section class="p-proof">
-  <div class="wrap">
-    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Connected, not generated</span>
-    <p>Your tutor's own lecture, at the moment you need. Real past-paper questions. <span class="muted">Nothing generated.</span></p>
-  </div>
-</section>
-
-<!-- 3. How it works -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From your practice to today's minis.</h2></div>
-    <ol class="steps mn-list-reset">
-      <li class="card card-pad step"><span class="num" aria-hidden="true">1</span><h3 class="card-title">You practise past papers</h3><p>Answer the real past-paper questions in your course. Each one you miss counts against the book unit it tests.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">2</span><h3 class="card-title">Minis finds your weak spots</h3><p>The units you missed most come first, each with how many you missed. With no weak spots yet, Minis starts from the beginning of the book.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">3</span><h3 class="card-title">You watch, then check</h3><p>Each day, watch the moment of the lecture that teaches each unit, then answer three past-paper checks on it.</p></li>
-    </ol>
-  </div>
-</section>
-
-<!-- 4. Feature rows -->
-<section class="section white">
-  <div class="wrap p-rows">
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Weak spots</span>
-        <h2>Your weak spots first.</h2>
-        <p>Minis lists the units you missed most in past-paper practice, weakest first, with how many you missed. Where there are no weak spots yet, it uses units from the start of the book, marked Start here.</p>
-        <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div data-nosnippet class="p-vis">
-        <div class="p-ui" role="img" aria-label="Today's minis in Biology 0610: nine units, 27 checks. Six weak spots from practice come first, weakest first: Enzymes, missed 5 of 6; Active transport, 4 of 5; Diffusion, 4 of 6; Transpiration, 3 of 4; Osmosis, 3 of 5; Photosynthesis, 2 of 4. Then three units from the start of the book, each marked Start here.">
-          <div class="mn-day-head" aria-hidden="true">
-            <span class="mn-eyebrow">Biology 0610 · Today's minis</span>
-            <span class="mn-day-title">9 minis, 9 lecture moments, 27 checks.</span>
-            <span class="mn-day-sub">6 weak spots from your practice, weakest first, then 3 units from the start of the book.</span>
-          </div>
-          <ol class="mn-list" aria-hidden="true">
-            <li><span class="mn-n">1</span><b>Enzymes</b><span class="mn-pill mn-pill-miss">Missed 5 of 6</span></li>
-            <li><span class="mn-n">2</span><b>Active transport</b><span class="mn-pill mn-pill-miss">Missed 4 of 5</span></li>
-            <li><span class="mn-n">3</span><b>Diffusion</b><span class="mn-pill mn-pill-miss">Missed 4 of 6</span></li>
-            <li><span class="mn-n">4</span><b>Transpiration</b><span class="mn-pill mn-pill-miss">Missed 3 of 4</span></li>
-            <li><span class="mn-n">5</span><b>Osmosis</b><span class="mn-pill mn-pill-miss">Missed 3 of 5</span></li>
-            <li><span class="mn-n">6</span><b>Photosynthesis</b><span class="mn-pill mn-pill-miss">Missed 2 of 4</span></li>
-            <li><span class="mn-n">7</span><b>Characteristics of living things</b><span class="mn-pill mn-pill-start">Start here</span></li>
-            <li><span class="mn-n">8</span><b>Classification</b><span class="mn-pill mn-pill-start">Start here</span></li>
-            <li><span class="mn-n">9</span><b>Cell structure</b><span class="mn-pill mn-pill-start">Start here</span></li>
+        <div class="show-under">
+          <ol class="rec-cues" data-steps>
+            <li data-t="0">Revise in minis: short, one idea at a time.</li>
+            <li data-t="4.37">First, the moment your tutor explains it…</li>
+            <li data-t="7.57">…then quick checks on it, from real past papers.</li>
           </ol>
+          <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
         </div>
-      </div>
+        <figcaption class="caption"><b>Sample course.</b> A mini: the moment your tutor explains it, then quick checks.</figcaption>
+      </figure>
     </div>
+  </div>
+</section>
 
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">The book</span>
-        <h2>The book, one tap away.</h2>
-        <p>Tap the page number beside the clip and your tutor's book opens at that page, with the passage the mini teaches marked. The clip pauses while you read.</p>
-        <a class="tlink" href="../study-view/">About study view <svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div data-nosnippet class="p-vis teal">
-        <div class="mn-phone mn-bphone" role="img" aria-label="A phone showing a mini paused at lecture 4, from 06:12, with the book open over it as a sheet. Page 48, Osmosis: the passage the mini teaches, the definition of osmosis, is highlighted and tagged In this mini.">
-          <div class="mn-bscreen" aria-hidden="true">
-            <div class="mn-bclip"><img src="../../img/lecture-osmosis.webp" alt="" loading="lazy" width="960" height="548"></div>
-            <span class="mn-blabel">Lecture 4 · from 06:12</span>
-            <div class="mn-bpause"><span><svg class="mn-ic" width="24" height="24"><use href="#mn-pause"/></svg>Paused</span></div>
-            <div class="mn-sheet">
-              <div class="mn-sheet-head">
-                <div><span class="mn-eyebrow">The book · page 48</span><b>Osmosis</b></div>
-                <span class="mn-close"><svg class="mn-ic" width="24" height="24"><use href="#mn-x"/></svg></span>
+<!-- 3. Features: three stacked cards. Card 2 shows an illustration until the open book is captured
+     (redesign.md 7.7: student-minis after tapping the page number). -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head"><h2 class="h2">Revision that starts with what you miss</h2><p class="section-sub">Short, one idea at a time, from your own tutor's course.</p></div>
+    <div class="stack">
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Your weak spots first</h3>
+          <p>Minis lists the units you missed most in past-paper practice, weakest first. Every question you missed also opens where it was explained.</p>
+          <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <figure class="stack-media rec" data-recording="student-weak">
+          <div class="plate" data-ph="img/plates/P6-library.webp">
+            <div class="device device--browser">
+              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+              <div class="device-screen rec-screen" data-screen data-nosnippet>
+                <img src="../../media/student-weak-poster.jpg" alt="A practice summary in Klaro on a sample course: the questions worth another look" width="1440" height="900" loading="lazy" decoding="async">
+                <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the questions you missed, each opening where it was explained"></video>
+                <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
               </div>
-              <div class="mn-desk">
-                <div class="mn-page course-content">
-                  <p class="mn-page-h">3.2 Osmosis</p>
-                  <p>Water molecules move freely through a partially permeable membrane.</p>
-                  <span class="mn-intag">In this mini</span>
-                  <mark class="mn-region">Osmosis is the net movement of water from a dilute solution to a more concentrated one through such a membrane.</mark>
-                  <p>A plant cell in pure water takes in water by osmosis and becomes turgid. Its cell wall stops it from bursting.</p>
-                </div>
-              </div>
-              <div class="mn-sheet-foot"><span class="mn-seg"><span>The passage</span><span class="mn-on">Whole page</span></span></div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Checks</span>
-        <h2>Three checks, then you know.</h2>
-        <p>After each clip come three past-paper questions on the same unit, each marked right or wrong with the right answer shown. A mini ends as Cleared or Nearly there, or, if you're still weak on it, it stays on your list.</p>
-      </div>
-      <div data-nosnippet class="p-vis gold">
-        <div class="p-stack" role="img" aria-label="The end of a mini: the third check on Diffusion says Not quite, the answer is B, and 1 of 3 on Diffusion, it stays on your list. Below, today's summary: Enzymes cleared, 3 of 3; Active transport nearly there, 2 of 3; Diffusion still weak, 1 of 3.">
-          <div class="p-ui" aria-hidden="true">
-            <div class="mn-res-head"><span>Check 3/3 · Diffusion</span><span>Past paper</span></div>
-            <p class="mn-res-no">Not quite. The answer is B.</p>
-            <p class="mn-res-score">1/3 on Diffusion. It stays on your list.</p>
-          </div>
-          <div class="p-ui" aria-hidden="true">
-            <span class="mn-eyebrow">Today's summary</span>
-            <ol class="mn-list">
-              <li><span class="mn-n">1</span><span><b>Enzymes</b><small class="mn-st-ok">Cleared 3/3</small></span><span class="mn-dots"><i class="mn-ok"></i><i class="mn-ok"></i><i class="mn-ok"></i></span></li>
-              <li><span class="mn-n">2</span><span><b>Active transport</b><small class="mn-st-near">Nearly there 2/3</small></span><span class="mn-dots"><i class="mn-ok"></i><i class="mn-ok"></i><i></i></span></li>
-              <li><span class="mn-n">3</span><span><b>Diffusion</b><small class="mn-st-weak">Still weak 1/3</small></span><span class="mn-dots"><i class="mn-ok"></i><i></i><i></i></span></li>
+          <div class="show-under">
+            <ol class="rec-cues" data-steps>
+              <li data-t="0">Klaro keeps track of what you got wrong…</li>
+              <li data-t="3.1">…and each one opens where it was explained, before the exam finds it.</li>
             </ol>
+            <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
           </div>
+          <figcaption class="caption"><b>Sample course.</b> What you got wrong, and where each one was explained.</figcaption>
+        </figure>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">The book, one tap away</h3>
+          <p>Tap the page number beside the clip and your tutor's book opens at that page, with the passage marked. The clip pauses while you read.</p>
+          <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- 5. Who it's for -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">For students, from their tutor's own course.</h2></div>
-    <div class="p-who">
-      <div class="card card-pad">
-        <span class="tag tag-purple">For students</span>
-        <h3>Revise what you actually get wrong.</h3>
-        <ul>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>The units you missed in practice, weakest first</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>The lecture moment that teaches each one</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Three past-paper checks after every clip</li>
-        </ul>
-        <a class="btn btn-primary" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
-      </div>
-      <div class="card card-pad">
-        <span class="tag tag-slate">For tutors</span>
-        <h3>Your lectures and past papers, working between lessons.</h3>
-        <ul>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Every mini is a moment from your own lecture</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Every check is a question from a real past paper</li>
-          <li><svg class="i" width="15" height="15" aria-hidden="true"><use href="#i-check"/></svg>Nothing added that you didn't choose</li>
-        </ul>
-        <a class="btn btn-secondary" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
-      </div>
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/02-book-passage.webp" style="--ar: 4 / 3"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        </div>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Three checks, then you know</h3>
+          <p>Three past-paper questions on the same unit, each marked right or wrong. A unit you're still weak on stays on your list.</p>
+          <a class="tlink" href="../progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <figure class="stack-media rec">
+          <div class="plate" data-ph="img/plates/P2-kitchen-table.webp">
+            <div class="device device--browser">
+              <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+              <div class="device-screen"><img src="../../media/stills/student-minis-check.webp" alt="The first check of a mini in Klaro: a question from past paper 0610/11 Oct/Nov 2022, answered correctly" width="640" height="400" loading="lazy" decoding="async"></div>
+            </div>
+          </div>
+          <figcaption class="caption"><b>Sample course.</b> The first of three checks, from a real past paper.</figcaption>
+        </figure>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- 6. Powered by research: the finding this product is built on -->
-<section class="section white">
+<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
+<section class="section" id="research">
   <div class="wrap">
-    <article class="card card-pad rcard p-research">
-      <div class="mn-rmain">
-        <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Powered by research</span>
-        <h2 class="mn-rh">Checking yourself beats reading it again.</h2>
-        <p>Students who practised recalling a passage remembered more of it a week later than students who re-read it.</p>
-      </div>
-      <div class="side">
-        <p class="in-klaro"><svg class="mn-ic" width="16" height="16" aria-hidden="true"><use href="#i-minis"/></svg>So every mini ends in three past-paper checks.</p>
-        <p class="cite"><i>Roediger &amp; Karpicke (2006).</i> Test-enhanced learning: Taking memory tests improves long-term retention. <cite>Psychological Science</cite>, 17(3), 249–255. <a class="mn-doi" href="https://doi.org/10.1111/j.1467-9280.2006.01693.x">doi:10.1111/j.1467-9280.2006.01693.x</a></p>
-        <a class="mn-rlink" href="../../research/">How Klaro uses research <svg class="i flip" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- 7. Related products -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
-    <div class="p-related">
-      <a class="card lift p-rel" href="../practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span><svg class="i chev flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a class="card lift p-rel" href="../study-view/"><span class="icon-tile"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span><svg class="i chev flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a class="card lift p-rel" href="../progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span><svg class="i chev flip" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
+    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto">
+      <article class="rcard">
+        <div class="ill" data-ph="img/ill/06-paper-plane.webp"><img src="../../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <div class="rcard-body">
+          <p class="rcard-source">Psychological Science, 2006</p>
+          <h3 class="rcard-title">Checking yourself beats reading it again</h3>
+          <p>Students who practised recalling a passage remembered more of it a week later than students who re-read it.</p>
+          <p class="small"><i>Roediger &amp; Karpicke (2006).</i> Test-enhanced learning: Taking memory tests improves long-term retention. <cite>Psychological Science</cite>, 17(3), 249–255. <a href="https://doi.org/10.1111/j.1467-9280.2006.01693.x">doi:10.1111/j.1467-9280.2006.01693.x</a></p>
+          <p class="rcard-in">In Klaro: every mini ends in three past-paper checks.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- 8. Closer -->
-<section class="section mn-flush">
+<!-- 5. More of Klaro: the students' products, minus this one -->
+<section class="section carousel" id="more">
+  <div class="wrap carousel-head">
+    <div class="section-head section-head--start"><h2 class="h2">Everything for your course, in one place</h2></div>
+    <div class="carousel-nav" hidden>
+      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+  <ul class="carousel-track" role="list">
+    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your tutor's lecture, open at the page it explains.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../practice-questions/"><div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Practice questions</span><span class="icard-line">Real past-paper questions, checked as you answer.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../progress/"><div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Progress</span><span class="icard-line">Lectures finished, quiz marks and your streak.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../../try/"><div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Try it</span><span class="icard-line">A sample course, open in your browser. No account needed.</span></span></a></li>
+  </ul>
+</section>
+
+<!-- 6. The deep panel: the students' version, the same on every student page -->
+<section class="section" id="promise">
   <div class="wrap">
-    <div class="closer">
-      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
-      <h2 class="closer-h">Start with what you get wrong.</h2>
-      <p>Create your account, then join with the code your tutor gives you.</p>
-      <a class="btn btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
+    <div class="panel">
+      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+      <h2 class="h2">Your tutor's explanation. Not a guess.</h2>
+      <p class="panel-sub">Everything you study comes from your tutor's own course: their lectures, their book and real past papers, linked to each other.</p>
+      <ul class="panel-grid">
+        <li class="panel-item"><h3 class="panel-item-title">Your tutor's own lectures</h3><p>You learn from your tutor's recordings, in the order they set.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Real past-paper questions</h3><p>Every question comes from a real exam paper, and says which.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">The page in your book, one tap away</h3><p>Each lecture clip opens your book at the part it explains.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">In English and Arabic</h3><p>Use Klaro in either language. Your course stays as your tutor wrote it.</p></li>
+      </ul>
+      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
     </div>
   </div>
 </section>
+
+<!-- 7. Closing -->
+<section class="closing">
+  <ul class="closing-tiles" aria-hidden="true">
+    <li class="ill closing-tile" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/13-parent-tea.webp"><img src="../../img/ill/13-parent-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/11-calendar.webp"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+  </ul>
+  <div class="closing-copy">
+    <h2 class="h2">Start with what you get wrong.</h2>
+    <p class="lead">Create your account, then join with the code your tutor gives you.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+  </div>
+</section>
+
 </main>
 
 <!-- chrome:footer -->
-<footer class="foot2">
-  <div class="wrap">
-    <div class="brandcol">
-      <img src="../../img/klaro-wordmark.svg" alt="Klaro" width="93" height="28">
-      <p class="foot-motto">Enough AI slop.</p>
-      <p class="small">We connect your content exactly how you intended it to look.</p>
-    </div>
-    <div><h2 class="foot-h">For students</h2><ul>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/practice-questions/">Practice questions</a></li>
-          <li><a href="../../products/minis/">Minis</a></li>
-          <li><a href="../../products/progress/">Progress</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">For tutors</h2><ul>
-          <li><a href="../../products/course-builder/">Course builder</a></li>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/live-sessions/">Live sessions</a></li>
-          <li><a href="../../products/marking/">Marking</a></li>
-          <li><a data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">Klaro</h2><ul>
-          <li><a href="../../research/">Research</a></li>
-          <li><a href="../../#try">Try it</a></li>
-          <li><a href="../../market/">Browse courses</a></li>
-          <li><a data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
-          <li><a href="../../ar/products/minis/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
-    </ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
-  </div>
-</footer>
 <!-- /chrome:footer -->
 <script src="../../klaro.js"></script>
 <script src="../../site.js"></script>
+<script src="../../showcase.js" defer></script>
 </body>
 </html>

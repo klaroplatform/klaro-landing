@@ -7,492 +7,198 @@
 <title>Progress: know where you stand before the exam · Klaro</title>
 <meta name="description" content="Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.">
 <!-- chrome:meta -->
-<link rel="canonical" href="https://learnklaro.com/products/progress/">
-<link rel="alternate" hreflang="en" href="https://learnklaro.com/products/progress/">
-<link rel="alternate" hreflang="ar" href="https://learnklaro.com/ar/products/progress/">
-<link rel="alternate" hreflang="x-default" href="https://learnklaro.com/products/progress/">
-<meta name="klaro-app" content="https://app.klaroplatform.com">
-<meta name="theme-color" content="#f3f3f1">
-<link rel="icon" href="../../favicon.ico" sizes="32x32">
-<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Klaro">
-<meta property="og:locale" content="en_GB">
-<meta property="og:locale:alternate" content="ar_AR">
-<meta property="og:url" content="https://learnklaro.com/products/progress/">
-<meta property="og:title" content="Progress: know where you stand before the exam">
-<meta property="og:description" content="Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.">
-<meta property="og:image" content="https://learnklaro.com/img/lecture-osmosis.webp">
-<meta property="og:image:width" content="960">
-<meta property="og:image:height" content="548">
-<meta property="og:image:alt" content="A Klaro lecture on osmosis, from an example course">
-<meta name="twitter:card" content="summary_large_image">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@graph": [
-  {
-   "@type": "Organization",
-   "@id": "https://learnklaro.com/#org",
-   "name": "Klaro",
-   "url": "https://learnklaro.com/",
-   "logo": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/apple-touch-icon.png",
-    "width": 180,
-    "height": 180
-   },
-   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
-   "slogan": "Enough AI slop."
-  },
-  {
-   "@type": "WebSite",
-   "@id": "https://learnklaro.com/#website",
-   "url": "https://learnklaro.com/",
-   "name": "Klaro",
-   "inLanguage": [
-    "en",
-    "ar"
-   ],
-   "publisher": {
-    "@id": "https://learnklaro.com/#org"
-   }
-  },
-  {
-   "@type": "WebPage",
-   "@id": "https://learnklaro.com/products/progress/#webpage",
-   "url": "https://learnklaro.com/products/progress/",
-   "name": "Progress: know where you stand before the exam · Klaro",
-   "description": "Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.",
-   "inLanguage": "en",
-   "isPartOf": {
-    "@id": "https://learnklaro.com/#website"
-   },
-   "primaryImageOfPage": {
-    "@type": "ImageObject",
-    "url": "https://learnklaro.com/img/lecture-osmosis.webp",
-    "width": 960,
-    "height": 548
-   },
-   "dateModified": "2026-10-08",
-   "about": {
-    "@id": "https://learnklaro.com/#app"
-   },
-   "audience": [
-    {
-     "@type": "EducationalAudience",
-     "educationalRole": "student"
-    }
-   ],
-   "breadcrumb": {
-    "@id": "https://learnklaro.com/products/progress/#breadcrumb"
-   }
-  },
-  {
-   "@type": "BreadcrumbList",
-   "@id": "https://learnklaro.com/products/progress/#breadcrumb",
-   "itemListElement": [
-    {
-     "@type": "ListItem",
-     "position": 1,
-     "name": "Klaro",
-     "item": "https://learnklaro.com/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 2,
-     "name": "Products",
-     "item": "https://learnklaro.com/products/"
-    },
-    {
-     "@type": "ListItem",
-     "position": 3,
-     "name": "Progress"
-    }
-   ]
-  }
- ]
-}
-</script>
 <!-- /chrome:meta -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="../../klaro.css">
 <link rel="stylesheet" href="../../site.css">
-<style>
-/* Progress only (pg-): the student's home page, a course's lectures, a quiz list, a week of streak
-   days and small details that used to be inline styles. Logical properties only. */
-.pg-list { list-style: none; margin: 0; padding: 0; }
-.section.pg-closer { padding-block-start: 0; }
-.dot.pg-lec { background: var(--purple); }
-.pg-teal { color: var(--teal-dark); }
-.pg-amber { color: var(--amber); }
-.pg-gold { color: var(--gold-deep); }
-.media .pg-w60 { width: 60%; }
-.media .pg-w27 { width: 27%; }
-.media .pg-w14 { width: 14%; }
-.pg-home-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
-.pg-home-greet { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
-.pg-home .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.pg-home .media, .p-vis .media { pointer-events: none; }
-.media .pic.pg-pic-short { aspect-ratio: 16 / 7; }
-.lec.pg-done .n { background: var(--success-soft); color: var(--success); }
-.lec.pg-done > svg { margin-inline-start: auto; color: var(--success); }
-.lec.pg-next { border-color: var(--purple-line); box-shadow: var(--shadow-panel); }
-.lec.pg-next .tag, .lec .pg-when { margin-inline-start: auto; }
-.lec.pg-later { color: var(--faint); }
-.lec .pg-when { font-size: 11.5px; font-weight: 600; color: var(--muted); }
-.lec .pg-when + svg { margin-inline-start: 0; }
-.file .pg-sub { display: block; font-size: 11.5px; font-weight: 500; color: var(--muted); }
-.mark.pg-low { color: var(--warn); background: var(--warn-soft); }
-.file.pg-later { color: var(--faint); }
-.pg-avg { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-block-start: 10px; border-block-start: 1px solid var(--border); font-size: 13px; font-weight: 700; }
-.pg-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; padding-block: 4px; }
-.pg-day { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; color: var(--muted); }
-.pg-day > span { width: 100%; max-width: 40px; aspect-ratio: 1; border-radius: 11px; display: grid; place-items: center; background: var(--surface); border: 1px dashed var(--border-strong); }
-.pg-day.on > span { background: var(--gold-soft); border: 1px solid #f3dd8a; color: var(--gold-deep); }
-.pg-day.today > span { box-shadow: 0 0 0 3px rgb(240 201 61 / .35); }
-.pg-day.today { color: var(--ink); }
-/* The research card */
-.pg-rcol { display: flex; flex-direction: column; gap: 12px; }
-.pg-tlink { font-size: 14px; font-weight: 700; color: var(--purple-dark); text-decoration: none; }
-.pg-tlink:hover { text-decoration: underline; text-underline-offset: 3px; }
-@media (max-width: 760px) {
-  .pg-home .shelf { grid-template-columns: minmax(0, 1fr); }
-  .pg-home .media:nth-child(3) { display: none; }
-}
-</style>
 </head>
 <body data-site="../../">
 <!-- chrome:sprite -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
-  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
-  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
-  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
-  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
-  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
-  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
-  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
-  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
-  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
-  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
-  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
-  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
-</defs></svg>
 <!-- /chrome:sprite -->
 <!-- chrome:header -->
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="../../" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-    <nav class="nav" aria-label="Main">
-      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
-      <a class="nav-btn" href="../../research/">Research</a>
-      <a class="nav-btn" href="../../#try">Try it</a>
-    </nav>
-    <span class="spacer"></span>
-    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="../../ar/products/progress/" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-    <a class="btn btn-glass" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
-  </div>
-  <div class="mega-wrap">
-    <nav class="mega" id="products-menu" aria-label="Products" hidden>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <p class="mega-head">For students</p>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="../../products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
-          <a class="mega-item" href="../../products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
-          <a class="mega-item" href="../../products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
-        </div>
-        <div class="mega-col">
-          <p class="mega-head">For tutors</p>
-          <a class="mega-item" href="../../products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
-          <a class="mega-item" href="../../products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="../../products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class. Klaro sets up the meeting.</small></span></a>
-          <a class="mega-item" href="../../products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
-        </div>
-      </div>
-      <div class="mega-links">
-        <a class="nav-btn" href="../../products/">All products</a>
-        <a class="nav-btn" href="../../research/">Research</a>
-        <a class="nav-btn" href="../../#try">Try it</a>
-        <a class="nav-btn" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
-      </div>
-      <div class="mega-foot">
-        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Get started</a>
-      </div>
-    </nav>
-  </div>
-</header>
 <!-- /chrome:header -->
 
 <main id="top">
 
-<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
-<section class="p-hero">
-  <div class="wrap">
-    <a class="p-back" href="../"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
-    <div class="p-top">
-      <span class="p-chip"><span class="icon-tile teal"><svg class="i" width="16" height="16"><use href="#i-chart"/></svg></span>Progress<span class="p-for">For students</span></span>
-      <div class="p-head">
-        <h1 class="display">Know where you stand <span class="key">before the exam</span>.</h1>
-        <div class="p-head-side">
-          <p class="lead">Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. "Next up" follows your tutor's lecture order, so you know where to start.</p>
-          <div class="actions">
-            <a class="btn btn-primary btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Create a student account <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-            <a class="btn btn-secondary btn-lg" href="../../#try">Try a lesson</a>
-          </div>
-        </div>
+<!-- 1. Hero: chip, H1 with the one underline, lead, one pill and a text link; the illustration mosaic -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Progress <span class="chip-for">for students</span></span>
+      <h1 class="h1">Know where you <span class="uline">stand</span> before the exam.</h1>
+      <p class="lead">Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
+        <a class="tlink" href="../../try/">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
+    <div class="mosaic" aria-hidden="true">
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+      <div class="mosaic-col">
+        <div class="ill" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" decoding="async"></div>
+        <div class="ill" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" decoding="async"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="p-field">
-      <div data-nosnippet class="studio pg-home" role="img" aria-label="A student's Klaro home page: a five-day study streak in the top bar, and three courses, each showing lectures finished, quizzes handed in and the lecture that's next up.">
-        <div class="studio-head" aria-hidden="true">
-          <span><i class="dot pg-lec"></i>Home</span>
-          <span class="grow"></span>
-          <span class="tag tag-yellow"><svg class="i" width="13" height="13"><use href="#i-flame"/></svg>5-day streak</span>
-          <span class="tag tag-neutral"><svg class="i" width="13" height="13"><use href="#i-code"/></svg>Join a course</span>
-        </div>
-        <div class="pg-home-body" aria-hidden="true">
-          <div class="pg-home-greet">
-            <div>
-              <div class="card-title">Continue learning</div>
-              <div class="small">Pick up where you left off.</div>
+<!-- 2. In action: Omar's student-weak recording (the closest to progress until a student-progress scene exists) -->
+<section class="section" id="in-action">
+  <div class="wrap">
+    <div class="split-card">
+      <div class="split-copy">
+        <h2 class="h3">See what to go over again</h2>
+        <p>After practice, Klaro keeps the questions you missed. Each one opens in the study view, next to the book page and the lecture moment that explain it.</p>
+        <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="rec" data-recording="student-weak">
+        <div class="plate" data-ph="img/plates/P6-library.webp">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen rec-screen" data-screen data-nosnippet>
+              <img src="../../media/student-weak-poster.jpg" alt="A practice summary in Klaro on a sample course: the questions worth another look" width="1440" height="900" loading="lazy" decoding="async">
+              <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the questions you missed, each opening where it was explained"></video>
+              <button class="rec-play" type="button" data-action="play" aria-label="Play the recording" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
             </div>
           </div>
-          <div class="shelf">
-            <div class="media"><div class="pic"><img src="../../img/course-biology.webp" alt="" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 11</div><div class="title">Biology 0610</div></div></div><div class="edge"><i class="pg-w60"></i></div><div class="figs"><span><b>6/10</b> lectures</span><span><b>3/5</b> quizzes</span></div><div class="foot"><span class="label">Next up</span><span>Active transport</span><span class="chev flip">›</span></div></div>
-            <div class="media"><div class="pic"><img src="../../img/course-chemistry.webp" alt="" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 10</div><div class="title">Chemistry 0620</div></div></div><div class="edge"><i class="pg-w27"></i></div><div class="figs"><span><b>3/11</b> lectures</span><span><b>1/4</b> quizzes</span></div><div class="foot"><span class="label">Next up</span><span>Electrolysis</span><span class="chev flip">›</span></div></div>
-            <div class="media"><div class="pic"><img src="../../img/course-physics.webp" alt="" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">A Level · Year 12</div><div class="title">Physics 9702</div></div></div><div class="edge"><i class="pg-w14"></i></div><div class="figs"><span><b>2/14</b> lectures</span><span><b>1/6</b> quizzes</span></div><div class="foot"><span class="label">Next up</span><span>Acceleration</span><span class="chev flip">›</span></div></div>
-          </div>
         </div>
-      </div>
-      <p class="p-field-note">An example home page. The courses, figures and streak are illustrative.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 2. Proof line: the motto, said for this product -->
-<section class="p-proof">
-  <div class="wrap">
-    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Connected, not generated</span>
-    <p>Every lecture you finish is your tutor's. Every quiz is set by your tutor. <span class="muted">Nothing generated to fill the bar.</span></p>
-  </div>
-</section>
-
-<!-- 3. How it works -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From a join code to a clear next step.</h2></div>
-    <ol class="steps pg-list">
-      <li class="card card-pad step"><span class="num" aria-hidden="true">1</span><h3 class="card-title">Join your tutor's course</h3><p>Enter the join code your tutor gives you. The course appears on your home page.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">2</span><h3 class="card-title">Study and practise</h3><p>Watch your tutor's lectures and answer real past-paper questions. Klaro keeps your place in every lecture.</p></li>
-      <li class="card card-pad step"><span class="num" aria-hidden="true">3</span><h3 class="card-title">See where you stand</h3><p>Each course shows the lectures you've finished, your quiz marks and what's next up.</p></li>
-    </ol>
-  </div>
-</section>
-
-<!-- 4. Feature rows -->
-<section class="section white">
-  <div class="wrap p-rows">
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Every course</span>
-        <h2>See every course you've joined in one place.</h2>
-        <p>Each course card shows the lectures you've finished and the one that's next up, in your tutor's order. Open it and carry on from where you stopped.</p>
-        <a class="tlink" href="../study-view/">About the study view <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div data-nosnippet class="p-vis teal" role="img" aria-label="A Chemistry 0620 course card with 3 of 11 lectures finished, and its lecture list in the tutor's order: lecture 3 done, lecture 4 Electrolysis next up, and lecture 5 opening once enough of lecture 4 is watched.">
-        <div class="p-stack" aria-hidden="true">
-          <div class="media">
-            <div class="pic pg-pic-short"><img src="../../img/course-chemistry.webp" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-purple">In progress</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 10</div><div class="title">Chemistry 0620</div></div></div>
-            <div class="edge"><i class="pg-w27"></i></div>
-            <div class="figs"><span><b>3/11</b> lectures</span><span><b>1/4</b> quizzes</span></div>
-            <div class="foot"><span class="label">Next up</span><span>Electrolysis</span><span class="chev flip">›</span></div>
-          </div>
-          <div class="order">
-            <div class="lec pg-done"><span class="n">3</span>Chemical bonding<svg class="i" width="15" height="15"><use href="#i-check"/></svg></div>
-            <div class="lec pg-next"><span class="n">4</span>Electrolysis<span class="tag tag-purple">Next up</span></div>
-            <div class="lec pg-later"><span class="n">5</span>Rates of reaction<span class="pg-when">Opens at 80%</span></div>
-          </div>
+        <div class="show-under">
+          <ol class="rec-cues" data-steps>
+            <li data-t="0">Klaro keeps track of what you got wrong…</li>
+            <li data-t="3.1">…and each one opens where it was explained, before the exam finds it.</li>
+          </ol>
+          <div class="show-actions"><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
         </div>
-      </div>
+        <figcaption class="caption"><b>Sample course.</b> What you got wrong, and where each one was explained.</figcaption>
+      </figure>
     </div>
+  </div>
+</section>
 
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Quiz marks</span>
-        <h2>Every quiz you hand in, with its mark.</h2>
-        <p>Your tutor sets quizzes from the course's questions. Your marks add up to an average for the course, so you can see what to go over again.</p>
-        <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
-      </div>
-      <div data-nosnippet class="p-vis amber" role="img" aria-label="The quizzes in Biology 0610: three handed in with marks of 8 out of 8, 6 out of 8 and 4 out of 8, one not taken yet, and an average mark of 75%.">
-        <div class="p-ui" aria-hidden="true">
-          <div class="p-ui-head"><svg class="i pg-amber" width="14" height="14"><use href="#i-check"/></svg>Biology 0610 · Quizzes<span class="grow"></span><span class="tag tag-neutral">3 of 5 handed in</span></div>
-          <div class="files">
-            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Cells and tissues<span class="pg-sub">8 questions · Paper 2 · 2023</span></span><span class="mark">8/8</span></div>
-            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Diffusion<span class="pg-sub">8 questions · Paper 2 · 2024</span></span><span class="mark">6/8</span></div>
-            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Osmosis<span class="pg-sub">8 questions · Paper 2 · 2024</span></span><span class="mark pg-low">4/8</span></div>
-            <div class="file pg-later"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-clock"/></svg></span><span class="name">Active transport<span class="pg-sub">After lecture 7</span></span><span class="tag tag-neutral">Not taken</span></div>
-          </div>
-          <div class="pg-avg"><span>Average mark</span><span class="mark">75%</span></div>
+<!-- 3. Features: three stacked cards. Illustrations stand in until the student-home and
+     student-progress scenes exist (redesign.md 7.7). The streak is never drawn as a screen. -->
+<section class="section" id="features">
+  <div class="wrap">
+    <div class="section-head"><h2 class="h2">Where you stand, course by course</h2><p class="section-sub">What you've finished, how your quizzes went and what's next, in your tutor's order.</p></div>
+    <div class="stack">
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Every course in one place</h3>
+          <p>Each course card shows the lectures you've finished and the one that's next up, in your tutor's order. Open it and carry on from where you stopped.</p>
+          <a class="tlink" href="../study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
-      </div>
-    </div>
-
-    <div class="p-row">
-      <div class="p-row-copy">
-        <span class="kicker">Streak</span>
-        <h2>Keep a streak going, one day at a time.</h2>
-        <p>Your streak sits at the top of Klaro and counts the days in a row you've studied, across all your courses. A day counts when you watch a lecture or answer a question.</p>
-      </div>
-      <div data-nosnippet class="p-vis gold" role="img" aria-label="A five-day study streak in a week that runs Saturday to Friday: Sunday to Thursday are marked with a flame, Saturday was missed and Friday is still to come. Today's lecture, Diffusion, is finished.">
-        <div class="p-ui" aria-hidden="true">
-          <div class="p-ui-head"><svg class="i pg-gold" width="14" height="14"><use href="#i-flame"/></svg>Your streak<span class="grow"></span><span class="tag tag-yellow">5 days</span></div>
-          <div class="pg-week">
-            <span class="pg-day"><span></span>Sat</span>
-            <span class="pg-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Sun</span>
-            <span class="pg-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Mon</span>
-            <span class="pg-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Tue</span>
-            <span class="pg-day on"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Wed</span>
-            <span class="pg-day on today"><span><svg class="i" width="16" height="16"><use href="#i-flame"/></svg></span>Thu</span>
-            <span class="pg-day"><span></span>Fri</span>
-          </div>
-          <div class="lec pg-done"><span class="n">6</span>Diffusion<span class="pg-when">Today</span><svg class="i" width="15" height="15"><use href="#i-check"/></svg></div>
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/03-parcel.webp" style="--ar: 4 / 3"><img src="../../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
         </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- 5. Who it's for -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">Made for students. Set up by tutors.</h2></div>
-    <div class="p-who">
-      <div class="card card-pad">
-        <span class="tag tag-purple">For students</span>
-        <h3>Know what to study next, in every course.</h3>
-        <ul>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Lectures finished and quiz marks for each course</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>What's next up, on every course card</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>One study streak across all your courses</li>
-        </ul>
-        <a class="btn btn-primary" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
-      </div>
-      <div class="card card-pad">
-        <span class="tag tag-slate">For tutors</span>
-        <h3>Give your students a clear next step.</h3>
-        <ul>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Students join with your join code</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Quizzes you set from your course's questions</li>
-          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Next up follows the order you set</li>
-        </ul>
-        <a class="btn btn-secondary" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
-      </div>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Every quiz, with its mark</h3>
+          <p>Your tutor sets quizzes from the course's questions. Your marks add up to an average for the course, so you can see what to go over again.</p>
+          <a class="tlink" href="../practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/07-red-pen.webp" style="--ar: 4 / 3"><img src="../../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        </div>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy">
+          <h3 class="h3">Keep a streak going</h3>
+          <p>Your streak counts the days in a row you've studied, across all your courses. A day counts when you watch a lecture or answer a question.</p>
+          <a class="tlink" href="../minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="stack-media">
+          <div class="ill" data-ph="img/ill/11-calendar.webp" style="--ar: 4 / 3"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- 6. Powered by research: the finding this product is built on -->
-<section class="section white">
+<!-- 4. Powered by research: the finding this product is built on (citation as before) -->
+<section class="section" id="research">
   <div class="wrap">
-    <article class="card card-pad rcard p-research">
-      <div class="pg-rcol">
-        <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Powered by research</span>
-        <h3>Tell students where they stand and where to go next.</h3>
-        <p>Useful feedback answers three questions for the learner: Where am I going? How am I going? Where to next?</p>
-      </div>
-      <div class="side">
-        <div class="in-klaro"><svg class="i pg-teal" width="16" height="16"><use href="#i-chart"/></svg>So every course shows what you've finished, how your quizzes went, and what's next up.</div>
-        <p class="cite"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research, 77(1), 81–112.</p>
-        <a class="pg-tlink" href="../../research/">How Klaro uses research →</a>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- 7. Related products -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
-    <div class="p-related">
-      <a class="card lift p-rel" href="../study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-      <a class="card lift p-rel" href="../practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
-      <a class="card lift p-rel" href="../minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+    <div class="section-head"><h2 class="h2">Powered by research</h2></div>
+    <div class="rcards" style="grid-template-columns: minmax(0, 1fr); max-width: 560px; margin-inline: auto">
+      <article class="rcard">
+        <div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+        <div class="rcard-body">
+          <p class="rcard-source">Review of Educational Research, 2007</p>
+          <h3 class="rcard-title">Tell students where they stand and where to go next</h3>
+          <p>Useful feedback answers three questions for the learner: Where am I going? How am I going? Where to next?</p>
+          <p class="small"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research, 77(1), 81–112.</p>
+          <p class="rcard-in">In Klaro: every course shows what you've finished, how your quizzes went, and what's next up.</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- 8. Closer -->
-<section class="section pg-closer">
+<!-- 5. More of Klaro: the students' products, minus this one -->
+<section class="section carousel" id="more">
+  <div class="wrap carousel-head">
+    <div class="section-head section-head--start"><h2 class="h2">Everything for your course, in one place</h2></div>
+    <div class="carousel-nav" hidden>
+      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+  <ul class="carousel-track" role="list">
+    <li class="carousel-item"><a class="icard" href="../study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your tutor's lecture, open at the page it explains.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../practice-questions/"><div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Practice questions</span><span class="icard-line">Real past-paper questions, checked as you answer.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../minis/"><div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Minis</span><span class="icard-line">Your weak spots, one short lecture moment a day.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../../try/"><div class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div><span class="icard-body"><span class="icard-title">Try it</span><span class="icard-line">A sample course, open in your browser. No account needed.</span></span></a></li>
+  </ul>
+</section>
+
+<!-- 6. The deep panel: the students' version, the same on every student page -->
+<section class="section" id="promise">
   <div class="wrap">
-    <div class="closer">
-      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
-      <h2 class="closer-h">See what's next up in every course.</h2>
-      <p>Create your account, then join with the code your tutor gives you.</p>
-      <a class="btn btn-lg" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Create a student account</a>
+    <div class="panel">
+      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></div>
+      <h2 class="h2">Your tutor's explanation. Not a guess.</h2>
+      <p class="panel-sub">Everything you study comes from your tutor's own course: their lectures, their book and real past papers, linked to each other.</p>
+      <ul class="panel-grid">
+        <li class="panel-item"><h3 class="panel-item-title">Your tutor's own lectures</h3><p>You learn from your tutor's recordings, in the order they set.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Real past-paper questions</h3><p>Every question comes from a real exam paper, and says which.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">The page in your book, one tap away</h3><p>Each lecture clip opens your book at the part it explains.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">In English and Arabic</h3><p>Use Klaro in either language. Your course stays as your tutor wrote it.</p></li>
+      </ul>
+      <a class="btn btn-on-deep" href="../../research/">How we use research</a>
     </div>
   </div>
 </section>
+
+<!-- 7. Closing -->
+<section class="closing">
+  <ul class="closing-tiles" aria-hidden="true">
+    <li class="ill closing-tile" data-ph="img/ill/10-bookmark.webp"><img src="../../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/15-electrolysis.webp"><img src="../../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/11-calendar.webp"><img src="../../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"><img src="../../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"><img src="../../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+    <li class="ill closing-tile" data-ph="img/ill/08-exam-clock.webp"><img src="../../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async"></li>
+  </ul>
+  <div class="closing-copy">
+    <h2 class="h2">See what's next up in every course.</h2>
+    <p class="lead">Create your account, then join with the code your tutor gives you.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a></div>
+  </div>
+</section>
+
 </main>
 
 <!-- chrome:footer -->
-<footer class="foot2">
-  <div class="wrap">
-    <div class="brandcol">
-      <img src="../../img/klaro-wordmark.svg" alt="Klaro" width="93" height="28">
-      <p class="foot-motto">Enough AI slop.</p>
-      <p class="small">We connect your content exactly how you intended it to look.</p>
-    </div>
-    <div><h2 class="foot-h">For students</h2><ul>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/practice-questions/">Practice questions</a></li>
-          <li><a href="../../products/minis/">Minis</a></li>
-          <li><a href="../../products/progress/">Progress</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">For tutors</h2><ul>
-          <li><a href="../../products/course-builder/">Course builder</a></li>
-          <li><a href="../../products/study-view/">Study view</a></li>
-          <li><a href="../../products/live-sessions/">Live sessions</a></li>
-          <li><a href="../../products/marking/">Marking</a></li>
-          <li><a data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
-    </ul></div>
-    <div><h2 class="foot-h">Klaro</h2><ul>
-          <li><a href="../../research/">Research</a></li>
-          <li><a href="../../#try">Try it</a></li>
-          <li><a href="../../market/">Browse courses</a></li>
-          <li><a data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
-          <li><a href="../../ar/products/progress/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
-    </ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
-  </div>
-</footer>
 <!-- /chrome:footer -->
 <script src="../../klaro.js"></script>
 <script src="../../site.js"></script>
+<script src="../../showcase.js" defer></script>
 </body>
 </html>
