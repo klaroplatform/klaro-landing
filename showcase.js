@@ -129,10 +129,14 @@
                     the plates are already cropped round the device); never more. fx fy (0–1,
                     default .5 .5): the point of the screen to lean towards, as far as the whole
                     screen allows.
+    A walk is one scale about one fixed point of the frame, so the picture moves one way only, in a
+    straight line, leaving and landing at rest (--ease-camera; --dur-camera in, --dur-camera-out
+    back out, in site.css). It runs on the compositor, and nothing changes under it: it waits for
+    the plate's picture, and a recording starts only once the camera has landed.
     A recording: the poster rests on the whole scene. When the recording is about to play, the
-    camera walks in (--dur-camera, --ease-inout in site.css) and the video starts once it is there;
-    it holds while the recording plays (the recordings have their own zooms inside the app, so the
-    camera stays still meanwhile), and a moment after the end it walks back out to the whole scene.
+    camera walks in and the video starts once it is there; it holds while the recording plays (the
+    recordings have their own zooms inside the app, so the camera stays still meanwhile), and a
+    moment after the end it walks back out to the whole scene.
     A still (a figure with data-camera and an <img>, no recording): the camera walks in once, when
     the still is well on screen, and stays. The frame is the figure's .plate--device, or the
     .pr-shot-field of a device on a plain field; a frame where the screen already fills most of the
@@ -285,17 +289,27 @@
     if (cs.overflow === 'visible') screen.style.overflow = 'hidden';
     if (!screen.clientHeight) screen.style.aspectRatio = APP_W + ' / ' + APP_H;
   }
-  // The motion tokens in site.css (:root), so the camera and the CSS keep one system: the camera's
-  // duration (--dur-camera) and its slow ease-in-out (--ease-inout), read once they are needed.
+  // The motion tokens in site.css (:root), so the camera and the CSS keep one system: how long the
+  // camera walks in (--dur-camera) and back out (--dur-camera-out), and its curve (--ease-camera,
+  // which the hero's pointer glides on too), read once they are needed.
   var TOKENS = null;
   function tokens() {
     if (TOKENS) return TOKENS;
     var cs = null;
     try { cs = W.getComputedStyle(HTML); } catch (e) { /* no styles: the defaults below */ }
     function tok(name, dflt) { var v = cs && cs.getPropertyValue(name).trim(); return v || dflt; }
-    var d = tok('--dur-camera', '2s'), ms = /ms$/.test(d) ? parseFloat(d) : parseFloat(d) * 1000;
+    function ms(name, dflt) {
+      var d = tok(name, ''), v = /ms$/.test(d) ? parseFloat(d) : parseFloat(d) * 1000;
+      return isFinite(v) && v > 0 ? v : dflt;
+    }
+    var travel = tok('--ease-camera', '');
+    if (!/^cubic-bezier\(\s*[\d.]+\s*,\s*-?[\d.]+\s*,\s*[\d.]+\s*,\s*-?[\d.]+\s*\)$/.test(travel)) travel = 'cubic-bezier(.65, 0, .35, 1)';
     TOKENS = {
-      camera: isFinite(ms) && ms > 0 ? ms : 2000,
+      camera: ms('--dur-camera', 2200),
+      cameraOut: ms('--dur-camera-out', 1800),
+      slow: ms('--dur-slow', 600),
+      travelCss: travel,
+      travel: bezier(travel),
       inout: bezier(tok('--ease-inout', 'cubic-bezier(.37, 0, .63, 1)'))
     };
     return TOKENS;
@@ -348,29 +362,39 @@
 
   /*
     The camera (the top of this file): the whole picture moves inside its frame, never the app
-    inside its screen. Its children (the plate's picture and the device, with the app in it) get
-    one transform between them, so they move as one: each gets translate() scale() from its own
-    top left, offset so that the frame's point p lands on T + z·p for all of them. The frame keeps
-    its own overflow and corners, and clips.
-    A view is { z, ux, uy }: the zoom, and where the frame's centre sits between the two ends of
-    the range that keeps the whole drawn screen (and a little bezel) and nothing but the picture
-    in view, across and down (0–1). Moving between two views eases z geometrically and u in a
-    straight line, so every frame on the way keeps the screen whole too.
+    inside its screen. One transform, one timeline, one curve:
+    - The frame's children (the plate's picture and the device, with the app in it) are all scaled
+      about the same point P of the frame (each gets transform-origin P minus its own place in the
+      frame), so they move as one picture: the frame's point q is drawn at P + z·(q − P).
+    - P comes from the view at the end of the walk (the drawn screen and a little bezel in view, the
+      picture filling the frame, leaning towards fx fy). It is set before the walk starts and never
+      changes during it, and the walk back out scales about the same P. Only z moves, from rest to
+      rest on --ease-camera, so every point of the picture travels in a straight line, one way,
+      leaving and landing at zero speed. Each view on the way holds the next one, so the screen
+      never leaves the frame and the picture never shows its edge.
+    - It runs on the compositor (Web Animations), so a busy page (the live app, a video starting)
+      can't make it stutter, and the browser draws the picture sharp at its largest size.
+    - Nothing changes under it: a walk waits for the plate's picture (its arrival changes the
+      screen's box, site.css .is-drawn), and the recording starts once the walk-in has landed.
+    The frame keeps its own overflow and corners, and clips.
   */
-  var BEZEL = 0.03, WORTH = 1.12, REST = { z: 1, ux: 0.5, uy: 0.5 };
+  var BEZEL = 0.03, WORTH = 1.12, REST = { z: 1, x: 0, y: 0 };
   function Camera(fig, screen) {
     var stage = fig.querySelector('.plate--device') || fig.querySelector('.pr-shot-field');
     if (!stage || !screen || !stage.contains(screen)) return null;
-    var cur = REST, done = { x: 0, y: 0, z: 1 }, g = null, tw = null, raf = 0, aim = null;
+    // pose: where the camera stands, or is walking to ({ z, x, y }: the zoom and its point P).
+    // pivot: the P in use while it is in. aim: the push it is at or walking to. walk: the walk under
+    // way. pend: a walk waiting for the plate's picture (only the first walk ever waits).
+    var g = null, pose = REST, pivot = null, aim = null, walk = null, anims = [], pend = null, waited = false, stale = false;
 
-    // The frame's size and the drawn screen's box in it, in the frame's own px, measured through
-    // whatever transform is on (and through a scaled ancestor: a covered stack card).
+    // The frame's size, the drawn screen's box in it and each child's place, in the frame's own px
+    // with the camera at rest, measured through a scaled ancestor (a covered stack card).
     function measure() {
       var F = stage.getBoundingClientRect(), k = stage.offsetWidth ? F.width / stage.offsetWidth : 1;
       if (!F.width || !F.height || !k) return null;
       function box(el) {
         var r = el.getBoundingClientRect();
-        return { x: ((r.left - F.left) / k - done.x) / done.z, y: ((r.top - F.top) / k - done.y) / done.z, w: r.width / k / done.z, h: r.height / k / done.z };
+        return { x: (r.left - F.left) / k, y: (r.top - F.top) / k, w: r.width / k, h: r.height / k };
       }
       var w = F.width / k, h = F.height / k, s = box(screen), b = BEZEL * s.w;
       var x0 = Math.max(0, s.x - b), y0 = Math.max(0, s.y - b), x1 = Math.min(w, s.x + s.w + b), y1 = Math.min(h, s.y + s.h + b);
@@ -379,78 +403,140 @@
       each(stage.children, function (el) { var o = box(el); parts.push({ el: el, x: o.x, y: o.y }); });
       return { w: w, h: h, s: s, x0: x0, y0: y0, x1: x1, y1: y1, top: top >= WORTH ? top : 1, parts: parts };
     }
-    function geo() { return g || (g = measure()); }
-    // The range the frame's centre may take at zoom z, on one axis: the screen stays in, and the
-    // picture fills the frame.
-    function range(z, len, a0, a1) {
-      var half = len / z / 2;
-      return [Math.max(a1 - half, half), Math.min(a0 + half, len - half)];
+    // Takes the camera off the picture (its animations and inline styles), so it can be measured.
+    function bare() {
+      anims.forEach(function (a) { a.cancel(); });
+      anims = [];
+      if (g) g.parts.forEach(function (p) { p.el.style.transform = p.el.style.transformOrigin = ''; });
     }
-    function along(u, r) { return r[1] > r[0] ? r[0] + u * (r[1] - r[0]) : (r[0] + r[1]) / 2; }
-    function where(c, r) { return r[1] > r[0] ? clamp((c - r[0]) / (r[1] - r[0]), 0, 1) : 0.5; }
-    // A push (data-camera) as a view on this frame now.
-    function viewOf(push) {
-      var G = geo();
+    // Measures again, at rest, and stands where `push` puts the camera on the frame as it is now.
+    function fresh(push) {
+      bare();
+      g = measure();
+      stand(poseOf(push));
+    }
+    function geo() {
+      if (!g && !walk) fresh(aim);
+      return g;
+    }
+    // On one axis: the view's centre at zoom z leans towards `want` as far as the range that keeps
+    // the screen (a0–a1) in view and the picture filling the frame (len) allows. The point that a
+    // scale of z about it puts at that centre, (c·z − len/2) / (z − 1), is always inside the frame.
+    function pivotOn(z, len, a0, a1, want) {
+      var half = len / z / 2, lo = Math.max(a1 - half, half), hi = Math.min(a0 + half, len - half);
+      var c = hi > lo ? clamp(want, lo, hi) : (lo + hi) / 2;
+      return clamp((c * z - len / 2) / (z - 1), 0, len);
+    }
+    // A push (data-camera) as a pose on this frame now.
+    function poseOf(push) {
+      var G = g;
       if (!push || !G || G.top <= 1) return REST;
       var z = 1 + push.a * (G.top - 1);
-      return {
-        z: z,
-        ux: where(G.s.x + push.fx * G.s.w, range(z, G.w, G.x0, G.x1)),
-        uy: where(G.s.y + push.fy * G.s.h, range(z, G.h, G.y0, G.y1))
-      };
+      if (z <= 1.0005) return REST;
+      return { z: z, x: pivotOn(z, G.w, G.x0, G.x1, G.s.x + push.fx * G.s.w), y: pivotOn(z, G.h, G.y0, G.y1, G.s.y + push.fy * G.s.h) };
     }
-    function put(v) {
-      cur = v;
-      var G = geo();
-      if (!G) return;
-      if (v.z <= 1.0005) {
-        if (done.z !== 1) G.parts.forEach(function (p) { p.el.style.transform = p.el.style.transformOrigin = p.el.style.willChange = ''; });
-        done = { x: 0, y: 0, z: 1 };
-        return;
-      }
-      var cx = along(v.ux, range(v.z, G.w, G.x0, G.x1)), cy = along(v.uy, range(v.z, G.h, G.y0, G.y1));
-      var tx = G.w / 2 - cx * v.z, ty = G.h / 2 - cy * v.z;
-      G.parts.forEach(function (p) {
-        p.el.style.transformOrigin = '0 0';
-        p.el.style.transform = 'translate(' + (tx + (v.z - 1) * p.x).toFixed(2) + 'px,' + (ty + (v.z - 1) * p.y).toFixed(2) + 'px) scale(' + v.z.toFixed(4) + ')';
+    function origin(p, P) { return (P.x - p.x).toFixed(2) + 'px ' + (P.y - p.y).toFixed(2) + 'px'; }
+    function scale(z) { return 'scale(' + z.toFixed(5) + ')'; }
+    // Stands at pose v at once.
+    function stand(v) {
+      pose = v;
+      pivot = v.z > 1 ? v : null;
+      if (!g) return;
+      g.parts.forEach(function (p) {
+        p.el.style.transformOrigin = pivot ? origin(p, pivot) : '';
+        p.el.style.transform = pivot ? scale(v.z) : '';
       });
-      done = { x: tx, y: ty, z: v.z };
     }
-    function tick() {
-      raf = 0;
-      if (!tw) return;
-      // The end is worked out from the frame as it is now, so a layout that settles mid-walk
-      // (fonts, the step list being built) still ends with the whole screen in view.
-      var q = clamp((now() - tw.t0) / tw.ms, 0, 1), e = tokens().inout(q), a = tw.a, b = viewOf(tw.push);
-      put({ z: a.z * Math.pow(b.z / a.z, e), ux: mix(a.ux, b.ux, e), uy: mix(a.uy, b.uy, e) });
-      if (q < 1) { raf = requestAnimationFrame(tick); return; }
-      var fn = tw.fn;
-      tw = null;
-      // Off the compositor's layer again, so the picture is drawn sharp at its new size.
-      if (g) g.parts.forEach(function (p) { p.el.style.willChange = ''; });
-      if (fn) fn();
+    // The zoom as drawn now, in the middle of a walk too.
+    function zNow() {
+      if (!walk || !g || !g.parts.length) return pose.z;
+      var m = /^matrix\(\s*([-\d.e]+)/.exec(W.getComputedStyle(g.parts[g.parts.length - 1].el).transform || '');
+      var z = m ? parseFloat(m[1]) : NaN;
+      return isFinite(z) && z > 0 ? z : pose.z;
     }
-    function same(a, b) { return Math.abs(a.z - b.z) < 0.002 && Math.abs(a.ux - b.ux) < 0.002 && Math.abs(a.uy - b.uy) < 0.002; }
+    function land() {
+      var w = walk;
+      walk = null;
+      anims.forEach(function (a) { a.cancel(); });
+      anims = [];
+      stand(w.to);
+      // The frame changed size during the walk: stand where it should be on the new one.
+      if (stale) { stale = false; fresh(aim); }
+      if (w.fn) w.fn();
+    }
+    // The plate's picture changes the screen's box when it arrives (site.css, .is-drawn) and fades
+    // in over the CSS frame (--dur-slow), so a walk waits for both: drawn, missing, or never coming
+    // (no --drawn: 1), or 3 s at most.
+    function settled() {
+      if (!stage.classList.contains('plate--device') || /\bis-(drawn|missing)\b/.test(stage.className)) return true;
+      return W.getComputedStyle(stage).getPropertyValue('--drawn').trim() !== '1';
+    }
+    function whenSettled(fn) {
+      var mo = W.MutationObserver ? new MutationObserver(check) : null, t = setTimeout(go, 3000), gone = false;
+      if (mo) mo.observe(stage, { attributes: true, attributeFilter: ['class'] });
+      function check() { if (settled()) go(); }
+      function go() {
+        if (gone) return;
+        gone = true;
+        clearTimeout(t);
+        if (mo) mo.disconnect();
+        // The picture's fade, and the new layout (and the refit it brings), before the walk measures.
+        setTimeout(function () { requestAnimationFrame(function () { requestAnimationFrame(guard(fn, 'camera')); }); }, tokens().slow);
+      }
+    }
+    function samePoint(a, b) { return Math.abs(a.x - b.x) < 0.5 && Math.abs(a.y - b.y) < 0.5; }
     function samePush(a, b) { return a === b || !!(a && b && a.a === b.a && a.fx === b.fx && a.fy === b.fy); }
     // Walks to `push` (null: the whole scene) and calls fn when it is there; at once if it is.
     function go(push, fn) {
+      if (still()) { walk = pend = aim = null; fresh(null); if (fn) fn(); return; }
+      if (walk && samePush(walk.push, push)) { walk.fn = fn; return; }
+      if (pend || (!waited && !settled())) {
+        var first = !pend;
+        pend = { push: push, fn: fn };
+        if (first) whenSettled(function () { var p = pend; pend = null; waited = true; if (p) go(p.push, p.fn); });
+        return;
+      }
       aim = push;
-      if (still()) { put(REST); if (fn) fn(); return; }
-      if (tw && samePush(tw.push, push)) { tw.fn = fn; return; }
-      g = measure();
+      var z0 = zNow(), from = pivot;
+      if (walk) { walk.fn = null; anims.forEach(function (a) { a.cancel(); }); anims = []; walk = null; }
+      else { bare(); g = measure(); }
       if (!g) { if (fn) fn(); return; }
-      if (!tw && same(cur, viewOf(push))) { if (fn) fn(); return; }
-      g.parts.forEach(function (p) { p.el.style.willChange = 'transform'; });
-      tw = { a: cur, push: push, t0: now(), ms: tokens().camera, fn: fn };
-      if (!raf) raf = requestAnimationFrame(tick);
+      var to = poseOf(push);
+      // In, about the new point; out (or back), about the one in use.
+      var P = to.z > 1 ? to : from;
+      if (!P || (from && z0 > 1.0005 && to.z > 1 && !samePoint(from, to))) {
+        // Nothing to walk, or another push while in (the frame crossed the narrow width): stand.
+        stand(to);
+        if (fn) fn();
+        return;
+      }
+      if (Math.abs(to.z - z0) < 0.002) { stand(to); if (fn) fn(); return; }
+      var T = tokens(), full = Math.abs((to.z > 1 ? to.z : from.z) - 1) || 1;
+      var ms = (to.z > z0 ? T.camera : T.cameraOut) * clamp(Math.abs(to.z - z0) / full, 0.4, 1);
+      // The end, inline, under the animation; the animation draws the way there.
+      pose = to;
+      pivot = P;
+      g.parts.forEach(function (p) {
+        p.el.style.transformOrigin = origin(p, P);
+        p.el.style.transform = scale(to.z);
+      });
+      var mine = walk = { push: push, fn: fn, to: to };
+      try {
+        anims = g.parts.map(function (p) {
+          return p.el.animate([{ transform: scale(z0) }, { transform: scale(to.z) }], { duration: ms, easing: T.travelCss, fill: 'both' });
+        });
+      } catch (e) { anims = []; }
+      if (!anims.length || !anims[0]) { land(); return; }
+      // One clock for every part: they start on the same frame.
+      var t0 = D.timeline && D.timeline.currentTime;
+      if (t0 != null) anims.forEach(function (a) { a.startTime = t0; });
+      anims[0].onfinish = guard(function () { if (walk === mine) land(); }, 'camera');
     }
-    // A new size (or a layout that settled): measure again and stand where the camera was, or, in
-    // the middle of a walk, let the walk carry on to the new end.
+    // A new size (or a layout that settled): measure again and stand where the camera should be on
+    // the new frame. In the middle of a walk, the walk lands first.
     function refit() {
-      if (tw) { g = null; return; }
-      put(REST);
-      g = measure();
-      put(viewOf(aim));
+      if (walk) { stale = true; return; }
+      fresh(aim);
     }
     // The frame, and the screen in it: the screen grows when the drawn picture arrives and the CSS
     // frame's bar goes (site.css, .is-drawn), inside a frame that keeps its size.
@@ -459,7 +545,7 @@
     return {
       go: go,
       // How far a push zooms on this frame now (1: it doesn't move).
-      zoom: function (push) { return still() ? 1 : viewOf(push).z || 1; }
+      zoom: function (push) { if (still()) return 1; geo(); return poseOf(push).z || 1; }
     };
   }
 
@@ -713,7 +799,7 @@
           ms: 3200,
           enter: function (S) { S.tell({ free: false, scrub: false, step: 0 }); S.measure(); },
           draw: function (S, q) {
-            var t = S.point('tap'), g = S.ease(lin(q, 0.1, 0.6));
+            var t = S.point('tap'), g = S.glide(lin(q, 0.1, 0.6));
             S.cursor(mix(t.x + S.dir * 220, t.x, g), mix(t.y + 150, t.y, g), S.ease(lin(q, 0.04, 0.2)) * (1 - S.ease(lin(q, 0.86, 1))));
             S.ripple(lin(q, 0.66, 0.94));
             if (q >= 0.66) S.once('point', function () { S.tell({ step: 1 }); });
@@ -921,6 +1007,8 @@
       point: point,
       measure: remeasure,
       ease: function (q) { return tokens().inout(q); },
+      // The pointer travels on the camera's curve (--ease-camera): it leaves and lands at rest.
+      glide: function (q) { return tokens().travel(q); },
       cursor: function (x, y, o) {
         if (!cursor) return;
         cursor.style.opacity = o > 0.001 ? o.toFixed(3) : '0';
@@ -1320,9 +1408,25 @@
       fig.setAttribute('data-state', 'playing');
       var my = ++want, push = cam && pushFor(screen.clientWidth);
       if (!push) { player.play(from); return; }
-      // The poster (or the frame at the chosen cue) waits while the camera walks in.
-      if (from != null && isFinite(from)) player.seek(from);
-      cam.go(push, function () { if (my === want) player.play(from); });
+      // The poster (or the frame at the chosen cue) waits while the camera walks in, and the video
+      // starts once it has landed. A cue's frame is found (and faded in) before the camera moves,
+      // so nothing changes under the walk.
+      var walk = function () { if (my === want) cam.go(push, function () { if (my === want) player.play(from); }); };
+      if (from != null && isFinite(from)) { player.seek(from); landed(from, walk); } else walk();
+    }
+    function landed(from, fn) {
+      var shown = video.hasAttribute('data-shown'), t = 0, ok = false;
+      function done() {
+        if (ok) return;
+        ok = true;
+        clearTimeout(t);
+        video.removeEventListener('seeked', done);
+        setTimeout(fn, !shown && video.hasAttribute('data-shown') ? tokens().slow : 0);
+      }
+      // No seek under way, or none coming (no data yet and the start is 0): go now.
+      if (!video.seeking && (video.readyState >= 1 || !(from > 0))) { fn(); return; }
+      video.addEventListener('seeked', done);
+      t = setTimeout(done, 1500);
     }
     function cueAt(t) {
       var k = 0;

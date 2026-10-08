@@ -747,24 +747,32 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 /* ======================================================================== Motion */
 /* One motion system (the owner, 2026-10-09: calm and smooth, nothing snappy, nothing that zooms
    inside a screen). Every duration and curve on the site is one of these tokens; showcase.js reads
-   --dur-camera and --ease-inout too, so the camera moves on the same curve as the CSS.
+   the camera's (and --ease-inout, --dur-slow) from here, so the script moves on the CSS's curves.
      --ease-ui     a soft ease-out (cubic) for UI answering the visitor: hover, menus, captions, fades
-     --ease-inout  a slow sine ease-in-out for anything that travels: the camera, the opening, the
-                   accordions, the pointer in the hero
+     --ease-inout  a slow sine ease-in-out for what opens or settles: the opening, the accordions,
+                   the step list, the hint's ring, the pointer fading in and out
+     --ease-camera a cubic ease-in-out for anything that travels across the picture: the camera,
+                   both ways, and the pointer's glide in the hero. It leaves at zero speed, is
+                   fastest halfway and lands at zero speed, like a camera on a dolly
      --dur-fast    .15s  colour, border and press feedback; a caption leaving
      --dur-ui      .3s   menus, captions, small turns, the FAQ
      --dur-slow    .6s   reveals, the live app and its hint fading in, the step list opening
-     --dur-camera  2s    one camera walk (in, or back out); then it holds
-   No overshoot and no bounce anywhere. Linear only where something follows a clock or the scroll
-   one to one (a progress bar, the parallax drift, the stacked cards). klaro.css's --ease-out and
-   --ease-settle point at --ease-ui here, so its buttons and links follow the system too. */
+     --dur-camera      2.2s  the camera walking in to the screen; then it holds
+     --dur-camera-out  1.8s  the camera walking back out to the whole scene
+   The camera is one scale about one fixed point per walk (showcase.js), so the picture never
+   drifts one way and then the other. No overshoot and no bounce anywhere. Linear only where
+   something follows a clock or the scroll one to one (a progress bar, the parallax drift, the
+   stacked cards). klaro.css's --ease-out and --ease-settle point at --ease-ui here, so its buttons
+   and links follow the system too. */
 :root {
   --ease-ui: cubic-bezier(.33, 1, .68, 1);
   --ease-inout: cubic-bezier(.37, 0, .63, 1);
+  --ease-camera: cubic-bezier(.65, 0, .35, 1);
   --dur-fast: .15s;
   --dur-ui: .3s;
   --dur-slow: .6s;
-  --dur-camera: 2s;
+  --dur-camera: 2.2s;
+  --dur-camera-out: 1.8s;
   --ease-out: var(--ease-ui);
   --ease-settle: var(--ease-ui);
 }

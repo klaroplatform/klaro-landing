@@ -109,10 +109,13 @@ The pages show the real Klaro app, not drawn mock-ups.
   never more, so the app is never cut; `fx fy` is the point of the screen to lean towards.
   A recording rests on the whole scene, walks in before it plays, holds while it plays and walks
   back out after it ends; a still on a plate walks in once. `data-camera-narrow` is the same for
-  screens narrower than 480px. With reduced motion the camera never moves.
+  screens narrower than 480px. With reduced motion the camera never moves. Each walk is one scale
+  about one fixed point (set before it starts), on one ease-in-out curve, run by the compositor:
+  the picture never drifts one way and then the other, and nothing (the plate's picture, the
+  video) changes under it.
 - **Motion tokens.** Every duration and curve is a token at the top of the Motion block in
-  `site.css` (`--ease-ui`, `--ease-inout`, `--dur-fast`, `--dur-ui`, `--dur-slow`,
-  `--dur-camera`); `showcase.js` reads the camera's from there.
+  `site.css` (`--ease-ui`, `--ease-inout`, `--ease-camera`, `--dur-fast`, `--dur-ui`, `--dur-slow`,
+  `--dur-camera`, `--dur-camera-out`); `showcase.js` reads the camera's from there.
 - **Phone-sized recordings.** A recording plays `media/<name>-sm.mp4` (960 × 600, H.264,
   `+faststart`; about a sixth of the bytes) whenever it is drawn at no more than about 960 device
   pixels across (its screen, times the camera's zoom, times the pixel ratio), and the full file
