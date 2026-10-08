@@ -29,6 +29,6 @@
 ## More
 
 - [Products](https://learnklaro.com/products/): Every product in one place: course builder, live sessions, quizzes and marking for tutors; study view, practice questions, Minis and progress for students.
-- [Try it](https://learnklaro.com/try/): Try Klaro's study view on a sample IGCSE Biology course: tap a passage in the book, watch the lecture explain it and see the past-paper questions on it.
+- [Live demo](https://learnklaro.com/try/): Try Klaro's study view on a sample IGCSE Biology course: tap a passage in the book, watch the lecture explain it and see the past-paper questions on it.
 - [Powered by research](https://learnklaro.com/research/): The learning research Klaro is built on: the source beside the explanation, testing yourself instead of re-reading, and feedback. Every source is linked.
 - [Browse courses](https://learnklaro.com/market/): Course catalogue (example courses and prices for now).
