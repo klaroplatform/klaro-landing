@@ -33,7 +33,7 @@ The plan:
 | Setting | Value |
 |---|---|
 | Live deployment | Version **`6fd94dd8-23d8-4d96-9a50-6d1a1a068155`** at 100%, uploaded by hand with `wrangler deploy` on 2026-10-03. This is the **old one-page site**, and the version to roll back to if go-live goes wrong |
-| Preview versions | **`bbb297dd-447d-427e-9f16-d9fcd3689086`**: the new site at `688c24b`, alias `new-site`, uploaded 2026-10-08, **not deployed** (§3). An earlier upload, `04b3477e-…` (at `4c8bfa9`), is superseded |
+| Preview versions | **`20285892-94de-47af-9713-38a657d18c28`**: the new site at `d8c89e7` (English and Arabic), alias `new-site`, uploaded 2026-10-08, **not deployed** (§3). Earlier preview uploads, superseded: `bbb297dd-…` (`688c24b`) and `04b3477e-…` (`4c8bfa9`) |
 | Custom domains | `learnklaro.com` and `www.learnklaro.com`, both → `klaro-landing` (production) |
 | workers.dev route | Off |
 | Version URLs (`preview_urls`) | Were **off**. Turned **on** on 2026-10-08, for this Worker only, with the owner's go-ahead. Done with one API call (`POST …/workers/scripts/klaro-landing/subdomain` with `{"enabled": false, "previews_enabled": true}`), which touches nothing else. learnklaro.com was checked before and after: still the old site. `preview_urls: true` in `wrangler.jsonc` keeps it on at every deploy |
@@ -102,7 +102,7 @@ Cloudflare reads this file; it is never served. GitHub Pages ignores it.
 | `/fonts/*` | one year, `immutable` | Only if fonts are ever self-hosted (today they come from Google Fonts) |
 | favicons | one day | |
 | HTML, robots.txt, sitemap.xml, llms.txt | No `Cache-Control` set: Cloudflare's default `public, max-age=0, must-revalidate` plus an ETag | A deploy shows at once |
-| `/robots.txt`, `/llms.txt` | `Content-Type: text/plain; charset=utf-8` | Cloudflare sends `.txt` as plain `text/plain` with no charset (seen on the preview); llms.txt may carry Arabic. HTML pages declare UTF-8 in `<meta charset>`. Added after the `bbb297dd` upload, so the next upload carries it |
+| `/robots.txt`, `/llms.txt` | `Content-Type: text/plain; charset=utf-8` | Cloudflare sends `.txt` as plain `text/plain` with no charset (seen on the preview); llms.txt may carry Arabic. HTML pages declare UTF-8 in `<meta charset>`. Confirmed on the `20285892` preview |
 
 - **No Content-Security-Policy.** The pages use inline styles, inline JSON-LD and Google Fonts; a CSP
   needs its own careful pass.
@@ -135,29 +135,35 @@ Checked on a clean snapshot of `new-site` (`68b0a8c`), using `wrangler deploy --
 **https://new-site-klaro-landing.learnklaro.workers.dev**
 
 - It is the `new-site` alias, and always shows the latest upload made with `--preview-alias new-site`.
-- This exact version is also at https://bbb297dd-klaro-landing.learnklaro.workers.dev.
-- It was uploaded from a clean snapshot of `new-site` at `688c24b`: version
-  `bbb297dd-447d-427e-9f16-d9fcd3689086`, **not deployed**.
+- This exact version is also at https://20285892-klaro-landing.learnklaro.workers.dev.
+- It was uploaded from a clean snapshot of `new-site` at `d8c89e7`, which has the full Arabic site:
+  version `20285892-94de-47af-9713-38a657d18c28`, **not deployed**.
 - learnklaro.com still serves `6fd94dd8`, the old site (checked after the upload).
 
 Checked with curl:
 
 | Check | Result |
 |---|---|
-| `/`, `/products/`, `/products/study-view/`, `/products/marking/`, `/research/`, `/market/`, `/ar/` | 200 |
-| `/products/study-view` (no slash) | 307 → `/products/study-view/` |
-| `/does-not-exist`, `/products/nope/` | **404 with the 404 page** ("Page not found · Klaro") |
-| `/robots.txt`, `/sitemap.xml`, `/llms.txt` | 200: our robots.txt (allows all, points at the sitemap), the sitemap XML, llms.txt |
-| `/design/`, `/design/brief/*.md`, `/tools/`, `/tools/site.json`, `/tools/site.py`, `/partials/`, `/partials/header.en.html` | 404 |
-| `/README.md`, `/CLAUDE.md`, `/_config.yml`, `/wrangler.jsonc`, `/_headers`, `/.assetsignore`, `/.gitignore`, `/.git/config` | 404 |
-| `x-robots-tag` on the alias and version URLs | `noindex` on both (the `_headers` host rule works) |
+| English: `/`, `/products/`, `/products/minis/`, `/research/`, `/market/` | 200 |
+| Arabic: `/ar/`, `/ar/products/`, all 7 `/ar/products/<name>/` pages, `/ar/research/` | 200; Arabic titles; `<html lang="ar" dir="rtl">` |
+| `/ar/products/minis` (no slash) | 307 → `/ar/products/minis/` |
+| `/does-not-exist` | **404 with the English 404 page** ("Page not found · Klaro") |
+| `/ar/nope/`, `/ar/products/nope/` | **404 with the Arabic 404 page** ("الصفحة غير موجودة · Klaro"): Cloudflare serves the nearest `404.html`, which is `ar/404.html` |
+| `/robots.txt`, `/llms.txt` | 200, `text/plain; charset=utf-8` (llms.txt now carries non-ASCII text) |
+| `/sitemap.xml` | 200, `application/xml` |
+| `/design/`, `/tools/`, `/partials/`, `/README.md`, `/CLAUDE.md` (and, on the earlier preview, `_config.yml`, `wrangler.jsonc`, `_headers`, `.assetsignore`, `.git/config`) | 404 |
+| `x-robots-tag` on the alias and version URLs | `noindex` (the `_headers` host rule works) |
 | `x-robots-tag` on learnklaro.com | none (the real site stays indexable) |
 | Security headers, cache rules | As in §2.3: CSS 5 minutes, images a week, HTML `max-age=0` |
 
 Notes:
 
-- A brand-new workers.dev subdomain takes a minute or two to resolve. For the first couple of minutes
-  the preview didn't answer at all.
+- **Wait about a minute after an upload before checking the alias.** Right after this upload, for a
+  few seconds the alias answered some URLs from the previous version: old `/ar/`, and 404s for the
+  new Arabic pages. The version URL was right at once, and the alias caught up within a minute.
+  The version URL (`<8 chars>-klaro-landing…`) is the one to check first.
+- A brand-new workers.dev subdomain takes a minute or two to resolve. On the first upload the
+  preview didn't answer at all for the first couple of minutes.
 - `/404.html` itself redirects to `/404`; unknown URLs get the page with status 404, which is what
   matters.
 - Navigation links are relative (`products/…`, `../../research/`, `/products/…` on the 404 page), so
