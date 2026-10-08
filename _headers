@@ -48,5 +48,11 @@ https://:version.:subdomain.workers.dev/*
 /apple-touch-icon.png
   Cache-Control: public, max-age=86400
 
-# robots.txt, sitemap.xml and llms.txt need nothing here: they get the default caching, as HTML
-# does, and .txt files are already sent as "text/plain; charset=utf-8".
+# robots.txt, sitemap.xml and llms.txt keep the default caching, as HTML does. Cloudflare sends .txt
+# files as plain "text/plain" with no charset, so say UTF-8 here: llms.txt may carry Arabic or
+# typographic characters. (HTML pages declare UTF-8 in their own <meta charset>.)
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8

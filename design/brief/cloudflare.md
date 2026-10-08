@@ -18,15 +18,27 @@ The plan:
 
 | What | Finding |
 |---|---|
-| Wrangler on this Mac | Logged in with OAuth as the Klaroplatform login. The token covers **one account only**: "Klaroplatform's Account" (`bbcdececfdc25f78201b3be407c7de6e`) |
-| The second account (`8f32b3259e15052339fe39a63baa1cca`) | The same login is an **Administrator member** of it, but the OAuth token was not granted that account. Every wrangler call there fails with `Authentication error [code: 10000]`. The Cloudflare MCP tools see only the first account too |
-| First account contents | Workers `klaro-web-staging`, `klaro-api-staging`, `klaro-correction-runner`, `klaro-annotate`, `radioscribe-demo`; zone `klaroplatform.com`. **No `klaro-landing` Worker and no `learnklaro.com` zone** |
-| learnklaro.com zone | Nameservers `toby.ns.cloudflare.com` / `rachel.ns.cloudflare.com`, so the zone is on Cloudflare, in an account this login can't read. `wrangler.jsonc` says it is the second account. Zone settings could not be read |
-| Worker `klaro-landing` | In the second account, so its versions, deployments, custom domains, workers.dev and Version URL settings **could not be read** |
-| Workers Builds (Git integration) | Not visible from the CLI. Probably **not connected**: the old README and the SEO audit both describe manual `wrangler deploy` |
+| Wrangler on this Mac | Two auth profiles, both the Klaroplatform login. **`default`** covers only the first account, "Klaroplatform's Account" (`bbcdececfdc25f78201b3be407c7de6e`); the app repositories use it. **`learnklaro`** (made by the owner on 2026-10-08) covers both accounts and is bound to this repository's folder |
+| Using the `learnklaro` profile | Inside the repository folder it applies by itself. From any other folder, such as a scratch worktree, add `--profile learnklaro` to every wrangler command. Always set `CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca`, because the profile sees two accounts |
+| The second account (`8f32b3259e15052339fe39a63baa1cca`) | Holds the zone `learnklaro.com` and two Workers: **`klaro-landing`** (ours) and `fund-389`. `fund-389` serves another site (omaraskar.com): never touch it |
+| Account workers.dev subdomain | **`learnklaro`** (`*.learnklaro.workers.dev`), registered on 2026-10-08 with the owner's approval. Until then the account had none, so no Version URLs could exist. It is account-wide, but `klaro-landing` keeps workers.dev off (Version URLs only) and `fund-389` has both off, so nothing else became reachable |
+| learnklaro.com zone | Id `d68dee8079f81328efe12358e4f62c5f`, **Free plan**, active. Nameservers `toby` / `rachel.ns.cloudflare.com` |
+| Zone settings | The wrangler login can't read them (no zone-settings scope): Always Use HTTPS, SSL mode, bot settings, redirect rules and DNS all answer "Authentication error". The owner checks them in the dashboard (§5) |
+| First account | Workers `klaro-web-staging`, `klaro-api-staging`, `klaro-correction-runner`, `klaro-annotate`, `radioscribe-demo`; zone `klaroplatform.com`; workers.dev subdomain `klaroplatform`. Nothing of the landing site's |
+| Workers Builds (Git integration) | Not visible from the CLI. **Not connected**: the only deployment came from a manual upload (§1.2) |
 | GitHub | `klaroplatform/klaro-landing` is **public**, owned by the personal GitHub account `klaroplatform`. Pages is on, building `main` from `/` (legacy Jekyll build), live at `https://klaroplatform.github.io/klaro-landing/` |
 
-### 1.2 What each address serves (curl, 2026-10-08)
+### 1.2 The Worker `klaro-landing`
+
+| Setting | Value |
+|---|---|
+| Live deployment | Version **`6fd94dd8-23d8-4d96-9a50-6d1a1a068155`** at 100%, uploaded by hand with `wrangler deploy` on 2026-10-03. This is the **old one-page site**, and the version to roll back to if go-live goes wrong |
+| Preview versions | **`bbb297dd-447d-427e-9f16-d9fcd3689086`**: the new site at `688c24b`, alias `new-site`, uploaded 2026-10-08, **not deployed** (§3). An earlier upload, `04b3477e-…` (at `4c8bfa9`), is superseded |
+| Custom domains | `learnklaro.com` and `www.learnklaro.com`, both → `klaro-landing` (production) |
+| workers.dev route | Off |
+| Version URLs (`preview_urls`) | Were **off**. Turned **on** on 2026-10-08, for this Worker only, with the owner's go-ahead. Done with one API call (`POST …/workers/scripts/klaro-landing/subdomain` with `{"enabled": false, "previews_enabled": true}`), which touches nothing else. learnklaro.com was checked before and after: still the old site. `preview_urls: true` in `wrangler.jsonc` keeps it on at every deploy |
+
+### 1.3 What each address serves (curl, 2026-10-08)
 
 | URL | Answer | Notes |
 |---|---|---|
@@ -43,7 +55,7 @@ The plan:
 
 ## 2. What changed in the repository, and why
 
-All three files are on branch `new-site` (not committed yet when this was written).
+All three files are committed on branch `new-site` (`4c8bfa9`).
 
 ### 2.1 `wrangler.jsonc`
 
@@ -89,7 +101,8 @@ Cloudflare reads this file; it is never served. GitHub Pages ignores it.
 | `/img/*` | `public, max-age=604800, stale-while-revalidate=86400` (a week) | To change an image, give it a new file name |
 | `/fonts/*` | one year, `immutable` | Only if fonts are ever self-hosted (today they come from Google Fonts) |
 | favicons | one day | |
-| HTML, robots.txt, sitemap.xml, llms.txt | Nothing set: Cloudflare's default `public, max-age=0, must-revalidate` plus an ETag | A deploy shows at once |
+| HTML, robots.txt, sitemap.xml, llms.txt | No `Cache-Control` set: Cloudflare's default `public, max-age=0, must-revalidate` plus an ETag | A deploy shows at once |
+| `/robots.txt`, `/llms.txt` | `Content-Type: text/plain; charset=utf-8` | Cloudflare sends `.txt` as plain `text/plain` with no charset (seen on the preview); llms.txt may carry Arabic. HTML pages declare UTF-8 in `<meta charset>`. Added after the `bbb297dd` upload, so the next upload carries it |
 
 - **No Content-Security-Policy.** The pages use inline styles, inline JSON-LD and Google Fonts; a CSP
   needs its own careful pass.
@@ -110,58 +123,68 @@ Checked on a clean snapshot of `new-site` (`68b0a8c`), using `wrangler deploy --
   `/partials/header.en.html`, `/README.md`, `/CLAUDE.md`, `/_config.yml`, `/wrangler.jsonc`,
   `/.assetsignore`, `/_headers`, `/.git/config`, and unknown URLs.
 - The security and cache headers came out as in the table above.
-- Not checked: the workers.dev `noindex` rule, because the local server doesn't use the real
-  hostname. Check it on the first real preview (§3, step 4).
+- The workers.dev `noindex` rule couldn't be checked locally (the local server doesn't use the real
+  hostname); it was confirmed on the real preview (§3.1).
 
 ---
 
 ## 3. The preview URL
 
-**No preview has been uploaded.** The upload needs access to the second account, and this Mac's
-wrangler login doesn't have it (§1.1). Nothing on Cloudflare was changed.
+### 3.1 The preview (2026-10-08)
 
-To unblock it, **the owner** does one of these:
+**https://new-site-klaro-landing.learnklaro.workers.dev**
 
-- **A. Recommended: a separate wrangler login just for this repository.** The app's projects keep
-  using the current login. In Terminal:
-  ```sh
-  cd ~/Documents/GitHub/klaro-landing
-  npx wrangler auth create learnklaro    # opens the browser: choose the account that holds learnklaro.com
-  npx wrangler auth activate learnklaro . # this folder now uses that login
-  npx wrangler whoami                     # should list account 8f32b3259e15052339fe39a63baa1cca
-  ```
-  `wrangler auth` profiles are marked experimental.
-- **B. Log in again with both accounts.** Run `npx wrangler login` and tick both accounts on
-  Cloudflare's consent page. This changes the login the app repositories use too. Any wrangler
-  command there with no account id would then stop and ask which account to use.
-- **C. An API token.** In the dashboard of the second account, create a token from
-  the "Edit Cloudflare Workers" template, limited to that account and the learnklaro.com zone. Put
-  it in the shell as `CLOUDFLARE_API_TOKEN`. Never paste it into a chat or a file in the repository.
+- It is the `new-site` alias, and always shows the latest upload made with `--preview-alias new-site`.
+- This exact version is also at https://bbb297dd-klaro-landing.learnklaro.workers.dev.
+- It was uploaded from a clean snapshot of `new-site` at `688c24b`: version
+  `bbb297dd-447d-427e-9f16-d9fcd3689086`, **not deployed**.
+- learnklaro.com still serves `6fd94dd8`, the old site (checked after the upload).
 
-Then **the orchestrator** uploads the preview. This uploads a version but doesn't deploy it, so
-learnklaro.com keeps the old site:
+Checked with curl:
 
-1. `git worktree add <scratch>/cf-preview new-site --detach` (a clean snapshot; other agents may be
-   editing the working tree).
+| Check | Result |
+|---|---|
+| `/`, `/products/`, `/products/study-view/`, `/products/marking/`, `/research/`, `/market/`, `/ar/` | 200 |
+| `/products/study-view` (no slash) | 307 → `/products/study-view/` |
+| `/does-not-exist`, `/products/nope/` | **404 with the 404 page** ("Page not found · Klaro") |
+| `/robots.txt`, `/sitemap.xml`, `/llms.txt` | 200: our robots.txt (allows all, points at the sitemap), the sitemap XML, llms.txt |
+| `/design/`, `/design/brief/*.md`, `/tools/`, `/tools/site.json`, `/tools/site.py`, `/partials/`, `/partials/header.en.html` | 404 |
+| `/README.md`, `/CLAUDE.md`, `/_config.yml`, `/wrangler.jsonc`, `/_headers`, `/.assetsignore`, `/.gitignore`, `/.git/config` | 404 |
+| `x-robots-tag` on the alias and version URLs | `noindex` on both (the `_headers` host rule works) |
+| `x-robots-tag` on learnklaro.com | none (the real site stays indexable) |
+| Security headers, cache rules | As in §2.3: CSS 5 minutes, images a week, HTML `max-age=0` |
+
+Notes:
+
+- A brand-new workers.dev subdomain takes a minute or two to resolve. For the first couple of minutes
+  the preview didn't answer at all.
+- `/404.html` itself redirects to `/404`; unknown URLs get the page with status 404, which is what
+  matters.
+- Navigation links are relative (`products/…`, `../../research/`, `/products/…` on the 404 page), so
+  clicking around the preview stays on the preview.
+- The canonical, `og:url`, hreflang, sitemap and robots.txt URLs point at `https://learnklaro.com/…`,
+  as they should. Until go-live, those addresses still serve the old site.
+
+### 3.2 How to upload a preview
+
+This uploads a version but doesn't deploy it, so learnklaro.com keeps what it serves.
+
+1. Make a clean snapshot, because other agents may be editing the working tree:
+   `git worktree add <scratch>/cf-preview new-site --detach`.
 2. In that folder, run:
    ```sh
-   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler versions upload --preview-alias new-site --message "new-site preview"
+   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler versions upload --profile learnklaro --preview-alias new-site --message "new-site preview"
    ```
-3. The output should include two lines: `Version Preview URL: https://<8 chars>-klaro-landing.<subdomain>.workers.dev`
-   and `Version Preview Alias URL: https://new-site-klaro-landing.<subdomain>.workers.dev`.
-   - If no URL is printed, Version URLs are off for this Worker. That is likely: workers.dev is off
-     for it (the routes turn it off), and Version URLs then default to off.
-   - To turn them on, either:
-     - the owner switches them on in Workers & Pages → klaro-landing → Settings → Domains &
-       Routes → **Version URLs** → Enable; or
-     - with the owner's OK, the orchestrator runs
-       `CLOUDFLARE_ACCOUNT_ID=… npx wrangler triggers deploy` from the snapshot. That applies
-       `workers_dev: false` and `preview_urls: true` without changing what learnklaro.com serves.
-   - Then upload again.
+   `--profile learnklaro` is needed because the snapshot is outside the repository folder.
+3. The output should include two lines:
+   - `Version Preview URL: https://<8 chars>-klaro-landing.<subdomain>.workers.dev`
+   - `Version Preview Alias URL: https://new-site-klaro-landing.<subdomain>.workers.dev`
+
+   The alias always points at the latest upload that used it.
 4. Check the preview with curl:
    - `/`, `/products/study-view/`, `/research/` and `/market/` answer 200.
    - `/does-not-exist` answers 404.
-   - `/design/` and `/tools/chrome.py` answer 404.
+   - `/design/`, `/tools/` and `/partials/header.en.html` answer 404.
    - `curl -sI <url>/` shows `x-robots-tag: noindex`.
 5. `git worktree remove <scratch>/cf-preview`.
 
@@ -209,10 +232,10 @@ Cloudflare Access can put a sign-in in front of them if that is ever wanted.
      `npx wrangler preview` (Worker Previews), which needs a `"previews": {}` block added to
      `wrangler.jsonc`. Add that only when branch previews are wanted.
 3. **Or, until step 2 is done:** with the owner's OK, the orchestrator deploys once by hand from a
-   clean snapshot of `main`. This needs the access from §3:
+   clean snapshot of `main`, using the `learnklaro` profile (§1.1):
    ```sh
    git worktree add <scratch>/cf-live main --detach
-   cd <scratch>/cf-live && CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deploy
+   cd <scratch>/cf-live && CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deploy --profile learnklaro
    ```
    This also applies `workers_dev: false` and `preview_urls: true` to the Worker.
 4. **Check** (anyone):
@@ -335,12 +358,13 @@ seconds.
 
 - **Dashboard:** Workers & Pages → klaro-landing → **Deployments**. Pick the last good version, then
   **⋯ → Rollback** (or "Deploy version").
-- **CLI** (needs the access from §3):
+- **CLI**, from the repository folder (the `learnklaro` profile applies there by itself):
   ```sh
   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deployments list   # find the good version id
   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler rollback <version-id> -m "why"
   ```
-  With no id, `wrangler rollback` goes back to the previous version.
+  With no id, `wrangler rollback` goes back to the previous version. To go back to the old one-page
+  site after the first go-live, roll back to `6fd94dd8-23d8-4d96-9a50-6d1a1a068155`.
 - **Then fix `main`.** With Builds connected, the next push to `main` deploys whatever `main` holds.
   Revert the bad commit (`git revert <sha>`, push) so the rollback doesn't get undone.
 - **What a rollback covers:**
