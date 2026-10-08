@@ -6,6 +6,14 @@
 # When two blocks match one URL and set the same header, the values are JOINED with a comma, so
 # never set the same header (Cache-Control above all) in two blocks that can match one URL.
 # At most 100 blocks. Check after a change: curl -sI <preview URL>/<path>
+#
+# A rule applies to EVERY response the assets build for a matching URL, 404s and redirects
+# included: a missing /media/x.mp4 would get /media/*'s Cache-Control too. That is why every miss
+# goes to worker/index.js, which sends the 404 page with "Cache-Control: no-store" (wrangler.jsonc
+# "not_found_handling": "none"; cloudflare.md §2.5). The cache rules below therefore only reach
+# files that exist, and redirects. Keep HTML pages out of the long-cached folders: their
+# trailing-slash redirects (307) would be cached as long as the files. The Worker's video answers
+# (206) keep these headers: it copies them from the file.
 
 # Security headers on every response. SAMEORIGIN lets our own pages frame the showcase and nobody
 # else. No Content-Security-Policy: the pages use inline styles, inline JSON-LD and Google Fonts, and

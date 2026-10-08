@@ -112,13 +112,18 @@ node tools/serve.cjs 8091
 
 ## Hosting and deploys
 
-The site is served by Cloudflare Workers static assets: a Worker named `klaro-landing` with no
-code. The repository root is the site.
+The site is served by Cloudflare Workers static assets: a Worker named `klaro-landing`. The
+repository root is the site, and files are answered straight from it.
 
-- **`wrangler.jsonc`**: the Worker, its custom domains, the 404 page and trailing-slash handling.
-  It keeps Version URLs on, so a version can be checked before it goes live.
+- **`worker/index.js`**: a small script that runs only for videos (`/media/*.mp4`, `/demo/*.mp4`)
+  and for URLs that match no file. Videos get Range answers (206), so players can seek; misses get
+  `404.html` with `Cache-Control: no-store`, so a browser never keeps a 404 for a file that is
+  added later.
+- **`wrangler.jsonc`**: the Worker, its custom domains, which requests run the script first, and
+  trailing-slash handling. It keeps Version URLs on, so a version can be checked before it goes live.
 - **`.assetsignore`**: what Cloudflare must not publish. Notes, `design/`, `partials/`, `tools/`,
-  every `*.md` file and the tooling configs stay off the site. Anything not listed here goes live.
+  `worker/`, every `*.md` file and the tooling configs stay off the site. Anything not listed here
+  goes live.
 - **`_headers`**: security headers, cache rules and `noindex` rules (Version URLs, `showcase/`,
   `demo/`, `v1/`). Cloudflare reads it and never serves it. Never set the same header in two blocks
   that can match one URL: Cloudflare joins the values.

@@ -1,6 +1,8 @@
 {
   // The Klaro landing site: plain static files served by a Worker with static assets. There is no
-  // build step and no Worker script (no "main"), so every request is answered from the files.
+  // build step. Files are answered straight from the assets; a small Worker script
+  // (worker/index.js) runs only for the videos (Range requests, so players can seek) and for URLs
+  // that match no file (the 404 page, never cached). Why: design/brief/cloudflare.md §2.5.
   // How it is deployed, previewed and rolled back: design/brief/cloudflare.md.
   //
   // Production deploys run from `main` through Workers Builds (Git integration, set up in the
@@ -12,13 +14,25 @@
   // Must match the Worker's name in the dashboard, or Workers Builds refuses to build.
   "name": "klaro-landing",
   "compatibility_date": "2026-09-11",
+  // Runs only for the videos and for misses (see "assets" below). It must stay out of the published
+  // files: .assetsignore lists /worker. It replaces worker.js on main (Omar's Range Worker, 8a428a9).
+  "main": "worker/index.js",
   "assets": {
     // The repository root is the site. .assetsignore keeps the notes, designs and tooling out;
     // _headers sets security and cache headers (it is read by Cloudflare, not served).
     "directory": ".",
-    // Unknown URLs get the nearest 404.html with a 404 status. Until a 404.html exists they get an
-    // empty 404, so deploys work either way.
-    "not_found_handling": "404-page",
+    // The Worker script reaches the files through this binding (env.ASSETS).
+    "binding": "ASSETS",
+    // Videos go to the Worker first: static assets answer Range requests with the whole file, and
+    // players need 206 to seek. Only .mp4 files, so posters, captions and images never invoke it.
+    // Static asset requests are free and unlimited; Worker invocations count against the Free
+    // plan's 100,000 a day.
+    "run_worker_first": ["/media/*.mp4", "/demo/*.mp4"],
+    // "none", not "404-page": every URL that matches no file then goes to the Worker, which sends
+    // 404.html with status 404 and "Cache-Control: no-store". With "404-page" (and a
+    // run_worker_first list) the assets would answer misses themselves, with the folder's
+    // _headers Cache-Control, so a 404 under /media/ would be kept by browsers for a day.
+    "not_found_handling": "none",
     // The default, written out: /products/study-view redirects to /products/study-view/ and serves
     // products/study-view/index.html; /index.html redirects to /.
     "html_handling": "auto-trailing-slash"
