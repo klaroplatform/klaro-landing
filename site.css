@@ -1,6 +1,8 @@
 /* Klaro site styles, on top of klaro.css (the app's tokens, buttons, cards and studio window).
    Here: the Products menu, a centred hero, the motto block, product tiles, research cards,
-   the Try it box, case-study cards and a bigger footer. Logical properties only. */
+   the Try it box, case-study cards and a bigger footer. Logical properties only.
+   Arabic (right to left): the "Arabic" block near the end, plus [dir="rtl"] lines next to the few
+   rules that need a mirror. The rules and the glossary are in design/brief/arabic.md. */
 :root {
   --plum: #1c1330; --plum-2: #2b1f47; --plum-line: rgb(255 255 255 / .12);
   --lavender: #efe6fb; --lavender-2: #f7f2fd;
@@ -11,6 +13,9 @@
 /* Klaro's own mark for one key phrase per headline: a straight gold bar behind the words */
 .key { background: linear-gradient(rgb(240 201 61 / .62), rgb(240 201 61 / .62)) no-repeat 0 86% / 100% .26em; padding-inline: .03em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 [dir="rtl"] .key { background-position: 100% 86%; } /* so the bar draws in from the start (right) side */
+/* Arabic: a thicker bar set higher, behind the lower half of the letters. A thin bar at 86% would
+   run through the descenders and read as a broken underline. The x position stays as above. */
+.key:lang(ar) { background-size: 100% .45em; background-position-y: 78%; }
 .gold-text { color: var(--yellow); }
 .shout { font-weight: 800; text-transform: uppercase; letter-spacing: -.04em; line-height: .9; }
 .i { flex-shrink: 0; }
@@ -77,9 +82,8 @@
 .hero2-copy .seg { background: rgb(255 255 255 / .6); }
 .stage { position: relative; margin-top: 52px; padding-bottom: 8px; }
 .stage .studio { max-width: 1020px; margin-inline: auto; }
-.chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 14px; background: var(--card);
+.chip { position: absolute; z-index: 2; display: inline-flex; align-items: center; gap: 10px; padding: 8px; padding-inline-end: 14px; border-radius: 14px; background: var(--card);
   border: 1px solid var(--border); box-shadow: var(--shadow-popover); font-size: 13px; font-weight: 700; white-space: nowrap; }
-[dir="rtl"] .chip { padding: 8px 8px 8px 14px; }
 .chip .icon-tile { width: 30px; height: 30px; border-radius: 9px; }
 .chip.c1 { inset-inline-start: 0; top: 18%; }
 .chip.c2 { inset-inline-start: 3%; bottom: 14%; }
@@ -154,6 +158,8 @@
 .covers img { position: absolute; width: 150px; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 12px; border: 3px solid var(--card); box-shadow: var(--shadow-panel); }
 .covers img:nth-child(1) { inset-inline-start: 0; top: 18px; rotate: -6deg; }
 .covers img:nth-child(2) { inset-inline-end: 0; top: 0; rotate: 5deg; }
+[dir="rtl"] .covers img:nth-child(1) { rotate: 6deg; } /* a true mirror: the tilts swap with the sides */
+[dir="rtl"] .covers img:nth-child(2) { rotate: -5deg; }
 .mark { font: 800 13px/1 var(--font); color: var(--success); background: var(--success-soft); border-radius: 6px; padding: 4px 6px; }
 /* Minis tile: a small phone-shaped card, the lecture moment behind it. Sized to sit inside the
    168px tile field (a 120x200 phone would be clipped). */
@@ -192,6 +198,7 @@
 .select select { appearance: none; width: 100%; height: 46px; border-radius: var(--r-control); border: 1px solid transparent; background: var(--card); color: var(--ink);
   font: 600 14px/1 var(--font); padding-inline: 14px 40px; cursor: pointer; }
 .select::after { content: ""; position: absolute; inset-inline-end: 16px; top: 50%; width: 8px; height: 8px; border-inline-end: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); translate: 0 -70%; rotate: 45deg; pointer-events: none; }
+[dir="rtl"] .select::after { rotate: -45deg; } /* its two borders are mirrored, so turn the other way to still point down */
 .try-box .btn { margin-top: 6px; background: var(--yellow); border-color: var(--yellow); color: var(--plum); }
 .try-box .btn:hover { background: #f5d561; }
 .try-box :focus-visible, .closer :focus-visible, .motto :focus-visible { outline-color: #fff; } /* purple focus rings vanish on the dark fields */
@@ -267,8 +274,7 @@
 .p-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink-soft); text-decoration: none; }
 .p-back:hover { color: var(--ink); }
 .p-top { display: flex; flex-direction: column; gap: 18px; padding-top: 28px; }
-.p-chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; padding: 5px 12px 5px 5px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); font-size: 14px; font-weight: 700; }
-[dir="rtl"] .p-chip { padding: 5px 5px 5px 12px; }
+.p-chip { align-self: flex-start; display: inline-flex; align-items: center; gap: 9px; padding: 5px; padding-inline-end: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); font-size: 14px; font-weight: 700; }
 .p-chip .icon-tile { width: 28px; height: 28px; border-radius: 8px; }
 .p-chip .p-for { font-size: 12px; font-weight: 600; color: var(--muted); padding-inline-start: 9px; border-inline-start: 1px solid var(--border); }
 .p-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 24px 56px; align-items: end; }
@@ -312,6 +318,7 @@
 .p-timeline .mk { position: absolute; top: 50%; width: 14px; height: 14px; translate: -50% -50%; border-radius: 50%; background: var(--card); border: 3px solid var(--yellow); }
 [dir="rtl"] .p-timeline .mk { translate: 50% -50%; }
 .p-timeline .mk span { position: absolute; top: 16px; inset-inline-start: 50%; translate: -50% 0; font-size: 11px; font-weight: 700; color: var(--gold-deep); white-space: nowrap; }
+[dir="rtl"] .p-timeline .mk span { translate: 50% 0; } /* centred under its mark: in RTL the start edge is the right one */
 .p-timeline .mk.on { background: var(--yellow); box-shadow: 0 0 0 5px rgb(240 201 61 / .25); }
 
 /* ---------- Who it's for ---------- */
@@ -355,6 +362,63 @@
   .p-vis { min-height: 0; }
 }
 
+/* ---------- Arabic: pages with <html lang="ar" dir="rtl"> ----------
+   Arabic text is set in Readex Pro: the font stack starts with Manrope, which has no Arabic letters,
+   so Arabic falls through to Readex Pro while Latin words (Klaro, IGCSE, course names) stay in
+   Manrope. Readex Pro is loaded up to 700, so the heavy English weights (800) become 700.
+   klaro.css already drops tracking and capitals on .display, .h2, .card-title, .kicker, .pane-label
+   and .media .foot .label; this block does the same for the site's own components.
+   Every rule is written .x:lang(ar), on the element itself, so English course material marked
+   lang="en" inside an Arabic page keeps its English styling. Nothing here applies to English pages
+   (their only Arabic text is the "عربي" link, which none of these rules match). */
+
+/* No tracking (it pulls joined letters apart) and no capitals (Arabic has none; mixed-in Latin
+   words like "Klaro" would turn into capitals) */
+:is(.serif, .shout, .mega-head, .mega-item b, .closer-h, .p-rel b, .phone, .try-box h3, .try-box label):lang(ar),
+:is(.display.big, .motto-lines p, .piece .who, .tile-body .who, .rcard .label, .rcard h3, .p-proof p,
+  .p-row-copy h2, .p-who h3, .case blockquote, .foot2 .foot-motto, .foot2 .foot-h):lang(ar) { letter-spacing: 0; text-transform: none; }
+
+/* No italics: Arabic has no true italic, and a slanted Arabic face is a fake. The serif accent
+   becomes a weight accent; the serif face has no Arabic letters anyway. */
+:is(i, em):lang(ar) { font-style: normal; }
+.serif:lang(ar) { font-family: var(--font); font-style: normal; font-weight: 700; }
+.case blockquote:lang(ar) { font-family: var(--font); font-size: 20px; line-height: 1.6; }
+
+/* More leading: Arabic letters reach higher and lower than Latin, so Latin's tight headline
+   leading (.9–1.1) makes lines touch. Headlines 1.2–1.35, short paragraphs 1.5, body 1.7–1.75. */
+.shout:lang(ar) { font-weight: 700; line-height: 1.2; }
+.display.big:lang(ar) { line-height: 1.25; }
+.p-head .display:lang(ar) { line-height: 1.3; }
+.closer-h:lang(ar) { line-height: 1.3; }
+.foot2 .foot-motto:lang(ar) { line-height: 1.3; font-weight: 700; }
+.p-row-copy h2:lang(ar) { line-height: 1.35; }
+.rcard h3:lang(ar), .p-who h3:lang(ar) { line-height: 1.45; }
+.motto-lines p:lang(ar), .p-proof p:lang(ar) { line-height: 1.5; }
+.mega-item small:lang(ar), .p-rel small:lang(ar) { line-height: 1.6; }
+.lead:lang(ar) { line-height: 1.75; }
+
+/* The motto: weight and size instead of capitals. "كفى" alone on the first line, then
+   "محتوى مُصطنعًا."; a little smaller at the top end than the English, since that line is wider
+   than "AI slop.", with a lower floor for phones. Each line is its own block, so if it is still
+   too wide it wraps between the two words rather than overflowing. */
+.motto-big:lang(ar) { font-size: clamp(52px, 11.5vw, 160px); }
+
+/* Small labels: 12–13px Readex Pro 600 instead of 10–11px capitals with tracking */
+.kicker:lang(ar) { font-size: 13px; line-height: 1.5; font-weight: 600; }
+:is(.mega-head, .piece .who, .tile-body .who, .rcard .label, .try-box label, .foot2 .foot-h):lang(ar) { font-size: 13px; font-weight: 600; }
+:is(.pane-label, .media .foot .label, .tag):lang(ar) { font-size: 12px; }
+
+/* A text chevron (›) already mirrors itself in right-to-left text (Unicode bidi mirroring), so
+   .flip would turn it back to the wrong way. .flip is for the SVG icons; on a text chevron it does
+   nothing here. (A text arrow → does not mirror: Arabic copy writes ← instead.) */
+[dir="rtl"] span.chev.flip { transform: none; }
+
+/* Arabic runs about 10–15% longer: a little more room where a measure is set in ch or px */
+.mega:lang(ar) { width: min(860px, 100%); }
+.hero2-copy .display:lang(ar) { max-width: 17ch; }
+.closer-h:lang(ar) { max-width: 18ch; }
+.p-proof p:lang(ar) { max-width: 34ch; }
+
 /* ---------- Motion: calm, short and once ----------
    site.js adds html.motion only when motion is allowed (no reduced-motion setting and
    IntersectionObserver present), and it marks only what starts below the first screen. With JS
@@ -377,6 +441,7 @@
 @keyframes k-ring { from { --ring: 0%; } }
 @keyframes k-sweep { from { background-size: 0% 100%; } }
 @keyframes k-key { from { background-size: 0% .26em; } }
+@keyframes k-key-ar { from { background-size: 0% .45em; } } /* the Arabic bar is thicker (see .key:lang(ar)) */
 @keyframes k-tick { 40% { transform: scale(1.1); } }
 .k-f { transform-origin: 0 50%; }
 .k-f.k-rtl { transform-origin: 100% 50%; }
@@ -392,6 +457,7 @@ mark.k-sw.k-rtl { background-position: 100% 50% !important; }
   html.motion .p-row.k-grp.k-in > * { animation: k-rise .7s var(--ease-out) var(--k-d, 0s) backwards; }
   html.motion .p-row.k-grp.k-in > * + * { animation-delay: calc(var(--k-d, 0s) + .12s); } /* copy, then its visual */
   html.motion .k-in .key { animation: k-key .8s var(--ease-out) calc(var(--k-d, 0s) + .3s) backwards; }
+  html.motion .k-in .key:lang(ar) { animation-name: k-key-ar; }
 
   /* The motto: "Enough" / "AI slop." rise line by line */
   html.motion .motto-big.k-grp.k-in > .ml { animation: k-line .9s var(--ease-out) var(--k-d, 0s) backwards; }
