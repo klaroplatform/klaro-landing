@@ -207,6 +207,9 @@ Notes:
     the book.
   - Omar's lines "marked, with feedback for each student" and "homework… written and sent" stay.
 - **New tutor product page:** Quizzes and homework.
+- **Arabic waits until the very end** of the redesign: Omar's landing had no Arabic. The redesign
+  ships in English first; the earlier Arabic pages stay in git history (`new-site`) as a base for
+  later, and the Arabic partials, RTL CSS and `arabic.md` are kept ready.
 
 **How to proceed (his words, same day):** don't build the site yet. First build a rough static
 frame of the new landing page together, run it locally, look at the overall shape, and only then
