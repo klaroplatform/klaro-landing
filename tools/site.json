@@ -55,7 +55,7 @@
   ],
 
   "_nosnippet": "Classes of example pictures (the showcase frame, recordings, stills, drawn mock-ups): kept out of snippets; their captions stay quotable.",
-  "nosnippet": ["show-screen", "rec-screen", "stage", "studio", "p-vis", "tile-vis", "connect", "mn-stage"],
+  "nosnippet": ["show-screen", "rec-screen"],
 
   "pages": {
     "": { "type": "home", "audience": ["teacher"] },

@@ -1,47 +1,53 @@
-<header class="topbar">
-  <div class="wrap">
+<header class="topbar" data-topbar>
+  <div class="wrap topbar-row">
     <a class="brand" href="{home}" aria-label="Klaro home"><img src="{root}img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
     <nav class="nav" aria-label="Main">
-      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
-      <a class="nav-btn" href="{root}research/">Research</a>
-      <a class="nav-btn" href="{home}#try">Try it</a>
+      <button class="nav-link" type="button" aria-expanded="false" aria-controls="site-menu" data-menu="products">Products <svg class="i chev" aria-hidden="true"><use href="#i-down"/></svg></button>
+      <a class="nav-link nav-aud" href="{aud}"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
+      <a class="nav-link" href="{root}research/">Research</a>
+      <a class="nav-link" href="{root}try/">Try it</a>
     </nav>
-    <span class="spacer"></span>
-    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="{twin}" data-lang-link lang="ar" hreflang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
-    <a class="btn btn-glass" data-signup href="#">Get started</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
+    <span class="topbar-space"></span>
+    <a class="nav-link nav-lang" href="{twin}" data-lang-link lang="ar" hreflang="ar">عربي</a>
+    <button class="btn btn-secondary btn-sm topbar-wide" type="button" data-joincode-open>Join code</button>
+    <a class="btn btn-soft btn-sm topbar-wide" data-signin href="#">Sign in</a>
+    <a class="btn btn-primary btn-sm topbar-wide" data-signup href="#">Try it free</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu" data-menu="sheet"><svg class="i menu-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="i menu-close" aria-hidden="true"><use href="#i-close"/></svg></button>
   </div>
   <div class="mega-wrap">
-    <nav class="mega" id="products-menu" aria-label="Products" hidden>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <p class="mega-head">For students</p>
-          <a class="mega-item" href="{root}products/study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="{root}products/practice-questions/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, checked as you answer</small></span></a>
-          <a class="mega-item" href="{root}products/minis/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-minis"/></svg></span><span><b>Minis</b><small>Your weak spots each day, as short lecture clips and past-paper checks</small></span></a>
-          <a class="mega-item" href="{root}products/progress/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
+    <div class="mega" id="site-menu" data-view="main" hidden>
+      <nav class="mega-main" aria-label="Menu">
+        <button class="mega-row" type="button" aria-expanded="false" aria-controls="menu-products" data-drill>Products <span class="chev" aria-hidden="true">›</span></button>
+        <a class="mega-row nav-aud" href="{aud}"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
+        <a class="mega-row" href="{root}research/">Research</a>
+        <a class="mega-row" href="{root}try/">Try it</a>
+      </nav>
+      <nav class="mega-products" id="menu-products" aria-label="Products">
+        <button class="mega-back" type="button" data-drill-back><span class="chev" aria-hidden="true">‹</span> Menu</button>
+        <div class="mega-cols">
+          <div class="mega-col">
+            <a class="mega-head" href="{home_tutors}">For tutors</a>
+            <a class="mega-item" href="{root}products/course-builder/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg></span><span class="mega-text"><b>Course builder</b><small>Upload what you already teach from. Set the order.</small></span></a>
+            <a class="mega-item" href="{root}products/live-sessions/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-live"/></svg></span><span class="mega-text"><b>Live sessions</b><small>Schedule a class. Your students join from Klaro.</small></span></a>
+            <a class="mega-item" href="{root}products/quizzes/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-quiz"/></svg></span><span class="mega-text"><b>Quizzes and homework</b><small>Ask in plain words. Built from real past-paper questions.</small></span></a>
+            <a class="mega-item" href="{root}products/marking/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg></span><span class="mega-text"><b>Marking</b><small>Answers marked against your scheme. You have the last word.</small></span></a>
+          </div>
+          <div class="mega-col">
+            <a class="mega-head" href="{home_students}">For students and parents</a>
+            <a class="mega-item" href="{root}products/study-view/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-study"/></svg></span><span class="mega-text"><b>Study view</b><small>Your tutor's lecture, open at the page it explains.</small></span></a>
+            <a class="mega-item" href="{root}products/practice-questions/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span class="mega-text"><b>Practice questions</b><small>Real past-paper questions, checked as you answer.</small></span></a>
+            <a class="mega-item" href="{root}products/minis/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-minis"/></svg></span><span class="mega-text"><b>Minis</b><small>Your weak spots, one short lecture moment a day.</small></span></a>
+            <a class="mega-item" href="{root}products/progress/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg></span><span class="mega-text"><b>Progress</b><small>Lectures finished, quiz marks and your streak.</small></span></a>
+          </div>
         </div>
-        <div class="mega-col">
-          <p class="mega-head">For tutors</p>
-          <a class="mega-item" href="{root}products/course-builder/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
-          <a class="mega-item" href="{root}products/study-view/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="{root}products/live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Schedule a live class. Klaro sets up the meeting.</small></span></a>
-          <a class="mega-item" href="{root}products/marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Scanned written papers, marked against your mark scheme</small></span></a>
-        </div>
-      </div>
-      <div class="mega-links">
-        <a class="nav-btn" href="{root}products/">All products</a>
-        <a class="nav-btn" href="{root}research/">Research</a>
-        <a class="nav-btn" href="{home}#try">Try it</a>
-        <a class="nav-btn" data-signin href="#">Sign in</a>
-      </div>
+        <a class="mega-all" href="{root}products/">All products <span class="chev" aria-hidden="true">›</span></a>
+      </nav>
       <div class="mega-foot">
-        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
+        <button class="btn btn-secondary btn-lg btn-block" type="button" data-joincode><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>Have a join code?</button>
         <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
-        <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
+        <a class="btn btn-soft btn-lg btn-block mega-sheet-only" data-signin href="#">Sign in</a>
+        <a class="btn btn-primary btn-lg btn-block mega-sheet-only" data-signup href="#">Try it free</a>
       </div>
-    </nav>
+    </div>
   </div>
 </header>

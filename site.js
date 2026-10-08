@@ -1,273 +1,356 @@
-/* Klaro site: fixed-audience sign-up links, the Products menu, the join-code field and the Try it demo.
-   klaro.js already runs the student/tutor switch, app links, reveal and FAQ. */
+/* Klaro site behaviour, on every page after klaro.js (which sets the app links, the header's
+   hairline on scroll and the FAQ). No libraries. Each part is independent and does nothing on a
+   page without its markup:
+     1. Links into the app for a fixed audience (data-signup-as, body[data-default-as="tutor"])
+     2. The header: Products menu, the phone menu sheet, the join code, the floating bar
+     3. Carousels (.carousel): arrows, keys, swipe, right to left
+     4. Sticky step lists (.steps-sticky): the pinned titles beside the recordings
+     5. The opening's scroll fallback (.opening) where CSS scroll-driven animations are missing
+     6. Illustration placeholders: a tile whose file is missing shows its name instead
+     7. Scroll reveal, calm and once
+   The showcase (live app frames and recordings) is showcase.js; this file never touches it. */
 (function () {
+  'use strict';
+  var root = document.documentElement;
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var meta = document.querySelector('meta[name="klaro-app"]');
   var APP = (meta && meta.content) || 'https://app.klaroplatform.com';
-  var SITE = document.body.dataset.site || '';
-  // Arabic pages open the app in Arabic, as in klaro.js.
-  var LANG = document.documentElement.lang === 'ar' ? '&lang=ar' : '';
+  var AR = root.lang === 'ar';
+  var LANG = AR ? '&lang=ar' : '';
+  root.classList.add('js');
 
-  // Links that always go to one audience's sign-up, whatever the page switch says (klaro.js
-  // rewrites every [data-signup] to follow the switch, so these use their own attribute).
-  // tools/site.py writes the same addresses into the HTML, so they work without JavaScript too.
+  function rtlOf(el) { return getComputedStyle(el).direction === 'rtl'; }
+  function focusables(box) {
+    return Array.prototype.filter.call(box.querySelectorAll('a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])'),
+      function (el) { return el.getClientRects().length && !el.closest('[hidden]'); });
+  }
+
+  /* ---------------------------------------------------------------- 1. Fixed-audience sign-up */
+  // Links that always go to one audience's sign-up (tools/site.py writes the same addresses into
+  // the HTML, so they work without JavaScript; this adds lang=ar on Arabic pages).
   document.querySelectorAll('[data-signup-as]').forEach(function (a) { a.href = APP + '/sign-up?as=' + a.dataset.signupAs + LANG; });
-  // Tutor product pages have no student/tutor switch: their header "Get started" goes to tutor sign-up.
-  if (document.body.dataset.defaultAs === 'tutor' && !document.querySelector('.seg[data-audience]')) {
+  // Tutor pages (body data-default-as="tutor"): every plain sign-up link is the tutor's.
+  if (document.body.dataset.defaultAs === 'tutor') {
     document.querySelectorAll('[data-signup]').forEach(function (a) { a.href = APP + '/sign-up?as=tutor' + LANG; });
   }
 
-  // Products menu: one panel, opened by "Products" on desktop and the menu button on phones.
-  // It opens with its CSS animation; closing plays a short fade (.mega.closing), then hides it.
-  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var panel = document.getElementById('products-menu');
-  var openers = document.querySelectorAll('[data-menu]');
-  var menuOpen = false, lastOpener = null, closeTimer = 0;
-  function setMenu(open) {
-    menuOpen = open;
-    openers.forEach(function (b) { b.setAttribute('aria-expanded', String(open)); });
-    clearTimeout(closeTimer);
-    panel.classList.remove('closing');
-    if (open) { panel.hidden = false; return; }
-    if (panel.hidden) return;
-    if (still) { panel.hidden = true; return; }
-    panel.classList.add('closing');
-    closeTimer = setTimeout(function () { panel.hidden = true; panel.classList.remove('closing'); }, 180);
-  }
-  // Escape returns focus to the button that opened the menu, or to whichever opener is on screen.
-  function focusOpener() {
-    var b = lastOpener && lastOpener.getClientRects().length ? lastOpener : null;
-    openers.forEach(function (x) { if (!b && x.getClientRects().length) b = x; });
-    if (b) b.focus();
-  }
-  openers.forEach(function (b) {
-    b.addEventListener('click', function (e) { e.stopPropagation(); lastOpener = b; setMenu(!menuOpen); });
-  });
-  document.addEventListener('click', function (e) { if (menuOpen && !panel.contains(e.target)) setMenu(false); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && menuOpen) { setMenu(false); focusOpener(); } });
-  // A link to somewhere on this same page (like "Try it" on the home page) closes the menu.
-  panel.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () { if (a.hash && a.pathname === location.pathname) setMenu(false); });
-  });
-
-  // "Have a join code?" turns into a code field, like SchoolAI's "Space code".
-  var codeBtn = panel.querySelector('[data-joincode]');
-  var codeForm = panel.querySelector('[data-joinform]');
-  function showCode() {
-    codeBtn.hidden = true;
-    codeForm.hidden = false;
-    codeForm.code.focus();
-  }
-  codeBtn.addEventListener('click', showCode);
-  // The header's "Join code" button opens the menu straight at the code field.
+  /* ---------------------------------------------------------------- 2. Header */
+  var sheetQuery = window.matchMedia('(max-width: 1024px)');
+  var headers = Array.prototype.map.call(document.querySelectorAll('[data-topbar]'), initHeader).filter(Boolean);
+  // A join-code button outside a header (the footer's) opens the first header's menu at the field.
   document.querySelectorAll('[data-joincode-open]').forEach(function (b) {
-    b.addEventListener('click', function (e) { e.stopPropagation(); lastOpener = b; setMenu(true); showCode(); });
-  });
-  codeForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var code = codeForm.code.value.trim().toUpperCase();
-    if (!code) { codeForm.code.focus(); return; }
-    // The app's join link: /join?code=… lets the student in once they sign in or sign up.
-    window.location.href = APP + '/join?code=' + encodeURIComponent(code) + LANG;
+    if (b.closest('[data-topbar]') || !headers[0]) return;
+    b.addEventListener('click', function (e) { e.stopPropagation(); headers[0].openCode(b); });
   });
 
-  // Try it: example lessons. Real courses carry the tutor's own lecture, book and past papers.
-  var LESSONS = {
-    'igcse-biology': {
-      level: 'igcse', subject: 'Biology', course: 'Biology 0610 · IGCSE', lecno: 'Lecture 4', lecture: 'Osmosis', img: SITE + 'img/lecture-osmosis.webp',
-      page: 'Book · p. 48', link: 'Linked to 06:12 in the lecture',
-      before: 'Water molecules move freely through a partially permeable membrane. ',
-      key: 'Osmosis is the net movement of water from a dilute solution to a more concentrated one',
-      after: ' through such a membrane.',
-      q: 'A potato slice is left in pure water. Water moves into its cells. What is this called?',
-      opts: ['Diffusion', 'Osmosis', 'Active transport'], answer: 1
-    },
-    'igcse-chemistry': {
-      level: 'igcse', subject: 'Chemistry', course: 'Chemistry 0620 · IGCSE', lecno: 'Lecture 2', lecture: 'Electrolysis', img: SITE + 'img/course-chemistry.webp',
-      page: 'Book · p. 112', link: 'Linked to 04:40 in the lecture',
-      before: 'In electrolysis, an ionic compound that is molten or dissolved is broken down by an electric current. ',
-      key: 'Positive ions move to the cathode, where they gain electrons',
-      after: ' and are discharged.',
-      q: 'Molten lead(II) bromide is electrolysed. What forms at the cathode?',
-      opts: ['Bromine', 'Lead', 'Hydrogen'], answer: 1
-    },
-    'alevel-physics': {
-      level: 'alevel', subject: 'Physics', course: 'Physics 9702 · A Level', lecno: 'Lecture 2', lecture: 'Acceleration', img: SITE + 'img/course-physics.webp',
-      page: 'Book · p. 21', link: 'Linked to 08:05 in the lecture',
-      before: 'Velocity is speed in a stated direction. ',
-      key: 'Acceleration is the rate of change of velocity: a = (v − u) / t',
-      after: ', measured in m/s².',
-      q: 'A car accelerates uniformly from rest to 20 m/s in 8.0 s. What is its acceleration?',
-      opts: ['2.5 m/s²', '0.40 m/s²', '160 m/s²'], answer: 0
-    },
-    'sat-math': {
-      level: 'sat', subject: 'Math', course: 'SAT Math', lecno: 'Lecture 3', lecture: 'Linear equations', img: SITE + 'img/course-sat-math.webp',
-      page: 'Book · p. 64', link: 'Linked to 02:30 in the lecture',
-      before: 'A linear equation in one variable has that variable only to the first power. ',
-      key: 'To solve it, undo each operation in reverse order, doing the same to both sides',
-      after: '.',
-      q: 'If 3x + 5 = 20, what is the value of x?',
-      opts: ['3', '25/3', '5'], answer: 2
+  function initHeader(header) {
+    var panel = header.querySelector('.mega');
+    if (!panel) return null;
+    var openers = Array.prototype.slice.call(header.querySelectorAll('[data-menu]'));
+    var drill = panel.querySelector('[data-drill]');
+    var back = panel.querySelector('[data-drill-back]');
+    var codeBtn = panel.querySelector('[data-joincode]');
+    var codeForm = panel.querySelector('[data-joinform]');
+    var open = false, opener = null, timer = 0;
+
+    function isSheet() { return sheetQuery.matches; }
+    function setView(view) {
+      panel.dataset.view = view;
+      if (drill) drill.setAttribute('aria-expanded', String(view === 'products'));
     }
-  };
+    function resetCode() { if (codeBtn && codeForm) { codeBtn.hidden = false; codeForm.hidden = true; } }
+    function set(state, from) {
+      open = state;
+      if (from) opener = from;
+      openers.forEach(function (b) { b.setAttribute('aria-expanded', String(state)); });
+      clearTimeout(timer);
+      panel.classList.remove('is-closing');
+      root.classList.toggle('menu-open', state && isSheet());
+      if (state) {
+        setView('main');
+        panel.hidden = false;
+        if (isSheet()) { var first = focusables(panel)[0]; if (first) first.focus(); }
+        return;
+      }
+      if (panel.hidden) return;
+      var done = function () { panel.hidden = true; panel.classList.remove('is-closing'); resetCode(); };
+      if (still) { done(); return; }
+      panel.classList.add('is-closing');
+      timer = setTimeout(done, 180);
+    }
+    function back2opener() {
+      var b = opener && opener.getClientRects().length ? opener : null;
+      openers.forEach(function (x) { if (!b && x.getClientRects().length) b = x; });
+      if (b) b.focus();
+    }
 
-  // Arabic pages show the demo's interface in Arabic, with the app's words (design/brief/arabic.md).
-  // The lesson itself (course and lecture names, book text, question and options) stays English,
-  // as it is in the real courses.
-  var AR = document.documentElement.lang === 'ar';
-  if (AR) {
-    var AR_LABELS = {
-      'igcse-biology': { subject: 'الأحياء', lecno: 'المحاضرة 4', page: 'الكتاب · ص 48', link: 'مرتبط بالدقيقة 06:12 من المحاضرة' },
-      'igcse-chemistry': { subject: 'الكيمياء', lecno: 'المحاضرة 2', page: 'الكتاب · ص 112', link: 'مرتبط بالدقيقة 04:40 من المحاضرة' },
-      'alevel-physics': { subject: 'الفيزياء', lecno: 'المحاضرة 2', page: 'الكتاب · ص 21', link: 'مرتبط بالدقيقة 08:05 من المحاضرة' },
-      'sat-math': { subject: 'الرياضيات', lecno: 'المحاضرة 3', page: 'الكتاب · ص 64', link: 'مرتبط بالدقيقة 02:30 من المحاضرة' }
-    };
-    Object.keys(AR_LABELS).forEach(function (id) {
-      Object.keys(AR_LABELS[id]).forEach(function (k) { LESSONS[id][k] = AR_LABELS[id][k]; });
+    openers.forEach(function (b) {
+      b.addEventListener('click', function (e) { e.stopPropagation(); set(!open, b); });
     });
+    document.addEventListener('click', function (e) {
+      if (open && !panel.contains(e.target) && !openers.some(function (b) { return b.contains(e.target); })) set(false);
+    });
+    header.addEventListener('keydown', function (e) {
+      if (!open) return;
+      if (e.key === 'Escape') { set(false); back2opener(); return; }
+      if (e.key !== 'Tab') return;
+      var items = focusables(panel);
+      if (!items.length) return;
+      var first = items[0], last = items[items.length - 1], at = document.activeElement;
+      if (isSheet()) {
+        // The sheet covers the page: Tab stays between the menu button and the sheet.
+        var btn = header.querySelector('[data-menu="sheet"]');
+        if (!e.shiftKey && at === last) { e.preventDefault(); btn.focus(); }
+        else if (e.shiftKey && at === btn) { e.preventDefault(); last.focus(); }
+        else if (e.shiftKey && at === first) { e.preventDefault(); btn.focus(); }
+        return;
+      }
+      // Desktop: the panel follows the Products button in the tab order, then the rest of the bar.
+      var trigger = header.querySelector('[data-menu="products"]');
+      if (!e.shiftKey && at === trigger) { e.preventDefault(); first.focus(); }
+      else if (e.shiftKey && at === first) { e.preventDefault(); trigger.focus(); }
+      else if (!e.shiftKey && at === last) {
+        var bar = focusables(header.querySelector('.topbar-row'));
+        var next = bar[bar.indexOf(trigger) + 1];
+        set(false);
+        if (next) { e.preventDefault(); next.focus(); }
+      }
+    });
+    sheetQuery.addEventListener('change', function () { if (open) set(false); });
+    // A link to somewhere on this same page closes the menu.
+    panel.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { if (a.hash && a.pathname === location.pathname) set(false); });
+    });
+
+    if (drill && back) {
+      drill.addEventListener('click', function () { setView('products'); back.focus(); });
+      back.addEventListener('click', function () { setView('main'); drill.focus(); });
+    }
+
+    // "Have a join code?" turns into the code field, like SchoolAI's "Space code".
+    function showCode() {
+      if (!codeBtn || !codeForm) return;
+      codeBtn.hidden = true;
+      codeForm.hidden = false;
+      codeForm.code.focus();
+    }
+    if (codeBtn) codeBtn.addEventListener('click', showCode);
+    function openCode(from) {
+      set(true, from);
+      if (isSheet() && codeForm) panel.scrollTop = panel.scrollHeight;
+      showCode();
+    }
+    header.querySelectorAll('[data-joincode-open]').forEach(function (b) {
+      b.addEventListener('click', function (e) { e.stopPropagation(); openCode(b); });
+    });
+    if (codeForm) codeForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var code = codeForm.code.value.trim().toUpperCase();
+      if (!code) { codeForm.code.focus(); return; }
+      // The app's join link: /join?code=… lets the student in once they sign in or sign up.
+      window.location.href = APP + '/join?code=' + encodeURIComponent(code) + LANG;
+    });
+
+    // The floating bar (header.topbar--float): an inset pill after 120px of scroll.
+    if (header.classList.contains('topbar--float')) {
+      var ticking = false;
+      var onScroll = function () {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () { ticking = false; header.classList.toggle('is-float', window.scrollY > 120); });
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    }
+    return { openCode: openCode };
   }
 
-  var form = document.querySelector('[data-try]');
-  var view = document.querySelector('[data-try-view]');
-  if (!form || !view) return;
-  var level = form.level, subject = form.subject;
-  function t(name) { return view.querySelector('[data-t="' + name + '"]'); }
+  /* ---------------------------------------------------------------- 3. Carousels */
+  // <section class="carousel"> … <div class="carousel-nav" hidden><button class="carousel-btn" data-prev>…
+  // <button class="carousel-btn" data-next>…</div> … <ul class="carousel-track"><li class="carousel-item">…
+  document.querySelectorAll('.carousel').forEach(function (box) {
+    var track = box.querySelector('.carousel-track');
+    var prev = box.querySelector('[data-prev]');
+    var next = box.querySelector('[data-next]');
+    if (!track) return;
+    var nav = box.querySelector('.carousel-nav');
+    if (nav) nav.hidden = false;
+    if (!track.id) track.id = 'carousel-' + Math.random().toString(36).slice(2, 8);
+    [prev, next].forEach(function (b) { if (b) b.setAttribute('aria-controls', track.id); });
 
-  function fillSubjects() {
-    subject.innerHTML = '';
-    Object.keys(LESSONS).forEach(function (id) {
-      if (LESSONS[id].level !== level.value) return;
-      var o = document.createElement('option');
-      o.value = id; o.textContent = LESSONS[id].subject;
-      subject.appendChild(o);
+    function items() { return Array.prototype.slice.call(track.querySelectorAll('.carousel-item')); }
+    function stepSize() {
+      var first = items()[0];
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return first ? first.getBoundingClientRect().width + gap : track.clientWidth * 0.8;
+    }
+    // Arrows step one card from where the last step was headed, so quick clicks add up.
+    var target = null, settle = 0;
+    function go(dir) {
+      var step = stepSize(), max = track.scrollWidth - track.clientWidth;
+      var from = target !== null ? target : Math.abs(track.scrollLeft);
+      target = Math.max(0, Math.min(max, Math.round(from / step) * step + dir * step));
+      // Positive scrollLeft runs towards the inline end in LTR; in RTL it is negative.
+      track.scrollTo({ left: target * (rtlOf(track) ? -1 : 1), behavior: still ? 'auto' : 'smooth' });
+    }
+    track.addEventListener('scroll', function () { clearTimeout(settle); settle = setTimeout(function () { target = null; }, 160); }, { passive: true });
+    function update() {
+      var max = track.scrollWidth - track.clientWidth;
+      var x = Math.abs(track.scrollLeft);
+      if (prev) prev.setAttribute('aria-disabled', String(x <= 2));
+      if (next) next.setAttribute('aria-disabled', String(x >= max - 2));
+    }
+    if (prev) prev.addEventListener('click', function () { if (prev.getAttribute('aria-disabled') !== 'true') go(-1); });
+    if (next) next.addEventListener('click', function () { if (next.getAttribute('aria-disabled') !== 'true') go(1); });
+    var raf = 0;
+    track.addEventListener('scroll', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; update(); }); }, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+
+    // Arrow keys move between cards (the card is the link inside each item); Home and End jump.
+    track.addEventListener('keydown', function (e) {
+      if (['ArrowLeft', 'ArrowRight', 'Home', 'End'].indexOf(e.key) < 0) return;
+      var links = items().map(function (li) { return focusables(li)[0]; }).filter(Boolean);
+      var i = links.indexOf(document.activeElement);
+      if (i < 0) return;
+      var j = e.key === 'Home' ? 0 : e.key === 'End' ? links.length - 1
+        : i + ((e.key === 'ArrowRight') !== rtlOf(track) ? 1 : -1);
+      j = Math.max(0, Math.min(links.length - 1, j));
+      e.preventDefault();
+      links[j].focus({ preventScroll: true });
+      links[j].closest('.carousel-item').scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'nearest', inline: 'start' });
     });
-  }
+  });
 
-  function render(id) {
-    var L = LESSONS[id];
-    ['course', 'lecno', 'lecture', 'page', 'link', 'before', 'key', 'after', 'q'].forEach(function (k) { t(k).textContent = L[k]; });
-    t('img').src = L.img;
-    t('key').classList.remove('on');
-    t('feedback').textContent = '';
-    t('feedback').className = 'feedback';
-    var box = t('opts');
-    box.innerHTML = '';
-    L.opts.forEach(function (text, i) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'opt';
-      b.innerHTML = '<b>' + 'ABC'[i] + '</b>';
-      b.appendChild(document.createTextNode(text));
-      b.addEventListener('click', function () {
-        box.querySelectorAll('.opt').forEach(function (x) { x.classList.remove('is-right', 'is-wrong'); });
-        var right = i === L.answer;
-        b.classList.add(right ? 'is-right' : 'is-wrong');
-        t('key').classList.add('on');
-        t('feedback').className = 'feedback ' + (right ? 'ok' : 'no');
-        var said = right ? 'Correct. It is explained in the highlighted part of the book page.' : 'Not quite. The answer is ' + 'ABC'[L.answer] + '. It is explained in the highlighted part of the book page.';
-        if (AR) said = right ? 'إجابة صحيحة. الشرح في الجزء المظلَّل من صفحة الكتاب.' : 'ليس تمامًا. الإجابة هي ' + 'ABC'[L.answer] + '. الشرح في الجزء المظلَّل من صفحة الكتاب.';
-        t('feedback').textContent = said;
+  /* ---------------------------------------------------------------- 4. Sticky step lists */
+  // Desktop with motion: the panels' titles become an accordion pinned on the inline start; the
+  // panel crossing the middle of the screen is the open one, and its bar fills as its recording
+  // plays. The panels' own copy is hidden there by CSS (.has-nav). Playing the recordings is the
+  // showcase driver's job; this only listens to their time.
+  if (!still && 'IntersectionObserver' in window) document.querySelectorAll('.steps-sticky').forEach(function (box, n) {
+    var panels = Array.prototype.slice.call(box.querySelectorAll('.steps-panel'));
+    if (panels.length < 2) return;
+    var nav = document.createElement('ol');
+    nav.className = 'steps-nav';
+    var label = box.getAttribute('aria-label');
+    if (label) nav.setAttribute('aria-label', label);
+    var entries = panels.map(function (panel, i) {
+      if (!panel.id) panel.id = 'steps-' + (n + 1) + '-' + (i + 1);
+      var copy = panel.querySelector('.steps-copy');
+      var title = copy && copy.querySelector('h2, h3, h4');
+      if (!title) return null;
+      var li = document.createElement('li');
+      li.className = 'steps-nav-item';
+      var h = document.createElement('h3');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'steps-nav-title';
+      btn.textContent = title.textContent.trim();
+      btn.setAttribute('aria-controls', panel.id + '-nav');
+      h.appendChild(btn);
+      var body = document.createElement('div');
+      body.className = 'steps-nav-body';
+      body.id = panel.id + '-nav';
+      var inner = document.createElement('div');
+      Array.prototype.forEach.call(copy.children, function (c) { if (c !== title) inner.appendChild(c.cloneNode(true)); });
+      body.appendChild(inner);
+      var bar = document.createElement('span');
+      bar.className = 'steps-nav-bar';
+      bar.setAttribute('aria-hidden', 'true');
+      var fill = document.createElement('i');
+      bar.appendChild(fill);
+      li.appendChild(h); li.appendChild(body); li.appendChild(bar);
+      btn.addEventListener('click', function () {
+        activate(i);
+        var media = panel.querySelector('.rec, .show, figure') || panel;
+        media.scrollIntoView({ behavior: still ? 'auto' : 'smooth', block: 'center' });
       });
-      box.appendChild(b);
+      // Media events don't bubble, but they do pass the capture phase.
+      panel.addEventListener('timeupdate', function (e) {
+        var v = e.target;
+        if (v.duration) fill.style.setProperty('--p', Math.min(1, v.currentTime / v.duration).toFixed(3));
+      }, true);
+      return { li: li, btn: btn, fill: fill };
     });
-    view.classList.remove('swap');
-    void view.offsetWidth;
-    view.classList.add('swap');
+    if (entries.some(function (x) { return !x; })) return;
+    entries.forEach(function (x) { nav.appendChild(x.li); });
+    box.insertBefore(nav, box.firstChild);
+    box.classList.add('has-nav');
+
+    var current = -1;
+    function activate(i) {
+      if (i === current) return;
+      current = i;
+      entries.forEach(function (x, k) {
+        x.li.classList.toggle('is-active', k === i);
+        x.btn.setAttribute('aria-expanded', String(k === i));
+      });
+    }
+    var io = new IntersectionObserver(function (list) {
+      list.forEach(function (en) { if (en.isIntersecting) activate(panels.indexOf(en.target)); });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    panels.forEach(function (p) { io.observe(p); });
+    activate(0);
+  });
+
+  /* ---------------------------------------------------------------- 5. The opening, without scroll-driven CSS */
+  // Where animation-timeline is missing (Safari before 26, Firefox), the opening's motion follows
+  // --od: how far the opening's top has scrolled past the top of the screen, in vh. One rect read
+  // and one custom property write per frame, only while the opening is on screen.
+  var supportsScrollCSS = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
+  if (!still && !supportsScrollCSS && 'IntersectionObserver' in window) document.querySelectorAll('.opening').forEach(function (el) {
+    root.classList.add('k-sd-js');
+    var raf = 0;
+    function update() {
+      raf = 0;
+      var top = el.getBoundingClientRect().top;
+      el.style.setProperty('--od', Math.max(0, -top / (window.innerHeight / 100)).toFixed(2));
+    }
+    function request() { if (!raf) raf = requestAnimationFrame(update); }
+    new IntersectionObserver(function (list) {
+      if (list[0].isIntersecting) { window.addEventListener('scroll', request, { passive: true }); request(); }
+      else window.removeEventListener('scroll', request);
+    }).observe(el);
+    window.addEventListener('resize', request);
+    update();
+  });
+
+  /* ---------------------------------------------------------------- 6. Illustration placeholders */
+  // A tile or plate whose image is missing (404) shows its data-ph file name instead of a broken image.
+  function missing(img) {
+    var box = img.closest('.ill, .plate');
+    if (box) box.classList.add('is-missing');
   }
+  document.querySelectorAll('.ill > img, .ill > picture > img, .plate-img, .plate > picture > img').forEach(function (img) {
+    if (img.complete && img.currentSrc && img.naturalWidth === 0) missing(img);
+    else img.addEventListener('error', function () { missing(img); }, { once: true });
+  });
 
-  level.addEventListener('change', fillSubjects);
-  form.addEventListener('submit', function (e) { e.preventDefault(); render(subject.value); });
-  fillSubjects();
-  render(subject.value);
-})();
-
-/* Motion, on every page that loads site.js: scroll reveal, the motto's lines and connectors, the
-   product visuals filling in. Calm and once; the CSS is the "Motion" block at the end of site.css.
-   Nothing is hidden unless html.motion is set, and it is never set with reduced motion. Only what
-   starts below the first screen is hidden, so nothing visible on load blinks. */
-(function () {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-  var root = document.documentElement;
+  /* ---------------------------------------------------------------- 7. Scroll reveal */
+  // Section heads and cards rise into place once. Only what starts below the first screen is
+  // hidden, and it shows as soon as any part of it is on screen, so nothing visible ever waits.
+  // Nothing at all with reduced motion, without IntersectionObserver, or in print.
+  if (still || !('IntersectionObserver' in window)) return;
+  var REVEAL = '.section-head, .strip, .icard-grid > *, .split-card, .band, .rcard, .panel, .faq, .closing-copy, [data-reveal]';
   var fold = window.innerHeight;
-
-  // Where an element starts; one hidden for the other audience counts from its nearest shown parent.
-  function topOf(el) {
-    while (el && !el.getClientRects().length) el = el.parentElement;
-    return el ? el.getBoundingClientRect().top : 0;
-  }
-  function isRtl(el) { return getComputedStyle(el).direction === 'rtl'; }
-  function inOrder(a, b) { return a.target.compareDocumentPosition(b.target) & 4 ? -1 : 1; }
-
-  // 1. Scroll reveal. Elements that come in together are staggered 80ms apart, per parent.
-  var lastPiece = 0;
-  var io = new IntersectionObserver(function (entries) {
-    var parents = [];
-    entries.filter(function (en) { return en.isIntersecting; }).sort(inOrder).forEach(function (en) {
-      var el = en.target, n = 0, d;
-      parents.forEach(function (p) { if (p === el.parentNode) n++; });
-      parents.push(el.parentNode);
-      d = Math.min(n, 5) * 0.08;
-      // The motto's note comes last, after the connectors between the pieces have drawn.
-      if (el.classList.contains('piece')) lastPiece = Date.now();
-      if (el.classList.contains('connect-note') && lastPiece) d = Math.max(d, 1.35 - (Date.now() - lastPiece) / 1000);
-      el.style.setProperty('--k-d', d.toFixed(2) + 's');
+  var io = new IntersectionObserver(function (list) {
+    var seen = [];
+    list.filter(function (en) { return en.isIntersecting; }).forEach(function (en) {
+      var el = en.target, n = 0;
+      seen.forEach(function (p) { if (p === el.parentNode) n++; });
+      seen.push(el.parentNode);
+      el.style.setProperty('--k-d', (Math.min(n, 4) * 0.06).toFixed(2) + 's');
       el.classList.add('k-in');
       io.unobserve(el);
     });
-  }, { rootMargin: '0px 0px -8% 0px' });
-
-  function watch(selector, cls) {
-    document.querySelectorAll(selector).forEach(function (el) {
-      // skip klaro.js's own .reveal, anything inside an element already watched, and what's on screen
-      if (el.classList.contains('reveal') || el.closest('.k-rv, .k-grp') || topOf(el) <= fold) return;
-      el.classList.add(cls);
-      io.observe(el);
-    });
-  }
-  // Groups: their children move (a feature row's copy then its visual; the motto's two lines).
-  // A feature row stacked in one column reveals its copy and visual one by one, as each scrolls in.
-  document.querySelectorAll('.p-row').forEach(function (row) {
-    if (getComputedStyle(row).gridTemplateColumns.split(' ').length < 2) row.classList.add('k-stack');
   });
-  watch('.p-row:not(.k-stack), .motto-big', 'k-grp');
-  watch('.section-head, .head-row, .p-proof .wrap, .tile, .rcard, .step, .p-who .card, .p-rel, .closer, .p-row.k-stack > *, ' +
-    '.motto .kicker, .motto-lines p, .piece, .connect-note, .try-copy, .try-box, .try-stage', 'k-rv');
-
-  // 2. Product visuals: progress bars and rings fill from 0 to their value, static book highlights
-  // sweep in, and timeline marks pop in from the start side. The studio demos keep their own loops.
-  var ringOk = getComputedStyle(root).getPropertyValue('--ring').trim() === '0%'; // @property registered
-  var fio = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en) {
-      if (!en.isIntersecting) return;
-      en.target.classList.add('k-go');
-      fio.unobserve(en.target);
-    });
-  }, { rootMargin: '0px 0px -20% 0px' });
-
-  var BOXES = '.p-vis, .p-field, .tile-vis';
-  document.querySelectorAll(BOXES).forEach(function (box) {
-    if (box.parentElement.closest(BOXES)) return;
-    var n = 0;
-    function prep(el, cls, delay) {
-      el.classList.add(cls);
-      if (isRtl(el)) el.classList.add('k-rtl');
-      el.style.setProperty('--k-fd', delay.toFixed(2) + 's');
-      n++;
-    }
-    box.querySelectorAll('.p-timeline > i, .bar > i, .edge > i').forEach(function (el) {
-      if (getComputedStyle(el).animationName === 'none') prep(el, 'k-f', 0.3 + n * 0.08);
-    });
-    if (ringOk) box.querySelectorAll('.ring').forEach(function (el) { prep(el, 'k-r', 0.3 + n * 0.08); });
-    box.querySelectorAll('.p-timeline .mk').forEach(function (el, i) {
-      var at = parseFloat(el.style.getPropertyValue('inset-inline-start'));
-      prep(el, 'k-mk', 0.35 + (isNaN(at) ? i * 30 : at) / 100 * 0.8);
-    });
-    box.querySelectorAll('mark').forEach(function (el) {
-      var cs = getComputedStyle(el);
-      if (cs.animationName === 'none' && /^100%/.test(cs.backgroundSize)) prep(el, 'k-sw', 0.4);
-    });
-    if (n) { box.classList.add('k-box'); fio.observe(box); }
+  document.querySelectorAll(REVEAL).forEach(function (el) {
+    if (el.closest('.k-rv, .carousel-track, .opening') || el.getBoundingClientRect().top <= fold) return;
+    el.classList.add('k-rv');
+    io.observe(el);
   });
-
-  // 3. Hero chips need no observer: their CSS plays once html.motion is set.
+  window.addEventListener('beforeprint', function () {
+    document.querySelectorAll('.k-rv:not(.k-in)').forEach(function (el) { el.classList.add('k-in'); });
+  });
   root.classList.add('motion');
 })();
