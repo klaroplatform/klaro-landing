@@ -1026,6 +1026,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
    pages it replaces the separate panel, carousel and floating tiles. */
 .pr-close .h2 { max-width: 18ch; }
 .pr-close .hero-actions { justify-content: center; margin-block-start: 8px; }
+.pr-close-motto > span { display: inline-block; }   /* the motto under a page's own line breaks between its two sentences, never inside one */
 .pr-close-note { font-size: 15px; font-weight: 500; color: var(--on-deep); }
 .pr-close-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; width: 100%; max-width: 720px; margin: 16px 0 0; padding: 24px 0 0; list-style: none; border-block-start: 1px solid rgb(255 255 255 / .18); }
 .pr-close-links a { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 600; color: #fff; text-decoration: none; }
