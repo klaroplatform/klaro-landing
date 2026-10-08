@@ -3,6 +3,15 @@
 (function () {
   var meta = document.querySelector('meta[name="klaro-app"]');
   var APP = (meta && meta.content) || 'https://app.klaroplatform.com';
+  var SITE = document.body.dataset.site || '../../';
+
+  // Links that always go to one audience's sign-up, whatever the page switch says (klaro.js
+  // rewrites every [data-signup] to follow the switch, so these use their own attribute).
+  document.querySelectorAll('[data-signup-as]').forEach(function (a) { a.href = APP + '/sign-up?as=' + a.dataset.signupAs; });
+  // Tutor product pages have no student/tutor switch: their header "Get started" goes to tutor sign-up.
+  if (document.body.dataset.defaultAs === 'tutor' && !document.querySelector('.seg[data-audience]')) {
+    document.querySelectorAll('[data-signup]').forEach(function (a) { a.href = APP + '/sign-up?as=tutor'; });
+  }
 
   // Products menu: one panel, opened by "Products" on desktop and the menu button on phones.
   var panel = document.getElementById('products-menu');
@@ -42,7 +51,7 @@
   // Try it: example lessons. Real courses carry the tutor's own lecture, book and past papers.
   var LESSONS = {
     'igcse-biology': {
-      level: 'igcse', subject: 'Biology', course: 'Biology 0610 · IGCSE', lecno: 'Lecture 4', lecture: 'Osmosis', img: '../../img/lecture-osmosis.webp',
+      level: 'igcse', subject: 'Biology', course: 'Biology 0610 · IGCSE', lecno: 'Lecture 4', lecture: 'Osmosis', img: SITE + 'img/lecture-osmosis.webp',
       page: 'Book · p. 48', link: 'Linked to 06:12 in the lecture',
       before: 'Water molecules move freely through a partially permeable membrane. ',
       key: 'Osmosis is the net movement of water from a dilute solution to a more concentrated one',
@@ -51,7 +60,7 @@
       opts: ['Diffusion', 'Osmosis', 'Active transport'], answer: 1
     },
     'igcse-chemistry': {
-      level: 'igcse', subject: 'Chemistry', course: 'Chemistry 0620 · IGCSE', lecno: 'Lecture 2', lecture: 'Electrolysis', img: '../../img/course-chemistry.webp',
+      level: 'igcse', subject: 'Chemistry', course: 'Chemistry 0620 · IGCSE', lecno: 'Lecture 2', lecture: 'Electrolysis', img: SITE + 'img/course-chemistry.webp',
       page: 'Book · p. 112', link: 'Linked to 04:40 in the lecture',
       before: 'In electrolysis, an ionic compound that is molten or dissolved is broken down by an electric current. ',
       key: 'Positive ions move to the cathode, where they gain electrons',
@@ -60,7 +69,7 @@
       opts: ['Bromine', 'Lead', 'Hydrogen'], answer: 1
     },
     'alevel-physics': {
-      level: 'alevel', subject: 'Physics', course: 'Physics 9702 · A Level', lecno: 'Lecture 2', lecture: 'Acceleration', img: '../../img/course-physics.webp',
+      level: 'alevel', subject: 'Physics', course: 'Physics 9702 · A Level', lecno: 'Lecture 2', lecture: 'Acceleration', img: SITE + 'img/course-physics.webp',
       page: 'Book · p. 21', link: 'Linked to 08:05 in the lecture',
       before: 'Velocity is speed in a stated direction. ',
       key: 'Acceleration is the rate of change of velocity: a = (v − u) / t',
@@ -69,7 +78,7 @@
       opts: ['2.5 m/s²', '0.40 m/s²', '160 m/s²'], answer: 0
     },
     'sat-math': {
-      level: 'sat', subject: 'Math', course: 'SAT Math', lecno: 'Lecture 3', lecture: 'Linear equations', img: '../../img/course-sat-math.webp',
+      level: 'sat', subject: 'Math', course: 'SAT Math', lecno: 'Lecture 3', lecture: 'Linear equations', img: SITE + 'img/course-sat-math.webp',
       page: 'Book · p. 64', link: 'Linked to 02:30 in the lecture',
       before: 'A linear equation in one variable has that variable only to the first power. ',
       key: 'To solve it, undo each operation in reverse order, doing the same to both sides',

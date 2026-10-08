@@ -13,75 +13,8 @@
 <link rel="stylesheet" href="../../klaro.css">
 <link rel="stylesheet" href="frame.css">
 </head>
-<body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
-  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
-  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
-  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
-  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
-  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
-  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
-  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
-  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
-  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
-  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
-</defs></svg>
-
-<header class="topbar">
-  <div class="wrap">
-    <a class="brand" href="#top" aria-label="Klaro home"><img src="../../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
-    <nav class="nav" aria-label="Main">
-      <button class="nav-btn" type="button" aria-expanded="false" aria-controls="products-menu" data-menu>Products <svg class="i chev" width="14" height="14"><use href="#i-down"/></svg></button>
-      <a class="nav-btn" href="#research">Research</a>
-      <a class="nav-btn" href="#try">Try it</a>
-    </nav>
-    <span class="spacer"></span>
-    <button class="btn btn-secondary hide-sm" type="button" data-joincode-open><svg class="i" width="16" height="16"><use href="#i-code"/></svg>Join code</button>
-    <a class="btn btn-quiet" href="#" lang="ar">عربي</a>
-    <a class="btn btn-quiet hide-sm" data-signin href="#">Sign in</a>
-    <a class="btn btn-glass" data-signup href="#">Get started</a>
-    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="products-menu" aria-label="Menu" data-menu><svg class="i" width="18" height="18"><use href="#i-menu"/></svg></button>
-  </div>
-
-  <div class="mega-wrap">
-    <div class="mega" id="products-menu" hidden>
-      <div class="mega-cols">
-        <div class="mega-col">
-          <p class="mega-head">For students</p>
-          <a class="mega-item" href="#products"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>The lecture, the book page and the questions, side by side</small></span></a>
-          <a class="mega-item" href="#products"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-check"/></svg></span><span><b>Practice questions</b><small>Real past-paper questions, marked the moment you answer</small></span></a>
-          <a class="mega-item" href="#products"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-chart"/></svg></span><span><b>Progress</b><small>Lectures finished, quiz marks and your streak</small></span></a>
-          <a class="mega-item" href="../../market/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-market"/></svg></span><span><b>Klaro Market</b><small>Find a course and the tutor who teaches it</small></span></a>
-        </div>
-        <div class="mega-col">
-          <p class="mega-head">For tutors</p>
-          <a class="mega-item" href="#products"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg></span><span><b>Course builder</b><small>Upload your lectures, books and past papers. Set the order.</small></span></a>
-          <a class="mega-item" href="#products"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span></a>
-          <a class="mega-item" href="#products"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Review papers against the mark scheme and release results</small></span></a>
-        </div>
-      </div>
-      <div class="mega-links">
-        <a class="nav-btn" href="#research">Research</a>
-        <a class="nav-btn" href="#try">Try it</a>
-        <a class="nav-btn" data-signin href="#">Sign in</a>
-      </div>
-      <div class="mega-foot">
-        <button class="btn-code" type="button" data-joincode><svg class="i" width="18" height="18"><use href="#i-code"/></svg>Have a join code?</button>
-        <form class="joinform" data-joinform hidden>
-          <input name="code" placeholder="K7Q-2PX" aria-label="Join code" autocomplete="off" maxlength="9">
-          <button class="btn btn-primary" type="submit">Join</button>
-        </form>
-        <a class="btn btn-primary btn-lg" data-signup href="#">Get started</a>
-      </div>
-    </div>
-  </div>
-</header>
+<body data-frame="" data-site="../../">
+<div data-chrome="header"></div>
 
 <main id="top">
 
@@ -279,34 +212,38 @@
     </div>
 
     <div class="tiles" data-aud="student">
-      <a class="card tile lift" href="#">
+      <a class="card tile lift" href="products/study-view/">
         <div class="tile-vis"><div class="mini"><div class="three"><div><div class="vid"><img src="../../img/lecture-osmosis.webp" alt="" loading="lazy"></div><div class="ln"></div></div><div><div class="ln"></div><div class="ln hl"></div><div class="ln hl"></div><div class="ln"></div></div><div><div class="ln"></div><div class="op" style="padding: 3px"></div><div class="op ok" style="padding: 3px"></div></div></div></div></div>
         <div class="tile-body"><h3 class="card-title">Study view</h3><p>The lecture, the book page and the questions, side by side.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
-      <a class="card tile lift" href="#">
+      <a class="card tile lift" href="products/practice-questions/">
         <div class="tile-vis" style="background: var(--amber-soft)"><div class="mini"><b style="font-size: 12px">Which process moves water into the cell?</b><div class="op">A · Diffusion</div><div class="op ok">B · Osmosis ✓</div><div class="op">C · Active transport</div></div></div>
         <div class="tile-body"><h3 class="card-title">Practice questions</h3><p>Real past-paper questions, marked the moment you answer.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
-      <a class="card tile lift" href="#">
+      <a class="card tile lift" href="products/progress/">
         <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini" style="flex-direction: row; align-items: center; gap: 12px"><span class="ring"></span><div style="flex: 1; display: flex; flex-direction: column; gap: 6px"><b style="font-size: 12px">Biology 0610</b><div class="bar"><i style="width: 60%"></i></div><span style="color: var(--muted)">6/10 lectures · 3/5 quizzes</span></div></div></div>
         <div class="tile-body"><h3 class="card-title">Progress</h3><p>Lectures finished, quiz marks and your streak, course by course.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
-      <a class="card tile lift" href="../../market/">
+      <a class="card tile lift" href="products/klaro-market/">
         <div class="tile-vis"><div class="covers"><img src="../../img/course-chemistry.webp" alt="" loading="lazy"><img src="../../img/course-sat-math.webp" alt="" loading="lazy"></div></div>
         <div class="tile-body"><h3 class="card-title">Klaro Market</h3><p>Find a course and the tutor who teaches it.</p><span class="more">Browse courses <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
     </div>
 
     <div class="tiles" data-aud="tutor">
-      <a class="card tile lift" href="#">
+      <a class="card tile lift" href="products/course-builder/">
         <div class="tile-vis"><div class="mini"><div class="row"><span class="icon-tile" style="width: 22px; height: 22px; border-radius: 6px"><svg class="i" width="12" height="12"><use href="#i-video"/></svg></span><span style="flex: 1">Lecture 2.mp4</span><span class="tag tag-green">Linked</span></div><div class="row"><span class="icon-tile teal" style="width: 22px; height: 22px; border-radius: 6px"><svg class="i" width="12" height="12"><use href="#i-book"/></svg></span><span style="flex: 1">Textbook.pdf</span><span class="tag tag-green">Linked</span></div><div class="row"><span class="icon-tile amber" style="width: 22px; height: 22px; border-radius: 6px"><svg class="i" width="12" height="12"><use href="#i-doc"/></svg></span><span style="flex: 1">Past paper P1.pdf</span><span class="tag tag-yellow">Linking</span></div></div></div>
         <div class="tile-body"><h3 class="card-title">Course builder</h3><p>Upload your lectures, books and past papers. Set the order and share one join code.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
-      <a class="card tile lift" href="#">
+      <a class="card tile lift" href="products/study-view/">
         <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini"><div class="three"><div><div class="vid"><img src="../../img/course-chemistry.webp" alt="" loading="lazy"></div><div class="ln"></div></div><div><div class="ln"></div><div class="ln hl"></div><div class="ln"></div></div><div><div class="ln"></div><div class="op" style="padding: 3px"></div><div class="op ok" style="padding: 3px"></div></div></div></div></div>
         <div class="tile-body"><h3 class="card-title">Study view</h3><p>See your course exactly the way your students see it.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
-      <a class="card tile lift" href="#">
+      <a class="card tile lift" href="products/live-sessions/">
+        <div class="tile-vis" style="background: var(--teal-soft)"><div class="mini"><div class="row"><span class="tag tag-green">● Live</span><span style="flex: 1"></span><span style="color: var(--muted)">Today · 7:00 pm</span></div><b style="font-size: 12px">Chemistry 0620 · Revision: electrolysis</b><div class="row" style="color: var(--muted)"><svg class="i" width="13" height="13"><use href="#i-users"/></svg>Students join from the course page</div><div class="op ok" style="text-align: center">Start session</div></div></div>
+        <div class="tile-body"><h3 class="card-title">Live sessions</h3><p>Teach your students live, straight from your Klaro course.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
+      </a>
+      <a class="card tile lift" href="products/marking/">
         <div class="tile-vis" style="background: var(--amber-soft)"><div class="mini"><div class="row"><b style="flex: 1; font-size: 12px">Paper 1 · Ahmed S.</b><span class="mark">7/9</span></div><div class="row"><span class="ln"></span><svg class="i" width="13" height="13" style="color: var(--success)"><use href="#i-check"/></svg></div><div class="row"><span class="ln" style="flex: .7"></span><span style="flex: .3"></span><svg class="i" width="13" height="13" style="color: var(--success)"><use href="#i-check"/></svg></div><div class="row"><span class="ln" style="flex: .85"></span><span style="flex: .15"></span><span style="color: var(--warn); font-weight: 700">½</span></div></div></div>
         <div class="tile-body"><h3 class="card-title">Marking</h3><p>Review exam papers against the mark scheme and release results.</p><span class="more">Learn more <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></span></div>
       </a>
@@ -362,7 +299,7 @@
         <p class="cite"><i>Hattie &amp; Timperley (2007).</i> The power of feedback. Review of Educational Research.</p>
       </article>
     </div>
-    <div class="section-foot"><a class="btn btn-secondary btn-lg" href="#">How Klaro uses research <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a></div>
+    <div class="section-foot"><a class="btn btn-secondary btn-lg" href="#research">How Klaro uses research <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a></div>
   </div>
 </section>
 
@@ -428,20 +365,9 @@
 </section>
 </main>
 
-<footer class="foot2">
-  <div class="wrap">
-    <div class="brandcol">
-      <img src="../../img/klaro-wordmark.svg" alt="Klaro" width="93" height="28">
-      <p class="foot-motto">Enough AI slop.</p>
-      <p class="small">We connect your content exactly how you intended it to look.</p>
-    </div>
-    <div><h4>For students</h4><ul><li><a href="#products">Study view</a></li><li><a href="#products">Practice questions</a></li><li><a href="#products">Progress</a></li><li><a href="../../market/">Klaro Market</a></li></ul></div>
-    <div><h4>For tutors</h4><ul><li><a href="#products">Course builder</a></li><li><a href="#products">Study view</a></li><li><a href="#products">Marking</a></li><li><a data-signup href="#">Apply as a tutor</a></li></ul></div>
-    <div><h4>Klaro</h4><ul><li><a href="#research">Research</a></li><li><a href="#try">Try it</a></li><li><a data-signin href="#">Sign in</a></li><li><a href="#" lang="ar">عربي</a></li></ul></div>
-    <div class="base"><span>© 2026 Klaro</span><span class="grow"></span><a data-legal="terms" href="#">Terms</a><a data-legal="privacy" href="#">Privacy</a></div>
-  </div>
-</footer>
+<div data-chrome="footer"></div>
 
+<script src="chrome.js"></script>
 <script src="../../klaro.js"></script>
 <script src="frame.js"></script>
 </body>

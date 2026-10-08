@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Course builder · Klaro (frame)</title>
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../../../../klaro.css">
+<link rel="stylesheet" href="../../frame.css">
+<link rel="stylesheet" href="../../product.css">
+<style>
+/* Course builder only: the upload area, a lecture lifted mid-move, the line under the join code */
+.cb-drop { display: flex; align-items: center; gap: 10px; padding: 14px; border: 1.5px dashed var(--purple-line); border-radius: var(--r-control); background: var(--purple-tint); font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+.cb-drop .i { color: var(--purple); }
+.lec.cb-lifted { border-color: var(--purple-line); box-shadow: var(--shadow-lift); z-index: 1; }
+.lec.cb-lifted .grip { color: var(--purple); }
+.cb-foot { display: flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+</style>
+</head>
+<body data-frame="../../" data-site="../../../../" data-default-as="tutor">
+<div data-chrome="header"></div>
+
+<main id="top">
+
+<!-- 1. Hero: chip, headline, one or two sentences, two buttons, the product in a coloured field -->
+<section class="p-hero">
+  <div class="wrap">
+    <a class="p-back" href="../../index.html#products"><svg class="i flip" width="14" height="14"><use href="#i-back"/></svg>All products</a>
+    <div class="p-top">
+      <span class="p-chip"><span class="icon-tile"><svg class="i" width="16" height="16"><use href="#i-upload"/></svg></span>Course builder<span class="p-for">For tutors</span></span>
+      <div class="p-head">
+        <h1 class="display">Bring what you already teach. <span class="key">Klaro connects it.</span></h1>
+        <div class="p-head-side">
+          <p class="lead">Upload your lectures, your books and your past papers. Klaro connects them: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.</p>
+          <div class="actions">
+            <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="#">Apply as a tutor <svg class="i flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn-secondary btn-lg" href="../study-view/">See what students see</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-field">
+      <div class="studio" role="img" aria-label="A tutor's course being set up: a lecture, a textbook and a past paper are uploaded and linked, the lectures are put in the tutor's order, and the course has a join code.">
+        <div class="studio-head"><span>Chemistry 0620 · IGCSE</span><span class="grow"></span><span class="tag tag-purple">Setting up</span></div>
+        <div class="panes two">
+          <div class="pane">
+            <div class="pane-label">Your material</div>
+            <div class="files">
+              <div class="file"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-video"/></svg></span><span class="name">Lecture 2, Electrolysis.mp4</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Linking</span><span class="tag tag-green s3">Linked</span></span></div>
+              <div class="file"><span class="icon-tile teal"><svg class="i" width="15" height="15"><use href="#i-book"/></svg></span><span class="name">Chemistry textbook.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Linking</span><span class="tag tag-green s3">Linked</span></span></div>
+              <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span><span class="name">Past paper 2024 P1.pdf</span><span class="states"><span class="tag tag-neutral s1">Uploading</span><span class="tag tag-yellow s2">Linking</span><span class="tag tag-green s3">Linked</span></span></div>
+            </div>
+            <div class="joincode"><span>Join code</span><code>K7Q-2PX</code></div>
+          </div>
+          <div class="pane">
+            <div class="pane-label">Lectures, in your order</div>
+            <div class="order">
+              <div class="lec"><span class="n">1</span>States of matter<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+              <div class="lec down"><span class="n">2</span>Electrolysis<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+              <div class="lec up"><span class="n">3</span>Atomic structure<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+              <div class="lec"><span class="n">4</span>Rates of reaction<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+            </div>
+            <span class="tag tag-green" style="align-self: flex-start">24 students joined</span>
+          </div>
+        </div>
+      </div>
+      <p class="p-field-note">Material, lecture order and join code from one example course.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2. Proof line: the motto, said for this product -->
+<section class="p-proof">
+  <div class="wrap">
+    <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Connected, not generated</span>
+    <p>Your lectures, your book, your past papers, exactly as you made them. <span class="muted">Klaro only connects them.</span></p>
+  </div>
+</section>
+
+<!-- 3. How it works -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">How it works</span><h2 class="h2">From your files to a course students can join.</h2></div>
+    <div class="steps">
+      <div class="card card-pad step"><span class="num">1</span><h3 class="card-title">Apply as a tutor</h3><p>The Klaro team checks every account before it opens.</p></div>
+      <div class="card card-pad step"><span class="num">2</span><h3 class="card-title">Upload what you already teach from</h3><p>Your recorded lectures, books, past papers and mark schemes, in one upload.</p></div>
+      <div class="card card-pad step"><span class="num">3</span><h3 class="card-title">Klaro connects it</h3><p>Every moment of a lecture is linked to its book page, every topic to its past-paper questions. Then set the order and share your join code.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Feature rows -->
+<section class="section white">
+  <div class="wrap p-rows">
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Upload</span>
+        <h2>One upload for everything you teach from.</h2>
+        <p>Add your recorded lectures, your textbook, your past papers and their mark schemes together. Klaro links each moment of a lecture to its book page and each topic to its past-paper questions.</p>
+      </div>
+      <div class="p-vis teal">
+        <div class="p-ui">
+          <div class="p-ui-head"><svg class="i" width="14" height="14" style="color: var(--purple)"><use href="#i-upload"/></svg>Chemistry 0620 · Your material<span class="grow"></span><span class="tag tag-neutral">4 files</span></div>
+          <div class="cb-drop"><svg class="i" width="18" height="18"><use href="#i-upload"/></svg><span>Drop lectures, books, past papers and mark schemes</span></div>
+          <div class="files">
+            <div class="file"><span class="icon-tile"><svg class="i" width="15" height="15"><use href="#i-video"/></svg></span><span class="name">Lecture 2, Electrolysis.mp4</span><span class="tag tag-green">Linked</span></div>
+            <div class="file"><span class="icon-tile teal"><svg class="i" width="15" height="15"><use href="#i-book"/></svg></span><span class="name">Chemistry textbook.pdf</span><span class="tag tag-green">Linked</span></div>
+            <div class="file"><span class="icon-tile amber"><svg class="i" width="15" height="15"><use href="#i-doc"/></svg></span><span class="name">Past paper 2024 P1.pdf</span><span class="tag tag-green">Linked</span></div>
+            <div class="file"><span class="icon-tile" style="background: var(--gold-soft); color: var(--gold-deep)"><svg class="i" width="15" height="15"><use href="#i-check"/></svg></span><span class="name">Mark scheme 2024 P1.pdf</span><span class="tag tag-green">Linked</span></div>
+          </div>
+          <span class="linked" style="animation: none"><svg class="i" width="13" height="13"><use href="#i-link"/></svg>Lecture 2 at 04:40 linked to Book p. 112</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Your order</span>
+        <h2>Your course runs in your order, not ours.</h2>
+        <!-- confirm: students see the lectures in the tutor's order, and the tutor reorders them by dragging (the grips in the visual) -->
+        <p>Put your lectures in the order you teach them. Students meet them in that same order.</p>
+      </div>
+      <div class="p-vis amber">
+        <div class="p-ui">
+          <div class="p-ui-head"><svg class="i" width="14" height="14" style="color: var(--purple)"><use href="#i-video"/></svg>Lectures, in your order<span class="grow"></span><span class="tag tag-slate">Chemistry 0620</span></div>
+          <div class="order">
+            <div class="lec"><span class="n">1</span>States of matter<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+            <div class="lec"><span class="n">2</span>Atomic structure<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+            <div class="lec cb-lifted"><span class="n">3</span>Electrolysis<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+            <div class="lec"><span class="n">4</span>Rates of reaction<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+            <div class="lec"><span class="n">5</span>Acids and bases<svg class="i grip" width="16" height="16" aria-hidden="true"><use href="#i-grip"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-row">
+      <div class="p-row-copy">
+        <span class="kicker">Join code</span>
+        <h2>One code, and your students are in.</h2>
+        <p>Share one join code with your class. Students join with it, and your course appears on their home page.</p>
+        <a class="tlink" href="../study-view/">What your students see <svg class="i flip" width="14" height="14"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="p-vis gold">
+        <div class="p-stack">
+          <div class="p-ui">
+            <div class="p-ui-head"><svg class="i" width="14" height="14" style="color: var(--purple)"><use href="#i-code"/></svg>Share your course<span class="grow"></span><span class="tag tag-slate">Chemistry 0620</span></div>
+            <div class="joincode"><span>Join code</span><code>K7Q-2PX</code></div>
+            <div class="cb-foot"><svg class="i" width="15" height="15" style="color: var(--success)"><use href="#i-users"/></svg>24 students joined</div>
+          </div>
+          <span class="pane-label">On a student's home page</span>
+          <div class="media">
+            <div class="pic"><img src="../../../../img/course-chemistry.webp" alt="" loading="lazy" width="960" height="548"><div class="corner"><span class="tag tag-green">Joined</span></div><div class="scrim"><div class="eyebrow">IGCSE · Year 10</div><div class="title">Chemistry 0620</div></div></div>
+            <div class="edge"></div>
+            <div class="foot"><span class="label">Start</span><span>Lecture 1 · States of matter</span><span class="chev flip">›</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 5. Who it's for -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">Who it's for</span><h2 class="h2">You set it up. Your students join it.</h2></div>
+    <div class="p-who">
+      <div class="card card-pad">
+        <span class="tag tag-purple">For tutors</span>
+        <h3>Teach from the material you already have.</h3>
+        <ul>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Lectures, books, past papers and mark schemes in one upload</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Every moment of a lecture linked to its book page</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>Your lecture order and one join code</li>
+        </ul>
+        <a class="btn btn-primary" data-signup-as="tutor" href="#">Apply as a tutor</a>
+      </div>
+      <div class="card card-pad">
+        <span class="tag tag-slate">For students</span>
+        <h3>Join your tutor's course with one code.</h3>
+        <ul>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>The course appears on your home page</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>The lecture, the book page and the questions side by side</li>
+          <li><svg class="i" width="15" height="15"><use href="#i-check"/></svg>IGCSE, A Level and SAT, in English and Arabic</li>
+        </ul>
+        <a class="btn btn-secondary" data-signup-as="student" href="#">Create a student account</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Powered by research: the finding this product is built on -->
+<section class="section white">
+  <div class="wrap">
+    <article class="card card-pad rcard p-research">
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <span class="kicker spark"><svg class="star" viewBox="112.56 0 103.11 103.11" width="13" height="13" aria-hidden="true"><use href="#spark" fill="#f0c93d"/></svg>Powered by research</span>
+        <h3>Show the explanation and its source together.</h3>
+        <p>People learn better when related words and pictures are presented together, close in space and in time.</p>
+      </div>
+      <div class="side">
+        <div class="in-klaro"><svg class="i" width="16" height="16" style="color: var(--purple)"><use href="#i-link"/></svg>That is why each moment of your lecture is linked to its book page.</div>
+        <p class="cite"><i>Ginns, P. (2006).</i> Integrating information: A meta-analysis of the spatial contiguity and temporal contiguity effects. <em>Learning and Instruction</em>, 16(6), 511–525.</p>
+        <a class="tlink" href="../../index.html#research" style="font-size: 14px; font-weight: 700; color: var(--purple-dark); text-decoration: none">How Klaro uses research →</a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- 7. Related products -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head"><span class="kicker">Related</span><h2 class="h2">Works with</h2></div>
+    <div class="p-related">
+      <a class="card lift p-rel" href="../study-view/"><span class="icon-tile"><svg class="i" width="18" height="18"><use href="#i-study"/></svg></span><span><b>Study view</b><small>See your course the way your students see it</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="card lift p-rel" href="../live-sessions/"><span class="icon-tile teal"><svg class="i" width="18" height="18"><use href="#i-live"/></svg></span><span><b>Live sessions</b><small>Teach your students live, straight from your Klaro course</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="card lift p-rel" href="../marking/"><span class="icon-tile amber"><svg class="i" width="18" height="18"><use href="#i-pen"/></svg></span><span><b>Marking</b><small>Review papers against the mark scheme and release results</small></span><svg class="i chev flip" width="16" height="16"><use href="#i-arrow"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Closer -->
+<section class="section" style="padding-top: 0">
+  <div class="wrap">
+    <div class="closer">
+      <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
+      <h2 class="closer-h">Your course, exactly as you teach it.</h2>
+      <p>The Klaro team reviews every tutor account before it opens.</p>
+      <a class="btn btn-lg" data-signup-as="tutor" href="#">Apply as a tutor</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div data-chrome="footer"></div>
+<script src="../../chrome.js"></script>
+<script src="../../../../klaro.js"></script>
+<script src="../../frame.js"></script>
+</body>
+</html>
