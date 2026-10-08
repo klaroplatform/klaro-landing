@@ -59,6 +59,12 @@ What it does:
   `<!-- chrome:meta -->` block under them: canonical, hreflang, Open Graph, icons, the app address
   and one JSON-LD graph. The JSON-LD includes FAQPage from a page's visible FAQ, an Article with
   citations on the research page, and a VideoObject for each recording.
+- **Fonts.** The Google Fonts links are the tool's too: it writes them at the end of the meta block
+  for the page's language (`tools/site.json` `"fonts"`; Readex Pro, the Arabic face, only on
+  Arabic pages) and removes any font link a page writes in its own `<head>`.
+- **Illustration sizes.** With `"srcset": {"on": true}` in `tools/site.json`, every `<img>` of a
+  full-size illustration (`img/ill/NN-name.webp`, 1200px) gets a `srcset` of its `-480` and `-800`
+  versions, and `sizes`. Set it to `false` and run the tool to take them off.
 - **App links.** The app's address lives once, in `tools/site.json` (`"app"`). The tool writes it
   into every link marked `data-signup`, `data-signup-as`, `data-signin` or `data-legal`, so the
   links work without JavaScript.
@@ -95,6 +101,20 @@ The pages show the real Klaro app, not drawn mock-ups.
 - **The markup** is documented at the top of `showcase.js`: a live scene is
   `figure.show[data-showcase]`, a recording is `figure.rec[data-recording]`. Phones get
   `data-phone-recording` instead of the live app.
+- **The camera.** `data-camera="t s x y; …"` zooms a recording or a still to a point at a scale (a
+  second number above 8 is a width in the recording's pixels instead). `data-camera-narrow` is the
+  track for screens narrower than 480px (phones, and the plates at 768), written in widths around
+  whole components so no word is cut at the screen's edge.
+- **Phone-sized recordings.** On those narrow screens a recording plays `media/<name>-sm.mp4`
+  (960 × 600, H.264, `+faststart`; about a sixth of the bytes) and its poster's `srcset` picks
+  `media/<name>-poster-sm.webp`. A new recording needs both:
+  `ffmpeg -i media/<name>.mp4 -vf scale=960:600:flags=lanczos -c:v libx264 -preset slower -crf 27 -g 90 -pix_fmt yuv420p -movflags +faststart -an media/<name>-sm.mp4`.
+- **The live app and the keyboard.** During the visitor's turn the frame takes a pointer at once,
+  but the Tab key and screen readers skip it until the visitor taps in it or presses "Use the
+  sample app with the keyboard" (it shows when it has focus).
+- **Scene plates** (`img/plates/`) draw the whole device; `site.css` holds each one's screen box
+  and opts it in (`--drawn: 1`). Add `?ph` to a page's address to see the placeholder file names
+  on tiles and plates that have no picture yet. Visitors never see them.
 - **Phone recordings** were made with the scripts in `tools/rec/`. They drive the showcase in a
   test browser and need Node, Playwright (`KLARO_PLAYWRIGHT` points at an install) and ffmpeg. See
   `tools/rec/README.md`.
