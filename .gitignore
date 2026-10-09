@@ -3,3 +3,15 @@ node_modules/
 .wrangler/
 # Internal chat screenshots behind the brief; the repository is public.
 design/brief/refs/
+# What the app does today, from its private code and staging; internal, so it stays local.
+design/brief/app-facts.md
+# The SEO/GEO audit quotes the app facts above; internal too.
+design/brief/seo-geo.md
+# Plans that quote the private app (protocol, unbuilt features); local until the repo is private.
+design/brief/showcase.md
+design/brief/redesign.md
+design/brief/qa.md
+# The handover note for the next session or agent; internal, like the plans above.
+design/brief/handover.md
+# Screenshots sent to the owner for review; local only.
+design/review/

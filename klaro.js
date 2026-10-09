@@ -1,6 +1,12 @@
-/* Klaro landing: the Student/Tutor switch, the links into the app, the sliding segment pill,
-   scroll reveal, the top bar's hairline and the FAQ. The app's address is the
-   <meta name="klaro-app"> in each page, so moving from staging to production is one line. */
+/* Klaro landing, on every page before site.js: the links into the app (sign up, sign in, terms and
+   privacy), the header's hairline on scroll (.topbar.scrolled) and the FAQ (one answer open at a
+   time). The app's address is the <meta name="klaro-app"> that tools/site.py writes into each
+   page, so moving it is one line in tools/site.json.
+   Kept for the frozen old landing (v1/), whose markup only it has: the Student/Tutor switch
+   (.seg[data-audience], #tutor in the address, the sliding .seg-pill) and the .reveal scroll
+   reveal. On the new pages the switch's only effect is that plain [data-signup] links get
+   ?as=student (?as=tutor with #tutor); site.js then gives tutor pages the tutor's sign-up, and
+   does the new pages' scroll reveal. */
 (function () {
   var meta = document.querySelector('meta[name="klaro-app"]');
   var APP = (meta && meta.content) || 'https://app.klaroplatform.com';

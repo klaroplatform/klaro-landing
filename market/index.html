@@ -3,159 +3,305 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Klaro Market: courses from Klaro tutors</title>
-<meta name="description" content="Find a course for IGCSE, A Level or the SAT. Every Klaro course comes with lectures, the book linked page by page, and practice questions.">
+<meta name="color-scheme" content="light">
+<title>Browse IGCSE, A Level and SAT courses · Klaro Market</title>
+<meta name="description" content="Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each. Every course is a tutor's own lectures, book and past papers, connected.">
+<!-- chrome:meta -->
+<link rel="canonical" href="https://learnklaro.com/market/">
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<meta name="theme-color" content="#f3f3f1">
 <link rel="icon" href="../favicon.ico" sizes="32x32">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="../klaro.css">
-<link rel="stylesheet" href="market.css">
-<style>
-/* V1: a catalog. Search first, then filters, then the grid that rearranges as you narrow it. */
-.hero { padding-block: 56px 36px; text-align: center; position: relative; overflow-x: clip; }
-.hero .wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; position: relative; }
-.hero .display { font-size: clamp(38px, 5.4vw, 66px); max-width: 14em; }
-.hero .lead { margin-inline: auto; }
-.bigsearch { width: min(640px, 100%); margin-top: 6px; }
-.bigsearch input { height: 58px; border-radius: 14px; font-size: 16px; padding-inline: 50px 130px; box-shadow: var(--shadow-panel); }
-.bigsearch svg { inset-inline-start: 18px; }
-.bigsearch .btn { position: absolute; inset-inline-end: 7px; height: 44px; }
-.quick { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; align-items: center; }
-.hero .accent { inset-inline-start: 4%; top: 30px; }
-.hero .accent.two { inset-inline-start: auto; inset-inline-end: 3%; top: auto; bottom: 0; rotate: 160deg; }
-.market { padding-block: 10px 80px; }
-.bar-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
-.bar-row .left { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; min-width: 0; }
-.seg.small { height: 40px; }
-.seg.small button { padding-inline: 14px; font-size: 12px; }
-.resultline { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: 13px; color: var(--muted); flex-wrap: wrap; }
-.resultline b { color: var(--ink); font-variant-numeric: tabular-nums; }
-.grid3 .mcard[hidden] { display: none; }
-@media (max-width: 640px) { .hero { padding-block: 28px 20px; } .bigsearch input { padding-inline-end: 16px; } .bigsearch .btn { display: none; } .bar-row .left, .bar-row { width: 100%; } }
-</style>
-</head>
-<body>
-<main id="top">
-  <section class="hero pub-only">
-    <div class="accent" aria-hidden="true"><span></span><span></span><span></span></div>
-    <div class="accent two" aria-hidden="true"><span></span><span></span><span></span></div>
-    <div class="wrap">
-      <span class="kicker">Klaro Market</span>
-      <h1 class="display">Courses from tutors who know the exam.</h1>
-      <p class="lead">Every course comes with lectures, the book linked page by page, and practice questions marked as you answer.</p>
-      <label class="search bigsearch"><span class="sr" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search courses</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="q1" type="search" autocomplete="off" placeholder="Search courses">
-        <a class="btn btn-primary" href="#market">Search</a></label>
-      <div class="quick"><span class="small">Popular:</span><button class="chip" type="button" data-q="Biology 0610">Biology 0610</button><button class="chip" type="button" data-q="SAT">SAT</button><button class="chip" type="button" data-q="Physics">Physics</button><button class="chip" type="button" data-q="Mathematics">Mathematics</button></div>
-    </div>
-  </section>
-
-  <section class="wrap market" id="market">
-    <div class="bar-row">
-      <div class="left">
-        <div class="seg small" id="level" role="group" aria-label="Level">
-          <button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="IGCSE" aria-pressed="false">IGCSE</button><button type="button" data-v="A Level" aria-pressed="false">A Level</button><button type="button" data-v="SAT" aria-pressed="false">SAT</button>
-        </div>
-        <div class="chips" id="subjects" role="group" aria-label="Subject"></div>
-      </div>
-      <label class="search app-only" style="width: 240px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q2" type="search" autocomplete="off" placeholder="Search courses" aria-label="Search courses"></label>
-    </div>
-    <div class="resultline">
-      <span><b id="count">12</b> courses <span id="what"></span></span>
-      <div class="chips" id="sort" role="group" aria-label="Sort"><button class="chip" type="button" data-s="popular" aria-pressed="true">Most students</button><button class="chip" type="button" data-s="price" aria-pressed="false">Lowest price</button><button class="chip" type="button" data-s="lectures" aria-pressed="false">Most lectures</button></div>
-    </div>
-    <div class="grid3" id="grid"></div>
-    <p class="example" style="margin-top: 18px">Example courses, tutors and prices.</p>
-  </section>
-</main>
-<script src="market.js"></script>
-<script>
-(function () {
-  var state = { level: 'all', subject: 'all', q: '', sort: 'popular' };
-  var grid = document.getElementById('grid');
-  grid.innerHTML = KM.COURSES.map(function (c) { return KM.card(c); }).join('') +
-    '<div class="empty" id="empty" hidden><img src="../img/empty-no-courses.webp" alt=""><h3 class="card-title">No course matches that</h3><p class="small">Try another subject or level.</p><button class="btn btn-primary" type="button" id="clear">Clear the filters</button></div>';
-  var cards = Array.prototype.slice.call(grid.querySelectorAll('.mcard'));
-  var subjectGroup = function (c) { return c.level === 'SAT' ? 'SAT' : c.subject; };
-  var SUBJECTS = ['all', 'Biology', 'Chemistry', 'Physics', 'Mathematics', 'English', 'SAT'];
-
-  function matches(c, ignoreSubject) {
-    var hay = (c.title + ' ' + c.subject + ' ' + c.level + ' ' + KM.TUTORS[c.tutor].name).toLowerCase();
-    return (state.level === 'all' || c.level === state.level) &&
-      (ignoreSubject || state.subject === 'all' || subjectGroup(c) === state.subject) &&
-      (!state.q || state.q.toLowerCase().split(/\s+/).every(function (w) { return hay.indexOf(w) >= 0; }));
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Klaro">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://learnklaro.com/market/">
+<meta property="og:title" content="Browse IGCSE, A Level and SAT courses · Klaro Market">
+<meta property="og:description" content="Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each. Every course is a tutor's own lectures, book and past papers, connected.">
+<meta property="og:image" content="https://learnklaro.com/img/ill/01-connected-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An open course book, a film strip and an exam paper, joined by one gold thread.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://learnklaro.com/#org",
+   "name": "Klaro",
+   "url": "https://learnklaro.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/apple-touch-icon.png",
+    "width": 180,
+    "height": 180
+   },
+   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
+   "slogan": "We don't make content. We connect yours."
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://learnklaro.com/#website",
+   "url": "https://learnklaro.com/",
+   "name": "Klaro",
+   "inLanguage": [
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://learnklaro.com/#org"
+   }
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://learnklaro.com/market/#webpage",
+   "url": "https://learnklaro.com/market/",
+   "name": "Browse IGCSE, A Level and SAT courses · Klaro Market",
+   "description": "Search IGCSE, A Level and SAT courses by level and subject, and see who teaches each. Every course is a tutor's own lectures, book and past papers, connected.",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/img/ill/01-connected-og.jpg",
+    "width": 1200,
+    "height": 630
+   },
+   "dateModified": "2026-10-09",
+   "breadcrumb": {
+    "@id": "https://learnklaro.com/market/#breadcrumb"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://learnklaro.com/market/#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Klaro",
+     "item": "https://learnklaro.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Browse courses"
+    }
+   ]
   }
-  function renderChips() {
-    var el = document.getElementById('subjects');
-    el.innerHTML = SUBJECTS.map(function (s) {
-      var n = KM.COURSES.filter(function (c) { return matches(c, true) && (s === 'all' || subjectGroup(c) === s); }).length;
-      return '<button class="chip" type="button" data-sub="' + s + '" aria-pressed="' + (state.subject === s) + '">' + (s === 'all' ? 'All subjects' : s) + '<span class="count">' + n + '</span></button>';
-    }).join('');
-  }
-  function apply() {
-    renderChips();
-    var shown = 0;
-    var order = KM.COURSES.slice().sort(function (a, b) {
-      return state.sort === 'price' ? (a.per === b.per ? a.price - b.price : a.per === 'month' ? -1 : 1) : state.sort === 'lectures' ? b.lectures - a.lectures : b.students - a.students;
-    });
-    KM.flip(cards, function () {
-      order.forEach(function (c) {
-        var el = grid.querySelector('[data-course="' + c.id + '"]');
-        el.hidden = !matches(c); if (!el.hidden) shown++;
-        grid.insertBefore(el, document.getElementById('empty'));
-      });
-    });
-    document.getElementById('count').textContent = shown;
-    document.getElementById('empty').hidden = shown > 0;
-    document.getElementById('what').textContent = state.q ? 'for “' + state.q + '”' : '';
-  }
-
-  document.getElementById('level').addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    state.level = b.dataset.v;
-    this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-    KM.placePill(this); apply();
-  });
-  document.getElementById('subjects').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) { state.subject = b.dataset.sub; apply(); } });
-  document.getElementById('sort').addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    state.sort = b.dataset.s;
-    this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
-    apply();
-  });
-  var inputs = [document.getElementById('q1'), document.getElementById('q2')], t;
-  inputs.forEach(function (inp) {
-    inp.addEventListener('input', function () {
-      state.q = inp.value.trim();
-      inputs.forEach(function (o) { if (o !== inp) o.value = inp.value; });
-      clearTimeout(t); t = setTimeout(apply, 120);
-    });
-  });
-  document.querySelectorAll('[data-q]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      state.q = b.dataset.q; inputs.forEach(function (o) { o.value = b.dataset.q; });
-      apply(); document.getElementById('market').scrollIntoView({ behavior: KM.still ? 'auto' : 'smooth' });
-    });
-  });
-  grid.addEventListener('click', function (e) {
-    if (e.target.id === 'clear') { state = { level: 'all', subject: 'all', q: '', sort: state.sort }; inputs.forEach(function (o) { o.value = ''; }); var lv = document.getElementById('level'); lv.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', String(x.dataset.v === 'all')); }); KM.placePill(lv); apply(); }
-  });
-
-  // The hero's placeholder types out a few searches people make.
-  if (!KM.still) {
-    var words = ['Biology 0610', 'SAT Math', 'A Level Physics', 'Mathematics 0580'], wi = 0, ci = 0, del = false;
-    setInterval(function () {
-      var inp = inputs[0]; if (inp.value) return;
-      var w = words[wi];
-      ci += del ? -1 : 1;
-      inp.placeholder = 'Search for ' + w.slice(0, ci) + (ci < w.length || del ? '' : '');
-      if (!del && ci === w.length + 8) del = true;
-      if (del && ci === 0) { del = false; wi = (wi + 1) % words.length; }
-    }, 90);
-  }
-  apply();
-})();
+ ]
+}
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap">
+<!-- /chrome:meta -->
+<link rel="stylesheet" href="../klaro.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="market.css">
+</head>
+<body data-site="../">
+<!-- chrome:sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
+  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
+  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
+  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M8.5 10.5l1.5 1.5 2.5-2.5M14.5 11h1.5M8.5 16h7"/></g></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></g></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></g></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.53.85l10.4-6.5a1 1 0 0 0 0-1.7L9.53 4.65A1 1 0 0 0 8 5.5Z"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></g></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></g></symbol>
+</defs></svg>
+<!-- /chrome:sprite -->
+<!-- chrome:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar" data-topbar>
+  <div class="wrap topbar-row">
+    <a class="brand" href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+    <nav class="nav" aria-label="Main">
+      <button class="nav-link" type="button" aria-expanded="false" aria-controls="site-menu" data-menu="products">Products <svg class="i chev" aria-hidden="true"><use href="#i-down"/></svg></button>
+      <a class="nav-link nav-aud" href="../students/"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
+      <a class="nav-link" href="../research/">Research</a>
+      <a class="nav-link" href="../try/">Live demo</a>
+    </nav>
+    <span class="topbar-space"></span>
+    <!-- arabic-later: <a class="nav-link nav-lang" href="../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a> -->
+    <button class="btn btn-secondary btn-sm topbar-wide" type="button" data-joincode-open>Join code</button>
+    <a class="btn btn-soft btn-sm topbar-wide" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
+    <a class="btn btn-primary btn-sm topbar-wide" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Try it free</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu" data-menu="sheet"><svg class="i menu-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="i menu-close" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="mega-wrap">
+    <div class="mega" id="site-menu" data-view="main" hidden>
+      <nav class="mega-main" aria-label="Menu">
+        <button class="mega-row" type="button" aria-expanded="false" aria-controls="menu-products" data-drill>Products <span class="chev" aria-hidden="true">›</span></button>
+        <a class="mega-row nav-aud" href="../students/"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
+        <a class="mega-row" href="../research/">Research</a>
+        <a class="mega-row" href="../try/">Live demo</a>
+      </nav>
+      <nav class="mega-products" id="menu-products" aria-label="Products">
+        <button class="mega-back" type="button" data-drill-back><span class="chev" aria-hidden="true">‹</span> Menu</button>
+        <div class="mega-cols">
+          <div class="mega-col">
+            <a class="mega-head" href="../">For tutors</a>
+            <a class="mega-item" href="../products/course-builder/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg></span><span class="mega-text"><b>Course builder</b><small>Upload what you already teach from. Set the order.</small></span></a>
+            <a class="mega-item" href="../products/live-sessions/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-live"/></svg></span><span class="mega-text"><b>Live sessions</b><small>Schedule a class. Your students join from Klaro.</small></span></a>
+            <a class="mega-item" href="../products/quizzes/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-quiz"/></svg></span><span class="mega-text"><b>Quizzes and homework</b><small>Ask in plain words. Built from real past-paper questions.</small></span></a>
+            <a class="mega-item" href="../products/marking/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg></span><span class="mega-text"><b>Marking</b><small>Answers marked against your scheme. You have the last word.</small></span></a>
+          </div>
+          <div class="mega-col">
+            <a class="mega-head" href="../students/">For students and parents</a>
+            <a class="mega-item" href="../products/study-view/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-study"/></svg></span><span class="mega-text"><b>Study view</b><small>Your tutor's lecture, open at the page it explains.</small></span></a>
+            <a class="mega-item" href="../products/practice-questions/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span class="mega-text"><b>Practice questions</b><small>Real past-paper questions, checked as you answer.</small></span></a>
+            <a class="mega-item" href="../products/minis/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-minis"/></svg></span><span class="mega-text"><b>Minis</b><small>Your weak spots, one short lecture moment a day.</small></span></a>
+            <a class="mega-item" href="../products/progress/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg></span><span class="mega-text"><b>Progress</b><small>Lectures finished, quiz marks and your streak.</small></span></a>
+          </div>
+        </div>
+        <a class="mega-all" href="../products/">All products <span class="chev" aria-hidden="true">›</span></a>
+      </nav>
+      <div class="mega-foot">
+        <button class="btn btn-secondary btn-lg btn-block" type="button" data-joincode><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>Have a join code?</button>
+        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
+        <a class="btn btn-soft btn-lg btn-block mega-sheet-only" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
+        <a class="btn btn-primary btn-lg btn-block mega-sheet-only" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Try it free</a>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- /chrome:header -->
+
+<main id="main">
+
+<!-- 1. Hero: the product pages' band, kept short. The search and filters sit at its foot. -->
+<section class="p-hero km-hero">
+  <div class="wrap">
+    <div class="p-top">
+      <span class="p-chip"><span class="icon-tile"><svg class="i" width="16" height="16"><use href="#i-market"/></svg></span>Klaro Market<span class="p-for">For students</span></span>
+      <div class="p-head">
+        <h1 class="display">Find a course and the <span class="uline">tutor</span> who teaches it.</h1>
+        <div class="p-head-side">
+          <p class="lead">Search IGCSE, A Level and SAT courses by level and subject. Each course is a tutor's own lectures, book and past papers, connected. Nothing in it is generated.</p>
+          <div class="km-notes">
+            <span class="p-draft"><svg class="i" width="13" height="13" aria-hidden="true"><use href="#i-info"/></svg>Courses, tutors and prices on this page are examples.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="km-panel" role="search" aria-label="Find a course">
+      <div class="km-bar">
+        <label class="km-search"><span class="km-sr">Search courses</span><svg class="i" width="18" height="18" aria-hidden="true"><use href="#i-search"/></svg><input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search by course, subject or tutor"></label>
+        <div class="km-seg" id="level" role="group" aria-label="Level"><button type="button" data-v="all" aria-pressed="true">All</button><button type="button" data-v="IGCSE" aria-pressed="false">IGCSE</button><button type="button" data-v="A Level" aria-pressed="false">A Level</button><button type="button" data-v="SAT" aria-pressed="false">SAT</button></div>
+      </div>
+      <div class="km-line">
+        <div class="km-chips" id="subjects" role="group" aria-label="Subject"></div>
+        <label class="km-sort"><span>Sort by</span><span class="km-select"><select id="sort"><option value="popular">Most students</option><option value="price">Lowest price</option><option value="lectures">Most lectures</option></select></span></label>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. The courses: cards rearrange as the filters narrow them; each opens the course drawer -->
+<section class="km-market" aria-labelledby="km-courses">
+  <div class="wrap">
+    <h2 class="km-sr" id="km-courses">Courses</h2>
+    <p class="km-result" id="result"><b id="count">12</b> <span id="noun">courses</span> <span id="what"></span></p>
+    <div class="km-grid" id="grid"></div>
+    <p class="km-fine"><svg class="i" width="14" height="14" aria-hidden="true"><use href="#i-info"/></svg>Example courses, tutors and prices.</p>
+  </div>
+</section>
+
+<!-- 3. For tutors: the motto, said for the market -->
+<section class="km-teach">
+  <div class="wrap">
+    <div class="card km-strip">
+      <div class="km-strip-copy">
+        <h2>Teach on Klaro with your own material.</h2>
+        <p>Upload your lectures, your books and your past papers. Klaro connects them: every moment of a lecture to its book page, every topic to its past-paper questions. Nothing generated.</p>
+      </div>
+      <div class="km-strip-actions">
+        <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a>
+        <a class="btn btn-secondary btn-lg" href="../products/course-builder/">See the course builder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- chrome:footer -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <a href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col"><h2 class="footer-h"><a href="../">For tutors</a></h2><ul>
+        <li><a class="footer-link" href="../products/course-builder/">Course builder</a></li>
+        <li><a class="footer-link" href="../products/live-sessions/">Live sessions</a></li>
+        <li><a class="footer-link" href="../products/quizzes/">Quizzes and homework</a></li>
+        <li><a class="footer-link" href="../products/marking/">Marking</a></li>
+        <li><a class="footer-link" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
+      </ul></div>
+      <div class="footer-col"><h2 class="footer-h"><a href="../students/">For students and parents</a></h2><ul>
+        <li><a class="footer-link" href="../products/study-view/">Study view</a></li>
+        <li><a class="footer-link" href="../products/practice-questions/">Practice questions</a></li>
+        <li><a class="footer-link" href="../products/minis/">Minis</a></li>
+        <li><a class="footer-link" href="../products/progress/">Progress</a></li>
+        <li><button class="footer-link" type="button" data-joincode-open>Join a course with a code</button></li>
+      </ul></div>
+      <div class="footer-col"><h2 class="footer-h">Klaro</h2><ul>
+        <li><a class="footer-link" href="../research/">Research</a></li>
+        <li><a class="footer-link" href="../try/">Live demo</a></li>
+        <li><a class="footer-link" href="../market/">Browse courses</a></li>
+        <li><a class="footer-link" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
+      </ul></div>
+      <!-- arabic-later: the Language column comes back with the Arabic pages (a column holding only "English" is noise):
+      <div class="footer-col"><h2 class="footer-h">Language</h2><ul>
+        <li><span class="footer-link footer-here">English</span></li>
+        <li><a class="footer-link" href="../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
+      </ul></div>
+      -->
+    </div>
+    <div class="footer-base"><span>© 2026 Klaro</span><a class="footer-link" data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a class="footer-link" data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
+  </div>
+</footer>
+<!-- /chrome:footer -->
+
+<!-- The course drawer: filled by market.js when a course opens -->
+<div class="km-scrim" data-close></div>
+<aside class="km-drawer" role="dialog" aria-modal="true" aria-labelledby="km-drawer-title"></aside>
+
+<script src="../klaro.js"></script>
+<script src="../site.js"></script>
+<script src="market.js"></script>
 </body>
 </html>

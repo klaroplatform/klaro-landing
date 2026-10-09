@@ -1,0 +1,30 @@
+# learnklaro.com: every search engine and AI crawler is welcome, AI training included
+# (the owner's decision, 2026-10-08).
+#
+# Cloudflare can add its own rules above this file (Bot Preference Sync, managed robots.txt).
+# After any change to Cloudflare's bot settings, open https://learnklaro.com/robots.txt and check
+# that nothing above this file blocks a crawler. A crawler named in its own group ignores the "*"
+# group, so the named crawlers below share the one group, and the same rules, with everyone else.
+
+# Search and answer engines, the fetchers that open a page when someone asks an assistant, and
+# the AI training crawlers: all allowed.
+User-agent: Googlebot
+User-agent: Google-Extended
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: CCBot
+User-agent: *
+Allow: /
+# Cloudflare's own endpoints, not pages of the site.
+Disallow: /cdn-cgi/
+
+Sitemap: https://learnklaro.com/sitemap.xml

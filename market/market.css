@@ -1,112 +1,163 @@
-/* Klaro Market: the parts every version shares, on top of klaro.css (the app's tokens and kit). */
+/* Klaro Market (/market/): the course catalogue, on top of klaro.css (the app's tokens and kit) and
+   site.css (the header, the footer and the product pages' .p-hero band).
+   Every class here starts with km- so nothing clashes with the shared files: site.css's .chip is a
+   floating hero chip, and klaro.js drives every .seg as the student/tutor switch.
+   Buttons and controls are rectangles (radius 9 to 11px), as in the app. Logical properties only. */
 
-/* Public page or inside the app: one body attribute swaps the chrome around the same market. */
-[data-chrome="public"] .app-only, [data-chrome="app"] .pub-only { display: none !important; }
+.km-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
-/* The app's top bar: wordmark, the menu with the ink glass pill on the open page, then bell and avatar */
-.appbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgb(243 243 241 / .86); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-.appbar .wrap { height: 64px; display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); align-items: center; gap: 24px; }
-.appbar .brand img { height: 26px; width: auto; }
-.appnav { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: rgb(255 255 255 / .7); border: 1px solid var(--border); }
-.appnav a { height: 34px; padding-inline: 14px; display: inline-flex; align-items: center; gap: 7px; border-radius: var(--r-pill); font-weight: 600; font-size: 13px; color: var(--ink-soft); text-decoration: none; transition: color .15s, background-color .15s; }
-.appnav a:hover { color: var(--ink); }
-.appnav a[aria-current="page"] { color: #fff; background: linear-gradient(rgb(255 255 255 / .11), rgb(255 255 255 / .02) 50%, transparent 62%), var(--ink); box-shadow: var(--shadow-glass); }
-.appnav .new { font-size: 9px; font-weight: 700; letter-spacing: .06em; padding: 2px 5px; border-radius: 4px; background: var(--yellow); color: var(--ink); }
-.appbar .tools { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
-.round { width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; color: var(--ink-soft); border: 1px solid transparent; background: none; position: relative; cursor: pointer; }
-.round:hover { background: rgb(255 255 255 / .84); border-color: rgb(35 35 37 / .1); color: var(--ink); }
-.round .badge { position: absolute; top: 4px; inset-inline-end: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--purple); color: #fff; font-size: 9px; font-weight: 700; display: grid; place-items: center; border: 2px solid var(--page); }
-.avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 12px; background: linear-gradient(135deg, #9254e0, #c58be8 60%, #f0c93d); border: 2px solid #fff; box-shadow: 0 1px 3px rgb(23 23 23 / .15); flex-shrink: 0; }
-.menu-btn { display: none; }
-@media (max-width: 1000px) { .appnav { display: none; } .appbar .wrap { grid-template-columns: auto 1fr auto; } .menu-btn { display: grid; } }
+/* ---------- Hero: the product pages' band, kept short so the courses start on the first screen ---------- */
+.km-hero { padding-block-end: 4px; }
+.km-hero .p-top { padding-block-start: 16px; }
+.km-hero .p-head .display { font-size: clamp(34px, 4.4vw, 56px); }
+.km-hero .p-head-side { gap: 14px; }
+.km-notes { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.km-about { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--purple-dark); text-decoration: none; }
+.km-about:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* App page head (PageHead): kicker, 34px title, lead */
-.pagehead { padding-block: 34px 22px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
-.pagehead .title { font-weight: 600; font-size: 34px; line-height: 1.05; letter-spacing: -.045em; margin-top: 6px; }
-.pagehead .lead { font-size: 14px; margin-top: 8px; }
-.headfigs { display: flex; gap: 22px; padding: 12px 16px; border-radius: var(--r-control); border: 1px solid var(--border); background: var(--card); }
-.headfigs dt { font-size: 11px; color: var(--muted); }
-.headfigs dd { margin: 0; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
-.headfigs dl { margin: 0; display: flex; flex-direction: column; gap: 3px; }
+/* ---------- Search and filters: one white panel at the foot of the band ---------- */
+.km-panel { margin-block-start: 30px; display: flex; flex-direction: column; gap: 12px; padding: 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-card); box-shadow: var(--shadow-panel); }
+.km-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.km-search { position: relative; flex: 1 1 300px; min-width: 0; display: flex; align-items: center; }
+.km-search svg { position: absolute; inset-inline-start: 15px; color: var(--muted); pointer-events: none; }
+.km-search input { -webkit-appearance: none; appearance: none; width: 100%; height: 46px; padding-inline: 44px 14px; border-radius: 11px; border: 1px solid var(--border-strong); background: var(--card);
+  font: 500 16px/1 var(--font); color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+.km-search input:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
+.km-search input::placeholder { color: var(--muted); }
 
-/* Filter bar: chips (the kit's one chip style) and a compact search, one row */
-.filterbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.chips { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
-.chips::-webkit-scrollbar { display: none; }
-.chip { height: 30px; padding-inline: 12px; border-radius: var(--r-pill); border: 1px solid var(--border); background: var(--card); font: 600 12px/1 var(--font); color: var(--ink-soft); cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; transition: background-color .15s, color .15s, border-color .15s; }
-.chip:hover { border-color: var(--purple-line); color: var(--ink); }
-.chip[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: #fff; }
-.chip .count { font-size: 11px; opacity: .7; font-variant-numeric: tabular-nums; }
-.search { position: relative; display: flex; align-items: center; }
-.search svg { position: absolute; inset-inline-start: 12px; color: var(--muted); pointer-events: none; }
-.search input { height: 40px; width: 100%; padding-inline: 38px 14px; border-radius: var(--r-button); border: 1px solid var(--border-strong); background: var(--card); font: 500 14px/1 var(--font); color: var(--ink); transition: border-color .15s, box-shadow .15s; }
-.search input:focus { outline: none; border-color: var(--purple); box-shadow: 0 0 0 3px var(--purple-soft); }
-.search input::placeholder { color: var(--muted); }
-@media (pointer: coarse) { .chip { height: 44px; } }
+/* Level: a segmented control with a sliding white pill (klaro.css's .seg look, under its own name) */
+.km-seg { position: relative; display: inline-flex; flex-shrink: 0; height: 46px; padding: 4px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); }
+.km-seg button { position: relative; z-index: 1; border: 0; background: none; padding-inline: 16px; border-radius: 7px; font: 700 13px/1 var(--font); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: color .2s var(--ease-out); }
+.km-seg button:hover { color: var(--ink); }
+.km-seg button[aria-pressed="true"] { color: var(--purple-dark); }
+.km-seg:not(.ready) button[aria-pressed="true"] { background: var(--card); box-shadow: var(--shadow-segment); }
+.km-pill { position: absolute; inset-block: 4px; inset-inline-start: 0; width: 0; border-radius: 7px; background: var(--card); box-shadow: var(--shadow-segment); }
+.km-seg.ready .km-pill { transition: translate .5s var(--ease-settle), width .5s var(--ease-settle); }
 
-/* Market course card: the kit's media card, plus the tutor and the price */
-.mcard { cursor: pointer; text-align: start; font: inherit; padding: 0; width: 100%; }
-.mcard .tutor { display: flex; align-items: center; gap: 8px; padding: 12px 18px 0; font-size: 13px; font-weight: 600; }
-.mcard .tutor .avatar { width: 26px; height: 26px; font-size: 10px; border-width: 1.5px; }
-.mcard .figs { padding-top: 8px; }
-.mcard .foot { border-top: 1px solid var(--border); margin-top: 14px; padding-block: 12px 14px; justify-content: space-between; }
-.price { display: inline-flex; align-items: baseline; gap: 4px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.price b { font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
-.price span { font-size: 12px; color: var(--muted); }
-.btn-sm { height: 30px; padding-inline: 12px; border-radius: 7px; font-size: 11px; }
-.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
-@media (max-width: 1080px) { .grid3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px) { .grid3 { grid-template-columns: minmax(0, 1fr); } }
+/* Subjects (with how many courses each has) and sort */
+.km-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+.km-chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.km-chip { flex-shrink: 0; display: inline-flex; align-items: center; gap: 7px; height: 34px; padding-inline: 12px; border-radius: var(--r-button); border: 1px solid var(--border); background: var(--card);
+  font: 600 12.5px/1 var(--font); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: background-color .15s, color .15s, border-color .15s; }
+.km-chip:hover { border-color: var(--purple-line); color: var(--ink); }
+.km-chip[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: #fff; }
+.km-chip:focus-visible { outline-offset: 1px; }
+.km-count { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .72; }
+.km-sort { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 13px; color: var(--muted); }
+.km-select { position: relative; display: inline-flex; }
+.km-select select { -webkit-appearance: none; appearance: none; height: 34px; padding-inline: 12px 32px; border-radius: var(--r-button); border: 1px solid var(--border-strong); background: var(--card);
+  font: 600 13px/1 var(--font); color: var(--ink); cursor: pointer; transition: border-color .15s; }
+.km-select select:hover { border-color: var(--purple-line); }
+.km-select::after { content: ""; position: absolute; inset-inline-end: 13px; inset-block-start: 50%; width: 6px; height: 6px; border-inline-end: 2px solid var(--ink-soft); border-block-end: 2px solid var(--ink-soft);
+  translate: 0 -70%; rotate: 45deg; pointer-events: none; }
+@media (pointer: coarse) { .km-chip, .km-select select { height: 44px; } }
 
-/* Course drawer: slides in from the inline end; a bottom sheet on phones */
-.scrim-bg { position: fixed; inset: 0; z-index: 80; background: rgb(23 18 30 / .35); opacity: 0; pointer-events: none; transition: opacity .25s var(--ease-out); }
-.drawer { position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 90; width: min(520px, 100%); background: var(--card); box-shadow: 0 18px 60px rgb(34 25 48 / .22); display: flex; flex-direction: column;
-  translate: 100% 0; transition: translate .45s var(--ease-settle); }
-[dir="rtl"] .drawer { translate: -100% 0; }
-body.drawer-open .scrim-bg { opacity: 1; pointer-events: auto; }
-body.drawer-open .drawer { translate: 0 0; }
-body.drawer-open { overflow: hidden; }
-.drawer .pic { position: relative; aspect-ratio: 16 / 9; flex-shrink: 0; overflow: hidden; }
-.drawer .pic img { width: 100%; height: 100%; object-fit: cover; }
-.drawer .pic .scrim { position: absolute; inset-inline: 0; inset-block-end: 0; padding: 60px 24px 18px; color: #fff; background: linear-gradient(to top, rgb(18 14 26 / .78), rgb(18 14 26 / .45) 55%, rgb(18 14 26 / 0)); }
-.drawer .pic .eyebrow { font-size: 12px; font-weight: 600; color: rgb(255 255 255 / .82); }
-.drawer .pic h2 { font-weight: 600; font-size: 28px; letter-spacing: -.04em; line-height: 1.1; }
-.drawer .close { position: absolute; top: 14px; inset-inline-end: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: rgb(255 255 255 / .9); color: var(--ink); display: grid; place-items: center; cursor: pointer; z-index: 2; }
-.drawer .body { flex: 1; overflow-y: auto; padding: 22px 24px; display: flex; flex-direction: column; gap: 20px; }
-.drawer .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--border); border-radius: var(--r-control); }
-.drawer .facts div { padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
-.drawer .facts div + div { border-inline-start: 1px solid var(--border); }
-.drawer .facts dt { font-size: 11px; color: var(--muted); }
-.drawer .facts dd { margin: 0; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
-.lessons { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: var(--r-control); overflow: hidden; }
-.lessons li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-size: 13.5px; font-weight: 600; }
-.lessons li + li { border-top: 1px solid var(--border); }
-.lessons .n { width: 24px; height: 24px; border-radius: 7px; background: var(--purple-soft); color: var(--purple-dark); display: grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
-.lessons .more { color: var(--muted); font-weight: 500; }
-.drawer .buy { border-top: 1px solid var(--border); padding: 16px 24px calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--card); }
-.drawer .buy .price b { font-size: 22px; }
-.checkout { display: flex; flex-direction: column; gap: 12px; animation: rise .4s var(--ease-out) both; }
-.checkout .line { display: flex; justify-content: space-between; font-size: 14px; padding-block: 8px; border-bottom: 1px dashed var(--border-strong); }
-.checkout .line.total { font-weight: 700; border-bottom: 0; font-size: 16px; }
-@media (max-width: 640px) {
-  .drawer { inset-block: auto 0; inset-inline: 0; width: 100%; max-height: 92dvh; border-radius: 20px 20px 0 0; translate: 0 100%; }
-  [dir="rtl"] .drawer { translate: 0 100%; }
-  .drawer .pic { border-radius: 20px 20px 0 0; }
+/* ---------- The courses ---------- */
+.km-market { padding-block: 26px 56px; }
+.km-result { margin-block-end: 14px; font-size: 13.5px; color: var(--muted); }
+.km-result b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.km-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.km-grid > [hidden] { display: none; }
+/* market.js builds the cards and the subject chips after the first paint. Until then the empty
+   grid holds a screen's height, so the fine print and "Teach on Klaro" start below the fold and
+   never jump (the 12 cards are taller than a screen at every width), and the empty chip row holds
+   its one row. Only where scripts run: without them both stay empty and take no room. */
+@media (scripting: enabled) {
+  .km-grid:empty { min-height: 100vh; min-height: 100svh; }
+  .km-chips:empty { --chip-h: 34px; min-height: calc(var(--chip-h) + var(--chips-pad, 0px)); }   /* one row of chips (.km-chip's height) */
 }
+@media (scripting: enabled) and (pointer: coarse) { .km-chips:empty { --chip-h: 44px; } }
+.km-fine { margin-block-start: 18px; display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
 
-/* Toast */
-.toast { position: fixed; inset-block-end: calc(76px + env(safe-area-inset-bottom, 0px)); inset-inline-start: 50%; translate: -50% 20px; z-index: 120; background: var(--ink); color: #fff; padding: 12px 16px; border-radius: var(--r-control); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-lift); opacity: 0; pointer-events: none; transition: opacity .25s, translate .35s var(--ease-settle); max-width: calc(100% - 32px); }
-.toast.on { opacity: 1; translate: -50% 0; }
+/* Course card: the kit's media card, plus the tutor, the price and Enroll */
+.km-card { cursor: pointer; }
+.km-card .corner .tag-slate { background: rgb(255 255 255 / .92); }
+.km-tutor { display: flex; align-items: center; gap: 8px; padding: 12px 18px 0; font-size: 13px; font-weight: 600; }
+.km-card .figs { padding-block: 8px 14px; }
+.km-card .foot { justify-content: space-between; border-block-start: 1px solid var(--border); }
+.km-price { display: inline-flex; align-items: baseline; gap: 4px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.km-price b { font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+.km-price span { font-size: 12px; color: var(--muted); }
+.btn.km-btn-sm { height: 32px; padding-inline: 13px; border-radius: var(--r-button); font-size: 12px; }
+.km-avatar { --h: var(--purple); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; color: #fff; font-size: 10px; font-weight: 700;
+  background: linear-gradient(135deg, var(--h), #c58be8 70%, var(--yellow)); border: 1.5px solid #fff; box-shadow: 0 1px 3px rgb(23 23 23 / .15); }
+.km-avatar.lg { width: 44px; height: 44px; font-size: 15px; border-width: 2px; }
+.km-empty { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 40px 16px; text-align: center; }
+.km-empty img { width: 150px; height: 150px; }
 
-/* Review dock: Public / In the app, and V1 to V4 (review aid, not part of the design) */
-.dock { position: fixed; inset-block-end: calc(16px + env(safe-area-inset-bottom, 0px)); inset-inline: 16px; z-index: 100; display: flex; justify-content: space-between; gap: 8px; pointer-events: none; }
-.dock > * { pointer-events: auto; }
-.dock .vswitch { position: static; }
-.chromeswitch { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--ink); box-shadow: var(--shadow-glass); }
-.chromeswitch button { height: 30px; padding-inline: 12px; border: 0; border-radius: var(--r-pill); background: none; color: rgb(255 255 255 / .7); font: 700 12px/1 var(--font); cursor: pointer; }
-.chromeswitch button[aria-pressed="true"] { background: #fff; color: var(--ink); }
-.example { font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
-.empty { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 40px 16px; text-align: center; }
-.empty img { width: 150px; height: 150px; }
-[hidden] { display: none !important; }
-body.drawer-open .dock { display: none; }
+/* ---------- For tutors ---------- */
+.km-teach { padding-block: 8px 72px; }
+.km-strip { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 22px 48px; padding: clamp(22px, 4vw, 40px); }
+.km-strip-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.km-strip h2 { font-size: clamp(24px, 2.6vw, 32px); font-weight: 600; line-height: 1.12; letter-spacing: -.04em; text-wrap: balance; }
+.km-strip p { color: var(--ink-soft); max-width: 40em; }
+.km-strip-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- Course drawer: slides in from the inline end; a bottom sheet on phones ---------- */
+.km-scrim { position: fixed; inset: 0; z-index: 80; background: rgb(23 18 30 / .35); opacity: 0; pointer-events: none; transition: opacity .25s var(--ease-out); }
+.km-drawer { position: fixed; inset-block: 0; inset-inline-end: 0; z-index: 90; width: min(520px, 100%); display: flex; flex-direction: column; background: var(--card); box-shadow: 0 18px 60px rgb(34 25 48 / .22);
+  translate: 100% 0; visibility: hidden; transition: translate .45s var(--ease-settle), visibility 0s linear .45s; }
+[dir="rtl"] .km-drawer { translate: -100% 0; }
+body.km-open { overflow: hidden; }
+body.km-open .km-scrim { opacity: 1; pointer-events: auto; }
+body.km-open .km-drawer { translate: 0 0; visibility: visible; transition: translate .45s var(--ease-settle); }
+.km-drawer .pic { position: relative; aspect-ratio: 16 / 9; flex-shrink: 0; overflow: hidden; background: var(--purple-soft); }
+.km-drawer .pic img { width: 100%; height: 100%; object-fit: cover; }
+.km-drawer .corner { position: absolute; inset-block-start: 16px; inset-inline-start: 16px; }
+.km-drawer .scrim { position: absolute; inset-inline: 0; inset-block-end: 0; padding: 60px 24px 18px; color: #fff; background: linear-gradient(to top, rgb(18 14 26 / .78), rgb(18 14 26 / .45) 55%, rgb(18 14 26 / 0)); }
+.km-drawer .eyebrow { font-size: 12px; font-weight: 600; color: rgb(255 255 255 / .82); }
+.km-drawer h2 { font-weight: 600; font-size: 28px; letter-spacing: -.04em; line-height: 1.1; }
+.km-close { position: absolute; inset-block-start: 14px; inset-inline-end: 14px; z-index: 2; width: 36px; height: 36px; display: grid; place-items: center; border: 0; border-radius: 10px;
+  background: rgb(255 255 255 / .92); color: var(--ink); cursor: pointer; transition: background-color .15s; }
+.km-close:hover { background: #fff; }
+.km-drawer-body { flex: 1; overflow-y: auto; padding: 22px 24px; display: flex; flex-direction: column; gap: 20px; }
+.km-who { display: flex; align-items: center; gap: 12px; }
+.km-who b { display: block; font-weight: 700; }
+.km-facts { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--border); border-radius: var(--r-control); }
+.km-facts div { padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+.km-facts div + div { border-inline-start: 1px solid var(--border); }
+.km-facts dt { font-size: 11px; color: var(--muted); }
+.km-facts dd { margin: 0; font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
+.km-block { display: flex; flex-direction: column; gap: 10px; }
+.km-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.km-tag-teal { background: var(--teal-soft); color: var(--teal-dark); }
+.km-tag-amber { background: var(--amber-soft); color: var(--warn); }
+.km-lessons { list-style: none; margin: 0; padding: 0; border: 1px solid var(--border); border-radius: var(--r-control); overflow: hidden; }
+.km-lessons li { display: flex; align-items: center; gap: 12px; padding: 11px 14px; font-size: 13.5px; font-weight: 600; }
+.km-lessons li + li { border-block-start: 1px solid var(--border); }
+.km-lessons .n { width: 24px; height: 24px; border-radius: 7px; background: var(--purple-soft); color: var(--purple-dark); display: grid; place-items: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.km-lessons .more { color: var(--muted); font-weight: 500; }
+.km-lessons .more .n { background: var(--surface); color: var(--muted); }
+.km-buy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; padding: 16px 24px calc(16px + env(safe-area-inset-bottom, 0px));
+  border-block-start: 1px solid var(--border); background: var(--card); }
+.km-buy .km-price b { font-size: 22px; }
+
+/* Arabic, when the market gets one: no tracking on headings */
+:lang(ar) .km-strip h2, :lang(ar) .km-drawer h2 { letter-spacing: 0; }
+
+@media (max-width: 1080px) {
+  .km-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Where the subjects and the sort no longer share a line: the subjects on one line of their own
+     that scrolls sideways (as on phones), the sort under them. One row whatever the width, so the
+     space the empty row holds until market.js fills it is exact. The padding keeps focus rings
+     from being cut off. */
+  .km-line { flex-direction: column; flex-wrap: nowrap; align-items: stretch; }   /* wrapping columns would size to the chips' full row */
+  .km-chips { --chips-pad: 8px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 4px; margin: -4px; }
+  .km-chips::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 860px) { .km-strip { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) {
+  .km-hero .p-top { padding-block-start: 4px; }
+  .km-panel { margin-block-start: 22px; padding: 10px; }
+  .km-seg { width: 100%; }
+  .km-seg button { flex: 1 1 auto; padding-inline: 8px; }
+  .km-market { padding-block-start: 20px; }
+  .km-strip-actions .btn { flex: 1 1 auto; }
+  .km-drawer { inset-block: auto 0; inset-inline: 0; width: 100%; max-height: 92dvh; border-start-start-radius: 20px; border-start-end-radius: 20px; translate: 0 100%; }
+  [dir="rtl"] .km-drawer { translate: 0 100%; }
+  .km-drawer .pic { border-start-start-radius: 20px; border-start-end-radius: 20px; }
+  .km-drawer-body { padding: 18px 16px; }
+  .km-buy { padding-inline: 16px; }
+  .km-buy .btn { flex: 1 1 auto; }
+}
+@media (max-width: 600px) { .km-grid { grid-template-columns: minmax(0, 1fr); } }

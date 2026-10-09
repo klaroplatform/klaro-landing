@@ -178,6 +178,39 @@ Notes:
 8. **Tech: open.** "If something other than plain HTML suits you better, or even a new repo, that's
    fine." Decide when the real build starts.
 
+**Later the same day:**
+- **Market:** keep it live and indexable, with a small visible line saying the courses, tutors and
+  prices are examples; drop that line when real data arrives. Keep it out of the Products menu
+  (only a quiet footer link).
+- **Minis** joins the students' products.
+- **SAT, the streak and the approved tutor line stay as they are**, even though the app doesn't
+  have them yet.
+- **Marking is shown normally:** written answers on scanned papers, marked by Klaro against the
+  tutor's mark scheme, then checked and sent by the tutor.
+- **Don't mention AI on the site.**
+- **Hosting:** Cloudflare, auto-deploying from `main`. GitHub Pages will be shut down, and the
+  repo made private once everything is done.
+
+**Redesign decisions (evening of 2026-10-08), after Omar's feedback ("more AI slop than before";
+"very close to schoolai.com") and Omar's new landing on `main` (the real app via the showcase):**
+- **Base:** Omar's landing: `/` for tutors, `/students/` for students and parents, the real app
+  first (live showcase story, then the Granola-style opening scroll). Every hand-drawn mock-up goes.
+- **The motto is no longer written literally.** Tutors: "We don't make content. We connect
+  yours." («لا نصنع المحتوى. نربط محتواك.») Students and parents: "Your tutor's explanation. Not a
+  guess." («شرح مدرّسك، لا تخمين.»)
+- **Visual rules:** pill buttons, as SchoolAI. **Illustration style: C, cut paper**, in Klaro's
+  purple, gold and lavender (`design/image-styles/`). Device frames sit on illustrated scenes, not
+  photos.
+- **These override the earlier rules and app-facts.md**, which was read from an older app version:
+  - Zoom may be named.
+  - Live-class recordings are built: the recording lands in the course, cut into clips linked to
+    the book.
+  - Omar's lines "marked, with feedback for each student" and "homework… written and sent" stay.
+- **New tutor product page:** Quizzes and homework.
+- **Arabic waits until the very end** of the redesign: Omar's landing had no Arabic. The redesign
+  ships in English first; the earlier Arabic pages stay in git history (`new-site`) as a base for
+  later, and the Arabic partials, RTL CSS and `arabic.md` are kept ready.
+
 **How to proceed (his words, same day):** don't build the site yet. First build a rough static
 frame of the new landing page together, run it locally, look at the overall shape, and only then
 work on the details. The new look should stay close to the current design, in the spirit of the

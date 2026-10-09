@@ -1,0 +1,31 @@
+{
+ "name": "student-minis-phone",
+ "duration": 17.87,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Minis",
+   "text": "A mini: your tutor's own lecture, at the moment it explains one idea."
+  },
+  {
+   "t": 3.4,
+   "kicker": "Minis",
+   "text": "Tap to pause. The book button opens the page it comes from."
+  },
+  {
+   "t": 5.41,
+   "kicker": "Minis",
+   "text": "Swipe up for three past-paper checks on it."
+  },
+  {
+   "t": 9.72,
+   "kicker": "Minis",
+   "text": "One tap answers it, and you know straight away."
+  },
+  {
+   "t": 14.34,
+   "kicker": "Minis",
+   "text": "Three right, and that idea is cleared for today."
+  }
+ ]
+}

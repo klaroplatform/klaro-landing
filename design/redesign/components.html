@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex">
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<title>Klaro components · redesign</title>
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../../klaro.css">
+<link rel="stylesheet" href="../../site.css">
+<style>
+/* Sheet only (cs-): the labels, swatches and phone previews of this page. Nothing here is part of
+   the site; the components themselves use only klaro.css and site.css. */
+.cs-intro { padding-block: 56px 40px; display: grid; gap: 16px; }
+.cs-intro h1 { font-size: 40px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; }
+.cs-intro p { max-width: 72ch; color: var(--text); }
+.cs-toc { display: flex; flex-wrap: wrap; gap: 6px; margin-block-start: 8px; }
+.cs-toc a { display: inline-flex; height: 30px; align-items: center; padding-inline: 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-size: 13px; font-weight: 500; text-decoration: none; }
+.cs-toc a:hover { border-color: var(--border-strong); }
+.cs-block { padding-block: 64px; border-block-start: 1px dashed var(--border-strong); }
+.cs-head { display: grid; gap: 8px; margin-block-end: 32px; }
+.cs-head h2 { font-size: 13px; font-weight: 700; color: var(--muted); }
+.cs-head p { max-width: 78ch; font-size: 15px; color: var(--text); }
+.cs-name { display: inline-block; padding: 1px 7px; border-radius: 6px; background: var(--purple-soft); color: var(--purple-dark); font: 500 12.5px/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0; }
+.cs-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; }
+.cs-stack { display: grid; gap: 28px; }
+.cs-grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: start; }
+.cs-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; align-items: end; }
+@media (max-width: 900px) { .cs-grid2, .cs-grid3 { grid-template-columns: minmax(0, 1fr); } }
+.cs-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 12px; }
+.cs-swatch { display: grid; gap: 6px; font-size: 12.5px; color: var(--text); }
+.cs-swatch i { display: block; height: 64px; border-radius: 16px; border: 1px solid rgb(0 0 0 / .06); }
+.cs-swatch b { color: var(--ink); font-weight: 600; }
+.cs-radii { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; }
+.cs-radii div { display: grid; gap: 6px; font-size: 12.5px; color: var(--text); }
+.cs-radii i { display: block; width: 120px; height: 90px; background: var(--card); border: 1px solid var(--line); }
+.cs-space { display: grid; gap: 6px; font-size: 12.5px; color: var(--text); }
+.cs-space span { display: flex; align-items: center; gap: 12px; }
+.cs-space i { display: block; height: 10px; border-radius: 3px; background: var(--purple); opacity: .55; }
+.cs-type { display: grid; gap: 24px; }
+.cs-type > div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+@media (max-width: 640px) { .cs-type > div { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+.cs-deep { padding: 32px; border-radius: 40px; background: var(--deep); }
+.cs-phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; }
+.cs-phones figure { display: grid; gap: 12px; justify-items: center; font-size: 14px; color: var(--text); }
+.cs-phones iframe { width: 375px; height: 812px; border: 10px solid #151515; border-radius: 48px; background: var(--page); }
+html.cs-frame #phone { display: none; }
+.cs-ar-chrome .topbar { position: relative; }
+</style>
+</head>
+<body>
+<div id="cs-sprite"></div>
+<div id="cs-header-en"></div>
+
+<main id="top">
+<section class="wrap cs-intro">
+  <h1>Klaro components</h1>
+  <p>The redesign's foundation (design/brief/redesign.md §5–7). Every component the page agents build with, with sample content: first in English, then the <a href="#arabic">Arabic block</a> (right to left), then <a href="#phone">both at phone width</a>. The header and footer at the top and bottom of this page are the real partials, read at run time. Illustrations are the chosen style (cut paper, design/image-styles/c-1 to c-3) standing in for the final ones; grey boxes with a file name are placeholders for pictures not made yet.</p>
+  <nav class="cs-toc" aria-label="Components">
+    <a href="#tokens">Tokens</a><a href="#type">Type</a><a href="#buttons">Buttons</a><a href="#chips">Chips</a><a href="#opening">Opening</a><a href="#hero">Product hero</a><a href="#strip">Strip</a><a href="#heads">Section heads</a><a href="#split">Split card</a><a href="#stack">Stacked cards</a><a href="#devices">Devices and plates</a><a href="#showcase">Showcase frame</a><a href="#steps">Step list</a><a href="#carousel">Carousel</a><a href="#band">Band</a><a href="#research">Research cards</a><a href="#panel">Deep panel</a><a href="#faq">FAQ</a><a href="#closing">Closing</a><a href="#arabic">Arabic</a><a href="#phone">Phone width</a>
+  </nav>
+</section>
+
+<!-- ============================================================ Tokens -->
+<section class="cs-block" id="tokens"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>Tokens</h2><p>In <span class="cs-name">klaro.css :root</span>, group 2 ("Site tokens"). Purple is the only action colour; gold only for the H1 underline and the spark; one deep panel and at most one pale band per page; no gradients or glows.</p></div>
+  <div class="cs-swatches">
+    <div class="cs-swatch"><i style="background:var(--page)"></i><b>--page</b>#f3f3f1</div>
+    <div class="cs-swatch"><i style="background:var(--card)"></i><b>--card</b>#ffffff</div>
+    <div class="cs-swatch"><i style="background:var(--ink)"></i><b>--ink</b>#171717</div>
+    <div class="cs-swatch"><i style="background:var(--text)"></i><b>--text</b>#45443f leads, body</div>
+    <div class="cs-swatch"><i style="background:var(--muted)"></i><b>--muted</b>#6b6a6f small print</div>
+    <div class="cs-swatch"><i style="background:var(--line)"></i><b>--line</b>#dcdcd6 hairlines</div>
+    <div class="cs-swatch"><i style="background:var(--purple)"></i><b>--purple</b>#9254e0 action</div>
+    <div class="cs-swatch"><i style="background:var(--purple-dark)"></i><b>--purple-dark</b>#7538bb hover, links</div>
+    <div class="cs-swatch"><i style="background:var(--purple-soft)"></i><b>--purple-soft</b>#f1e8fb soft pill</div>
+    <div class="cs-swatch"><i style="background:var(--gold)"></i><b>--gold</b>#f0c93d underline, spark</div>
+    <div class="cs-swatch"><i style="background:var(--deep)"></i><b>--deep</b>#2e1758 the panel</div>
+    <div class="cs-swatch"><i style="background:var(--band)"></i><b>--band</b>#efe6fb pale band</div>
+    <div class="cs-swatch"><i style="background:var(--chip)"></i><b>--chip</b>#e9e8e3 chips</div>
+    <div class="cs-swatch"><i style="background:var(--paper)"></i><b>--paper</b>#efeeea behind art</div>
+    <div class="cs-swatch"><i style="background:var(--plate)"></i><b>--plate</b>#ddd0f2 plate stand-in</div>
+  </div>
+  <div class="cs-radii">
+    <div><i style="border-radius:var(--radius-panel);width:200px"></i>--radius-panel 96 (40)</div>
+    <div><i style="border-radius:var(--radius-card)"></i>--radius-card 40 (28)</div>
+    <div><i style="border-radius:var(--radius-media)"></i>--radius-media 28 (20)</div>
+    <div><i style="border-radius:var(--radius-frame)"></i>--radius-frame 16</div>
+    <div><i style="border-radius:999px;height:44px"></i>pill</div>
+  </div>
+  <div class="cs-space">
+    <span><i style="width:var(--s-2)"></i>--s-2 8</span><span><i style="width:var(--s-4)"></i>--s-4 16</span><span><i style="width:var(--s-5)"></i>--s-5 24</span><span><i style="width:var(--s-6)"></i>--s-6 32</span><span><i style="width:var(--s-7)"></i>--s-7 40</span><span><i style="width:var(--s-8)"></i>--s-8 56 · --head-gap</span><span><i style="width:var(--s-9)"></i>--s-9 80</span><span><i style="width:var(--s-10)"></i>--s-10 112 · --section (72 on phones)</span>
+  </div>
+</div></section>
+
+<!-- ============================================================ Type -->
+<section class="cs-block" id="type"><div class="wrap">
+  <div class="cs-head"><h2>Type</h2><p>Manrope (Readex Pro for Arabic). Headings 600, body 400, nav 500, buttons 600. Sentence case, no uppercase anywhere. One <span class="cs-name">.uline</span> per page, on one or two words of the H1; it draws in once.</p></div>
+  <div class="cs-type">
+    <div><span class="cs-name">.h1 --fs-h1</span><p class="h1">Spend your time <span class="uline">teaching</span>. Klaro connects the rest.</p></div>
+    <div><span class="cs-name">.h2 --fs-h2</span><p class="h2">What Klaro takes off your plate</p></div>
+    <div><span class="cs-name">.h3 --fs-h3</span><p class="h3">Papers come back marked</p></div>
+    <div><span class="cs-name">.lead --fs-lead</span><p class="lead">Upload your books, notes, past papers and videos. Klaro breaks each one down to the smallest idea and links them into one connected curriculum.</p></div>
+    <div><span class="cs-name">body --fs-body</span><p class="text">Schedule a class and Klaro sets up the meeting. Students join from Klaro, and joining marks them present.</p></div>
+    <div><span class="cs-name">.small</span><p class="small">Courses, tutors and prices on this page are examples.</p></div>
+    <div><span class="cs-name">.caption</span><p class="caption"><b>Sample course.</b> The tutor's marking queue: one card for each paper handed in.</p></div>
+  </div>
+</div></section>
+
+<!-- ============================================================ Buttons -->
+<section class="cs-block" id="buttons"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>Buttons</h2><p>Pills, one language. <span class="cs-name">.btn</span> + <span class="cs-name">.btn-primary</span> (one per view) · <span class="cs-name">.btn-secondary</span> · <span class="cs-name">.btn-soft</span> · <span class="cs-name">.btn-on-deep</span>; sizes <span class="cs-name">.btn-lg</span> 52, default 44, <span class="cs-name">.btn-sm</span> 36; <span class="cs-name">.btn-block</span>. A text link is <span class="cs-name">.tlink</span> with the sprite's arrow and <span class="cs-name">.flip</span>. The carousel's pair is <span class="cs-name">.carousel-btn</span>.</p></div>
+  <div class="cs-row">
+    <a class="btn btn-primary btn-lg" href="#buttons">Start your course</a>
+    <a class="btn btn-secondary btn-lg" href="#buttons">Try it yourself</a>
+    <a class="btn btn-primary" href="#buttons">Start learning</a>
+    <a class="btn btn-secondary" href="#buttons">Have a join code?</a>
+    <a class="btn btn-soft btn-sm" href="#buttons">Sign in</a>
+    <a class="btn btn-primary btn-sm" href="#buttons">Try it free</a>
+    <a class="tlink" href="#buttons">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </div>
+  <div class="cs-row">
+    <div class="cs-deep cs-row"><a class="btn btn-on-deep" href="#buttons">How we use research</a></div>
+    <button class="carousel-btn" type="button" aria-label="Previous" aria-disabled="true"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+    <button class="carousel-btn" type="button" aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </div>
+</div></section>
+
+<!-- ============================================================ Chips -->
+<section class="cs-block" id="chips"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>Chips (hero only)</h2><p><span class="cs-name">.chip</span>: a grey pill with an icon and the product name (product heroes). <span class="cs-name">.chip-switch</span>: the audience switch on the two homes, two links, the current page dark (<span class="cs-name">aria-current="page"</span>). The beta line is <span class="cs-name">.hero-note</span> with the spark.</p></div>
+  <div class="cs-row">
+    <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Marking <span class="chip-for">for tutors</span></span>
+    <nav class="chip-switch" aria-label="Klaro for"><span class="chip-switch-label">Klaro for…</span><a href="#chips" aria-current="page">Tutors</a><a href="#chips">Students and parents</a></nav>
+    <span class="hero-note"><svg class="i spark" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><use href="#spark"/></svg>Klaro is in beta. Free to try.</span>
+  </div>
+</div></section>
+
+<!-- ============================================================ Opening -->
+<div class="cs-block" style="padding-block-end:0"><div class="wrap cs-head" style="margin-block-end:0"><h2>The opening scroll · <span class="cs-name">.opening</span></h2><p>The hero of <span class="cs-name">/</span> and <span class="cs-name">/students/</span>. Scroll: the stage pins for about one screen, the device settles from 108% to its place and the three tiles (your book, your lecture, your past papers) gather behind it and fade. The captions under the stage follow four invisible markers; on the site <span class="cs-name">showcase.js</span> does that, here a small sheet-only script stands in. Below 900px the stage is a phone (<span class="cs-name">.only-narrow</span>); with reduced motion nothing pins or moves.</p></div></div>
+<section class="opening" id="opening">
+  <div class="wrap opening-grid">
+    <div class="opening-copy">
+      <nav class="chip-switch" aria-label="Klaro for"><span class="chip-switch-label">Klaro for…</span><a href="#opening" aria-current="page">Tutors</a><a href="#opening">Students and parents</a></nav>
+      <h2 class="h1">Spend your time <span class="uline">teaching</span>. Klaro connects the rest.</h2>
+      <p class="lead">Upload your books, notes, past papers and videos. Klaro breaks each one down to the smallest idea and links them into one connected curriculum.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#opening">Start your course</a>
+        <a class="btn btn-secondary btn-lg" href="#opening">Try it yourself</a>
+      </div>
+      <span class="hero-note"><svg class="i spark" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><use href="#spark"/></svg>Klaro is in beta. Free to try.</span>
+    </div>
+    <div class="opening-track">
+      <div class="opening-stage">
+        <div class="opening-collage" aria-hidden="true">
+          <div class="ill opening-tile"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" decoding="async"></div>
+          <div class="ill opening-tile"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" decoding="async"></div>
+          <div class="ill opening-tile"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" decoding="async"></div>
+        </div>
+        <figure class="show only-wide">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen show-screen" data-nosnippet><img src="../../img/study-0.png" alt="Klaro's study view on a sample Biology course: the book, the lecture and the questions" width="1440" height="900"></div>
+          </div>
+          <div class="show-under">
+            <ol class="show-steps">
+              <li>A student taps a passage in your book.</li>
+              <li>Your lecture jumps to that moment and explains it.</li>
+              <li>The question on that passage is right there.</li>
+              <li>Your turn. Tap any part of the book.</li>
+            </ol>
+          </div>
+          <figcaption class="caption"><b>Sample course.</b> Your book, your lecture and your past-paper questions, linked: what your students see.</figcaption>
+        </figure>
+        <figure class="rec only-narrow">
+          <div class="device device--phone"><div class="device-body"><div class="device-screen rec-screen" data-nosnippet><div class="ph" data-ph="media/study-hero.mp4 · phone recording, coming"></div></div></div></div>
+          <div class="show-under">
+            <ol class="rec-cues">
+              <li>A student taps a passage in your book.</li>
+              <li>Your lecture jumps to that moment and explains it.</li>
+              <li>The question on that passage is right there.</li>
+              <li>Your turn. Try it full screen.</li>
+            </ol>
+          </div>
+        </figure>
+      </div>
+      <div class="opening-marks" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Product hero -->
+<section class="cs-block" id="hero" style="padding-block-end:0"><div class="wrap cs-head"><h2>Product-page hero · <span class="cs-name">.hero</span> <span class="cs-name">.hero-grid</span> <span class="cs-name">.hero-copy</span> <span class="cs-name">.mosaic</span></h2><p>Copy 5/12 (chip, H1 with the underline, one-to-two-sentence lead, one primary pill and a text link), an illustration mosaic 7/12: two offset columns, the second drifts a little with the scroll. <span class="cs-name">.hero--center</span> is the one-column variant (hub, research, 404).</p></div></section>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>Marking <span class="chip-for">for tutors</span></span>
+      <h2 class="h1">Upload the papers. Get them back <span class="uline">marked</span>.</h2>
+      <p class="lead">Scan your students' written papers and upload them with your mark scheme. Klaro marks every answer; you check, change any mark and send.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#hero">Start your course</a>
+        <a class="tlink" href="#hero">Try it yourself <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <div class="mosaic" aria-hidden="true">
+      <div class="mosaic-col">
+        <div class="ill"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></div>
+        <div class="ill" data-ph="img/ill/07-red-pen.webp"></div>
+      </div>
+      <div class="mosaic-col">
+        <div class="ill"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></div>
+        <div class="ill"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ Strip -->
+<section class="cs-block" id="strip"><div class="wrap">
+  <div class="cs-head"><h2>Subjects strip · <span class="cs-name">.strip</span> <span class="cs-name">.strip-tiles</span> <span class="cs-name">.strip-caption</span></h2><p>Six 4:3 tiles and one line (three across on phones). Placeholders: a tile with no image shows its <span class="cs-name">data-ph</span>; a tile whose image is missing (404) does the same (the fourth tile points at a file that doesn't exist yet).</p></div>
+  <div class="strip">
+    <ul class="strip-tiles" aria-hidden="true">
+      <li class="ill"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></li>
+      <li class="ill" data-ph="img/ill/15-electrolysis.webp"></li>
+      <li class="ill"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></li>
+      <li class="ill" data-ph="img/ill/17-compass.webp"><img src="../../img/ill/17-compass.webp" alt="" width="1200" height="900" loading="lazy"></li>
+      <li class="ill" data-ph="img/ill/18-answer-sheet.webp"></li>
+      <li class="ill"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></li>
+    </ul>
+    <p class="strip-caption">For IGCSE, A Level and SAT tutors. In English and Arabic.</p>
+  </div>
+</div></section>
+
+<!-- ============================================================ Section heads -->
+<section class="cs-block" id="heads"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>Section heading · <span class="cs-name">.section</span> <span class="cs-name">.section-head</span> <span class="cs-name">.section-sub</span></h2><p>An H2 and at most one line. No kickers. Centred by default; <span class="cs-name">.section-head--start</span> for carousels, FAQ and step lists. <span class="cs-name">.section</span> gives 112px (72 on phones) above and below; two sections in a row share one gap.</p></div>
+  <div class="section-head" style="margin-block-end:0"><h2 class="h2">What Klaro takes off your plate</h2><p class="section-sub">Live classes, homework and marking, in the same place as your course.</p></div>
+  <div class="section-head section-head--start" style="margin-block-end:0"><h2 class="h2">Built around what you already teach</h2></div>
+</div></section>
+
+<!-- ============================================================ Split card -->
+<section class="cs-block" id="split"><div class="wrap">
+  <div class="cs-head"><h2>Split card ("in action") · <span class="cs-name">.split-card</span> <span class="cs-name">.split-copy</span></h2><p>One white radius-40 card: text on one side, the product on its plate on the other. <span class="cs-name">.split-card--flip</span> swaps them. The recording markup is showcase.md §11.1; the plate here has no illustration yet, so it shows its file name.</p></div>
+  <div class="split-card">
+    <div class="split-copy">
+      <h2 class="h3">Marked against your mark scheme</h2>
+      <p>Every answer is marked question by question against the scheme you upload. Feedback works best when it says how the student did and what to do next (<a href="#split">Hattie and Timperley, 2007</a>).</p>
+      <a class="tlink" href="#split">About marking <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <figure class="rec">
+      <div class="plate" data-ph="img/plates/P4-answer-scripts.webp">
+        <div class="device device--browser">
+          <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+          <div class="device-screen rec-screen" data-nosnippet><video muted playsinline preload="none" poster="../../media/marking-poster.jpg" aria-label="A recording of Klaro on a sample course: the tutor's marking queue"></video></div>
+        </div>
+      </div>
+      <div class="show-under"><ol class="rec-cues"><li>Every paper handed in waits here, one card per paper.</li><li>Each answer comes back marked.</li><li>Each student's mark adds up as you go.</li></ol></div>
+      <figcaption class="caption"><b>Sample course.</b> The marking queue, then one student's paper, marked.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<!-- ============================================================ Stack -->
+<section class="cs-block" id="stack"><div class="wrap">
+  <div class="cs-head"><h2>Stacked feature cards · <span class="cs-name">.stack</span> <span class="cs-name">.stack-card</span> <span class="cs-name">.stack-copy</span> <span class="cs-name">.stack-media</span></h2><p>Product pages, three cards. On desktop each sticks 16px under the one before and the covered card settles back to 96%. A plain stack on phones and with reduced motion. The middle card shows a phone frame waiting for a phone-layout capture.</p></div>
+  <div class="stack">
+    <article class="stack-card">
+      <div class="stack-copy">
+        <h3 class="h3">From the book to the lecture, and back</h3>
+        <p>Tap a passage and the lecture plays the moment it's explained. Each clip opens the book at the part it explains.</p>
+        <a class="tlink" href="#stack">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="stack-media">
+        <div class="plate" data-ph="img/plates/P5-window-dusk.webp">
+          <div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen"><img src="../../img/study-0.png" alt="Klaro's study view on a sample course" width="1440" height="900" loading="lazy"></div></div>
+        </div>
+      </figure>
+    </article>
+    <article class="stack-card">
+      <div class="stack-copy">
+        <h3 class="h3">Revise in minis</h3>
+        <p>One idea at a time: the moment your tutor explains it, then quick checks from real past papers.</p>
+        <a class="tlink" href="#stack">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="stack-media">
+        <div class="plate" data-ph="img/plates/P2-kitchen-table.webp">
+          <div class="device device--phone"><div class="device-body"><div class="device-screen"><div class="ph" data-ph="media/stills/minis-1.webp · phone capture"></div></div></div></div>
+        </div>
+      </figure>
+    </article>
+    <article class="stack-card">
+      <div class="stack-copy">
+        <h3 class="h3">You have the last word</h3>
+        <p>Change any mark, with a reason, before a result reaches a student.</p>
+        <a class="tlink" href="#stack">About marking <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+      <figure class="stack-media">
+        <div class="plate" data-ph="img/plates/P4-answer-scripts.webp">
+          <div class="device device--tablet"><div class="device-body"><div class="device-screen"><img src="../../media/marking-poster.jpg" alt="Klaro's marking view on a sample course" width="1440" height="900" loading="lazy"></div></div></div>
+        </div>
+      </figure>
+    </article>
+  </div>
+</div></section>
+
+<!-- ============================================================ Devices and plates -->
+<section class="cs-block" id="devices"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>Devices and plates · <span class="cs-name">.device--browser</span> <span class="cs-name">.device--phone</span> <span class="cs-name">.device--tablet</span> <span class="cs-name">.plate</span></h2><p>CSS-drawn frames, no brand; they scale with their width. A phone frame only ever holds the app's own phone layout. A plate is a wide illustrated scene with the device at its inline end; <span class="cs-name">.plate--center</span>, <span class="cs-name">.plate--bleed</span>. The last plate points at a file that doesn't exist yet, so it shows its name.</p></div>
+  <div class="cs-grid3">
+    <div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen"><img src="../../img/study-0.png" alt="Klaro's study view on a sample course" width="1440" height="900" loading="lazy"></div></div>
+    <div class="device device--tablet"><div class="device-body"><div class="device-screen"><img src="../../media/marking-poster.jpg" alt="Klaro's marking view on a sample course" width="1440" height="900" loading="lazy"></div></div></div>
+    <div class="device device--phone" style="--device-w:200px;margin-inline:auto"><div class="device-body"><div class="device-screen"><div class="ph" data-ph="phone-layout capture"></div></div></div></div>
+  </div>
+  <div class="cs-grid2">
+    <div class="plate plate--center" data-ph="img/plates/P1-tutor-desk.webp"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen"><img src="../../media/lives-poster.jpg" alt="Klaro's teaching calendar on a sample course" width="1440" height="900" loading="lazy"></div></div></div>
+    <div class="plate plate--bleed" data-ph="img/plates/P3-classroom.webp"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen"><img src="../../media/quiz-poster.jpg" alt="Klaro's quiz assistant on a sample course" width="1440" height="900" loading="lazy"></div></div></div>
+    <div class="plate" data-ph="img/plates/P2-kitchen-table.webp" style="--plate-ar: 4 / 3"><div class="device device--phone"><div class="device-body"><div class="device-screen"><div class="ph" data-ph="phone capture"></div></div></div></div></div>
+    <div class="plate" data-ph="img/plates/P1-tutor-desk.webp"><img class="plate-img" src="../../img/plates/P1-tutor-desk.webp" alt="" width="2400" height="1000" loading="lazy"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen"><img src="../../media/lives-poster.jpg" alt="Klaro's teaching calendar on a sample course" width="1440" height="900" loading="lazy"></div></div></div>
+  </div>
+</div></section>
+
+<!-- ============================================================ Showcase frame -->
+<section class="cs-block" id="showcase"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>The real app · <span class="cs-name">.show</span> <span class="cs-name">.rec</span> <span class="cs-name">.show-under</span> <span class="cs-name">.show-steps</span> <span class="cs-name">.rec-cues</span> <span class="cs-name">.caption</span></h2><p>The visuals of showcase.md §11.1 (the driver styles nothing). Static here: a live frame's poster with the visitor's-turn hint drawn on (<span class="cs-name">.show-hint.is-on</span>, <span class="cs-name">.show-ring</span>, <span class="cs-name">.show-bubble</span>), the "Try it full screen" and Replay pills; and a recording with the Play button it gets with reduced motion (<span class="cs-name">.rec-play</span>). The caption track shows one step at a time (the <span class="cs-name">li.is-on</span>, or the first).</p></div>
+  <div class="cs-grid2">
+    <figure class="show is-ready">
+      <div class="device device--browser">
+        <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+        <div class="device-screen show-screen" data-nosnippet><img src="../../img/study-0.png" alt="Klaro's study view on a sample Biology course" width="1440" height="900" loading="lazy">
+          <div class="show-hint is-on" style="transform:translate(70px,150px)" aria-hidden="true"><span class="show-ring"></span><span class="show-bubble">Your turn. Tap any part of the book.</span></div>
+        </div>
+      </div>
+      <div class="show-under">
+        <ol class="show-steps"><li>A student taps a passage in your book.</li><li class="is-on">Your turn. Tap any part of the book.</li></ol>
+        <div class="show-actions"><button class="btn btn-primary btn-sm show-try" type="button"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</button><button class="btn btn-secondary btn-sm show-replay" type="button"><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+      </div>
+      <figcaption class="caption"><b>Sample course.</b> A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
+    </figure>
+    <figure class="rec">
+      <div class="device device--browser">
+        <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+        <div class="device-screen rec-screen" data-nosnippet><video muted playsinline preload="none" poster="../../media/quiz-poster.jpg" aria-label="A recording of Klaro on a sample course: asking for a quiz in plain words"></video><button class="rec-play" type="button" aria-label="Play the recording"><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button></div>
+      </div>
+      <div class="show-under"><ol class="rec-cues"><li>Tell the quiz assistant what you need.</li><li>Check it, then publish and assign it.</li></ol></div>
+      <figcaption class="caption"><b>Sample course.</b> Asking for a quiz in plain words.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<!-- ============================================================ Sticky step list -->
+<section class="cs-block" id="steps"><div class="wrap">
+  <div class="cs-head"><h2>Sticky step list · <span class="cs-name">.steps-sticky</span> <span class="cs-name">.steps-panel</span> <span class="cs-name">.steps-copy</span></h2><p>The second section of the two homes. Desktop: site.js turns the panels' titles into a list pinned on the inline start; the step whose recording crosses the middle of the screen opens, and its bar fills as the recording plays (playing is the driver's job). Phones and reduced motion: a plain stack.</p></div>
+  <div class="section-head"><h2 class="h2">What Klaro takes off your plate</h2><p class="section-sub">Live classes, homework and marking, in the same place as your course.</p></div>
+  <div class="steps-sticky" aria-label="What Klaro takes off your plate">
+    <div class="steps-panels">
+      <article class="steps-panel" id="step-lives">
+        <div class="steps-copy"><h3 class="h3">Teach live from your schedule</h3><p>Schedule a class and Klaro sets up the meeting. Students join from Klaro, and joining marks them present.</p><a class="tlink" href="#steps">About live sessions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <figure class="rec">
+          <div class="plate" data-ph="img/plates/P1-tutor-desk.webp"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen rec-screen" data-nosnippet><video muted playsinline preload="none" poster="../../media/lives-poster.jpg" aria-label="A recording of Klaro on a sample course: the tutor's teaching calendar"></video></div></div></div>
+          <figcaption class="caption"><b>Sample course.</b> Your teaching calendar: classes, quizzes and homework in one place.</figcaption>
+        </figure>
+      </article>
+      <article class="steps-panel" id="step-quiz">
+        <div class="steps-copy"><h3 class="h3">Ask for homework in plain words</h3><p>Klaro builds it from real past-paper questions in your course. You check it before you assign it.</p><a class="tlink" href="#steps">About quizzes and homework <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <figure class="rec">
+          <div class="plate" data-ph="img/plates/P3-classroom.webp"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen rec-screen" data-nosnippet><video muted playsinline preload="none" poster="../../media/quiz-poster.jpg" aria-label="A recording of Klaro on a sample course: the quiz assistant"></video></div></div></div>
+          <figcaption class="caption"><b>Sample course.</b> Asking for a quiz in plain words.</figcaption>
+        </figure>
+      </article>
+      <article class="steps-panel" id="step-marking">
+        <div class="steps-copy"><h3 class="h3">Papers come back marked</h3><p>Upload the scanned papers with your mark scheme. Every answer is marked question by question, and you check any mark before results go out.</p><a class="tlink" href="#steps">About marking <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <figure class="rec">
+          <div class="plate" data-ph="img/plates/P4-answer-scripts.webp"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen rec-screen" data-nosnippet><video muted playsinline preload="none" poster="../../media/marking-poster.jpg" aria-label="A recording of Klaro on a sample course: the marking queue"></video></div></div></div>
+          <figcaption class="caption"><b>Sample course.</b> The marking queue, then one paper, marked.</figcaption>
+        </figure>
+      </article>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================================================ Carousel -->
+<div class="cs-block" style="padding-block-end:0"><div class="wrap cs-head" style="margin-block-end:0"><h2>Illustrated cards and carousel · <span class="cs-name">.carousel</span> <span class="cs-name">.icard</span> <span class="cs-name">.icard-grid</span></h2><p>SchoolAI's "There's a Space for that": white card, a 1:1 illustration, a title, one line; the whole card is a link. The track starts at the container edge and runs off the inline end. Arrows (hidden until JavaScript runs), swipe, arrow keys, Home and End; it never moves by itself. On the hub the same cards sit in <span class="cs-name">.icard-grid</span>.</p></div></div>
+<section class="section carousel" id="carousel">
+  <div class="wrap carousel-head">
+    <div class="section-head section-head--start"><h2 class="h2">Built around what you already teach</h2></div>
+    <div class="carousel-nav" hidden>
+      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+  <ul class="carousel-track" role="list">
+    <li class="carousel-item"><a class="icard" href="#carousel"><div class="ill"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">Course builder</span><span class="icard-line">Upload what you already teach from. Set the order.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="#carousel"><div class="ill"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your tutor's lecture, open at the page it explains.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="#carousel"><div class="ill" data-ph="img/ill/05-lamp-laptop.webp"></div><span class="icard-body"><span class="icard-title">Live sessions</span><span class="icard-line">Schedule a class. Your students join from Klaro.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="#carousel"><div class="ill"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">Quizzes and homework</span><span class="icard-line">Ask in plain words. Built from real past-paper questions.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="#carousel"><div class="ill" data-ph="img/ill/07-red-pen.webp"></div><span class="icard-body"><span class="icard-title">Marking</span><span class="icard-line">Answers marked against your scheme. You have the last word.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="#carousel"><div class="ill"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">For your students</span><span class="icard-line">Your lectures, where they study.</span></span></a></li>
+  </ul>
+</section>
+
+<!-- ============================================================ Band -->
+<section class="cs-block" id="band"><div class="wrap">
+  <div class="cs-head"><h2>Pale band · <span class="cs-name">.band</span> <span class="cs-name">.band-copy</span></h2><p>At most one per page (the parents' note on <span class="cs-name">/students/</span>, or research).</p></div>
+  <div class="band">
+    <div class="ill"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></div>
+    <div class="band-copy"><h2 class="h2">For parents</h2><p>If they're on their phone anyway, make it count. Minis turns phone time into short revision from their own tutor's lectures.</p></div>
+  </div>
+</div></section>
+
+<!-- ============================================================ Research cards -->
+<section class="cs-block" id="research"><div class="wrap">
+  <div class="cs-head"><h2>Research cards · <span class="cs-name">.rcards</span> <span class="cs-name">.rcard</span> <span class="cs-name">.rcard-source</span> <span class="cs-name">.rcard-title</span> <span class="cs-name">.rcard-in</span></h2><p>Source line, a title, two lines, and where it shows in Klaro.</p></div>
+  <div class="rcards">
+    <article class="rcard"><div class="ill"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></div><div class="rcard-body"><p class="rcard-source">Learning and Instruction, 2006</p><h3 class="rcard-title">Keep the source next to the explanation</h3><p>Students learn more when the words and the picture they explain sit together, not apart (Ginns, 2006).</p><p class="rcard-in">In Klaro: the lecture opens at its book page.</p></div></article>
+    <article class="rcard"><div class="ill"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></div><div class="rcard-body"><p class="rcard-source">Psychological Science, 2006</p><h3 class="rcard-title">Testing beats rereading</h3><p>Answering practice questions helped students remember a week later better than reading again (Roediger and Karpicke, 2006).</p><p class="rcard-in">In Klaro: real past-paper questions after each lecture.</p></div></article>
+    <article class="rcard"><div class="ill" data-ph="img/ill/09-phone-tea.webp"></div><div class="rcard-body"><p class="rcard-source">Review of Educational Research, 2007</p><h3 class="rcard-title">Feedback on how you did and what's next</h3><p>Feedback works when it says where the student is going, how they're doing and what to do next (Hattie and Timperley, 2007).</p><p class="rcard-in">In Klaro: a wrong answer opens where it was explained.</p></div></article>
+  </div>
+</div></section>
+
+<!-- ============================================================ Deep panel -->
+<section class="cs-block" id="panel"><div class="wrap">
+  <div class="cs-head"><h2>The deep panel · <span class="cs-name">.panel</span> <span class="cs-name">.panel-sub</span> <span class="cs-name">.panel-grid</span> <span class="cs-name">.panel-item</span></h2><p>The motto as a promise, in SchoolAI's "Built on trust" slot. One per page; the same panel on every tutor page (and the students' version on student pages).</p></div>
+  <div class="panel">
+    <div class="ill panel-ill"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></div>
+    <h2 class="h2">We don't make content. We connect yours.</h2>
+    <p class="panel-sub">Your lectures, your book and real past papers, linked to each other. Nothing in your course is made up.</p>
+    <ul class="panel-grid">
+      <li class="panel-item"><h3 class="panel-item-title">Your own lectures</h3><p>Students learn from your recordings, in the order you set.</p></li>
+      <li class="panel-item"><h3 class="panel-item-title">Real past papers</h3><p>Every question comes from a real exam paper, and says which.</p></li>
+      <li class="panel-item"><h3 class="panel-item-title">Checked before it's published</h3><p>The Klaro team checks every course before your students see it.</p></li>
+      <li class="panel-item"><h3 class="panel-item-title">You have the last word</h3><p>Change any mark before a result reaches a student.</p></li>
+    </ul>
+    <a class="btn btn-on-deep" href="#panel">How we use research</a>
+  </div>
+</div></section>
+
+<!-- ============================================================ FAQ -->
+<section class="cs-block" id="faq"><div class="wrap">
+  <div class="cs-head"><h2>FAQ · <span class="cs-name">.faq</span> <span class="cs-name">.faq-item</span> <span class="cs-name">.faq-q</span> <span class="cs-name">.answer</span></h2><p>klaro.js opens one answer at a time; tools/site.py reads the same markup for the FAQPage JSON-LD.</p></div>
+  <div class="faq">
+    <div class="faq-head"><h2 class="h2">Questions tutors ask</h2></div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Does Klaro make up lectures or questions?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>No. Klaro connects what you upload: your lectures, your book and your past papers. Every question comes from a real exam paper.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How do my students join?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Each course has a join code. Share it, and your students join once they have an account.</p></div></div></div>
+      <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I use Klaro in Arabic?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. The site and the app are in English and Arabic; your course material stays in its own language.</p></div></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============================================================ Closing -->
+<div class="cs-block" id="closing" style="padding-block-end:0"><div class="wrap cs-head" style="margin-block-end:0"><h2>Closing call · <span class="cs-name">.closing</span> <span class="cs-name">.closing-tiles</span> <span class="cs-name">.closing-tile</span> <span class="cs-name">.closing-copy</span></h2><p>Up to eight tiles, placed by order, four a side, drifting a little with the scroll. Under 1240px the inner four hide; on phones the first four sit in a row above the words.</p></div></div>
+<section class="closing">
+  <ul class="closing-tiles" aria-hidden="true">
+    <li class="ill closing-tile"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></li>
+    <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"></li>
+    <li class="ill closing-tile"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></li>
+    <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"></li>
+    <li class="ill closing-tile"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></li>
+    <li class="ill closing-tile" data-ph="img/ill/19-fountain-pen.webp"></li>
+    <li class="ill closing-tile" data-ph="img/ill/20-night-window.webp"></li>
+    <li class="ill closing-tile"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></li>
+  </ul>
+  <div class="closing-copy">
+    <h2 class="h2">Bring your course to Klaro.</h2>
+    <p class="lead">Klaro is in beta. Free to try.</p>
+    <div class="hero-actions"><a class="btn btn-primary btn-lg" href="#closing">Start your course</a><a class="btn btn-secondary btn-lg" href="#closing">For students and parents</a></div>
+  </div>
+</section>
+
+<!-- ============================================================ Arabic -->
+<div lang="ar" dir="rtl" id="arabic">
+  <div class="cs-block"><div class="wrap cs-head" style="margin-block-end:0"><h2 lang="en" dir="ltr">Arabic (right to left) · the header partial, then the components in Arabic</h2><p lang="en" dir="ltr" style="text-align:left">Everything mirrors through logical properties: the menu, the carousel (it runs off the left; the arrows and arrow keys swap), the opening (the tiles and the settle come from the other side), the plates (flipped), the underline (spark on the left). Readex Pro, no tracking, longer line heights. The browser frame keeps its dots on the left.</p></div></div>
+  <div class="cs-ar-chrome" id="cs-header-ar"></div>
+
+  <section class="opening">
+    <div class="wrap opening-grid">
+      <div class="opening-copy">
+        <nav class="chip-switch" aria-label="Klaro لـ"><span class="chip-switch-label">Klaro…</span><a href="#arabic" aria-current="page">للمدرّسين</a><a href="#arabic">للطلاب وأولياء الأمور</a></nav>
+        <h2 class="h1">اقضِ وقتك في <span class="uline">التدريس</span>، ويربط Klaro الباقي.</h2>
+        <p class="lead">ارفع كتبك وملاحظاتك وامتحانات السنوات السابقة وفيديوهاتك. يقسّم Klaro كل واحد منها إلى أصغر فكرة، ويربطها في منهج واحد مترابط.</p>
+        <div class="hero-actions"><a class="btn btn-primary btn-lg" href="#arabic">ابدأ كورسك</a><a class="btn btn-secondary btn-lg" href="#arabic">جرّبه بنفسك</a></div>
+        <span class="hero-note"><svg class="i spark" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><use href="#spark"/></svg>Klaro في مرحلة تجريبية. جرّبه مجانًا.</span>
+      </div>
+      <div class="opening-track">
+        <div class="opening-stage">
+          <div class="opening-collage" aria-hidden="true">
+            <div class="ill opening-tile"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" decoding="async" loading="lazy"></div>
+            <div class="ill opening-tile"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" decoding="async" loading="lazy"></div>
+            <div class="ill opening-tile"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" decoding="async" loading="lazy"></div>
+          </div>
+          <figure class="show only-wide">
+            <div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen show-screen" data-nosnippet><img src="../../img/study-0.png" alt="شاشة المذاكرة في Klaro على كورس تجريبي" width="1440" height="900" loading="lazy"></div></div>
+            <div class="show-under"><ol class="show-steps"><li>يضغط الطالب على فقرة في كتابك.</li><li>تقفز محاضرتك إلى تلك اللحظة وتشرحها.</li><li>السؤال عن تلك الفقرة أمامه مباشرة.</li><li>دورك. اضغط على أي جزء من الكتاب.</li></ol></div>
+            <figcaption class="caption"><b>كورس تجريبي.</b> كتابك ومحاضرتك وأسئلة امتحاناتك السابقة، مربوطة ببعضها: هذا ما يراه طلابك.</figcaption>
+          </figure>
+          <figure class="rec only-narrow">
+            <div class="device device--phone"><div class="device-body"><div class="device-screen rec-screen" data-nosnippet><div class="ph" data-ph="media/study-hero.mp4"></div></div></div></div>
+            <div class="show-under"><ol class="rec-cues"><li>يضغط الطالب على فقرة في كتابك.</li><li>تقفز محاضرتك إلى تلك اللحظة وتشرحها.</li><li>السؤال عن تلك الفقرة أمامه مباشرة.</li><li>دورك. جرّبه بملء الشاشة.</li></ol></div>
+          </figure>
+        </div>
+        <div class="opening-marks" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-block"><div class="wrap cs-stack">
+    <div class="cs-row">
+      <a class="btn btn-primary btn-lg" href="#arabic">ابدأ التعلّم</a>
+      <a class="btn btn-secondary btn-lg" href="#arabic">لديك كود انضمام؟</a>
+      <a class="btn btn-soft btn-sm" href="#arabic">تسجيل الدخول</a>
+      <a class="tlink" href="#arabic">كيف يستخدم Klaro الأبحاث <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <span class="chip"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg>التصحيح <span class="chip-for">للمدرّسين</span></span>
+    </div>
+    <div class="section-head"><h2 class="h2">ما يرفعه Klaro عن كاهلك</h2><p class="section-sub">الحصص المباشرة والواجبات والتصحيح، في المكان نفسه الذي فيه كورسك.</p></div>
+    <div class="stack">
+      <article class="stack-card">
+        <div class="stack-copy"><h3 class="h3">الأوراق تعود مصحَّحة</h3><p>ارفع الأوراق الممسوحة ضوئيًا مع نموذج إجابتك. تُصحَّح كل إجابة سؤالًا بسؤال، وتراجع أي درجة قبل إرسال النتائج.</p><a class="tlink" href="#arabic">عن التصحيح <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <figure class="stack-media"><div class="plate" data-ph="img/plates/P4-answer-scripts.webp"><div class="device device--browser"><div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div><div class="device-screen"><img src="../../media/marking-poster.jpg" alt="شاشة التصحيح في Klaro على كورس تجريبي" width="1440" height="900" loading="lazy"></div></div></div></figure>
+      </article>
+      <article class="stack-card">
+        <div class="stack-copy"><h3 class="h3">راجع بالميني</h3><p>فكرة واحدة في كل مرة: اللحظة التي يشرحها فيها مدرّسك، ثم أسئلة سريعة من امتحانات سابقة حقيقية.</p><a class="tlink" href="#arabic">عن الميني <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+        <figure class="stack-media"><div class="plate" data-ph="img/plates/P2-kitchen-table.webp"><div class="device device--phone"><div class="device-body"><div class="device-screen"><div class="ph" data-ph="phone capture"></div></div></div></div></div></figure>
+      </article>
+    </div>
+  </div></section>
+
+  <section class="section carousel" style="padding-block-start:0">
+    <div class="wrap carousel-head">
+      <div class="section-head section-head--start"><h2 class="h2">مبنيّ حول ما تدرّسه بالفعل</h2></div>
+      <div class="carousel-nav" hidden>
+        <button class="carousel-btn" type="button" data-prev aria-label="السابق"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+        <button class="carousel-btn" type="button" data-next aria-label="التالي"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+    <ul class="carousel-track" role="list">
+      <li class="carousel-item"><a class="icard" href="#arabic"><div class="ill"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">إعداد الكورس</span><span class="icard-line">ارفع ما تدرّس منه بالفعل، ثم رتّب المحاضرات.</span></span></a></li>
+      <li class="carousel-item"><a class="icard" href="#arabic"><div class="ill"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">شاشة المذاكرة</span><span class="icard-line">محاضرة مدرّسك، مفتوحة عند الصفحة التي تشرحها.</span></span></a></li>
+      <li class="carousel-item"><a class="icard" href="#arabic"><div class="ill" data-ph="img/ill/05-lamp-laptop.webp"></div><span class="icard-body"><span class="icard-title">الحصص المباشرة</span><span class="icard-line">جدوِل حصة، وينضم طلابك من Klaro.</span></span></a></li>
+      <li class="carousel-item"><a class="icard" href="#arabic"><div class="ill"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></div><span class="icard-body"><span class="icard-title">الكويزات والواجبات</span><span class="icard-line">اطلبها بكلماتك، من أسئلة امتحانات سابقة حقيقية.</span></span></a></li>
+      <li class="carousel-item"><a class="icard" href="#arabic"><div class="ill" data-ph="img/ill/07-red-pen.webp"></div><span class="icard-body"><span class="icard-title">التصحيح</span><span class="icard-line">تُصحَّح الإجابات وفق نموذج إجابتك، والكلمة الأخيرة لك.</span></span></a></li>
+    </ul>
+  </section>
+
+  <section class="section" style="padding-block-start:0"><div class="wrap">
+    <div class="panel">
+      <h2 class="h2">لا نصنع المحتوى. نربط محتواك.</h2>
+      <p class="panel-sub">محاضراتك وكتابك وامتحانات سابقة حقيقية، مربوطة ببعضها. لا شيء في كورسك مُصطنع.</p>
+      <ul class="panel-grid">
+        <li class="panel-item"><h3 class="panel-item-title">محاضراتك أنت</h3><p>يتعلّم الطلاب من تسجيلاتك، بالترتيب الذي تحدده.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">امتحانات سابقة حقيقية</h3><p>كل سؤال من امتحان حقيقي، ويذكر مصدره.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">يُراجَع قبل نشره</h3><p>يراجع فريق Klaro كل كورس قبل أن يراه طلابك.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">الكلمة الأخيرة لك</h3><p>غيّر أي درجة قبل أن تصل النتيجة إلى الطالب.</p></li>
+      </ul>
+      <a class="btn btn-on-deep" href="#arabic">كيف يستخدم Klaro الأبحاث</a>
+    </div>
+  </div></section>
+
+  <section class="section" style="padding-block-start:0"><div class="wrap">
+    <div class="faq">
+      <div class="faq-head"><h2 class="h2">أسئلة يطرحها المدرّسون</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">هل يختلق Klaro محاضرات أو أسئلة؟<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>لا. يربط Klaro ما ترفعه أنت: محاضراتك وكتابك وامتحانات السنوات السابقة. لا شيء مُصطنع.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">كيف ينضم طلابي؟<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>لكل كورس كود انضمام. شاركه مع طلابك، وينضمون بعد إنشاء حساباتهم.</p></div></div></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="closing" style="padding-block-start:0">
+    <ul class="closing-tiles" aria-hidden="true">
+      <li class="ill closing-tile"><img src="../image-styles/c-1.png" alt="" width="1024" height="1024" loading="lazy"></li>
+      <li class="ill closing-tile" data-ph="img/ill/14-osmosis.webp"></li>
+      <li class="ill closing-tile"><img src="../image-styles/c-2.png" alt="" width="1024" height="1024" loading="lazy"></li>
+      <li class="ill closing-tile" data-ph="img/ill/16-trolley.webp"></li>
+      <li class="ill closing-tile"><img src="../image-styles/c-3.png" alt="" width="1024" height="1024" loading="lazy"></li>
+    </ul>
+    <div class="closing-copy">
+      <h2 class="h2">أحضِر كورسك إلى Klaro.</h2>
+      <p class="lead">Klaro في مرحلة تجريبية. جرّبه مجانًا.</p>
+      <div class="hero-actions"><a class="btn btn-primary btn-lg" href="#arabic">ابدأ كورسك</a><a class="btn btn-secondary btn-lg" href="#arabic">للطلاب وأولياء الأمور</a></div>
+    </div>
+  </section>
+
+  <div class="cs-ar-chrome" id="cs-footer-ar"></div>
+</div>
+
+<!-- ============================================================ Phone width -->
+<section class="cs-block" id="phone"><div class="wrap cs-stack">
+  <div class="cs-head"><h2>At phone width (375px)</h2><p>This same page in two frames: the English components from the top, and the Arabic block. Scroll inside each.</p></div>
+  <div class="cs-phones">
+    <figure><iframe title="The component sheet at 375px, English" data-src="components.html?frame" loading="lazy"></iframe><figcaption>English</figcaption></figure>
+    <figure><iframe title="The component sheet at 375px, Arabic" data-src="components.html?frame&amp;at=arabic" loading="lazy"></iframe><figcaption>Arabic</figcaption></figure>
+  </div>
+</div></section>
+</main>
+
+<div id="cs-footer-en"></div>
+
+<script>
+/* Sheet only. 1) Read the real partials and stamp them as tools/site.py would for the tutors'
+   home one level up ({aud} → the students' home). 2) Then load klaro.js and site.js.
+   3) Stand in for showcase.js in the opening: the caption follows the markers. */
+(function () {
+  var framed = /[?&]frame\b/.test(location.search);
+  if (framed) document.documentElement.classList.add('cs-frame');
+  // In a preview frame, start at a section without a #fragment (a fragment would scroll this page's parent too).
+  var at = (location.search.match(/[?&]at=(\w+)/) || [])[1];
+  if (framed && at) window.addEventListener('load', function () { var el = document.getElementById(at); if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY); });
+  document.querySelectorAll('iframe[data-src]').forEach(function (f) { if (!framed) f.src = f.dataset.src; });
+
+  var R = '../../';
+  var vals = {
+    en: { '{root}': R, '{home}': R, '{twin}': R + 'ar/', '{aud}': R + 'students/', '{home_tutors}': R, '{home_students}': R + 'students/' },
+    ar: { '{root}': R, '{home}': R + 'ar/', '{twin}': R, '{aud}': R + 'ar/students/', '{home_tutors}': R + 'ar/', '{home_students}': R + 'ar/students/' }
+  };
+  function stamp(html, lang) {
+    Object.keys(vals[lang]).forEach(function (k) { html = html.split(k).join(vals[lang][k]); });
+    if (lang === 'ar') html = html.replace(/(id|aria-controls)="(site-menu|menu-products)"/g, '$1="$2-ar"');   // two headers on one page
+    return html;
+  }
+  function get(name) { return fetch(R + 'partials/' + name).then(function (r) { return r.text(); }); }
+  function load(src) { return new Promise(function (ok) { var s = document.createElement('script'); s.src = src; s.onload = ok; document.body.appendChild(s); }); }
+
+  Promise.all(['sprite.svg', 'header.en.html', 'header.ar.html', 'footer.en.html', 'footer.ar.html'].map(get)).then(function (p) {
+    document.getElementById('cs-sprite').innerHTML = p[0];
+    document.getElementById('cs-header-en').outerHTML = stamp(p[1], 'en');
+    document.getElementById('cs-header-ar').innerHTML = stamp(p[2], 'ar');
+    document.getElementById('cs-footer-en').outerHTML = stamp(p[3], 'en');
+    document.getElementById('cs-footer-ar').innerHTML = stamp(p[4], 'ar');
+  }).catch(function () {
+    document.getElementById('cs-header-en').textContent = 'Serve the repository over http (python3 -m http.server) to see the header and footer partials.';
+  }).then(function () { return load(R + 'klaro.js'); }).then(function () { return load(R + 'site.js'); });
+
+  // The opening's caption follows its markers (on the site, showcase.js does this).
+  var openings = document.querySelectorAll('.opening');
+  function steps() {
+    var mid = window.innerHeight / 2;
+    openings.forEach(function (op) {
+      var step = 0;
+      op.querySelectorAll('.opening-marks > i').forEach(function (m, i) { if (m.getBoundingClientRect().top < mid) step = i + 1; });
+      op.querySelectorAll('.show-steps, .rec-cues').forEach(function (list) {
+        Array.prototype.forEach.call(list.children, function (li, i) { li.classList.toggle('is-on', i === Math.max(0, step - 1)); });
+      });
+    });
+  }
+  window.addEventListener('scroll', steps, { passive: true });
+  steps();
+})();
+</script>
+</body>
+</html>

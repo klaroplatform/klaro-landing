@@ -2,165 +2,662 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>Klaro · Spend your time understanding</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Klaro for students and parents: your tutor's explanation</title>
+<meta name="description" content="Study your tutor's own lectures, book and past-paper questions in one place, linked down to the smallest idea. For IGCSE, A Level and SAT.">
+<!-- chrome:meta -->
+<link rel="canonical" href="https://learnklaro.com/students/">
+<meta name="klaro-app" content="https://app.klaroplatform.com">
+<meta name="theme-color" content="#f3f3f1">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Klaro">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://learnklaro.com/students/">
+<meta property="og:title" content="Klaro for students and parents: your tutor's explanation">
+<meta property="og:description" content="Study your tutor's own lectures, book and past-paper questions in one place, linked down to the smallest idea. For IGCSE, A Level and SAT.">
+<meta property="og:image" content="https://learnklaro.com/img/ill/01-connected-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An open course book, a film strip and an exam paper, joined by one gold thread.">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://learnklaro.com/#org",
+   "name": "Klaro",
+   "url": "https://learnklaro.com/",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/apple-touch-icon.png",
+    "width": 180,
+    "height": 180
+   },
+   "description": "Klaro is a study platform for tutors and their students. Tutors upload their own recorded lectures, course book and past papers, and Klaro links them, so students study the lecture, the book and past-paper questions side by side.",
+   "slogan": "We don't make content. We connect yours."
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://learnklaro.com/#website",
+   "url": "https://learnklaro.com/",
+   "name": "Klaro",
+   "inLanguage": [
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://learnklaro.com/#org"
+   }
+  },
+  {
+   "@type": "WebApplication",
+   "@id": "https://learnklaro.com/#app",
+   "name": "Klaro",
+   "url": "https://learnklaro.com/",
+   "applicationCategory": "EducationalApplication",
+   "operatingSystem": "Web browser",
+   "inLanguage": [
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://learnklaro.com/#org"
+   },
+   "featureList": [
+    "Study view: Your tutor's lecture, the course book and real past-paper questions on one screen. Tap a passage and the lecture plays the moment it's explained.",
+    "Practice questions: Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.",
+    "Minis: Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.",
+    "Progress: Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.",
+    "Course builder: Upload your lectures, books and past papers. Klaro connects them: every lecture moment to its book page, every topic to its past-paper questions.",
+    "Live sessions: Schedule a live class and Klaro sets up the Zoom meeting. Students join from Klaro, and the recording lands in your course, cut into clips linked to your book.",
+    "Quizzes and homework: Ask for homework in plain words. Klaro builds it from real past-paper questions in your course, and you check it before it goes to your students.",
+    "Marking: Upload your students' scanned papers with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it."
+   ],
+   "audience": [
+    {
+     "@type": "EducationalAudience",
+     "educationalRole": "student"
+    },
+    {
+     "@type": "EducationalAudience",
+     "educationalRole": "teacher"
+    }
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://learnklaro.com/students/#webpage",
+   "url": "https://learnklaro.com/students/",
+   "name": "Klaro for students and parents: your tutor's explanation",
+   "description": "Study your tutor's own lectures, book and past-paper questions in one place, linked down to the smallest idea. For IGCSE, A Level and SAT.",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://learnklaro.com/img/ill/01-connected-og.jpg",
+    "width": 1200,
+    "height": 630
+   },
+   "dateModified": "2026-10-09",
+   "about": {
+    "@id": "https://learnklaro.com/#app"
+   },
+   "audience": [
+    {
+     "@type": "EducationalAudience",
+     "educationalRole": "student"
+    },
+    {
+     "@type": "EducationalAudience",
+     "educationalRole": "parent"
+    }
+   ],
+   "video": [
+    {
+     "@id": "https://learnklaro.com/students/#video-student-wrong"
+    },
+    {
+     "@id": "https://learnklaro.com/students/#video-student-weak"
+    },
+    {
+     "@id": "https://learnklaro.com/students/#video-student-minis-phone"
+    },
+    {
+     "@id": "https://learnklaro.com/students/#video-student-tutor"
+    }
+   ]
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-wrong",
+   "name": "Got one wrong? See where it was explained.",
+   "thumbnailUrl": "https://learnklaro.com/media/student-wrong-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. A past-paper question answered wrong: the right answer, then where it was explained.",
+   "duration": "PT14S",
+   "contentUrl": "https://learnklaro.com/media/student-wrong.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-weak",
+   "name": "Find your weak spots before the exam does",
+   "thumbnailUrl": "https://learnklaro.com/media/student-weak-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. The end of a practice set: what you missed, each one a tap from its explanation.",
+   "duration": "PT7S",
+   "contentUrl": "https://learnklaro.com/media/student-weak.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-minis-phone",
+   "name": "Revise in minis",
+   "thumbnailUrl": "https://learnklaro.com/media/student-minis-phone-poster.webp",
+   "uploadDate": "2026-10-09",
+   "inLanguage": "en",
+   "description": "Sample course. Minis on a phone: a moment of the tutor's lecture, then three checks from real past papers.",
+   "duration": "PT18S",
+   "contentUrl": "https://learnklaro.com/media/student-minis-phone.mp4"
+  },
+  {
+   "@type": "VideoObject",
+   "@id": "https://learnklaro.com/students/#video-student-tutor",
+   "name": "From a question to the lecture that explains it",
+   "thumbnailUrl": "https://learnklaro.com/media/student-tutor-poster.jpg",
+   "uploadDate": "2026-10-08",
+   "inLanguage": "en",
+   "description": "Sample course. A past-paper question in the study view, and the moment of the lecture that explains it.",
+   "duration": "PT11S",
+   "contentUrl": "https://learnklaro.com/media/student-tutor.mp4"
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://learnklaro.com/students/#faq",
+   "url": "https://learnklaro.com/students/",
+   "inLanguage": "en",
+   "isPartOf": {
+    "@id": "https://learnklaro.com/#website"
+   },
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How do I join a course?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Create your account, then enter the join code your tutor gives you. The course appears on your home page. If your tutor shares a course link instead, you can ask to join, and your tutor lets you in."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is it free?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Klaro is in beta, and it's free to try. Create your account and join your tutor's course with their code."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does Klaro make up questions?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Every question comes from a real past paper and shows which paper it came from. The lectures are your tutor's own and the book is your tutor's book; Klaro links them to each other."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does it work on a phone?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Klaro works in the browser on a phone, a tablet or a computer, with nothing to install."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I use Klaro in Arabic?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Klaro is built for English and Arabic, and the whole layout turns right to left in Arabic. Your course material stays in the language your tutor wrote it in."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap">
-<style>
-:root{--ink:#171717;--soft:#66665f;--muted:#6b6a6f;--line:#ecece8;--line-2:#deded9;--page:#f3f3f1;--purple:#9254e0;--purple-dark:#7538bb;--tint:#f1e8fb}
-*{box-sizing:border-box}
-body{margin:0;font-family:Manrope,system-ui,sans-serif;font-size:15px;line-height:1.5;color:var(--ink);background:var(--page)}
-.btn{height:46px;display:inline-flex;align-items:center;gap:8px;padding:0 20px;border-radius:9px;font:inherit;font-weight:600;text-decoration:none;white-space:nowrap;cursor:pointer;border:0}
-.btn-primary{background:var(--purple);color:#fff}.btn-primary:hover{background:var(--purple-dark)}
-.btn-ghost{background:#fff;color:var(--ink);border:1px solid var(--line-2)}
-.btn-sm{height:40px;padding:0 16px}
-header{position:sticky;top:0;z-index:5;height:69px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(16px,3vw,40px);background:rgba(243,243,241,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-header nav{display:flex;gap:8px}
-
-.hero{padding:clamp(28px,4vw,56px) clamp(16px,3vw,40px) 72px}
-.hero-inner{max-width:1520px;margin:0 auto;display:flex;align-items:center;gap:clamp(24px,3.5vw,56px)}
-.copy{flex:0 0 min(380px,30%);display:flex;flex-direction:column;gap:18px}
-h1{margin:0;font-size:clamp(36px,3.7vw,56px);line-height:1.02;letter-spacing:-.045em;font-weight:600}
-h1 span{color:var(--purple)}
-.lead{margin:0;font-size:17px;line-height:1.55;color:var(--soft)}
-.ctas{display:flex;flex-wrap:wrap;gap:10px}
-/* The kit's purple Tag (components/ui/tags.tsx), at hero size, with the brand mark's spark. */
-.beta{display:inline-flex;align-self:flex-start;align-items:center;gap:7px;height:30px;padding:0 13px 0 10px;border-radius:999px;background:var(--tint);color:var(--purple-dark);font-size:13px;font-weight:600;line-height:1;white-space:nowrap}
-.beta svg{flex:none}
-
-.frame{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:14px}
-.screen{position:relative;width:100%;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#f3f3f1 url(../img/study-0.png) top left/100% auto no-repeat;box-shadow:0 30px 60px rgba(23,23,23,.12);transition:box-shadow .4s}
-.screen.free{box-shadow:0 0 0 3px var(--purple),0 30px 60px rgba(23,23,23,.14)}
-.cam{position:absolute;top:0;left:0;width:1440px;height:900px;transform-origin:0 0;will-change:transform}
-.cam iframe{display:block;width:1440px;height:900px;border:0;pointer-events:none;opacity:0;transition:opacity .4s}
-.cam iframe.ready{opacity:1}
-.screen.free .cam iframe{pointer-events:auto}
-.cursor{position:absolute;top:0;left:0;z-index:2;pointer-events:none;opacity:0;will-change:transform,opacity}
-.cursor .tap{position:absolute;left:-18px;top:-18px;width:36px;height:36px;border-radius:50%;background:rgba(146,84,224,.35);opacity:0}
-.hint{position:absolute;top:0;left:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .35s}
-.hint.on{opacity:1}
-.hint .ring{position:absolute;left:-22px;top:-22px;width:44px;height:44px;border-radius:50%;border:3px solid var(--purple);animation:ring 1.6s ease-out infinite}
-@keyframes ring{0%{transform:scale(.5);opacity:1}100%{transform:scale(1.6);opacity:0}}
-.hint .bubble{position:absolute;left:38px;top:-24px;width:max-content;max-width:260px;padding:10px 14px;border-radius:12px;background:var(--ink);color:#fff;font-weight:600;font-size:15px;line-height:1.35;box-shadow:0 10px 24px rgba(23,23,23,.18)}
-.hint .bubble::before{content:"";position:absolute;left:-6px;top:18px;width:12px;height:12px;background:var(--ink);transform:rotate(45deg)}
-
-.under{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:46px}
-.caption{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em;transition:opacity .35s}
-.under .actions{display:flex;gap:8px}
-.replay[hidden],.tryit[hidden]{display:none}
-
-.end{padding:24px clamp(16px,3vw,40px) 96px}
-.end-card{max-width:1240px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;padding:64px 24px;background:#fff;border:1px solid var(--line);border-radius:24px}
-.end-card h2{margin:0;font-size:clamp(30px,3.4vw,44px);letter-spacing:-.045em;font-weight:600}
-
-/* Examples: each recording plays by itself once it is on screen (examples.js). */
-.ex .stage{padding:clamp(40px,5vw,72px) clamp(16px,3vw,40px)}
-.ex .row{width:100%;max-width:1520px;margin:0 auto;display:flex;align-items:center;gap:clamp(24px,3.5vw,56px)}
-.eyebrow{font-size:13px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--purple-dark)}
-.ex h2{margin:0;font-size:clamp(28px,2.8vw,42px);line-height:1.08;letter-spacing:-.045em;font-weight:600}
-.note{margin:0;font-size:16px;color:var(--soft)}
-.note b{color:var(--ink)}
-.steps{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:4px}
-.steps li{position:relative;padding:9px 0 11px;font-size:16px;font-weight:600;color:var(--muted);transition:color .3s}
-.steps li.on{color:var(--ink)}
-.steps li::before,.steps li i{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--line)}
-.steps li i{background:var(--purple);transform-origin:0 50%;transform:scaleX(0)}
-.ex .screen{aspect-ratio:1440/900;background:#f3f3f1}
-.ex video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-
-/* Phone: the sample workspace full screen, in the app's own phone layout. */
-.sheet{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;background:var(--page)}
-.sheet[hidden]{display:none}
-.sheet-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:#fff;font-weight:600}
-.sheet-bar span{font-size:14px;color:var(--soft)}
-.sheet iframe{flex:1;width:100%;border:0}
-
-@media (max-width:900px){
-  .hero-inner{flex-direction:column;align-items:stretch;gap:24px}
-  .copy{flex:none;width:100%}
-  h1{font-size:36px}
-  .caption{font-size:16px}
-  .under{flex-wrap:wrap}
-  .ex .stage{padding:32px 16px}
-  .ex .row{flex-direction:column;align-items:stretch;gap:16px}
-  .ex h2{font-size:24px}
-  .steps li{padding:5px 0 7px;font-size:14px}
-}
-@media (prefers-reduced-motion:reduce){
-  .hint .ring{animation:none}
-}
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap">
+<!-- /chrome:meta -->
+<link rel="stylesheet" href="../klaro.css">
+<link rel="stylesheet" href="../site.css">
 </head>
-<body>
-<header>
-  <a href="#top" aria-label="Klaro home"><img src="../brand/klaro-wordmark.svg" alt="Klaro" width="96" height="29"></a>
-  <nav>
-    <a class="btn btn-ghost btn-sm" href="../">For tutors</a>
-    <a class="btn btn-ghost btn-sm" href="https://app.klaroplatform.com/sign-in">Sign in</a>
-    <a class="btn btn-primary btn-sm" href="https://app.klaroplatform.com/sign-up">Try it free</a>
-  </nav>
+<body data-site="../" data-default-as="student">
+<!-- chrome:sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <path id="spark" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/>
+  <symbol id="i-study" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 4v16M15 4v16"/></g></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></g></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M7 16v-5M12 16V7M17 16v-8"/></g></symbol>
+  <symbol id="i-market" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18v11H3zM9 20v-6h6v6"/></g></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></g></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/></g></symbol>
+  <symbol id="i-video" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="14" rx="2"/><path d="m16 10 5-3v10l-5-3"/></g></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5z"/></g></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></g></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></g></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></g></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></g></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></g></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M7.5 12h.01M12 12h.01M16.5 12h.01"/></g></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></g></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></g></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></g></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.7 2.2-4.8.3 1.6 1.1 2.6 2.3 3.1C11 9 11 6 12 3z"/></g></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12 20 4l-6 16-3-7z"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8a6 6 0 0 1 0 8.4M7.8 16.2a6 6 0 0 1 0-8.4M19.1 4.9a10 10 0 0 1 0 14.2M4.9 19.1a10 10 0 0 1 0-14.2"/></g></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></g></symbol>
+  <symbol id="i-grip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
+  <symbol id="i-minis" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3"/><path d="M10.5 9.3v5.4l4.3-2.7z"/></g></symbol>
+  <symbol id="i-quiz" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M8.5 10.5l1.5 1.5 2.5-2.5M14.5 11h1.5M8.5 16h7"/></g></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"/></g></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></g></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.53.85l10.4-6.5a1 1 0 0 0 0-1.7L9.53 4.65A1 1 0 0 0 8 5.5Z"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></g></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></g></symbol>
+</defs></svg>
+<!-- /chrome:sprite -->
+<!-- chrome:header -->
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="topbar" data-topbar>
+  <div class="wrap topbar-row">
+    <a class="brand" href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+    <nav class="nav" aria-label="Main">
+      <button class="nav-link" type="button" aria-expanded="false" aria-controls="site-menu" data-menu="products">Products <svg class="i chev" aria-hidden="true"><use href="#i-down"/></svg></button>
+      <a class="nav-link nav-aud" href="../"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
+      <a class="nav-link" href="../research/">Research</a>
+      <a class="nav-link" href="../try/">Live demo</a>
+    </nav>
+    <span class="topbar-space"></span>
+    <!-- arabic-later: <a class="nav-link nav-lang" href="../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a> -->
+    <button class="btn btn-secondary btn-sm topbar-wide" type="button" data-joincode-open>Join code</button>
+    <a class="btn btn-soft btn-sm topbar-wide" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
+    <a class="btn btn-primary btn-sm topbar-wide" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Try it free</a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Menu" data-menu="sheet"><svg class="i menu-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="i menu-close" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="mega-wrap">
+    <div class="mega" id="site-menu" data-view="main" hidden>
+      <nav class="mega-main" aria-label="Menu">
+        <button class="mega-row" type="button" aria-expanded="false" aria-controls="menu-products" data-drill>Products <span class="chev" aria-hidden="true">›</span></button>
+        <a class="mega-row nav-aud" href="../"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
+        <a class="mega-row" href="../research/">Research</a>
+        <a class="mega-row" href="../try/">Live demo</a>
+      </nav>
+      <nav class="mega-products" id="menu-products" aria-label="Products">
+        <button class="mega-back" type="button" data-drill-back><span class="chev" aria-hidden="true">‹</span> Menu</button>
+        <div class="mega-cols">
+          <div class="mega-col">
+            <a class="mega-head" href="../">For tutors</a>
+            <a class="mega-item" href="../products/course-builder/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg></span><span class="mega-text"><b>Course builder</b><small>Upload what you already teach from. Set the order.</small></span></a>
+            <a class="mega-item" href="../products/live-sessions/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-live"/></svg></span><span class="mega-text"><b>Live sessions</b><small>Schedule a class. Your students join from Klaro.</small></span></a>
+            <a class="mega-item" href="../products/quizzes/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-quiz"/></svg></span><span class="mega-text"><b>Quizzes and homework</b><small>Ask in plain words. Built from real past-paper questions.</small></span></a>
+            <a class="mega-item" href="../products/marking/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg></span><span class="mega-text"><b>Marking</b><small>Answers marked against your scheme. You have the last word.</small></span></a>
+          </div>
+          <div class="mega-col">
+            <a class="mega-head" href="./">For students and parents</a>
+            <a class="mega-item" href="../products/study-view/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-study"/></svg></span><span class="mega-text"><b>Study view</b><small>Your tutor's lecture, open at the page it explains.</small></span></a>
+            <a class="mega-item" href="../products/practice-questions/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span><span class="mega-text"><b>Practice questions</b><small>Real past-paper questions, checked as you answer.</small></span></a>
+            <a class="mega-item" href="../products/minis/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-minis"/></svg></span><span class="mega-text"><b>Minis</b><small>Your weak spots, one short lecture moment a day.</small></span></a>
+            <a class="mega-item" href="../products/progress/"><span class="mega-icon"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg></span><span class="mega-text"><b>Progress</b><small>Lectures finished, quiz marks and your streak.</small></span></a>
+          </div>
+        </div>
+        <a class="mega-all" href="../products/">All products <span class="chev" aria-hidden="true">›</span></a>
+      </nav>
+      <div class="mega-foot">
+        <button class="btn btn-secondary btn-lg btn-block" type="button" data-joincode><svg class="i" aria-hidden="true"><use href="#i-code"/></svg>Have a join code?</button>
+        <form class="joinform" data-joinform hidden><input name="code" placeholder="ABCD-EFGH-JKLM-NPQR" aria-label="Join code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="19"><button class="btn btn-primary" type="submit">Join</button></form>
+        <a class="btn btn-soft btn-lg btn-block mega-sheet-only" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a>
+        <a class="btn btn-primary btn-lg btn-block mega-sheet-only" data-signup href="https://app.klaroplatform.com/sign-up?as=student">Try it free</a>
+      </div>
+    </div>
+  </div>
 </header>
+<!-- /chrome:header -->
 
-<main id="top">
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="copy">
-        <span class="beta"><svg width="14" height="14" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><path fill="#e3b23c" d="M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z"/></svg>Klaro is in beta. Free to try.</span>
-        <h1>Spend your time understanding.<br><span>Not searching.</span></h1>
-        <p class="lead">Your tutor’s lectures, book and past papers, linked into one connected curriculum, down to the smallest idea.</p>
-        <div class="ctas">
-          <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start learning</a>
-        </div>
+<main id="main">
+
+<!-- The opening (redesign.md 7.2 and 7.8): the real app as the sample student, pinned while the story plays. -->
+<section class="opening opening--pin-copy" data-opening>
+  <div class="wrap opening-grid">
+    <div class="opening-copy">
+      <nav class="chip-switch" aria-label="Klaro for"><span class="chip-switch-label">Klaro for…</span><a href="../">Tutors</a><a href="./" aria-current="page">Students and parents</a></nav>
+      <h1 class="h1">Spend your time <span class="uline">understanding</span>. Not searching.</h1>
+      <p class="lead">Your tutor's lectures, book and past papers, linked into one connected curriculum, down to the smallest idea.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
+        <button class="btn btn-secondary btn-lg" type="button" data-joincode-open>Have a join code?</button>
       </div>
-      <div class="frame">
-        <div class="screen" id="screen">
-          <div class="cam" id="cam">
-            <iframe id="app" title="Klaro sample workspace: the study view" src="../showcase/showcase.html?scene=student-study&amp;lang=en"></iframe>
-          </div>
-          <div class="cursor" id="cursor" aria-hidden="true">
-            <span class="tap" id="tap"></span>
-            <svg width="26" height="26" viewBox="0 0 24 24" style="position:relative"><path d="M4 2l16 9.5-7 1.6L9.6 20z" fill="#171717" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
-          </div>
-          <div class="hint" id="hint" aria-hidden="true">
-            <span class="ring"></span>
-          </div>
+      <span class="hero-note"><svg class="i spark" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><use href="#spark"/></svg>Klaro is in beta. Free to try.</span>
+    </div>
+    <div class="opening-track">
+      <div class="opening-stage">
+        <div class="opening-collage" aria-hidden="true">
+          <div class="ill opening-tile" data-ph="img/ill/09-phone-tea-480.webp"><img src="../img/ill/09-phone-tea-480.webp" alt="" width="480" height="480" decoding="async"></div>
+          <div class="ill opening-tile" data-ph="img/ill/02-book-passage-480.webp"><img src="../img/ill/02-book-passage-480.webp" alt="" width="480" height="480" decoding="async"></div>
+          <div class="ill opening-tile" data-ph="img/ill/08-exam-clock-480.webp"><img src="../img/ill/08-exam-clock-480.webp" alt="" width="480" height="480" decoding="async"></div>
         </div>
-        <div class="under">
-          <p class="caption" id="caption" aria-live="polite"></p>
-          <div class="actions">
-            <button class="btn btn-primary btn-sm tryit" id="tryit" type="button" hidden>Try it full screen</button>
-            <button class="btn btn-ghost btn-sm replay" id="replay" type="button" hidden>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
-              Replay
-            </button>
+        <figure class="show" data-showcase="student-study" data-phone-recording="student-study-hero" data-app-width="1000" data-title="Klaro sample workspace: a student's study view">
+          <div class="device device--browser">
+            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <div class="device-screen show-screen" data-screen data-nosnippet><picture><source media="(max-width: 899px)" srcset="../media/stills/student-study-hero-phone.webp" width="780" height="1688"><img src="../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course, as a student sees it: the book, the lecture and the past-paper questions" width="1440" height="900" fetchpriority="high"></picture></div>
           </div>
-        </div>
+          <div class="show-under">
+            <ol class="show-steps" data-steps>
+              <li>A tap on a passage in your book…</li>
+              <li>…and your tutor's lecture jumps to the moment that explains it.</li>
+              <li>The past-paper question on it is right there.</li>
+              <li>Your turn. Tap any part of the book.</li>
+            </ol>
+            <div class="show-actions" data-actions>
+              <a class="btn btn-secondary btn-sm show-try only-narrow" href="../try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a>
+              <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
+            </div>
+          </div>
+          <figcaption class="caption"><b>Sample course.</b> A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
+        </figure>
+      </div>
+      <div class="opening-marks" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- Subjects strip -->
+<section class="section">
+  <div class="wrap strip">
+    <ul class="strip-tiles" aria-hidden="true">
+      <li class="ill" data-ph="img/ill/14-osmosis.webp"><img src="../img/ill/14-osmosis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/14-osmosis-480.webp 480w, ../img/ill/14-osmosis-800.webp 800w, ../img/ill/14-osmosis.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+      <li class="ill" data-ph="img/ill/15-electrolysis.webp"><img src="../img/ill/15-electrolysis.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/15-electrolysis-480.webp 480w, ../img/ill/15-electrolysis-800.webp 800w, ../img/ill/15-electrolysis.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+      <li class="ill" data-ph="img/ill/16-trolley.webp"><img src="../img/ill/16-trolley.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/16-trolley-480.webp 480w, ../img/ill/16-trolley-800.webp 800w, ../img/ill/16-trolley.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+      <li class="ill" data-ph="img/ill/17-compass.webp"><img src="../img/ill/17-compass.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/17-compass-480.webp 480w, ../img/ill/17-compass-800.webp 800w, ../img/ill/17-compass.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+      <li class="ill" data-ph="img/ill/18-answer-sheet.webp"><img src="../img/ill/18-answer-sheet.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/18-answer-sheet-480.webp 480w, ../img/ill/18-answer-sheet-800.webp 800w, ../img/ill/18-answer-sheet.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+      <li class="ill" data-ph="img/ill/19-fountain-pen.webp"><img src="../img/ill/19-fountain-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/19-fountain-pen-480.webp 480w, ../img/ill/19-fountain-pen-800.webp 800w, ../img/ill/19-fountain-pen.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    </ul>
+    <p class="strip-caption">For IGCSE, A Level and SAT students. In English and Arabic.</p>
+  </div>
+</section>
+
+<!-- The sticky step list: Omar's four student examples, each a recording of the real app on its plate. -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <h2 class="h2">Stuck? Your tutor already explained it.</h2>
+      <p class="section-sub">Every question you practise leads back to your tutor's lecture and your book.</p>
+    </div>
+    <div class="steps-sticky" role="group" aria-label="Stuck? Your tutor already explained it.">
+      <div class="steps-panels">
+
+        <article class="steps-panel" id="step-wrong">
+          <div class="steps-copy">
+            <h3 class="h3">Got one wrong? See where it was explained.</h3>
+            <p>Practise real past-paper questions. Miss one and Klaro shows the right answer, the page in your book and the moment in your lecture.</p>
+            <a class="tlink" href="../products/practice-questions/">About practice questions <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+          <figure class="rec" data-recording="student-wrong" data-camera=".9">
+            <div class="plate plate--device" data-plate="P5-dusk-window-full2" data-ph="img/plates/P5-dusk-window-full2.webp">
+              <div class="device device--browser">
+                <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+                <div class="device-screen rec-screen" data-screen data-nosnippet>
+                  <img src="../media/student-wrong-poster.jpg" srcset="../media/student-wrong-poster-sm.webp 960w, ../media/student-wrong-poster.jpg 1440w" sizes="(max-width: 640px) 320px, 1440px" alt="A past-paper question in Klaro's practice, on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async">
+                  <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a past-paper question answered wrong, then where it was explained"></video>
+                  <button class="rec-play" type="button" data-action="play" aria-label="Play: a wrong answer, then where it was explained" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+                </div>
+              </div>
+            </div>
+            <div class="show-under">
+              <ol class="rec-cues" data-steps>
+                <li data-t="0">Practise past-paper questions from your course.</li>
+                <li data-t="3">Not quite. Klaro shows the right answer…</li>
+                <li data-t="4.9">…and where it was explained: the page in your book and the moment in your lecture.</li>
+                <li data-t="8.87">One tap, and your tutor explains it.</li>
+              </ol>
+              <div class="show-actions" data-actions><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+            </div>
+            <figcaption class="caption"><b>Sample course.</b> A past-paper question answered wrong: the right answer, then where it was explained.</figcaption>
+          </figure>
+        </article>
+
+        <article class="steps-panel" id="step-weak">
+          <div class="steps-copy">
+            <h3 class="h3">Find your weak spots before the exam does</h3>
+            <p>Klaro keeps track of what you got wrong, and each one opens where it was explained.</p>
+            <a class="tlink" href="../products/progress/">About progress <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+          <figure class="rec" data-recording="student-weak" data-camera=".9">
+            <div class="plate plate--device" data-plate="P6-library-full" data-ph="img/plates/P6-library-full.webp">
+              <div class="device device--browser">
+                <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+                <div class="device-screen rec-screen" data-screen data-nosnippet>
+                  <img src="../media/student-weak-poster.jpg" srcset="../media/student-weak-poster-sm.webp 960w, ../media/student-weak-poster.jpg 1440w" sizes="(max-width: 640px) 320px, 1440px" alt="The end of a practice set in Klaro: the questions missed, on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async">
+                  <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: the questions you missed, each opening where it was explained"></video>
+                  <button class="rec-play" type="button" data-action="play" aria-label="Play: the questions you missed" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+                </div>
+              </div>
+            </div>
+            <div class="show-under">
+              <ol class="rec-cues" data-steps>
+                <li data-t="0">Klaro keeps track of what you got wrong…</li>
+                <li data-t="3.1">…and each one opens where it was explained, before the exam finds it.</li>
+              </ol>
+              <div class="show-actions" data-actions><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+            </div>
+            <figcaption class="caption"><b>Sample course.</b> The end of a practice set: what you missed, each one a tap from its explanation.</figcaption>
+          </figure>
+        </article>
+
+        <article class="steps-panel" id="step-minis">
+          <div class="steps-copy">
+            <h3 class="h3">Revise in minis</h3>
+            <p>One idea at a time: the moment your tutor explains it, then quick checks from real past papers.</p>
+            <a class="tlink" href="../products/minis/">About minis <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+          <figure class="rec" data-recording="student-minis-phone" data-camera=".9">
+            <div class="plate plate--device" data-plate="P2-kitchen-tea-phone" data-ph="img/plates/P2-kitchen-tea-phone.webp">
+              <div class="device device--phone">
+                <div class="device-body">
+                  <div class="device-screen rec-screen" data-screen data-nosnippet>
+                    <img src="../media/student-minis-phone-poster.webp" alt="Minis in Klaro on a phone, on a sample Biology course: a moment of the tutor's lecture playing in the feed" width="780" height="1688" loading="lazy" decoding="async">
+                    <video muted playsinline preload="none" aria-label="A recording of Klaro's Minis on a phone, on a sample course: a lecture moment, then three past-paper checks"></video>
+                    <button class="rec-play" type="button" data-action="play" aria-label="Play: a mini on a phone" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="show-under">
+              <ol class="rec-cues" data-steps>
+              <li data-t="0">A mini: your tutor's own lecture, at the moment it explains one idea.</li>
+              <li data-t="3.4">Tap to pause. The book button opens the page it comes from.</li>
+              <li data-t="5.41">Swipe up for three past-paper checks on it.</li>
+              <li data-t="9.72">One tap answers it, and you know straight away.</li>
+              <li data-t="14.34">Three right, and that idea is cleared for today.</li>
+              </ol>
+              <div class="show-actions" data-actions><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+            </div>
+            <figcaption class="caption"><b>Sample course.</b> Minis on a phone: a moment of the tutor's lecture, then three checks from real past papers.</figcaption>
+          </figure>
+        </article>
+
+        <article class="steps-panel" id="step-tutor">
+          <div class="steps-copy">
+            <h3 class="h3">From a question to the lecture that explains it</h3>
+            <p>Point at a question and Klaro shows where your tutor explained it, not a random video.</p>
+            <a class="tlink" href="../products/study-view/">About the study view <svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          </div>
+          <figure class="rec" data-recording="student-tutor" data-camera=".9">
+            <div class="plate plate--device" data-plate="P7-sofa-corner-phone" data-ph="img/plates/P7-sofa-corner-phone.webp">
+              <div class="device device--tablet">
+                <div class="device-body">
+                  <div class="device-screen rec-screen" data-screen data-nosnippet>
+                    <img src="../media/student-tutor-poster.jpg" srcset="../media/student-tutor-poster-sm.webp 960w, ../media/student-tutor-poster.jpg 1440w" sizes="(max-width: 640px) 320px, 1440px" alt="A past-paper question next to the lecture that explains it, in Klaro's study view on a sample Biology course" width="1440" height="900" loading="lazy" decoding="async">
+                    <video muted playsinline preload="none" aria-label="A recording of Klaro on a sample course: a question, and the moment of the tutor's lecture that explains it"></video>
+                    <button class="rec-play" type="button" data-action="play" aria-label="Play: a question, then the lecture that explains it" hidden><svg class="i" aria-hidden="true"><use href="#i-play"/></svg></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="show-under">
+              <ol class="rec-cues" data-steps>
+                <li data-t="0">Stuck on a question? Point at it.</li>
+                <li data-t="2.3">Klaro shows where your tutor explained it.</li>
+                <li data-t="5.67">The lecture opens right at that moment.</li>
+              </ol>
+              <div class="show-actions" data-actions><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
+            </div>
+            <figcaption class="caption"><b>Sample course.</b> A past-paper question in the study view, and the moment of the lecture that explains it.</figcaption>
+          </figure>
+        </article>
+
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <div id="examples"></div>
-
-  <section class="end">
-    <div class="end-card">
-      <h2>Klaro is in beta. Free to try.</h2>
-      <div class="ctas">
-        <a class="btn btn-primary" href="https://app.klaroplatform.com/sign-up">Start learning</a>
+<!-- For parents: the one pale band on this page. -->
+<section class="section" id="parents">
+  <div class="wrap">
+    <div class="band">
+      <div class="ill" data-ph="img/ill/13-parent-tea.webp"><img src="../img/ill/13-parent-tea.webp" alt="A hand setting down a glass of tea beside an open book and a phone." width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/13-parent-tea-480.webp 480w, ../img/ill/13-parent-tea-800.webp 800w, ../img/ill/13-parent-tea.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div>
+      <div class="band-copy">
+        <h2 class="h2">For parents</h2>
+        <p>If they're on their phone anyway, make it count. Minis turns phone time into short revision from their own tutor's lectures.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- The students' products, as an illustrated carousel. -->
+<section class="section carousel" id="products">
+  <div class="wrap carousel-head">
+    <div class="section-head section-head--start"><h2 class="h2">Everything for your course, in one place</h2></div>
+    <div class="carousel-nav" hidden>
+      <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
+      <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    </div>
+  </div>
+  <ul class="carousel-track" role="list">
+    <li class="carousel-item"><a class="icard" href="../products/study-view/"><div class="ill" data-ph="img/ill/02-book-passage.webp"><img src="../img/ill/02-book-passage.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/02-book-passage-480.webp 480w, ../img/ill/02-book-passage-800.webp 800w, ../img/ill/02-book-passage.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div><span class="icard-body"><span class="icard-title">Study view</span><span class="icard-line">Your tutor's lecture, open at the page it explains.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../products/practice-questions/"><div class="ill" data-ph="img/ill/08-exam-clock.webp"><img src="../img/ill/08-exam-clock.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/08-exam-clock-480.webp 480w, ../img/ill/08-exam-clock-800.webp 800w, ../img/ill/08-exam-clock.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div><span class="icard-body"><span class="icard-title">Practice questions</span><span class="icard-line">Real past-paper questions, checked as you answer.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../products/minis/"><div class="ill" data-ph="img/ill/09-phone-tea.webp"><img src="../img/ill/09-phone-tea.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/09-phone-tea-480.webp 480w, ../img/ill/09-phone-tea-800.webp 800w, ../img/ill/09-phone-tea.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div><span class="icard-body"><span class="icard-title">Minis</span><span class="icard-line">Your weak spots, one short lecture moment a day.</span></span></a></li>
+    <li class="carousel-item"><a class="icard" href="../products/progress/"><div class="ill" data-ph="img/ill/10-bookmark.webp"><img src="../img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/10-bookmark-480.webp 480w, ../img/ill/10-bookmark-800.webp 800w, ../img/ill/10-bookmark.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div><span class="icard-body"><span class="icard-title">Progress</span><span class="icard-line">Lectures finished, quiz marks and your streak.</span></span></a></li>
+  </ul>
+</section>
+
+<!-- The deep panel: the students' motto line and four plain promises. -->
+<section class="section" id="promise">
+  <div class="wrap">
+    <div class="panel">
+      <div class="ill panel-ill" data-ph="img/ill/01-connected.webp"><img src="../img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/01-connected-480.webp 480w, ../img/ill/01-connected-800.webp 800w, ../img/ill/01-connected.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div>
+      <h2 class="h2">Your tutor's explanation. Not a guess.</h2>
+      <p class="panel-sub">Everything you study comes from your tutor's own course: their lectures, their book and real past papers, linked to each other.</p>
+      <ul class="panel-grid">
+        <li class="panel-item"><h3 class="panel-item-title">Your tutor's own lectures</h3><p>You learn from your tutor's recordings, in the order they set.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">Real past-paper questions</h3><p>Every question comes from a real exam paper, and says which.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">The page in your book, one tap away</h3><p>Each lecture clip opens your book at the part it explains.</p></li>
+        <li class="panel-item"><h3 class="panel-item-title">In English and Arabic</h3><p>Use Klaro in either language. Your course stays as your tutor wrote it.</p></li>
+      </ul>
+      <a class="btn btn-on-deep" href="../research/">How we use research</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (tools/site.py builds the FAQPage JSON-LD from these .faq-item blocks). -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="faq">
+      <div class="faq-head"><h2 class="h2">Questions students and parents ask</h2></div>
+      <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How do I join a course?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Create your account, then enter the join code your tutor gives you. The course appears on your home page. If your tutor shares a course link instead, you can ask to join, and your tutor lets you in.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Is it free?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Klaro is in beta, and it's free to try. Create your account and join your tutor's course with their code.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Does Klaro make up questions?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>No. Every question comes from a real past paper and shows which paper it came from. The lectures are your tutor's own and the book is your tutor's book; Klaro links them to each other.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Does it work on a phone?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Klaro works in the browser on a phone, a tablet or a computer, with nothing to install.</p></div></div></div>
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I use Klaro in Arabic?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Klaro is built for English and Arabic, and the whole layout turns right to left in Arabic. Your course material stays in the language your tutor wrote it in.</p></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Closing call -->
+<section class="closing" aria-labelledby="closing-h">
+  <ul class="closing-tiles" aria-hidden="true">
+    <li class="ill closing-tile" data-ph="img/ill/11-calendar.webp"><img src="../img/ill/11-calendar.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/11-calendar-480.webp 480w, ../img/ill/11-calendar-800.webp 800w, ../img/ill/11-calendar.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/06-paper-plane.webp"><img src="../img/ill/06-paper-plane.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/06-paper-plane-480.webp 480w, ../img/ill/06-paper-plane-800.webp 800w, ../img/ill/06-paper-plane.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/12-raised-hand.webp"><img src="../img/ill/12-raised-hand.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/12-raised-hand-480.webp 480w, ../img/ill/12-raised-hand-800.webp 800w, ../img/ill/12-raised-hand.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/07-red-pen.webp"><img src="../img/ill/07-red-pen.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/07-red-pen-480.webp 480w, ../img/ill/07-red-pen-800.webp 800w, ../img/ill/07-red-pen.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/20-night-window.webp"><img src="../img/ill/20-night-window.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/20-night-window-480.webp 480w, ../img/ill/20-night-window-800.webp 800w, ../img/ill/20-night-window.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/05-lamp-laptop.webp"><img src="../img/ill/05-lamp-laptop.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/05-lamp-laptop-480.webp 480w, ../img/ill/05-lamp-laptop-800.webp 800w, ../img/ill/05-lamp-laptop.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/03-parcel.webp"><img src="../img/ill/03-parcel.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/03-parcel-480.webp 480w, ../img/ill/03-parcel-800.webp 800w, ../img/ill/03-parcel.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+    <li class="ill closing-tile" data-ph="img/ill/04-empty-desk.webp"><img src="../img/ill/04-empty-desk.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="../img/ill/04-empty-desk-480.webp 480w, ../img/ill/04-empty-desk-800.webp 800w, ../img/ill/04-empty-desk.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
+  </ul>
+  <div class="closing-copy">
+    <h2 class="h2" id="closing-h">Your tutor's course is waiting.</h2>
+    <p class="lead">Create your account, then join with the code your tutor gives you.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-lg" data-signup-as="student" href="https://app.klaroplatform.com/sign-up?as=student">Start learning</a>
+      <button class="btn btn-secondary btn-lg" type="button" data-joincode-open>Have a join code?</button>
+    </div>
+  </div>
+</section>
+
 </main>
 
-<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Klaro sample workspace">
-  <div class="sheet-bar">
-    <span>Tap any part of the book.</span>
-    <button class="btn btn-ghost btn-sm" id="close" type="button">Close</button>
+<!-- chrome:footer -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-brand">
+      <a href="../" aria-label="Klaro home"><img src="../img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+      <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col"><h2 class="footer-h"><a href="../">For tutors</a></h2><ul>
+        <li><a class="footer-link" href="../products/course-builder/">Course builder</a></li>
+        <li><a class="footer-link" href="../products/live-sessions/">Live sessions</a></li>
+        <li><a class="footer-link" href="../products/quizzes/">Quizzes and homework</a></li>
+        <li><a class="footer-link" href="../products/marking/">Marking</a></li>
+        <li><a class="footer-link" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Apply as a tutor</a></li>
+      </ul></div>
+      <div class="footer-col"><h2 class="footer-h"><a href="./">For students and parents</a></h2><ul>
+        <li><a class="footer-link" href="../products/study-view/">Study view</a></li>
+        <li><a class="footer-link" href="../products/practice-questions/">Practice questions</a></li>
+        <li><a class="footer-link" href="../products/minis/">Minis</a></li>
+        <li><a class="footer-link" href="../products/progress/">Progress</a></li>
+        <li><button class="footer-link" type="button" data-joincode-open>Join a course with a code</button></li>
+      </ul></div>
+      <div class="footer-col"><h2 class="footer-h">Klaro</h2><ul>
+        <li><a class="footer-link" href="../research/">Research</a></li>
+        <li><a class="footer-link" href="../try/">Live demo</a></li>
+        <li><a class="footer-link" href="../market/">Browse courses</a></li>
+        <li><a class="footer-link" data-signin href="https://app.klaroplatform.com/sign-in">Sign in</a></li>
+      </ul></div>
+      <!-- arabic-later: the Language column comes back with the Arabic pages (a column holding only "English" is noise):
+      <div class="footer-col"><h2 class="footer-h">Language</h2><ul>
+        <li><span class="footer-link footer-here">English</span></li>
+        <li><a class="footer-link" href="../ar/" data-lang-link lang="ar" hreflang="ar">عربي</a></li>
+      </ul></div>
+      -->
+    </div>
+    <div class="footer-base"><span>© 2026 Klaro</span><a class="footer-link" data-legal="terms" href="https://app.klaroplatform.com/terms">Terms</a><a class="footer-link" data-legal="privacy" href="https://app.klaroplatform.com/privacy">Privacy</a></div>
   </div>
-</div>
-
-<script src="hero.js"></script>
-<script src="examples.js"></script>
+</footer>
+<!-- /chrome:footer -->
+<script src="../klaro.js" defer></script>
+<script src="../site.js" defer></script>
+<script src="../showcase.js" defer></script>
 </body>
 </html>

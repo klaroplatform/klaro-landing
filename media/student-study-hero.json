@@ -1,0 +1,26 @@
+{
+ "name": "student-study-hero",
+ "duration": 16.2,
+ "cues": [
+  {
+   "t": 0,
+   "kicker": "Study view",
+   "text": "Tap any passage in your book."
+  },
+  {
+   "t": 3.49,
+   "kicker": "Study view",
+   "text": "Your tutor's lecture jumps to that moment and explains it."
+  },
+  {
+   "t": 8.82,
+   "kicker": "Study view",
+   "text": "The past-paper question on it is right there."
+  },
+  {
+   "t": 12.13,
+   "kicker": "Study view",
+   "text": "Your turn. Tap any part of the book."
+  }
+ ]
+}
