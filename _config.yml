@@ -4,3 +4,4 @@ exclude:
   - CLAUDE.md
   - design
   - wrangler.jsonc
+  - worker.js

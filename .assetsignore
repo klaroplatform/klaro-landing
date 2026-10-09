@@ -8,3 +8,4 @@ _config.yml
 README.md
 design
 CLAUDE.md
+worker.js
