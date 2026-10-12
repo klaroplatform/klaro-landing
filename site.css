@@ -34,6 +34,9 @@
   font: 500 var(--fs-nav)/1 var(--font); color: var(--ink); text-decoration: none; white-space: nowrap; cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease-ui), color var(--dur-fast) var(--ease-ui); }
 .nav-link:hover { background: rgb(23 23 23 / .05); }
+/* A top-bar link that only fits on wider screens (Motion demo): under 1120px it would push the
+   buttons off the bar; the footer (and, under 1024px, the menu sheet) still has it. */
+@media (max-width: 1119px) { .nav-link.nav-extra { display: none; } }
 .nav-link[aria-expanded="true"] { background: var(--ink); color: #fff; }   /* the open trigger turns into a dark pill */
 .nav-link .chev { width: 14px; height: 14px; transition: rotate var(--dur-ui) var(--ease-ui); }
 .nav-link[aria-expanded="true"] .chev { rotate: 180deg; }
