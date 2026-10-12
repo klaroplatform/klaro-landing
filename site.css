@@ -13,7 +13,8 @@
      .split-card and .stack   .band   .rcard (.rcards--one)   .panel   .faq   .closing
      Devices (.device, .plate, .plate--device)   The real app (.show, .rec, .caption, .show--full)
      .opening   .steps-sticky
-     Utilities   Market support   Arabic   Motion */
+     Utilities   Market support   Arabic   Motion   Product page layouts (.pr-*)
+     Hierarchy, bands and the beta marks (end of file) */
 
 /* ======================================================================== Header */
 /* "Skip to content" (partials/header.*.html): the keyboard's first stop, out of sight until it has
@@ -1077,3 +1078,87 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 
 /* Arabic */
 :is(.pr-legend p, .pr-spec-list dd, .pr-duo p, .pr-trio p, .pr-feature-copy p, .pr-aside-cards p, .pr-timeline p, .pr-compare dd, .pr-finding-line):lang(ar) { line-height: 1.75; }
+
+/* ======================================================================== Hierarchy, bands and the beta marks (2026-10-12) */
+/* The owner: "the titles feel mixed in with the rest of the text, nothing separates them". Four
+   moves, all here so the earlier rules stay readable:
+     1. Ink against copy. Headings take the deepest ink (--head) at 700 and a tight line; the copy
+        beneath is a softer grey (--text, 6.9:1 on the page colour, 7.4:1 on white, so AA holds).
+     2. A real size step. The H2 is 2.2 to 2.5 times the body; the H3 is 1.4 times; leads sit between.
+     3. An eyebrow: a few words, in purple with the Klaro spark, above a section's title (sentence
+        case, as everything on the site). One per section head; never repeats the title.
+     4. Sections that read as blocks: every second section is a white band with a hairline, and a
+        page's closing call sits on a pale lavender one. The deep panel keeps its own field.
+   Only site tokens are touched here; the app's tokens in klaro.css :root are not. */
+:root {
+  --head: #110f17;                 /* headings: the deepest ink, a touch of the purple */
+  --text: #55544e;                 /* copy: softer than the headings (klaro.css had #45443f) */
+  --band-white: #fff;              /* the alternate section band */
+  --band-tint: #f1eafb;            /* the closing call's band */
+  --band-pad: clamp(64px, 9vw, 96px);   /* a banded section's top and bottom space */
+  --heading-color: var(--head);
+
+  /* Type steps. Phones first: fluid up to 640px, then up to the desktop sizes. */
+  --fs-h1: clamp(36px, 10.4vw, 48px);
+  --fs-h1-split: clamp(36px, 10.4vw, 48px);
+  --fs-h2: clamp(32px, 9vw, 40px);
+  --fs-h3: clamp(22px, 5.8vw, 24px);
+}
+@media (min-width: 641px) {
+  :root {
+    --fs-h1: clamp(48px, 5.2vw, 76px);
+    --fs-h1-split: 52px;                       /* tablets: one wide column */
+    --fs-h2: clamp(40px, 2.2vw + 24px, 56px);
+    --fs-h3: clamp(24px, 1vw + 14px, 30px);
+  }
+}
+@media (min-width: 1025px) { :root { --fs-h1-split: clamp(44px, 3.9vw, 56px); } }   /* the 5/12 copy column */
+
+.h1, .h2, .h3, .display, .try-title { color: var(--heading-color); }
+.panel { --heading-color: #fff; }
+.h1, .display { font-weight: 700; line-height: 1.03; letter-spacing: -.035em; }
+.h2 { font-weight: 700; line-height: 1.06; letter-spacing: -.032em; }
+.h3 { line-height: 1.18; }
+:is(.icard-title, .rcard-title, .card-title, .faq-q, .pr-spec-list dt, .footer-h) { color: var(--head); }
+.lead { color: var(--text); }
+:is(.h1, .h2, .display):lang(ar) { font-weight: 600; }   /* Readex Pro: the Arabic weights stay as arabic.md has them */
+
+/* The eyebrow. A short label above a section title: purple, 15px, the gold spark before it. */
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0; font: 600 15px/1.25 var(--font); letter-spacing: .005em; color: var(--purple-dark); text-wrap: balance; }
+.eyebrow::before { content: ""; flex: none; width: 14px; height: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='112.56 0 103.11 103.11'%3E%3Cpath fill='%23f0c93d' d='M215.67 51.56C203.93 55.66 189.46 58.46 180.24 67.68C171.02 76.9 168.22 91.37 164.12 103.11C160.02 91.37 157.21 76.9 147.99 67.68C138.77 58.46 124.3 55.66 112.56 51.56C124.3 47.46 138.77 44.65 147.99 35.43C157.21 26.21 160.02 11.74 164.12 0C168.22 11.74 171.02 26.21 180.24 35.43C189.46 44.65 203.93 47.46 215.67 51.56Z'/%3E%3C/svg%3E") no-repeat center / contain; }
+.eyebrow--deep { color: var(--gold); }
+.eyebrow + :is(.h1, .h2) { margin-block-start: -4px; }   /* the label belongs to the title under it */
+.panel > .eyebrow { margin-block-end: -8px; }
+.closing-copy > .eyebrow { margin-block-end: -6px; }
+
+/* Bands. Every second section is a white band between two hairlines; a page's closing call sits on
+   a pale lavender one. A banded section's neighbours take the same top and bottom space, so the
+   rhythm is even; two plain sections in a row still share one gap. */
+.section { padding-block: var(--band-pad); }
+.hero { padding-block-end: var(--band-pad); }
+.section.section--white { padding-block: var(--band-pad); background: var(--band-white); border-block: 1px solid var(--line); }
+.section--white + .section { padding-block-start: var(--band-pad); }
+.closing { padding-block: calc(var(--band-pad) + 8px); background: var(--band-tint); }
+.closing-tile { box-shadow: 0 16px 34px -20px rgb(30 12 60 / .38); }
+.section--white .band { background: var(--band); }   /* the inline pale card stays lavender on a white band */
+
+/* The beta marks. A pill next to the logo, a line under each home hero's buttons, one in the footer.
+   Gold dot, purple words, a hairline: a label, not a button. */
+.beta-pill { display: inline-flex; align-items: center; gap: 7px; flex: none; height: 26px; padding-inline: 10px 12px; border: 1px solid var(--purple-line); border-radius: var(--r-pill);
+  background: var(--purple-tint); font: 600 13px/1 var(--font); letter-spacing: .01em; color: var(--purple-dark); white-space: nowrap; user-select: none; }
+.beta-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px rgb(240 201 61 / .28); }
+.brand + .beta-pill { margin-inline-start: -6px; }
+/* Between the phone menu and a wide desktop the bar is full (1025 to 1180px): the pill shortens to "Beta". */
+@media (min-width: 1025px) and (max-width: 1180px) {
+  .topbar .beta-free { display: none; }
+  .topbar .beta-pill { text-transform: capitalize; }
+  .topbar .nav-link { padding-inline: 8px; }
+  .topbar .brand { margin-inline-end: 8px; }
+}
+.brand { flex: none; }   /* the logo never gives up width when the bar is full */
+.beta-note { display: inline-flex; align-items: center; gap: 10px; margin: -6px 0 0; padding: 6px 16px 6px 6px; border: 1px solid var(--line); border-radius: var(--r-pill);
+  background: rgb(255 255 255 / .72); font-size: 15px; font-weight: 500; line-height: 1.35; color: var(--ink); }
+.beta-note-tag { display: inline-flex; align-items: center; flex: none; height: 28px; padding-inline: 12px; border-radius: var(--r-pill); background: var(--purple-soft); font-size: 13px; font-weight: 700; letter-spacing: .01em; color: var(--purple-dark); }
+.footer-beta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0; font-size: 15px; line-height: 1.4; color: var(--text); }
+:is(.beta-note, .beta-note-tag, .beta-pill):lang(ar) { letter-spacing: 0; }

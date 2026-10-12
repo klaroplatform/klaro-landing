@@ -104,7 +104,7 @@
     "width": 1200,
     "height": 630
    },
-   "dateModified": "2026-10-09",
+   "dateModified": "2026-10-12",
    "about": {
     "@id": "https://klaroplatform.com/#app"
    },
@@ -170,6 +170,14 @@
    "mainEntity": [
     {
      "@type": "Question",
+     "name": "Is it free?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Klaro is in beta and free to try. Choose “I'm a tutor” when you sign up; the Klaro team reviews every tutor account before it opens and emails you the decision."
+     }
+    },
+    {
+     "@type": "Question",
      "name": "Does Klaro make up lectures or questions?",
      "acceptedAnswer": {
       "@type": "Answer",
@@ -190,14 +198,6 @@
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Each course has a join code. Share it with your students: they enter it after creating their account, and your course appears on their home page."
-     }
-    },
-    {
-     "@type": "Question",
-     "name": "Is it free?",
-     "acceptedAnswer": {
-      "@type": "Answer",
-      "text": "Yes. Klaro is in beta and free to try. Choose “I'm a tutor” when you sign up; the Klaro team reviews every tutor account before it opens and emails you the decision."
      }
     },
     {
@@ -262,6 +262,7 @@
 <header class="topbar" data-topbar>
   <div class="wrap topbar-row">
     <a class="brand" href="./" aria-label="Klaro home"><img src="img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
+    <span class="beta-pill"><span class="beta-free">Free </span>beta</span>
     <nav class="nav" aria-label="Main">
       <button class="nav-link" type="button" aria-expanded="false" aria-controls="site-menu" data-menu="products">Products <svg class="i chev" aria-hidden="true"><use href="#i-down"/></svg></button>
       <a class="nav-link nav-aud" href="students/"><span class="aud-students">For students and parents</span><span class="aud-tutors">For tutors</span></a>
@@ -327,7 +328,7 @@
         <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
         <a class="btn btn-secondary btn-lg" href="products/study-view/">See what students get</a>
       </div>
-      <span class="hero-note"><svg class="i spark" viewBox="112.56 0 103.11 103.11" aria-hidden="true"><use href="#spark"/></svg>Klaro is in beta. Free to try.</span>
+      <p class="beta-note"><span class="beta-note-tag">Beta</span>Klaro is free to try while it's in beta.</p>
     </div>
     <div class="opening-track">
       <div class="opening-stage">
@@ -379,9 +380,10 @@
 </section>
 
 <!-- 3. Omar's three tutor examples: recordings of the real app, framed on their plates, with the sticky step list. -->
-<section class="section" id="how" aria-labelledby="how-title">
+<section class="section section--white" id="how" aria-labelledby="how-title">
   <div class="wrap">
     <div class="section-head">
+      <p class="eyebrow">How Klaro helps</p>
       <h2 class="h2" id="how-title">What Klaro takes off your plate</h2>
       <p class="section-sub">Live classes, homework and marking, in the same place as your course.</p>
     </div>
@@ -486,7 +488,7 @@
 <!-- 4. The tutors' products, illustrated -->
 <section class="section carousel" id="products" aria-labelledby="products-title">
   <div class="wrap carousel-head">
-    <div class="section-head section-head--start"><h2 class="h2" id="products-title">Built around what you already teach</h2></div>
+    <div class="section-head section-head--start"><p class="eyebrow">Products</p><h2 class="h2" id="products-title">Built around what you already teach</h2></div>
     <div class="carousel-nav" hidden>
       <button class="carousel-btn" type="button" data-prev aria-label="Previous"><svg class="i flip" aria-hidden="true"><use href="#i-back"/></svg></button>
       <button class="carousel-btn" type="button" data-next aria-label="Next"><svg class="i flip" aria-hidden="true"><use href="#i-arrow"/></svg></button>
@@ -503,10 +505,11 @@
 </section>
 
 <!-- 5. The deep panel: the motto, as four plain promises -->
-<section class="section" id="promise">
+<section class="section section--white" id="promise">
   <div class="wrap">
     <div class="panel">
       <div class="ill panel-ill"><img src="img/ill/01-connected.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="img/ill/01-connected-480.webp 480w, img/ill/01-connected-800.webp 800w, img/ill/01-connected.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></div>
+      <p class="eyebrow eyebrow--deep">Our promise</p>
       <h2 class="h2">We don't make content. We connect yours.</h2>
       <p class="panel-sub">Your lectures, your book and real past papers, linked to each other. Nothing in your course is made up.</p>
       <ul class="panel-grid">
@@ -524,6 +527,7 @@
 <section class="section" id="research" aria-labelledby="research-title">
   <div class="wrap">
     <div class="section-head">
+      <p class="eyebrow">Research</p>
       <h2 class="h2" id="research-title">Built on how students learn</h2>
       <p class="section-sub">Three findings from learning research, and where you'll see them in Klaro.</p>
     </div>
@@ -561,15 +565,15 @@
 </section>
 
 <!-- 7. FAQ (tools/site.py reads the .faq-item markup for the FAQPage JSON-LD) -->
-<section class="section" id="faq">
+<section class="section section--white" id="faq">
   <div class="wrap">
     <div class="faq">
-      <div class="faq-head"><h2 class="h2">Questions tutors ask</h2></div>
+      <div class="faq-head"><p class="eyebrow">FAQ</p><h2 class="h2">Questions tutors ask</h2></div>
       <div class="faq-list">
+        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Is it free?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Klaro is in beta and free to try. Choose “I'm a tutor” when you sign up; the Klaro team reviews every tutor account before it opens and emails you the decision.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Does Klaro make up lectures or questions?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>No. The lectures are your own recordings, the book is your book, and every question comes from a real past paper. Klaro links them: each moment of a lecture to the book page it explains, each topic to its past-paper questions. The Klaro team checks every course before it's published.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">What do I upload?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>What you already teach from: your books, notes, past papers and lecture videos. Klaro links them into one course, in the order you teach it.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">How do my students join?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Each course has a join code. Share it with your students: they enter it after creating their account, and your course appears on their home page.</p></div></div></div>
-        <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Is it free?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. Klaro is in beta and free to try. Choose “I'm a tutor” when you sign up; the Klaro team reviews every tutor account before it opens and emails you the decision.</p></div></div></div>
         <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false">Can I use Klaro in Arabic?<span class="faq-icon" aria-hidden="true"><svg class="i"><use href="#i-plus"/></svg></span></button><div class="answer"><div><p>Yes. The app is in English and Arabic, and in Arabic the whole layout turns right to left. Your course material stays in its own language.</p></div></div></div>
       </div>
     </div>
@@ -585,8 +589,9 @@
     <li class="ill closing-tile"><img src="img/ill/10-bookmark.webp" alt="" width="1200" height="1200" loading="lazy" decoding="async" srcset="img/ill/10-bookmark-480.webp 480w, img/ill/10-bookmark-800.webp 800w, img/ill/10-bookmark.webp 1200w" sizes="auto, (max-width: 640px) 60vw, 400px"></li>
   </ul>
   <div class="closing-copy">
+    <p class="eyebrow">Free while in beta</p>
     <h2 class="h2" id="closing-h">Bring your course to Klaro.</h2>
-    <p class="lead">Klaro is in beta. Free to try.</p>
+    <p class="lead">Upload what you already teach from. Klaro links it into one course for your students.</p>
     <div class="hero-actions">
       <a class="btn btn-primary btn-lg" data-signup-as="tutor" href="https://app.klaroplatform.com/sign-up?as=tutor">Start your course</a>
       <a class="btn btn-secondary btn-lg" href="students/">For students and parents</a>
@@ -602,6 +607,7 @@
     <div class="footer-brand">
       <a href="./" aria-label="Klaro home"><img src="img/klaro-wordmark.svg" alt="Klaro" width="100" height="30"></a>
       <p class="footer-line">Klaro connects a tutor's lectures, books and past papers for their students.</p>
+      <p class="footer-beta"><span class="beta-pill">Free beta</span>Klaro is in beta, and free to try.</p>
     </div>
     <div class="footer-cols">
       <div class="footer-col"><h2 class="footer-h"><a href="./">For tutors</a></h2><ul>
