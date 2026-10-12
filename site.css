@@ -14,7 +14,7 @@
      Devices (.device, .plate, .plate--device)   The real app (.show, .rec, .caption, .show--full)
      .opening   .steps-sticky
      Utilities   Market support   Arabic   Motion   Product page layouts (.pr-*)
-     Hierarchy, bands and the beta marks (end of file) */
+     Hierarchy, bands and the beta marks (end of file)   Phones and touch (end of file) */
 
 /* ======================================================================== Header */
 /* "Skip to content" (partials/header.*.html): the keyboard's first stop, out of sight until it has
@@ -724,7 +724,7 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .p-chip .p-for { padding-inline-start: 9px; border-inline-start: 1px solid var(--border-strong); color: var(--chip-muted); }
 .p-head { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: end; gap: 24px 56px; }
 .p-head-side { display: flex; flex-direction: column; gap: 20px; padding-block-end: 6px; }
-.p-draft { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px dashed #f0b58c; border-radius: var(--r-pill); background: #fff0e6; font-size: 12px; font-weight: 600; color: #a5521b; }
+.p-draft { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px dashed #f0b58c; border-radius: var(--r-pill); background: #fff0e6; font-size: 13px; font-weight: 600; color: #a5521b; }
 .kicker { font-size: 13px; font-weight: 600; line-height: 1.5; color: var(--muted); }
 .kicker.spark { display: inline-flex; align-items: center; gap: 7px; color: var(--purple-dark); fill: inherit; }
 .star { display: inline-block; flex-shrink: 0; }
@@ -1162,3 +1162,58 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .beta-note-tag { display: inline-flex; align-items: center; flex: none; height: 28px; padding-inline: 12px; border-radius: var(--r-pill); background: var(--purple-soft); font-size: 13px; font-weight: 700; letter-spacing: .01em; color: var(--purple-dark); }
 .footer-beta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0; font-size: 15px; line-height: 1.4; color: var(--text); }
 :is(.beta-note, .beta-note-tag, .beta-pill):lang(ar) { letter-spacing: 0; }
+
+/* ======================================================================== Phones and touch (2026-10-12) */
+/* The owner: "the mobile UI is off, the sizes of things aren't right". What was wrong, from a pass at
+   360, 390, 430 and 768px wide on every page: the H1 was 44px on a 360px phone (four lines), the
+   audience switch wrapped inside its pill, every text link, footer link and small button was
+   20 to 36px tall (a finger needs 44), the page gutter was a cramped 16px, the market's smallest
+   text was 10 to 11px, and on a tablet a caption floated off the line above it. The type steps are
+   fluid in the block above; this block is the rest. Logical properties only. */
+@media (max-width: 640px) { :root { --gutter: 20px; --section: 64px; --head-gap: 32px; } }
+
+/* Touch targets: 44px, without moving anything the eye reads. A text link keeps its look and gains
+   height; a list of links loses the gap it no longer needs. */
+.brand { align-items: center; min-height: 44px; }
+@media (max-width: 1024px), (pointer: coarse) {
+  .btn-sm { height: 44px; }
+  .chip-switch { border-radius: 26px; }
+  .chip-switch a { height: 44px; }
+  .tlink { min-height: 44px; }
+  .footer-link { display: inline-flex; align-items: center; min-width: 44px; min-height: 44px; }
+  .footer ul { gap: 0; }
+  .footer-brand a { min-height: 44px; align-items: center; }
+  .pr-close-links a { min-height: 44px; }
+  .mega-all, .mega-head { min-height: 44px; display: inline-flex; align-items: center; }
+  .faq-q { min-height: 44px; }
+  /* A caption that jumps to its step when tapped (showcase.js wraps it in .step-go, 25px tall for one
+     line): the touch area grows into the space round it. Inline margin and padding in the script's
+     reset are overridden on purpose, so this one needs !important. */
+  .step-go { padding-block: 10px !important; margin-block: -10px !important; }
+}
+/* Only the caption on show takes a tap; the ones stacked behind it (same grid cell, invisible) must
+   not catch it. */
+.show-steps > li:not(:is(.is-on, [data-current], :first-child)), .rec-cues > li:not(:is(.is-on, [data-current], :first-child)) { pointer-events: none; }
+.show-steps:has(> :is(.is-on, [data-current])) > li:first-child:not(.is-on, [data-current]),
+.rec-cues:has(> :is(.is-on, [data-current])) > li:first-child:not(.is-on, [data-current]) { pointer-events: none; }
+
+/* The audience switch, on a phone: two equal segments the width of the column, 44px tall, never
+   wrapping inside its pill. Its label ("Klaro for…") stays for screen readers. */
+@media (max-width: 640px) {
+  .chip-switch { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); width: 100%; gap: 4px; padding: 4px; border-radius: var(--r-pill); }
+  .chip-switch-label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .chip-switch a { justify-content: center; height: 44px; padding-inline: 8px; text-align: center; font-size: 15px; }
+  .hero-actions { gap: 12px; }
+  .beta-note { font-size: 14.5px; }
+}
+@media (max-width: 380px) { .beta-note { gap: 8px; padding-inline-end: 12px; font-size: 14px; } }
+
+/* Tablets: the phone recording's caption lines up with the line above it, not centred in the figure. */
+@media (max-width: 899px) { .opening-stage > .show[data-phone-recording] > .caption { align-self: flex-start; } }
+
+/* Small text: nothing under 12px where a person has to read it. */
+.tag { font-size: 12px; height: 24px; }
+.media .eyebrow { font-size: 12.5px; }
+.pr-cite { font-size: 13.5px; }
+
+/* The audience links in the menu sheet and the sheet's own rows are 64px already; the join form is 52px. */
