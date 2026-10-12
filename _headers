@@ -1,4 +1,6 @@
-# Response headers for learnklaro.com, applied by Cloudflare (Workers static assets).
+# Response headers for the Klaro site (klaroplatform.com, and learnklaro.com which serves the same files),
+# applied by Cloudflare (Workers static assets). Nothing here is host-specific except the workers.dev rule
+# below, so neither real domain is ever marked noindex.
 # This file is read by Cloudflare and is never served. GitHub Pages ignores it (Jekyll skips "_" files).
 # Docs: https://developers.cloudflare.com/workers/static-assets/headers/
 #
@@ -26,7 +28,7 @@
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), browsing-topics=()
 
 # Version URLs (<version>-klaro-landing.<subdomain>.workers.dev) and any workers.dev copy are
-# public but must not be indexed: search engines keep to learnklaro.com.
+# public but must not be indexed: search engines keep to klaroplatform.com (the canonical host).
 https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex
 

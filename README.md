@@ -1,6 +1,7 @@
 # Klaro landing
 
-The public website for Klaro, at https://learnklaro.com. Klaro links a tutor's own lectures, book
+The public website for Klaro, at https://klaroplatform.com (https://learnklaro.com serves the same site;
+the canonical address, in every canonical link, Open Graph URL, sitemap entry and JSON-LD node, is klaroplatform.com). Klaro links a tutor's own lectures, book
 and past papers, so students study them side by side.
 
 The site is plain HTML, CSS and a little JavaScript. There is no build step: every page is a
@@ -172,8 +173,10 @@ CLOUDFLARE_ACCOUNT_ID=<account id> npx wrangler versions upload --preview-alias 
 It prints a version URL and the `new-site` alias URL. Both are public and marked `noindex`. The
 account, the wrangler login and the full steps are in `design/brief/cloudflare.md`.
 
-**Production.** Once Workers Builds is connected, every push to `main` deploys learnklaro.com.
-Until then, production is deployed by hand: ask the owner first. Never run `wrangler deploy` or
+**Production.** The site has two deploy targets, in `wrangler.jsonc`: the default one (learnklaro.com)
+and `--env klaroplatform` (klaroplatform.com, the canonical address, in the other Cloudflare account).
+Once Workers Builds is connected, every push to `main` deploys learnklaro.com. Until then, production
+is deployed by hand: ask the owner first. Never run `wrangler deploy` or
 `wrangler versions deploy` for a preview; both replace the live site. Rollback steps are in
 `design/brief/cloudflare.md`.
 

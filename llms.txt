@@ -8,27 +8,27 @@
 - Built for IGCSE, A Level and SAT, in English and Arabic. In Arabic the whole layout turns right to left.
 - Works in the browser on phone, tablet and computer.
 - Motto: "We don't make content. We connect yours."
-- Website: https://learnklaro.com/
+- Website: https://klaroplatform.com/
 - App: https://app.klaroplatform.com
 
 ## For students
 
-- [For students and parents](https://learnklaro.com/students/): Study your tutor's own lectures, book and past-paper questions in one place, linked down to the smallest idea. For IGCSE, A Level and SAT.
-- [Study view](https://learnklaro.com/products/study-view/): Your tutor's lecture, the course book and real past-paper questions on one screen. Tap a passage and the lecture plays the moment it's explained.
-- [Practice questions](https://learnklaro.com/products/practice-questions/): Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.
-- [Minis](https://learnklaro.com/products/minis/): Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.
-- [Progress](https://learnklaro.com/products/progress/): Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.
+- [For students and parents](https://klaroplatform.com/students/): Study your tutor's own lectures, book and past-paper questions in one place, linked down to the smallest idea. For IGCSE, A Level and SAT.
+- [Study view](https://klaroplatform.com/products/study-view/): Your tutor's lecture, the course book and real past-paper questions on one screen. Tap a passage and the lecture plays the moment it's explained.
+- [Practice questions](https://klaroplatform.com/products/practice-questions/): Practise on real past-paper questions. Multiple-choice answers are checked the moment you answer, with the right answer and where it's explained.
+- [Minis](https://klaroplatform.com/products/minis/): Minis picks the book units you miss most in past-paper practice and shows the moment of your tutor's lecture that teaches each one, then three checks.
+- [Progress](https://klaroplatform.com/products/progress/): Lectures finished, quizzes handed in and your average mark, course by course, plus your study streak. Next up follows your tutor's lecture order.
 
 ## For tutors
 
-- [Course builder](https://learnklaro.com/products/course-builder/): Upload your lectures, books and past papers. Klaro connects them: every lecture moment to its book page, every topic to its past-paper questions.
-- [Live sessions](https://learnklaro.com/products/live-sessions/): Schedule a live class and Klaro sets up the Zoom meeting. Students join from Klaro, and the recording lands in your course, cut into clips linked to your book.
-- [Quizzes and homework](https://learnklaro.com/products/quizzes/): Ask for homework in plain words. Klaro builds it from real past-paper questions in your course, and you check it before it goes to your students.
-- [Marking](https://learnklaro.com/products/marking/): Upload your students' scanned papers with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it.
+- [Course builder](https://klaroplatform.com/products/course-builder/): Upload your lectures, books and past papers. Klaro connects them: every lecture moment to its book page, every topic to its past-paper questions.
+- [Live sessions](https://klaroplatform.com/products/live-sessions/): Schedule a live class and Klaro sets up the Zoom meeting. Students join from Klaro, and the recording lands in your course, cut into clips linked to your book.
+- [Quizzes and homework](https://klaroplatform.com/products/quizzes/): Ask for homework in plain words. Klaro builds it from real past-paper questions in your course, and you check it before it goes to your students.
+- [Marking](https://klaroplatform.com/products/marking/): Upload your students' scanned papers with your mark scheme. Answers come back marked, with feedback for each student, and nothing goes out until you send it.
 
 ## More
 
-- [Products](https://learnklaro.com/products/): Every product in one place: course builder, live sessions, quizzes and marking for tutors; study view, practice questions, Minis and progress for students.
-- [Live demo](https://learnklaro.com/try/): Try Klaro's study view on a sample IGCSE Biology course: tap a passage in the book, watch the lecture explain it and see the past-paper questions on it.
-- [Powered by research](https://learnklaro.com/research/): The learning research Klaro is built on: the source beside the explanation, testing yourself instead of re-reading, and feedback. Every source is linked.
-- [Browse courses](https://learnklaro.com/market/): Course catalogue (example courses and prices for now).
+- [Products](https://klaroplatform.com/products/): Every product in one place: course builder, live sessions, quizzes and marking for tutors; study view, practice questions, Minis and progress for students.
+- [Live demo](https://klaroplatform.com/try/): Try Klaro's study view on a sample IGCSE Biology course: tap a passage in the book, watch the lecture explain it and see the past-paper questions on it.
+- [Powered by research](https://klaroplatform.com/research/): The learning research Klaro is built on: the source beside the explanation, testing yourself instead of re-reading, and feedback. Every source is linked.
+- [Browse courses](https://klaroplatform.com/market/): Course catalogue (example courses and prices for now).
