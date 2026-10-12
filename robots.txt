@@ -1,8 +1,8 @@
-# learnklaro.com: every search engine and AI crawler is welcome, AI training included
+# klaroplatform.com (also served at learnklaro.com): every search engine and AI crawler is welcome, AI training included
 # (the owner's decision, 2026-10-08).
 #
 # Cloudflare can add its own rules above this file (Bot Preference Sync, managed robots.txt).
-# After any change to Cloudflare's bot settings, open https://learnklaro.com/robots.txt and check
+# After any change to Cloudflare's bot settings, open https://klaroplatform.com/robots.txt and check
 # that nothing above this file blocks a crawler. A crawler named in its own group ignores the "*"
 # group, so the named crawlers below share the one group, and the same rules, with everyone else.
 
@@ -27,4 +27,4 @@ Allow: /
 # Cloudflare's own endpoints, not pages of the site.
 Disallow: /cdn-cgi/
 
-Sitemap: https://learnklaro.com/sitemap.xml
+Sitemap: https://klaroplatform.com/sitemap.xml

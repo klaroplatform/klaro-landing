@@ -1,5 +1,5 @@
 # Files Cloudflare must NOT publish. The whole repository root is the assets directory
-# (wrangler.jsonc), so anything not listed here goes live at learnklaro.com/<path>.
+# (wrangler.jsonc), so anything not listed here goes live at klaroplatform.com/<path> (and learnklaro.com/<path>).
 # Same syntax as .gitignore. A leading "/" means "only at the top of the repository".
 # Keep this in step with _config.yml (GitHub Pages) while that still runs.
 # _headers is read by Cloudflare and never served, so it is not listed here.

@@ -1,6 +1,7 @@
 # Klaro landing
 
-The public website for Klaro, at https://learnklaro.com. Klaro links a tutor's own lectures, book
+The public website for Klaro, at https://klaroplatform.com (https://learnklaro.com serves the same site;
+the canonical address, in every canonical link, Open Graph URL, sitemap entry and JSON-LD node, is klaroplatform.com). Klaro links a tutor's own lectures, book
 and past papers, so students study them side by side.
 
 The site is plain HTML, CSS and a little JavaScript. There is no build step: every page is a
@@ -33,6 +34,14 @@ Shared by every page:
 - `site.js`: the header menus, the join code, carousels, illustration plates and scroll reveal.
 - `showcase.js`: the live app frames and the recordings (see [The showcase](#the-showcase-and-the-recordings)).
 - `partials/`: the header, footer and icon sprite that `tools/site.py` copies into each page.
+
+Page rhythm (2026-10-12): after the hero, every second `<section class="section">` also carries
+`section--white` (a white band between two hairlines); a page's closing call (`.closing`) sits on a
+lavender band by itself. A section's title may have a short eyebrow above it, `<p class="eyebrow">`
+(`eyebrow--deep` on the deep panel); it never repeats the title. Headings, copy colour and the fluid
+type steps are tokens at the top of the "Hierarchy, bands and the beta marks" block at the end of
+`site.css`. The "Free beta" pill is in the header and footer partials; the hero line under the
+buttons is `<p class="beta-note">`.
 
 Not pages: `showcase/`, `demo/`, `media/`, `brand/` and `illustrations/` hold the showcase and
 its files; `img/` holds images (`img/ill/` is the cut-paper illustrations); `design/`, `partials/`
@@ -172,8 +181,10 @@ CLOUDFLARE_ACCOUNT_ID=<account id> npx wrangler versions upload --preview-alias 
 It prints a version URL and the `new-site` alias URL. Both are public and marked `noindex`. The
 account, the wrangler login and the full steps are in `design/brief/cloudflare.md`.
 
-**Production.** Once Workers Builds is connected, every push to `main` deploys learnklaro.com.
-Until then, production is deployed by hand: ask the owner first. Never run `wrangler deploy` or
+**Production.** The site has two deploy targets, in `wrangler.jsonc`: the default one (learnklaro.com)
+and `--env klaroplatform` (klaroplatform.com, the canonical address, in the other Cloudflare account).
+Once Workers Builds is connected, every push to `main` deploys learnklaro.com. Until then, production
+is deployed by hand: ask the owner first. Never run `wrangler deploy` or
 `wrangler versions deploy` for a preview; both replace the live site. Rollback steps are in
 `design/brief/cloudflare.md`.
 

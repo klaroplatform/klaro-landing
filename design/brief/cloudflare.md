@@ -533,3 +533,62 @@ seconds.
     `/demo/*` and `/media/*`).
   - It does **not** undo zone settings, redirect rules or custom-domain changes. Change those back
     by hand.
+
+---
+
+## 8. klaroplatform.com, the canonical address (added 2026-10-12)
+
+The site moves to **https://klaroplatform.com** (apex; www redirects to it). The app stays at
+https://app.klaroplatform.com. learnklaro.com keeps serving the same files, so both addresses work,
+but every canonical link, `og:url`, sitemap entry, `llms.txt` line, robots.txt `Sitemap:` line and
+JSON-LD node says `https://klaroplatform.com/` (`tools/site.json` `"base"`; `python3 tools/site.py`
+restamps it). Search engines therefore fold learnklaro.com into klaroplatform.com.
+
+**The two deploy targets** (both in `wrangler.jsonc`, same files, same `worker/index.js`):
+
+| Target | Account | Command | Custom domains |
+|---|---|---|---|
+| default | `8f32b3259e15052339fe39a63baa1cca` (zone learnklaro.com) | `npx wrangler deploy` (profile `learnklaro`) | `learnklaro.com`, `www.learnklaro.com` |
+| env `klaroplatform` | `bbcdececfdc25f78201b3be407c7de6e` ("Klaroplatform's Account", zone klaroplatform.com) | `npx wrangler deploy --env klaroplatform` (profile `default`) | `klaroplatform.com`, `www.klaroplatform.com` |
+
+A deploy to one target does not touch the other. Deploy both whenever the site changes, or the two
+hosts drift apart. A preview of the new target: `npx wrangler versions upload --env klaroplatform
+--preview-alias new-site` (its Version URLs are `<id>-klaro-landing.klaroplatform.workers.dev`, which
+`_headers` marks `noindex`; klaroplatform.com itself is not matched by any noindex rule).
+
+**Before the first deploy of the new target:**
+
+1. In the klaroplatform.com zone, DNS: delete any existing A, AAAA or CNAME record on the apex
+   (`klaroplatform.com`) and on `www`. A Workers custom domain refuses to replace one. Leave
+   `app`, MX, TXT and every other record alone.
+2. Then deploy. Cloudflare creates the proxied records and the certificates for the two domains.
+
+**After it is live (owner, by hand in the klaroplatform.com zone):**
+
+1. **SSL/TLS → Edge Certificates → Always Use HTTPS: On.**
+2. **Rules → Redirect Rules → Create rule** (the template "Redirect from WWW to root"):
+   request URL `https://www.klaroplatform.com/*`, target `https://klaroplatform.com/${1}`, status
+   **301**, preserve the query string. Keep the `www` custom domain on the Worker: the rule needs its
+   record and certificate. Rules run before the Worker, so the redirect needs no code.
+3. Same bot and AI-crawler settings as §5, in this zone (AI bot policies allow, managed robots.txt
+   off, Bot Fight Mode off), so `https://klaroplatform.com/robots.txt` is our file only.
+4. Search Console: add a **Domain** property for klaroplatform.com (DNS TXT in this zone) and submit
+   `https://klaroplatform.com/sitemap.xml`. Keep the learnklaro.com property; use the Change of
+   address tool only if learnklaro.com is later redirected.
+
+**Check:**
+
+```sh
+curl -sI https://klaroplatform.com/ | head -1                                  # 200
+curl -s https://klaroplatform.com/ | grep -o '<link rel="canonical"[^>]*>'     # https://klaroplatform.com/
+curl -sI https://klaroplatform.com/ | grep -i x-robots-tag                     # nothing: indexable
+curl -sI https://www.klaroplatform.com/research/ | grep -iE '^HTTP|location'   # 301 -> https://klaroplatform.com/research/
+curl -sI http://klaroplatform.com/ | grep -iE '^HTTP|location'                 # 301 -> https://klaroplatform.com/
+curl -s https://klaroplatform.com/robots.txt | grep -i sitemap                 # Sitemap: https://klaroplatform.com/sitemap.xml
+curl -sI https://klaroplatform.com/does-not-exist | grep -iE '^HTTP|cache-control'   # 404, no-store
+curl -s -o /dev/null -r 0-1023 -w '%{http_code}\n' https://klaroplatform.com/media/marking.mp4   # 206
+```
+
+Workers Builds (§4, step 2) is connected to the learnklaro.com Worker only. A second Worker in the
+other account needs its own connection (same repository and settings, deploy command
+`npx wrangler deploy --env klaroplatform`), or a hand deploy after each merge.

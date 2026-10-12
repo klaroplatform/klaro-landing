@@ -38,11 +38,11 @@
 .km-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
 .km-chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
 .km-chip { flex-shrink: 0; display: inline-flex; align-items: center; gap: 7px; height: 34px; padding-inline: 12px; border-radius: var(--r-button); border: 1px solid var(--border); background: var(--card);
-  font: 600 12.5px/1 var(--font); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: background-color .15s, color .15s, border-color .15s; }
+  font: 600 13px/1 var(--font); color: var(--ink-soft); cursor: pointer; white-space: nowrap; transition: background-color .15s, color .15s, border-color .15s; }
 .km-chip:hover { border-color: var(--purple-line); color: var(--ink); }
 .km-chip[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: #fff; }
 .km-chip:focus-visible { outline-offset: 1px; }
-.km-count { font-size: 11px; font-variant-numeric: tabular-nums; opacity: .72; }
+.km-count { font-size: 12px; font-variant-numeric: tabular-nums; opacity: .72; }
 .km-sort { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; font-size: 13px; color: var(--muted); }
 .km-select { position: relative; display: inline-flex; }
 .km-select select { -webkit-appearance: none; appearance: none; height: 34px; padding-inline: 12px 32px; border-radius: var(--r-button); border: 1px solid var(--border-strong); background: var(--card);
@@ -51,6 +51,9 @@
 .km-select::after { content: ""; position: absolute; inset-inline-end: 13px; inset-block-start: 50%; width: 6px; height: 6px; border-inline-end: 2px solid var(--ink-soft); border-block-end: 2px solid var(--ink-soft);
   translate: 0 -70%; rotate: 45deg; pointer-events: none; }
 @media (pointer: coarse) { .km-chip, .km-select select { height: 44px; } }
+/* The level control's buttons are 36px inside its 46px frame: on a phone or a touch screen the frame grows to 52px, so each is 44px, and the search box grows with it. */
+@media (pointer: coarse), (max-width: 640px) { .km-seg, .km-search input { height: 52px; } }
+.km-card .figs { font-size: 13px; }
 
 /* ---------- The courses ---------- */
 .km-market { padding-block: 26px 56px; }
@@ -67,7 +70,7 @@
   .km-chips:empty { --chip-h: 34px; min-height: calc(var(--chip-h) + var(--chips-pad, 0px)); }   /* one row of chips (.km-chip's height) */
 }
 @media (scripting: enabled) and (pointer: coarse) { .km-chips:empty { --chip-h: 44px; } }
-.km-fine { margin-block-start: 18px; display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.km-fine { margin-block-start: 18px; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
 
 /* Course card: the kit's media card, plus the tutor, the price and Enroll */
 .km-card { cursor: pointer; }

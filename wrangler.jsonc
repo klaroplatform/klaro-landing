@@ -50,5 +50,42 @@
   // Version URLs (<version>-klaro-landing.<subdomain>.workers.dev) stay on, so a version can be
   // checked before it is promoted (`wrangler versions upload`). They are public; _headers marks them
   // noindex so search engines keep to learnklaro.com.
-  "preview_urls": true
+  "preview_urls": true,
+
+  // The same site on klaroplatform.com, the canonical address (tools/site.json "base"). The zone
+  // klaroplatform.com lives in the OTHER Cloudflare account ("Klaroplatform's Account", the one the
+  // app's Workers are in), so this target carries its own account_id and Worker, with the same files
+  // and the same Worker script as above. The default config above keeps serving learnklaro.com.
+  //   npx wrangler deploy --env klaroplatform            (goes live: the owner or orchestrator only)
+  //   npx wrangler versions upload --env klaroplatform   (a preview URL only)
+  // wrangler does not inherit `routes`, `assets` or `name` into an env reliably, so each is written
+  // out in full. Cloudflare creates the DNS records and certificates for the two custom domains; it
+  // refuses if the zone already has an A, AAAA or CNAME record on the apex or on www, so remove any
+  // such record first. The www -> apex 301 is a Redirect Rule in the zone's dashboard, not code
+  // (design/brief/cloudflare.md §6). This env sets no response headers: _headers is shared, and its
+  // only noindex rule is for *.workers.dev, so klaroplatform.com is indexable.
+  "env": {
+    "klaroplatform": {
+      // A different account from the default target, so the Worker can keep the same name.
+      "account_id": "bbcdececfdc25f78201b3be407c7de6e",
+      "name": "klaro-landing",
+      "compatibility_date": "2026-09-11",
+      "main": "worker/index.js",
+      "assets": {
+        "directory": ".",
+        "binding": "ASSETS",
+        "run_worker_first": ["/media/*.mp4", "/demo/*.mp4"],
+        "not_found_handling": "none",
+        "html_handling": "auto-trailing-slash"
+      },
+      "routes": [
+        { "pattern": "klaroplatform.com", "custom_domain": true },
+        // Keep www here even though it redirects to the apex: the redirect rule needs its DNS record
+        // and certificate.
+        { "pattern": "www.klaroplatform.com", "custom_domain": true }
+      ],
+      "workers_dev": false,
+      "preview_urls": true
+    }
+  }
 }
