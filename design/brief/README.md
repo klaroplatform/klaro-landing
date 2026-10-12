@@ -305,3 +305,24 @@ Omar, in the WhatsApp chat (screenshots in `refs/`):
 > (curipod.com) هذي جميله … حطلنا career page … الناس دي محترمة برضو
 > (briskteaching.com/solutions/students) هذول يستخدمون كلمات قوية
 > (classcompanion.com) Try an assignment
+
+**2026-10-12: the beta, the titles, the phones and the domain** (the owner's requests; these win over
+the "no kickers" and "one pale band per page" rules above):
+- **The beta must be unmissable, and honest.** "Free beta" pill next to the logo in the header (it
+  shortens to "Beta" between 1025 and 1180px, where the bar is full), a pill under the buttons of
+  both home heroes ("Free to try while Klaro is in beta"), a line in the footer, "Is it free?" as the
+  first question of both home FAQs, and "Free while in beta" as the eyebrow of every closing call.
+  The product pages' closing note on the tutor side now says every tutor account is reviewed.
+- **Titles stand out.** Headings use the deepest ink at weight 700 with a tight line; copy is a
+  softer grey (`--text`); H1, H2 and H3 are fluid (clamp) with a real step above the body. A short
+  **eyebrow** (sentence case, purple, the gold spark before it) sits above each section title and
+  never repeats it. Every second section is a **white band** between two hairlines; a page's closing
+  call is on a pale lavender band. The deep panel keeps its own field. The inline pale `.band` card
+  stays. Contrast is AA everywhere (checked on every page at 390 and 1440px).
+- **Phones.** Page gutter 20px; the audience switch is two 44px segments; text links, footer links,
+  small buttons and tappable captions are 44px tall; nothing the eye reads is under 12px (market) or
+  13px (everywhere else).
+- **The site moves to https://klaroplatform.com** (apex; www redirects to it; the app stays at
+  app.klaroplatform.com). learnklaro.com keeps serving the same files. `tools/site.json` "base" is
+  the one switch; `wrangler.jsonc` has an `env.klaroplatform` target in the other Cloudflare
+  account. Plan and checks: `cloudflare.md` section 8.

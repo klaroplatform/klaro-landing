@@ -138,8 +138,8 @@
 /* ======================================================================== Layout */
 .section { padding-block: var(--section); }
 .section + .section { padding-block-start: 0; }
-/* Section heading: H2 and at most one line under it. No kickers. Centred; --start aligns it to the
-   inline start (carousel, FAQ, step lists). */
+/* Section heading: an optional eyebrow (.eyebrow, end of file), the H2 and at most one line under it.
+   Centred; --start aligns it to the inline start (carousel, FAQ, step lists). */
 .section-head { display: flex; flex-direction: column; align-items: center; gap: 16px; max-width: 880px; margin-inline: auto; margin-block-end: var(--head-gap); text-align: center; }
 .section-head--start { align-items: flex-start; margin-inline: 0; text-align: start; }
 .section-sub { max-width: 40em; font-size: var(--fs-lead); line-height: 1.45; color: var(--text); text-wrap: pretty; }

@@ -32,7 +32,9 @@
 
   /* 2. Site tokens (redesign §5) */
   /* Colour roles. One action colour (purple), gold only for the H1 underline and the spark, one
-     deep panel per page, at most one pale band per page. No gradients, no glows. */
+     deep panel per page, at most one pale band card per page. No gradients, no glows.
+     (2026-10-12: site.css, "Hierarchy, bands and the beta marks", adds the softer copy colour, the
+     heading ink, fluid type steps, eyebrows and alternating full-width section bands on top of these.) */
   --text: #45443f;            /* leads and body copy: darker than the app's grey, a printed feel */
   --line: #dcdcd6;            /* hairline on cards, visible on the off-white page */
   --gold: #f0c93d;
