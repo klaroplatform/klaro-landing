@@ -35,6 +35,14 @@ Shared by every page:
 - `showcase.js`: the live app frames and the recordings (see [The showcase](#the-showcase-and-the-recordings)).
 - `partials/`: the header, footer and icon sprite that `tools/site.py` copies into each page.
 
+Page rhythm (2026-10-12): after the hero, every second `<section class="section">` also carries
+`section--white` (a white band between two hairlines); a page's closing call (`.closing`) sits on a
+lavender band by itself. A section's title may have a short eyebrow above it, `<p class="eyebrow">`
+(`eyebrow--deep` on the deep panel); it never repeats the title. Headings, copy colour and the fluid
+type steps are tokens at the top of the "Hierarchy, bands and the beta marks" block at the end of
+`site.css`. The "Free beta" pill is in the header and footer partials; the hero line under the
+buttons is `<p class="beta-note">`.
+
 Not pages: `showcase/`, `demo/`, `media/`, `brand/` and `illustrations/` hold the showcase and
 its files; `img/` holds images (`img/ill/` is the cut-paper illustrations); `design/`, `partials/`
 and `tools/` are kept off the site.
