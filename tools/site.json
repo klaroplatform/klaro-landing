@@ -81,6 +81,12 @@
     "products/quizzes/": { "label": "Quizzes and homework", "group": "tutors", "audience": ["teacher"] },
     "products/marking/": { "label": "Marking", "group": "tutors", "audience": ["teacher"] },
     "try/": { "label": "Live demo", "audience": ["student"] },
+    "lessons/enzymes/": {
+      "_index": "A sample lesson shared by link (2026-10-13): noindex, out of sitemap.xml and llms.txt, linked from no page. Set true to list it.",
+      "index": false,
+      "label": "Sample lesson: enzymes",
+      "audience": ["student"]
+    },
     "research/": { "label": "Powered by research", "type": "article" },
     "market/": {
       "_index": "The one switch for the market's indexing. false = noindex, and out of sitemap.xml and llms.txt.",
