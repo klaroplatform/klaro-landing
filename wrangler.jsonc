@@ -6,7 +6,9 @@
   // How it is deployed, previewed and rolled back: design/brief/cloudflare.md.
   //
   // One Worker in the Klaro account serves klaroplatform.com (the canonical address) and
-  // learnklaro.com (moved into this account on 2026-10-13). Deployed by hand, from a clean checkout:
+  // learnklaro.com (moved into this account on 2026-10-13). learnklaro.com and www 301 to
+  // klaroplatform.com through a Redirect Rule in their zone, which runs before this Worker; the
+  // custom domains below still give them their DNS records and certificates. Deployed by hand, from a clean checkout:
   //   npx wrangler deploy            (goes live on all four hostnames: the owner or orchestrator only)
   //   npx wrangler versions upload   (a preview URL only)
   "$schema": "https://unpkg.com/wrangler/config-schema.json",

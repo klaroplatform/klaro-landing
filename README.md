@@ -1,7 +1,7 @@
 # Klaro landing
 
-The public website for Klaro, at https://klaroplatform.com (https://learnklaro.com serves the same site;
-the canonical address, in every canonical link, Open Graph URL, sitemap entry and JSON-LD node, is klaroplatform.com). Klaro links a tutor's own lectures, book
+The public website for Klaro, at https://klaroplatform.com (https://learnklaro.com 301-redirects there,
+path and query kept, by a Redirect Rule in its zone; the canonical address, in every canonical link, Open Graph URL, sitemap entry and JSON-LD node, is klaroplatform.com). Klaro links a tutor's own lectures, book
 and past papers, so students study them side by side.
 
 The site is plain HTML, CSS and a little JavaScript. There is no build step: every page is a
@@ -184,7 +184,7 @@ It prints a version URL and the `new-site` alias URL. Both are public and marked
 account, the wrangler login and the full steps are in `design/brief/cloudflare.md`.
 
 **Production.** One Worker, `klaro-landing` in the Klaro Cloudflare account, serves klaroplatform.com
-and learnklaro.com (moved into that account on 2026-10-13). Production is deployed by hand with
+and learnklaro.com (moved into that account on 2026-10-13; a Redirect Rule 301s it to klaroplatform.com). Production is deployed by hand with
 `npx wrangler deploy`: ask the owner first. Never run `wrangler deploy` or
 `wrangler versions deploy` for a preview; both replace the live site. Rollback steps are in
 `design/brief/cloudflare.md`.
