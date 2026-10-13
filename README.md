@@ -68,9 +68,11 @@ What it does:
   `<!-- chrome:meta -->` block under them: canonical, hreflang, Open Graph, icons, the app address
   and one JSON-LD graph. The JSON-LD includes FAQPage from a page's visible FAQ, an Article with
   citations on the research page, and a VideoObject for each recording.
-- **Fonts.** The Google Fonts links are the tool's too: it writes them at the end of the meta block
-  for the page's language (`tools/site.json` `"fonts"`; Readex Pro, the Arabic face, only on
-  Arabic pages) and removes any font link a page writes in its own `<head>`.
+- **Fonts.** Self-hosted (OFL): Manrope and Readex Pro as variable woff2 files in `fonts/`, with the
+  `@font-face` rules at the top of `klaro.css` (and `fonts.css` for `v1/` and the showcase).
+  No request goes to Google. The tool writes the preload links at the end of the meta block for
+  the page's language (`tools/site.json` `"fonts"`; Readex Pro, the Arabic face, only on Arabic
+  pages) and removes any Google Fonts link a page writes in its own `<head>`.
 - **Illustration sizes.** With `"srcset": {"on": true}` in `tools/site.json`, every `<img>` of a
   full-size illustration (`img/ill/NN-name.webp`, 1200px) gets a `srcset` of its `-480` and `-800`
   versions, and `sizes`. Set it to `false` and run the tool to take them off.

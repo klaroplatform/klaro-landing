@@ -26,9 +26,9 @@
     }
   },
   "fonts": {
-    "_about": "Google Fonts families per language, written by tools/site.py into every page's meta block. Readex Pro (the Arabic face) only on Arabic pages.",
-    "en": "family=Manrope:wght@400;500;600;700",
-    "ar": "family=Manrope:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700"
+    "_about": "Preloaded font files (in /fonts/) per language, written by tools/site.py into every page's meta block; the @font-face rules are at the top of klaro.css. Readex Pro (the Arabic face) only on Arabic pages.",
+    "en": ["manrope-latin"],
+    "ar": ["readex-pro-arabic", "manrope-latin"]
   },
   "srcset": {
     "_about": "When on, tools/site.py gives every <img> of a full-size illustration (img/ill/NN-name.webp, 1200px) a srcset of its -480 and -800 versions and these sizes; a lazy image's sizes start with 'auto', so Chrome uses its drawn size (never on an eager image: Chrome then takes the full width). Off until the page branches are merged, so it doesn't collide with their edits: then set on to true and run the tool.",

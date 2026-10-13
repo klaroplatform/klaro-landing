@@ -18,7 +18,7 @@
 # (206) keep these headers: it copies them from the file.
 
 # Security headers on every response. SAMEORIGIN lets our own pages frame the showcase and nobody
-# else. No Content-Security-Policy: the pages use inline styles, inline JSON-LD and Google Fonts, and
+# else. No Content-Security-Policy: the pages use inline styles, inline JSON-LD, and
 # the showcase needs frame, media, worker and connect sources (showcase.md §7.3), so a CSP needs its
 # own careful pass.
 /*
@@ -99,7 +99,7 @@ https://:version.:subdomain.workers.dev/*
 /img/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
-# Self-hosted fonts, if the site ever stops using Google Fonts. Font files never change in place.
+# Self-hosted fonts (Manrope, Readex Pro). Font files never change in place: give a new one a new name.
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 

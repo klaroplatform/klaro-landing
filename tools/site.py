@@ -46,9 +46,9 @@ App links. The href of every link marked data-signup, data-signup-as, data-signi
 set to its real address in the app (site.json "app"), so it works without JavaScript; klaro.js
 and site.js still refine them for the audience switch. Partials may write href="#" for these.
 
-Fonts. The Google Fonts links are the tool's: it writes them at the end of the meta block, for the
-page's language (site.json "fonts": Readex Pro, the Arabic face, only on Arabic pages), and removes
-any font link a page writes in its own <head>.
+Fonts. The fonts are self-hosted (/fonts/, @font-face at the top of klaro.css). The tool writes the
+preload links at the end of the meta block, for the page's language (site.json "fonts": Readex Pro,
+the Arabic face, only on Arabic pages), and removes any Google Fonts link a page writes in its own <head>.
 
 Illustration sizes. With site.json "srcset" on, every <img> of a full-size illustration
 (img/ill/NN-name.webp) gets srcset (its -480 and -800 versions, where they exist) and sizes.
@@ -338,7 +338,7 @@ def app_href(tag, page):
         return link('/sign-up', 'as=' + page.default_as)
     if re.search(r'\sdata-signin(?=[\s>=])', tag):
         return link('/sign-in')
-    m = re.search(r'\sdata-legal="(\w+)"', tag)
+    m = re.search(r'\sdata-legal="([\w-]+)"', tag)
     if m:
         return link('/' + m.group(1))
     return None
@@ -363,11 +363,10 @@ FONT_LINK = re.compile(r'[ \t]*<link\b[^>]*\bhref="https://fonts\.(?:googleapis|
 
 
 def font_links(page):
-    """The Google Fonts links for the page's language (site.json "fonts"), for its meta block."""
-    families = SITE['fonts'].get(page.lang) or SITE['fonts']['en']
-    return ['<link rel="preconnect" href="https://fonts.googleapis.com">',
-            '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
-            f'<link rel="stylesheet" href="{attr("https://fonts.googleapis.com/css2?" + families + "&display=swap")}">']
+    """The preload links for the page's language (site.json "fonts": file names in /fonts/), for its
+    meta block. The @font-face rules are at the top of klaro.css; nothing leaves the site."""
+    names = SITE['fonts'].get(page.lang) or SITE['fonts']['en']
+    return [f'<link rel="preload" href="/fonts/{n}.woff2" as="font" type="font/woff2" crossorigin>' for n in names]
 
 
 def outside_chrome(html, fn):

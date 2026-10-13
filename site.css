@@ -133,6 +133,9 @@
 .footer-link:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .footer-here { color: var(--ink); font-weight: 600; cursor: default; }
 .footer-here:hover { text-decoration: none; }
+.footer-company { display: grid; gap: 8px; padding-block-end: 24px; font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 64em; text-wrap: pretty; }
+.footer-company p { margin: 0; }
+.footer-company .footer-link { font-size: inherit; color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
 .footer-base { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block-start: 24px; border-block-start: 1px solid var(--line); font-size: 14px; color: var(--muted); }
 .footer-base > span:first-child { margin-inline-end: auto; }
 .footer-base .footer-link { font-size: 14px; color: var(--muted); }
