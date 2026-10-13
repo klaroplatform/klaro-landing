@@ -1,4 +1,4 @@
-# Response headers for the Klaro site (klaroplatform.com; learnklaro.com only redirects there and serves no files),
+# Response headers for the Klaro site (klaroplatform.com, and learnklaro.com which serves the same files),
 # applied by Cloudflare (Workers static assets). Nothing here is host-specific except the workers.dev rule
 # below, so neither real domain is ever marked noindex.
 # This file is read by Cloudflare and is never served. GitHub Pages ignores it (Jekyll skips "_" files).

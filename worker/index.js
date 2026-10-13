@@ -1,4 +1,4 @@
-// The landing site's Worker script (klaroplatform.com; learnklaro.com runs worker/redirect.js instead). Files are served straight from the static assets without it;
+// The landing site's Worker script (klaroplatform.com and learnklaro.com). Files are served straight from the static assets without it;
 // it runs for two things only (wrangler.jsonc, design/brief/cloudflare.md §2.5):
 //
 // 1. Videos (/media/*.mp4 and /demo/*.mp4, "run_worker_first"). Workers static assets answer a

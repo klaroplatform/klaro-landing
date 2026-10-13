@@ -592,13 +592,3 @@ curl -s -o /dev/null -r 0-1023 -w '%{http_code}\n' https://klaroplatform.com/med
 Workers Builds (§4, step 2) is connected to the learnklaro.com Worker only. A second Worker in the
 other account needs its own connection (same repository and settings, deploy command
 `npx wrangler deploy --env klaroplatform`), or a hand deploy after each merge.
-
-## learnklaro.com redirects to klaroplatform.com (2026-10-13)
-
-The default target in `wrangler.jsonc` no longer serves the site. It runs `worker/redirect.js` with
-no static assets: every request to learnklaro.com or www.learnklaro.com gets a 301 (308 for methods
-other than GET and HEAD) to `https://klaroplatform.com` with the same path and query string. The site
-itself is only the `--env klaroplatform` target. It goes live with the next deploy of the default
-target (a push to `main` once Workers Builds is connected, or `wrangler deploy` by hand), with the
-owner's approval. Rollback: `wrangler rollback` to the previous version of `klaro-landing` in the
-second account, which serves the full site again.
