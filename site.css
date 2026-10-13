@@ -1220,3 +1220,10 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .pr-cite { font-size: 13.5px; }
 
 /* The audience links in the menu sheet and the sheet's own rows are 64px already; the join form is 52px. */
+
+/* Home: the motion lesson, the top feature after the opening (owner, 2026-10-13). The video's own 16:9. */
+.home-lesson { margin: 40px 0 0; }
+.home-lesson .device-screen { --screen: 1920 / 1080; background: var(--page); }
+.home-lesson .device-screen > video { object-fit: contain; }
+.home-lesson .caption { margin-block-start: 16px; }
+.home-lesson-actions { justify-content: center; margin-block-start: 24px; }
