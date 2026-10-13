@@ -1,12 +1,13 @@
 {
-  // The Klaro landing site: plain static files served by a Worker with static assets. There is no
-  // build step. Files are answered straight from the assets; a small Worker script
-  // (worker/index.js) runs only for the videos (Range requests, so players can seek) and for URLs
-  // that match no file (the 404 page, never cached). Why: design/brief/cloudflare.md §2.5.
-  // How it is deployed, previewed and rolled back: design/brief/cloudflare.md.
+  // Two targets. The default one (below) is learnklaro.com: it serves no files and only redirects
+  // every request to the same address on klaroplatform.com (worker/redirect.js, 301, path and query
+  // kept). The site itself is the "klaroplatform" env further down: plain static files served by a
+  // Worker with static assets, no build step. Its small script (worker/index.js) runs only for the
+  // videos (Range requests, so players can seek) and for URLs that match no file (the 404 page,
+  // never cached). Why: design/brief/cloudflare.md §2.5. Deploys, previews, rollback: same file.
   //
-  // Production deploys run from `main` through Workers Builds (Git integration, set up in the
-  // dashboard): deploy command `npx wrangler deploy`, no build command, root directory `/`.
+  // Workers Builds (Git integration, set up in the dashboard) runs `npx wrangler deploy` from `main`
+  // for the default target, so a push to `main` deploys the learnklaro.com redirect.
   // By hand, from a clean checkout:
   //   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler deploy            (goes live)
   //   CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca npx wrangler versions upload   (preview URL only)
@@ -14,48 +15,26 @@
   // Must match the Worker's name in the dashboard, or Workers Builds refuses to build.
   "name": "klaro-landing",
   "compatibility_date": "2026-09-11",
-  // Runs only for the videos and for misses (see "assets" below). It must stay out of the published
-  // files: .assetsignore lists /worker. It replaces worker.js on main (Omar's Range Worker, 8a428a9).
-  "main": "worker/index.js",
-  "assets": {
-    // The repository root is the site. .assetsignore keeps the notes, designs and tooling out;
-    // _headers sets security and cache headers (it is read by Cloudflare, not served).
-    "directory": ".",
-    // The Worker script reaches the files through this binding (env.ASSETS).
-    "binding": "ASSETS",
-    // Videos go to the Worker first: static assets answer Range requests with the whole file, and
-    // players need 206 to seek. Only .mp4 files, so posters, captions and images never invoke it.
-    // Static asset requests are free and unlimited; Worker invocations count against the Free
-    // plan's 100,000 a day.
-    "run_worker_first": ["/media/*.mp4", "/demo/*.mp4"],
-    // "none", not "404-page": every URL that matches no file then goes to the Worker, which sends
-    // 404.html with status 404 and "Cache-Control: no-store". With "404-page" (and a
-    // run_worker_first list) the assets would answer misses themselves, with the folder's
-    // _headers Cache-Control, so a 404 under /media/ would be kept by browsers for a day.
-    "not_found_handling": "none",
-    // The default, written out: /products/study-view redirects to /products/study-view/ and serves
-    // products/study-view/index.html; /index.html redirects to /.
-    "html_handling": "auto-trailing-slash"
-  },
+  // Answers every request with a redirect to klaroplatform.com. No "assets" here on purpose: with
+  // static assets a file would be served before the script could redirect.
+  "main": "worker/redirect.js",
   // learnklaro.com lives in the owner's second account, so every wrangler command needs
   // CLOUDFLARE_ACCOUNT_ID=8f32b3259e15052339fe39a63baa1cca. Cloudflare creates the DNS records and
-  // certificates for these custom domains. Keep www here even though it redirects to the apex: the
-  // redirect rule needs the record and the certificate.
+  // certificates for these custom domains. Both hosts redirect straight to https://klaroplatform.com.
   "routes": [
     { "pattern": "learnklaro.com", "custom_domain": true },
     { "pattern": "www.learnklaro.com", "custom_domain": true }
   ],
-  // No public <name>.<subdomain>.workers.dev copy of the site (this is also what the routes imply).
+  // No public <name>.<subdomain>.workers.dev copy (this is also what the routes imply).
   "workers_dev": false,
   // Version URLs (<version>-klaro-landing.<subdomain>.workers.dev) stay on, so a version can be
-  // checked before it is promoted (`wrangler versions upload`). They are public; _headers marks them
-  // noindex so search engines keep to learnklaro.com.
+  // checked before it is promoted (`wrangler versions upload`).
   "preview_urls": true,
 
   // The same site on klaroplatform.com, the canonical address (tools/site.json "base"). The zone
   // klaroplatform.com lives in the OTHER Cloudflare account ("Klaroplatform's Account", the one the
   // app's Workers are in), so this target carries its own account_id and Worker, with the same files
-  // and the same Worker script as above. The default config above keeps serving learnklaro.com.
+  // and the site's Worker script (worker/index.js). The default config above only redirects learnklaro.com here.
   //   npx wrangler deploy --env klaroplatform            (goes live: the owner or orchestrator only)
   //   npx wrangler versions upload --env klaroplatform   (a preview URL only)
   // wrangler does not inherit `routes`, `assets` or `name` into an env reliably, so each is written
