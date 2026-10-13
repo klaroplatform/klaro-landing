@@ -82,8 +82,8 @@
     "products/marking/": { "label": "Marking", "group": "tutors", "audience": ["teacher"] },
     "try/": { "label": "Live demo", "audience": ["student"] },
     "motion-demo/": {
-      "_index": "The motion demo (2026-10-13), shared by link: noindex, out of sitemap.xml and llms.txt, linked from no page. Set true to list it.",
-      "index": false,
+      "_index": "The motion demo (2026-10-13). Listed since 2026-10-13: the home page leads with it (owner), so it is indexed, in sitemap.xml and llms.txt. false = noindex and unlisted.",
+      "index": true,
       "label": "Motion demo",
       "audience": ["student"]
     },
