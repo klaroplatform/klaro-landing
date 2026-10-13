@@ -183,10 +183,9 @@ CLOUDFLARE_ACCOUNT_ID=<account id> npx wrangler versions upload --preview-alias 
 It prints a version URL and the `new-site` alias URL. Both are public and marked `noindex`. The
 account, the wrangler login and the full steps are in `design/brief/cloudflare.md`.
 
-**Production.** The site has two deploy targets, in `wrangler.jsonc`: the default one (learnklaro.com)
-and `--env klaroplatform` (klaroplatform.com, the canonical address, in the other Cloudflare account).
-Once Workers Builds is connected, every push to `main` deploys learnklaro.com. Until then, production
-is deployed by hand: ask the owner first. Never run `wrangler deploy` or
+**Production.** One Worker, `klaro-landing` in the Klaro Cloudflare account, serves klaroplatform.com
+and learnklaro.com (moved into that account on 2026-10-13). Production is deployed by hand with
+`npx wrangler deploy`: ask the owner first. Never run `wrangler deploy` or
 `wrangler versions deploy` for a preview; both replace the live site. Rollback steps are in
 `design/brief/cloudflare.md`.
 

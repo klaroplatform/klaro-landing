@@ -1,5 +1,11 @@
 # Cloudflare: how learnklaro.com is deployed
 
+> **Superseded on 2026-10-13.** learnklaro.com moved into the Klaro account
+> (`bbcdececfdc25f78201b3be407c7de6e`). One Worker, `klaro-landing` there, now serves
+> klaroplatform.com and learnklaro.com; deploy with `npx wrangler deploy` (no account variable, no
+> `--env`). The old Worker in the second account is deleted; `fund-389` (omaraskar.com) still lives
+> there. Workers Builds is not connected. The rest of this file is the 2026-10-08 history.
+
 Checked on 2026-10-08 (§2.5 and §3.1 re-checked at 19:40 UTC). The SEO side of the same settings
 is in `design/brief/seo-geo.md` §5 (a local file, not in git).
 
