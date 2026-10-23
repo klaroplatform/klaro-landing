@@ -337,29 +337,19 @@
           <div class="ill opening-tile"><img src="img/ill/03-parcel-480.webp" alt="" width="480" height="480" decoding="async"></div>
           <div class="ill opening-tile"><img src="img/ill/08-exam-clock-480.webp" alt="" width="480" height="480" decoding="async"></div>
         </div>
-        <figure class="show" data-showcase="study" data-phone-recording="study-hero" data-app-width="1000" data-title="Klaro sample workspace: the study view">
-          <div class="device device--browser">
-            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen show-screen" data-screen data-nosnippet>
-              <picture><source media="(max-width: 899px)" srcset="media/stills/study-hero-phone.webp" width="780" height="1688"><img src="img/study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" fetchpriority="high"></picture>
-            </div>
-          </div>
-          <div class="show-under">
-            <ol class="show-steps" data-steps>
-              <li>A student taps a passage in your book.</li>
-              <li>Your lecture jumps to that moment and explains exactly that passage.</li>
-              <li>The question on that passage is right there.</li>
-              <li>Your turn. Tap any part of the book.</li>
-            </ol>
-            <div class="show-actions" data-actions>
-              <a class="btn btn-secondary btn-sm show-try only-narrow" href="try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a>
-              <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
-            </div>
-          </div>
+        <!-- The hero (owner, 2026-10-23): a short looping animation of the real study view on a
+             monitor, on phones and computers alike, in place of the live app and the phone recording.
+             Reduced motion: no <source> matches, so the poster stands. site.js pauses it off screen. -->
+        <figure class="show show--anim">
+          <video class="anim-video" data-anim autoplay muted loop playsinline preload="auto" width="1600" height="1200" poster="media/study-anim-poster.webp" aria-label="Klaro's study view on a sample Biology course. Step 1: tap a line in the book and the lecture plays the part that explains it. Step 2: practise that exact part, right beside it.">
+            <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="media/study-anim-960.webm" type="video/webm">
+            <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="media/study-anim-960.mp4" type="video/mp4">
+            <source media="(prefers-reduced-motion: no-preference)" src="media/study-anim.webm" type="video/webm">
+            <source media="(prefers-reduced-motion: no-preference)" src="media/study-anim.mp4" type="video/mp4">
+          </video>
           <figcaption class="caption"><b>Sample course.</b> Your book, your lecture and your past-paper questions, linked: what your students get.</figcaption>
         </figure>
       </div>
-      <div class="opening-marks" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></div>
     </div>
   </div>
 </section>

@@ -680,6 +680,16 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
   .opening:has(.show[data-phone-recording]) .opening-tile:nth-child(2) { --fx: -140%; }
 }
 
+/* The hero animation (/ only, owner 2026-10-23): one 4:3 looping video of the study view on a
+   monitor (the frame and the step captions are drawn in it), on every width, in place of the live
+   app and the phone recording. Its own canvas is --page, so it sits on the page without a box.
+     <figure class="show show--anim"><video class="anim-video" data-anim …><source media=…>…</video><figcaption class="caption">…</figcaption></figure> */
+.opening-stage > .show--anim { width: min(100%, calc((100svh - var(--sticky-top) - 96px) * 4 / 3)); }
+.anim-video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: var(--page);
+  /* Trimmed to the drawn caption, monitor and stand, so the opening's tiles behind it are not boxed in by its empty corners. */
+  clip-path: polygon(9.375% 2.5%, 90.625% 2.5%, 90.625% 11.667%, 96.25% 11.667%, 96.25% 92.5%, 63.125% 92.5%, 63.125% 100%, 36.875% 100%, 36.875% 92.5%, 3.75% 92.5%, 3.75% 11.667%, 9.375% 11.667%); }
+@media (max-width: 1024px) { .opening-stage > .show--anim { width: min(100%, 720px, calc((100svh - 88px - 96px) * 4 / 3)); } }
+
 /* ======================================================================== Sticky step list (/ and /students/, §7.8) */
 /* Each step is a panel: its copy (h3, two lines, a text link) and its framed recording.
      <div class="steps-sticky" data-steps aria-label="What Klaro takes off your plate">

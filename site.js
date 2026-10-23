@@ -10,6 +10,7 @@
         is loaded here, only once site.css opts it in and it is near the view, and takes over
         from the CSS frame; ?ph shows the placeholders' file names
      7. Scroll reveal, calm and once
+     8. The hero animation (video[data-anim]): plays only on screen; never with reduced motion
    The showcase (live app frames and recordings) is showcase.js; this file never touches it. */
 (function () {
   'use strict';
@@ -411,5 +412,17 @@
   window.addEventListener('beforeprint', function () {
     document.querySelectorAll('.k-rv:not(.k-in)').forEach(function (el) { el.classList.add('k-in'); });
   });
+
+  /* ---------------------------------------------------------------- 8. The hero animation (video[data-anim]) */
+  // Muted, looping, autoplaying. Reduced motion: no source matches, so only the poster shows; we
+  // also never call play(). Otherwise it plays only while on screen and the tab is visible.
+  document.querySelectorAll('video[data-anim]').forEach(function (v) {
+    if (still) { v.removeAttribute('autoplay'); v.pause(); return; }
+    var on = true;
+    function sync() { if (on && !document.hidden) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); }
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (l) { on = l[l.length - 1].isIntersecting; sync(); }).observe(v);
+    document.addEventListener('visibilitychange', sync);
+  });
+
   root.classList.add('motion');
 })();
