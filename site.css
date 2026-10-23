@@ -26,6 +26,9 @@
 .topbar { position: sticky; top: 0; z-index: 50; background: var(--page); border-block-end: 1px solid transparent;
   transition: background-color var(--dur-ui) var(--ease-ui), border-color var(--dur-ui) var(--ease-ui); }
 .topbar.scrolled { background: rgb(243 243 241 / .84); -webkit-backdrop-filter: saturate(1.5) blur(14px); backdrop-filter: saturate(1.5) blur(14px); border-block-end-color: var(--line); }
+/* Phones and tablets: a near-solid bar, no blur. Re-blurring the page (and the hero's video) under it
+   every scroll frame made iPhone Safari stutter (2026-10-23). The frosted bar stays from 1025px. */
+@media (max-width: 1024px) { .topbar.scrolled { background: rgb(243 243 241 / .96); -webkit-backdrop-filter: none; backdrop-filter: none; } }
 .topbar-row { height: var(--header-h); display: flex; align-items: center; gap: 6px; }
 .brand { display: inline-flex; margin-inline-end: 14px; border-radius: 8px; }
 .brand img { height: 28px; width: auto; }
@@ -852,9 +855,11 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
     .stack-card:nth-child(4) { animation-timeline: --stack-5; }
   }
 }
-/* The opening without scroll-driven animations: site.js sets html.k-sd-js and, on .opening, --od
-   (how far the opening has scrolled past the top of the screen, in vh). Same ranges as above, and
-   the same gentle in-and-out (a smoothstep, close to --ease-inout). */
+/* The opening without scroll-driven animations: site.js sets html.k-sd-js and, on each tile and the
+   stage's device, --od (how far the opening has scrolled past the top of the screen, in vh). Same
+   ranges as above, and the same gentle in-and-out (a smoothstep, close to --ease-inout). --od is
+   registered as not inherited, so its per-frame write restyles only those four elements. */
+@property --od { syntax: '<number>'; inherits: false; initial-value: 0; }
 @media (prefers-reduced-motion: no-preference) {
   html.k-sd-js .opening-stage .device {
     --q: clamp(0, var(--od, 0) / 100, 1);

@@ -306,15 +306,20 @@
   /* ---------------------------------------------------------------- 5. The opening, without scroll-driven CSS */
   // Where animation-timeline is missing (Safari before 26, Firefox), the opening's motion follows
   // --od: how far the opening's top has scrolled past the top of the screen, in vh. One rect read
-  // and one custom property write per frame, only while the opening is on screen.
+  // per frame, only while the opening is on screen, and --od written on the elements that use it
+  // (the three tiles and the stage's device), not on .opening: an inherited property there
+  // restyled the whole opening every frame (site.css registers --od as not inherited).
   var supportsScrollCSS = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
   if (!still && !supportsScrollCSS && 'IntersectionObserver' in window) document.querySelectorAll('.opening').forEach(function (el) {
     root.classList.add('k-sd-js');
-    var raf = 0;
+    var raf = 0, last = '', users = el.querySelectorAll('.opening-tile, .opening-stage .device');
     function update() {
       raf = 0;
       var top = el.getBoundingClientRect().top;
-      el.style.setProperty('--od', Math.max(0, -top / (window.innerHeight / 100)).toFixed(2));
+      var od = Math.max(0, -top / (window.innerHeight / 100)).toFixed(2);
+      if (od === last) return;
+      last = od;
+      for (var i = 0; i < users.length; i++) users[i].style.setProperty('--od', od);
     }
     function request() { if (!raf) raf = requestAnimationFrame(update); }
     new IntersectionObserver(function (list) {

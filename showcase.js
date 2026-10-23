@@ -151,7 +151,8 @@
     clock. If the visitor doesn't scroll, the steps advance every ~4 s after a 2 s pause. Scrolling
     back resets the story to that step. Once the visitor has used the app, scrolling no longer takes
     it back (Replay does). The wrapper and the figure get data-step and --step (0 before the first
-    step, then 1 to n), plus --steps (n). The wrapper also gets --progress (0–1 through the pin).
+    step, then 1 to n), plus --steps (n). Nothing is written per scroll frame: a custom property on the
+    wrapper would restyle the whole opening each frame (the iPhone scroll jank, 2026-10-23).
 
   ── 4. The sticky step list beside the recordings ──────────────────────────────────────────
 
@@ -169,7 +170,7 @@
                       scenes poster|loading|live|story|free|done|failed,
                       recordings poster|playing|paused|done|failed.
     [data-steps] li   data-current on the current item, data-done on the ones before it, and --fill
-                      (0–1) on each. Its words are wrapped in <button class="step-go"> (inline-reset
+                      (1 before the current item, 0 from it on), set when the step changes. Its words are wrapped in <button class="step-go"> (inline-reset
                       to look like the text; the focus ring is kept). A click jumps there. Use
                       data-steps="static" for a list that should not be clickable.
     .plate--device, .pr-shot-field
@@ -567,7 +568,7 @@
 
   // A step list: the words stay in the HTML, the script marks the current one and fills its bar.
   function Steps(list, pick) {
-    var items = [], ctl = [], cur = -2, lastFill = -1;
+    var items = [], ctl = [], cur = -2;
     if (list) {
       for (var c = list.firstElementChild; c; c = c.nextElementSibling) if (c.tagName === 'LI') items.push(c);
       if (list.getAttribute('data-steps') === 'static') pick = null;
@@ -586,7 +587,6 @@
     function set(k, fill) {
       if (k !== cur) {
         cur = k;
-        lastFill = -1;
         items.forEach(function (li, i) {
           if (i === k) { li.setAttribute('data-current', ''); ctl[i].setAttribute('aria-current', 'step'); }
           else { li.removeAttribute('data-current'); ctl[i].removeAttribute('aria-current'); }
@@ -594,10 +594,8 @@
           li.style.setProperty('--fill', i < k ? '1' : '0');
         });
       }
-      if (fill != null && items[k] && Math.abs(fill - lastFill) > 0.004) {
-        lastFill = fill;
-        items[k].style.setProperty('--fill', fill.toFixed(3));
-      }
+      // fill (0–1 through step k) is no longer written each frame: nothing in site.css reads --fill,
+      // and the write restyled the caption every video frame. Step changes still set 0 or 1.
     }
     return { items: items, set: set };
   }
@@ -738,7 +736,6 @@
     function scrolled() {
       raf = 0;
       var p = pin();
-      op.style.setProperty('--progress', p.toFixed(3));
       if (!on || held || still()) return;
       var s = stepAt(p);
       if (s === lastS) return;
@@ -1311,16 +1308,29 @@
       var a = times[i] || 0, b = ends(i);
       return b > a ? (b - a) * 1000 : 4000;
     }, function () { return engaged && !lean(); });
+    // The video loads and starts once the visitor's first scroll has settled (scrollend, or 150 ms
+    // without a scroll event where scrollend is missing), not on the scroll's first frame: fetching
+    // and decoding it mid-swipe made the first swipe hitch on iPhones. A tap or key that doesn't
+    // scroll starts it 150 ms later; one that turns into a scroll waits for that scroll to settle.
+    var SETTLE = 150, settleT = 0, HAS_END = 'onscrollend' in W, WAKE = ['pointerdown', 'keydown', 'touchstart'];
     function engage() {
       if (engaged) return;
       engaged = true;
-      ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(function (t) { W.removeEventListener(t, engage, true); });
+      clearTimeout(settleT);
+      W.removeEventListener('scroll', onScroll, true);
+      if (HAS_END) W.removeEventListener('scrollend', engage, true);
+      WAKE.forEach(function (t) { W.removeEventListener(t, onWake, true); });
       if (lean()) return;           // Save-Data: the poster stays until a step is chosen
       load();
       cond.start();
     }
+    function later() { clearTimeout(settleT); settleT = setTimeout(engage, SETTLE); }
+    function onScroll() { if (HAS_END) clearTimeout(settleT); else later(); }
+    function onWake() { later(); }
     if (!still()) {
-      ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(function (t) { W.addEventListener(t, engage, { capture: true, passive: true }); });
+      W.addEventListener('scroll', onScroll, { capture: true, passive: true });
+      if (HAS_END) W.addEventListener('scrollend', engage, { capture: true, passive: true });
+      WAKE.forEach(function (t) { W.addEventListener(t, onWake, { capture: true, passive: true }); });
     }
     api.go = function (k) { load(); cond.hold(false); cond.go(k, 'click'); };
     api.step = function () { return cond.cur(); };

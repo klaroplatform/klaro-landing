@@ -226,10 +226,15 @@ button,.btn{font:inherit;font-weight:600;height:40px;padding:0 16px;border-radiu
   window.addEventListener('message', function (e) { if (e.data && e.data.type === 'klaro-showcase-ready') note('ready heard'); });
   // A small live readout of the hero's state.
   var log = document.getElementById('log');
+  // How far through the pin (0–1), as showcase.js reads it; it no longer writes --progress.
+  function pinProgress(o) {
+    var r = o.getBoundingClientRect(), span = r.height - window.innerHeight;
+    return (span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : r.top < 0 ? 1 : 0).toFixed(3);
+  }
   setInterval(function () {
     var o = document.querySelector('[data-opening]');
     log.textContent = 'hero ' + hero.getAttribute('data-mode') + ' / ' + hero.getAttribute('data-state') +
-      ' / step ' + hero.getAttribute('data-step') + '\nprogress ' + (o.style.getPropertyValue('--progress') || '-') +
+      ' / step ' + hero.getAttribute('data-step') + '\nprogress ' + pinProgress(o) +
       '\nbytes ' + Math.round(window.__bytes().total / 1024) + ' KB';
   }, 300);
 })();
