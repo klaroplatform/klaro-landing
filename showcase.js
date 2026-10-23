@@ -621,7 +621,7 @@
     one seek per frame, which is always allowed (Omar's examples.js). The clock runs at real speed;
     a frame that is still loading is skipped, never waited for.
   */
-  function Player(video, onTime, onEnd, onStop) {
+  function Player(video, onTime, onEnd, onStop, onNext) {
     var manual = false, run = false, until = 0, clock = 0, last = 0;
     function end() { return Math.min(until || Infinity, video.duration || Infinity); }
     function frame(t) {
@@ -636,7 +636,9 @@
       }
       var at = manual ? clock : video.currentTime;
       onTime(at);
-      if (video.readyState >= 1 && at >= end() - 0.04) { stop(); onEnd(); return; }
+      // `onNext` may carry straight on into the next stretch (a story's next step): the video then
+      // keeps playing, with no pause and no seek between the two.
+      if (video.readyState >= 1 && at >= end() - 0.04) { if (onNext && onNext()) return; stop(); onEnd(); return; }
       // Paused by the browser (a background tab saving power, a stall): say so, and wait.
       if (!manual && video.paused) { run = false; if (onStop) onStop(); return; }
       requestAnimationFrame(frame);
@@ -768,6 +770,15 @@
       hold: function (v) { held = !!v; arm(); },
       cur: function () { return cur; },
       jump: function (i) { cur = i; mark(); },
+      // The next step now, where the clock would take it there anyway (its timer is armed): a
+      // recording that reaches the end of a step carries on without waiting for the timer.
+      next: function () {
+        if (!timer || cur >= n - 1) return false;
+        clearTimeout(timer);
+        timer = 0;
+        go(cur + 1, 'clock');
+        return true;
+      },
       stop: function () { on = false; clearTimeout(timer); }
     };
   }
@@ -1285,6 +1296,10 @@
       if (seg < 0) return;
       steps.set(seg, 1);
       if (seg === n - 1) { fig.setAttribute('data-state', 'done'); replay.hidden = false; }
+    }, null, function () {
+      // The end of a step while the clock tells the story: straight on into the next one, with
+      // no freeze (pause, wait for the timer, seek) at each step.
+      return seg >= 0 && seg < n - 1 && cond.next();
     });
     video.addEventListener('error', function () { warn('the ' + name + ' recording stays a picture'); fig.setAttribute('data-state', 'failed'); cond.stop(); });
 
@@ -1293,16 +1308,33 @@
       loaded = true;
       video.preload = 'auto';
       video.src = ROOT + 'media/' + name + '.mp4';
-      if (times.some(function (t) { return !isFinite(t); })) cuesFrom(name, times, noop);
+      if (times.some(function (t) { return !isFinite(t); })) {
+        cuesFrom(name, times, cued);
+        cueWait = setTimeout(cued, 2500);   // no media/<name>.json: play as before, unbounded
+      } else cued();
+    }
+    // The cue times come from media/<name>.json (when the <li>s have no data-t). A step that
+    // started before they arrived played on past its end (no end yet) and the next step then
+    // seeked back over it: the first stretch is held until they are known.
+    var cueWait = 0, cuesIn = false, pending = null;
+    function cued() {
+      clearTimeout(cueWait);
+      if (cuesIn) return;
+      cuesIn = true;
+      if (pending) { var a = pending; pending = null; play(a[0], a[1], a[2]); }
     }
     function play(i, prev, how) {
       seg = i;
       replay.hidden = true;
-      if (i < 0) { player.pause(); player.seek(0); steps.set(-1); return; }
+      if (i < 0) { pending = null; player.pause(); player.seek(0); steps.set(-1); return; }
       load();
       fig.setAttribute('data-state', 'story');
       steps.set(i, 0);
-      player.play(times[i] || 0, ends(i));
+      if (!cuesIn) { pending = [i, prev, how]; return; }
+      var from = times[i] || 0;
+      // Already there (the clock carried the video on into this step): no seek, so no hitch.
+      if (how === 'clock' && player.playing() && Math.abs(video.currentTime - from) < 0.15) from = null;
+      player.play(from, ends(i));
     }
     var cond = Conductor(fig, n, play, function (i) {
       var a = times[i] || 0, b = ends(i);
