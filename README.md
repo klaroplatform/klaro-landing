@@ -110,8 +110,11 @@ The pages show the real Klaro app, not drawn mock-ups.
 - **Recordings** are in `media/`: `<name>.mp4`, a poster image, and `<name>.json` with the caption
   cue times. `media/stills/` holds still frames.
 - **The markup** is documented at the top of `showcase.js`: a live scene is
-  `figure.show[data-showcase]`, a recording is `figure.rec[data-recording]`. Phones get
-  `data-phone-recording` instead of the live app.
+  `figure.show[data-showcase]`, a recording is `figure.rec[data-recording]`. Phones get the
+  poster instead of the live app.
+- **The heroes** of `/`, `/students/` and `/products/study-view/` are a looping video
+  (`figure.show.show--anim`, `media/study-anim*.{webm,mp4}` with `study-anim-poster.webp`), made in
+  the Remotion project outside this repo; `site.js` pauses it off screen.
 - **The app is always whole.** A recording is contained in its screen (at the top, on the app's
   own page colour), and the live app is drawn to the screen's shape. Nothing zooms inside a screen.
 - **The camera** moves the whole picture instead: the scene plate, with its drawn device and the

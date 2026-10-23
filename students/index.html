@@ -104,7 +104,7 @@
     "width": 1200,
     "height": 630
    },
-   "dateModified": "2026-10-12",
+   "dateModified": "2026-10-23",
    "about": {
     "@id": "https://klaroplatform.com/#app"
    },
@@ -335,8 +335,8 @@
 
 <main id="main">
 
-<!-- The opening (redesign.md 7.2 and 7.8): the real app as the sample student, pinned while the story plays. -->
-<section class="opening opening--pin-copy" data-opening>
+<!-- The opening (redesign.md 7.2): the copy beside the hero animation of the study view, as on / (owner, 2026-10-23). -->
+<section class="opening">
   <div class="wrap opening-grid">
     <div class="opening-copy">
       <nav class="chip-switch" aria-label="Klaro for"><span class="chip-switch-label">Klaro for…</span><a href="../">Tutors</a><a href="./" aria-current="page">Students and parents</a></nav>
@@ -355,27 +355,16 @@
           <div class="ill opening-tile" data-ph="img/ill/02-book-passage-480.webp"><img src="../img/ill/02-book-passage-480.webp" alt="" width="480" height="480" decoding="async"></div>
           <div class="ill opening-tile" data-ph="img/ill/08-exam-clock-480.webp"><img src="../img/ill/08-exam-clock-480.webp" alt="" width="480" height="480" decoding="async"></div>
         </div>
-        <figure class="show" data-showcase="student-study" data-phone-recording="student-study-hero" data-app-width="1000" data-title="Klaro sample workspace: a student's study view">
-          <div class="device device--browser">
-            <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-            <div class="device-screen show-screen" data-screen data-nosnippet><picture><source media="(max-width: 899px)" srcset="../media/stills/student-study-hero-phone.webp" width="780" height="1688"><img src="../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course, as a student sees it: the book, the lecture and the past-paper questions" width="1440" height="900" fetchpriority="high"></picture></div>
-          </div>
-          <div class="show-under">
-            <ol class="show-steps" data-steps>
-              <li>A tap on a passage in your book…</li>
-              <li>…and your tutor's lecture jumps to the moment that explains it.</li>
-              <li>The past-paper question on it is right there.</li>
-              <li>Your turn. Tap any part of the book.</li>
-            </ol>
-            <div class="show-actions" data-actions>
-              <a class="btn btn-secondary btn-sm show-try only-narrow" href="../try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a>
-              <button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button>
-            </div>
-          </div>
+        <figure class="show show--anim">
+          <video class="anim-video" data-anim autoplay muted loop playsinline preload="auto" width="1600" height="1200" poster="../media/study-anim-poster.webp" aria-label="Klaro's study view on a sample Biology course. Step 1: tap a line in the book and the lecture plays the part that explains it. Step 2: practise that exact part, right beside it.">
+            <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="../media/study-anim-960.webm" type="video/webm">
+            <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="../media/study-anim-960.mp4" type="video/mp4">
+            <source media="(prefers-reduced-motion: no-preference)" src="../media/study-anim.webm" type="video/webm">
+            <source media="(prefers-reduced-motion: no-preference)" src="../media/study-anim.mp4" type="video/mp4">
+          </video>
           <figcaption class="caption"><b>Sample course.</b> A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
         </figure>
       </div>
-      <div class="opening-marks" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></div>
     </div>
   </div>
 </section>

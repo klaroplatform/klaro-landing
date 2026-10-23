@@ -70,7 +70,7 @@
     "width": 1200,
     "height": 630
    },
-   "dateModified": "2026-10-12",
+   "dateModified": "2026-10-23",
    "about": {
     "@id": "https://klaroplatform.com/#app"
    },
@@ -269,9 +269,8 @@
 
 <main id="main">
 
-<!-- Study view. The real study view is the hero: the copy centred, the live frame at full width,
-     handed to the visitor at once (Replay plays the story). Under 900px it is the phone recording
-     student-study-hero. Then what the three panes do (with the research line), a recording of a
+<!-- Study view. The hero: the copy centred, the hero animation of the study view under it (as on /,
+     owner 2026-10-23; the interactive demo is /try/). Then what the three panes do (with the research line), a recording of a
      question opening where the tutor explained it, two short cards, the FAQ and the closing call. -->
 <section class="hero pr-hero-stack">
   <div class="wrap">
@@ -285,20 +284,13 @@
         </div>
       </div>
     </div>
-    <figure class="show pr-hero-media" id="in-action" data-showcase="student-study" data-play="free" data-app-width="1000" data-phone-recording="student-study-hero" data-title="Klaro sample workspace: the study view">
-      <div class="device device--browser">
-        <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
-        <div class="device-screen show-screen" data-screen data-nosnippet><picture><source media="(max-width: 899px)" srcset="../../media/stills/student-study-hero-phone.webp" width="780" height="1688"><img src="../../img/student-study-0.webp" alt="Klaro's study view on a sample Biology course: the book, the lecture and the past-paper questions side by side" width="1440" height="900" fetchpriority="high"></picture></div>
-      </div>
-      <div class="show-under">
-        <ol class="show-steps" data-steps="static">
-          <li>Tap any passage in your book.</li>
-          <li>Your tutor's lecture jumps to that moment and explains it.</li>
-          <li>The past-paper question on it is right there.</li>
-          <li>Your turn. Tap any part of the book.</li>
-        </ol>
-        <div class="show-actions" data-actions><a class="btn btn-secondary btn-sm show-try" href="../../try/"><svg class="i" aria-hidden="true"><use href="#i-expand"/></svg>Try it full screen</a><button class="btn btn-secondary btn-sm show-replay" type="button" data-action="replay" hidden><svg class="i" aria-hidden="true"><use href="#i-replay"/></svg>Replay</button></div>
-      </div>
+    <figure class="show show--anim pr-hero-media" id="in-action">
+      <video class="anim-video" data-anim autoplay muted loop playsinline preload="auto" width="1600" height="1200" poster="../../media/study-anim-poster.webp" aria-label="Klaro's study view on a sample Biology course. Step 1: tap a line in the book and the lecture plays the part that explains it. Step 2: practise that exact part, right beside it.">
+        <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="../../media/study-anim-960.webm" type="video/webm">
+        <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="../../media/study-anim-960.mp4" type="video/mp4">
+        <source media="(prefers-reduced-motion: no-preference)" src="../../media/study-anim.webm" type="video/webm">
+        <source media="(prefers-reduced-motion: no-preference)" src="../../media/study-anim.mp4" type="video/mp4">
+      </video>
       <figcaption class="caption"><b>Sample course.</b> A student's study view: the book, the lecture and the past-paper questions on one screen.</figcaption>
     </figure>
   </div>

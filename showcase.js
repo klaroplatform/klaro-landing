@@ -11,20 +11,13 @@
 
   ── 1. A live scene (one per page at most) ─────────────────────────────────────────────────
 
-    <figure class="show" data-showcase="study" data-phone-recording="study-hero">
+    <figure class="show" data-showcase="student-study" data-fit="fill" data-play="free">   (/try/)
       <div class="show-screen" data-screen data-nosnippet>
-        <img src="img/showcase/study.webp" alt="…" width="1440" height="900" fetchpriority="high">
+        <img src="img/student-study-0.webp" alt="…" width="1440" height="900" fetchpriority="high">
       </div>
       <figcaption>Sample course. …</figcaption>
-      <ol class="show-steps" data-steps>
-        <li>A student taps a passage in your book.</li>
-        <li>Your lecture jumps to that moment and explains exactly that passage.</li>
-        <li>The question on that passage is right there.</li>
-        <li>Your turn. Tap any part of the book.</li>
-      </ol>
-      <p class="show-tapped" data-after-tap hidden>Every page links to the moment you explained it.</p>
+      <ol class="show-steps" data-steps>…</ol>
       <div class="show-actions" data-actions>
-        <a class="show-try" href="try/">Try it full screen</a>
         <button type="button" data-action="replay" hidden>Replay</button>
       </div>
     </figure>
@@ -32,16 +25,13 @@
     data-showcase   The scene (showcase.md §3): study, student-study, student-practice, lives, quiz,
                     marking, student-minis, student-tutor. A name starting with student- runs as
                     the sample student.
-    data-play       "story" (the default when the scene has one; study and student-study do): the
-                    story (a drawn pointer taps the book, the lecture jumps, the question shows),
-                    then the visitor's turn. "steps": each <li> is a step of the scene (<li
-                    data-step="n"> picks one). The app is always whole in its screen: there is no
-                    camera on a live scene (see "The camera" below). "free": the
-                    visitor's turn at once; on a scene with a story, Replay (or a step) plays the
-                    whole story on the clock and hands over again. The visitor's turn only
-                    exists on study, student-study and student-practice; elsewhere the frame stays
-                    read-only.
-    data-story      A story by name (default: the scene's own). "none" means no story.
+    data-play       "steps" (the default): each <li> is a step of the scene (<li data-step="n">
+                    picks one). The app is always whole in its screen: there is no camera on a
+                    live scene (see "The camera" below). "free": the visitor's turn at once. The
+                    visitor's turn only exists on study, student-study and student-practice;
+                    elsewhere the frame stays read-only. ("story", a drawn pointer telling the
+                    study story, went with the live heroes on 2026-10-23; no story is defined.)
+    data-story      A story by name, from STORIES (none is defined now).
     data-fit        "fill": the frame fills the screen at its own size, in the app's own layout,
                     with no story (data-play defaults to "free"), so the app's text is at its real
                     size. On phones and with Save-Data it stays a poster like any scene, unless
@@ -49,22 +39,13 @@
                     draws the app 1440 wide (data-app-width) and as tall as the screen's shape
                     asks, scaled to fit the screen, so it fills a drawn screen whole whatever its
                     shape: nothing cut, no band.
-    data-phone-recording
-                    On phones (< 900px) the page plays this recording instead of loading the live
-                    app, stepped like the story: media/<name>.mp4 and media/<name>.json (one cue
-                    per <li>). It loads on the visitor's first scroll or tap, not before. The
-                    screen's <img> stays the poster until the video has a frame: give phones their
-                    own with <picture><source media="(max-width: 899px)" srcset="…">, or set
-                    data-phone-poster. Without a phone recording, phones (and big screens with
-                    Save-Data) keep the poster and the Try link.
+                    Phones (< 900px) and big screens with Save-Data keep the poster (and a Try
+                    link if the page has one).
     data-app-width  The width the app is drawn at before it is scaled to the screen (default 1440,
                     at least 1000, where the study view still has its three panes; the height
                     follows the screen's shape). A product page's frame uses 1000, so the app's
                     text is about 45% larger on the same screen than at 1440.
     data-title      The frame's title (default "Klaro sample workspace").
-    <li data-at>    Where the step starts in the opening's pin, from 0 to 1 (defaults: 0.15, 0.35,
-                    0.6, 0.85). The study story's four <li> are the tap, the lecture, the question
-                    and the visitor's turn.
 
   ── 2. A recording ──────────────────────────────────────────────────────────────────────────
 
@@ -143,16 +124,10 @@
     picture (the push would be under 1.12×) doesn't move. With reduced motion the camera never
     moves. A live scene has no camera.
 
-  ── 3. The opening (redesign.md §7.8) ───────────────────────────────────────────────────────
+  ── 3. The opening (removed 2026-10-23) ─────────────────────────────────────────────────────
 
-    <section class="opening" data-opening> … the live figure, in a sticky stage … </section>
-
-    The scroll position through the wrapper picks the story's step, and each step plays on its own
-    clock. If the visitor doesn't scroll, the steps advance every ~4 s after a 2 s pause. Scrolling
-    back resets the story to that step. Once the visitor has used the app, scrolling no longer takes
-    it back (Replay does). The wrapper and the figure get data-step and --step (0 before the first
-    step, then 1 to n), plus --steps (n). Nothing is written per scroll frame: a custom property on the
-    wrapper would restyle the whole opening each frame (the iPhone scroll jank, 2026-10-23).
+    The heroes of /, /students/ and /products/study-view/ are a looping video now (site.css,
+    .show--anim; site.js plays it), not a scene: nothing here drives the opening any more.
 
   ── 4. The sticky step list beside the recordings ──────────────────────────────────────────
 
@@ -166,7 +141,7 @@
 
   ── 5. What the script sets, for site.css ──────────────────────────────────────────────────
 
-    figure            data-mode="live|phone|poster" (scenes), and data-state:
+    figure            data-mode="live|poster" (scenes), and data-state:
                       scenes poster|loading|live|story|free|done|failed,
                       recordings poster|playing|paused|done|failed.
     [data-steps] li   data-current on the current item, data-done on the ones before it, and --fill
@@ -177,8 +152,7 @@
                       the camera's frame: its children get an inline transform while it is in.
     video[data-shown] a recording's video once it has a frame (site.css fades it in over the poster).
     [data-screen]     gets .show-cam > iframe.show-frame, .show-cursor (a drawn pointer and its tap)
-                      and .show-hint > .show-hint-ring (the "your turn" ring: style it in site.css),
-                      or video.show-video (the phone recording).
+                      and .show-hint > .show-hint-ring (the "your turn" ring: style it in site.css).
     [data-action="play"|"replay"]
                       The script toggles their hidden attribute, and creates them if they are
                       missing (inside [data-actions], or at the end of the figure).
@@ -205,7 +179,6 @@
   // guard loops until the stack overflows (showcase.md §4.2). Practice redirects into the study
   // view, so it may be freed once it has drawn (2), but never from the start.
   var FREE = { study: 1, 'student-study': 1, 'student-practice': 2 };
-  var STORY_OF = { study: 'study', 'student-study': 'study' };
   var WORDS = {
     en: { frame: 'Klaro sample workspace', play: 'Play', replay: 'Replay', use: 'Use the sample app with the keyboard' },
     ar: { frame: 'مساحة Klaro التجريبية', play: 'تشغيل', replay: 'إعادة التشغيل', use: 'استخدم التطبيق التجريبي بلوحة المفاتيح' }
@@ -687,29 +660,17 @@
   }
 
   /*
-    Picks the step: the scroll position through the opening (redesign.md §7.8), or a clock when
-    the visitor doesn't scroll (2 s, then every ~4 s), or a click on a step. `play(i, prev, how)`
-    shows step i (-1 is the state before the first step).
+    Picks the step: a clock (2 s, then every ~4 s) while the figure is on screen, or a click on a
+    step. `play(i, prev, how)` shows step i (-1 is the state before the first step).
   */
   function Conductor(fig, n, play, ms, auto) {
-    var op = fig.closest('[data-opening]');
-    var lis = fig.querySelectorAll('[data-steps] > li');
-    var spread = n === 4 ? [0.15, 0.35, 0.6, 0.85] : null;
-    var at = [];
-    for (var k = 0; k < n; k++) {
-      var v = lis[k] ? parseFloat(lis[k].getAttribute('data-at')) : NaN;
-      at.push(isFinite(v) ? v : spread ? spread[k] : 0.15 + 0.7 * (n > 1 ? k / (n - 1) : 0));
-    }
-    var cur = -1, timer = 0, on = false, held = false, seen = false, lastS = -1, raf = 0;
+    var cur = -1, timer = 0, on = false, held = false, seen = false;
 
     function mark() {
       var s = String(cur + 1);
-      [fig, op].forEach(function (el) {
-        if (!el) return;
-        el.setAttribute('data-step', s);
-        el.style.setProperty('--step', s);
-        el.style.setProperty('--steps', String(n));
-      });
+      fig.setAttribute('data-step', s);
+      fig.style.setProperty('--step', s);
+      fig.style.setProperty('--steps', String(n));
     }
     function go(i, how) {
       i = clamp(i, -1, n - 1);
@@ -725,33 +686,6 @@
       if (!on || held || !seen || D.hidden || still() || cur >= n - 1 || !auto()) return;
       timer = setTimeout(function () { timer = 0; go(cur + 1, 'clock'); }, cur < 0 ? 2000 : Math.max(4000, ms(cur) + 800));
     }
-    // How far the visitor is through the pin: 0 when it starts, 1 when the stage lets go.
-    function pin() {
-      var r = op.getBoundingClientRect(), span = r.height - W.innerHeight;
-      return span > 0 ? clamp(-r.top / span, 0, 1) : r.top < 0 ? 1 : 0;
-    }
-    function stepAt(p) {
-      var s = -1;
-      for (var i = 0; i < n; i++) if (p >= at[i]) s = i;
-      return s;
-    }
-    function scrolled() {
-      raf = 0;
-      var p = pin();
-      if (!on || held || still()) return;
-      var s = stepAt(p);
-      if (s === lastS) return;
-      var back = s < lastS;
-      lastS = s;
-      // Forward never rewinds what the clock already played; back always resets to that step.
-      if (back || s > cur) go(s, 'scroll');
-    }
-    if (op) {
-      var later = function () { if (!raf) raf = requestAnimationFrame(guard(scrolled, 'scroll')); };
-      W.addEventListener('scroll', later, { passive: true });
-      W.addEventListener('resize', later);
-      later();
-    }
     watch(fig, [0, 0.25], function (e) { seen = e.isIntersecting && e.intersectionRatio >= 0.25; arm(); });
     onShow.push(arm);
     mark();
@@ -759,9 +693,7 @@
       start: function () {
         if (on) return;
         on = true;
-        lastS = op ? stepAt(pin()) : -1;
-        if (lastS >= 0) go(lastS, 'scroll');
-        else arm();
+        arm();
       },
       go: go,
       // The visitor asked for the story (Replay, or a step): let the clock carry it on from there,
@@ -783,55 +715,11 @@
     };
   }
 
-  /*
-    Stories: Omar's hero.js, without its camera (the owner, 2026-10-09: nothing zooms inside a
-    screen). The whole app stays in view; a drawn pointer taps the book, the lecture jumps and the
-    question shows, each at its own calm pace. Every point is found in the app with `measure`
-    (showcase.md §2.1), so it also works in Arabic, where the panes mirror. `px` are Omar's English
-    pixels, used only when a target can't be measured (mirrored in Arabic). The book page is a PDF
-    and never mirrors, so points inside it are fractions of the page.
-  */
-  var STORIES = {
-    study: {
-      shown: { selector: '[data-book-page="2"] .textLayer span' },
-      targets: {
-        page: { selector: '[data-book-page="2"]' }
-      },
-      points: {
-        tap: { from: 'page', at: [0.545, 0.318], px: [205, 392] },     // "Parts every cell has"
-        hint: { from: 'page', at: [0.53, 0.51], px: [200, 470] }       // "The cell membrane"
-      },
-      beats: [
-        { // A passage of the book is tapped (the app points at it, as a click would): the pointer
-          // glides in, rests, taps, and fades.
-          ms: 3200,
-          enter: function (S) { S.tell({ free: false, scrub: false, step: 0 }); S.measure(); },
-          draw: function (S, q) {
-            var t = S.point('tap'), g = S.glide(lin(q, 0.1, 0.6));
-            S.cursor(mix(t.x + S.dir * 220, t.x, g), mix(t.y + 150, t.y, g), S.ease(lin(q, 0.04, 0.2)) * (1 - S.ease(lin(q, 0.86, 1))));
-            S.ripple(lin(q, 0.66, 0.94));
-            if (q >= 0.66) S.once('point', function () { S.tell({ step: 1 }); });
-          }
-        },
-        { // The lecture jumps to that moment and plays the explanation (scrubbed, 113 s to 163 s).
-          ms: 4200,
-          enter: function (S) { S.cursor(0, 0, 0); S.tell({ step: 1 }); S.tell({ step: 2, scrub: true }); S.time(113, true); S.measure(); },
-          draw: function (S, q) { S.time(113 + 50 * lin(q, 0.1, 1)); }
-        },
-        { // The past-paper question on that passage, beside it.
-          ms: 3000,
-          enter: function (S) { S.tell({ step: 2, scrub: true }); S.measure(); },
-          draw: noop
-        },
-        { // The study view is the visitor's.
-          ms: 800,
-          enter: function (S) { S.tell({ step: 2 }); },
-          draw: noop,
-          end: function (S) { S.handOver(); }
-        }
-      ]
-    }
-  };
+  // The study story (a drawn pointer taps the book, the lecture jumps, the question shows) went with
+  // the live heroes of /, /students/ and /products/study-view/ (owner, 2026-10-23: a looping video
+  // there now). A story is { shown, targets, points, beats }; none is defined, so data-play
+  // defaults to "steps" (or "free" with data-fit="fill").
+  var STORIES = {};
   // Before the first step: the app as it opened.
   var INTRO = {
     ms: 700,
@@ -869,7 +757,7 @@
     var fill = fig.getAttribute('data-fit') === 'fill';
     var storyName = fig.getAttribute('data-story');
     // A frame at its own size has no story.
-    var story = fill ? null : STORIES[storyName == null ? STORY_OF[scene] || '' : storyName] || null;
+    var story = fill ? null : (storyName && STORIES[storyName]) || null;
     var mode = fig.getAttribute('data-play') || (story ? 'story' : fill ? 'free' : 'steps');
     var freeKind = FREE[scene] || 0;
     if (mode === 'free' && !freeKind) {
@@ -884,12 +772,9 @@
     // its three panes (they need about 1000px).
     var AW = Math.max(1000, +fig.getAttribute('data-app-width') || APP_W), AH = Math.round(AW * APP_H / APP_W);
 
-    // Phones and Save-Data: no live app inline (it is the whole app, ~1.1 MB of code). Phones
-    // get the phone recording; a big screen on Save-Data keeps the poster. Only /try/, where the
-    // app is the page, asks for it on phones too (data-phone="live").
+    // Phones and Save-Data: no live app inline (it is the whole app, ~1.1 MB of code); the poster
+    // stays. Only /try/, where the app is the page, asks for it on phones too (data-phone="live").
     if (fig.getAttribute('data-phone') !== 'live' && (PHONE.matches || lean())) {
-      var rec = PHONE.matches && fig.getAttribute('data-phone-recording');
-      if (rec) return Handset(fig, screen, rec, api);
       fig.setAttribute('data-mode', 'poster');
       fig.setAttribute('data-state', 'poster');
       api.mode = 'poster';
@@ -1256,117 +1141,6 @@
     api.step = function () { return cond.cur(); };
     api.measure = measure;
     api.rects = rects;
-    return api;
-  }
-
-  /*
-    Phones: the same story as a recording of the app's phone layout, stepped by scroll like the
-    live one (redesign.md §7.8). Nothing is fetched until the visitor scrolls or taps, so the first
-    screen costs only the poster.
-  */
-  function Handset(fig, screen, name, api) {
-    fig.setAttribute('data-mode', 'phone');
-    fig.setAttribute('data-state', 'poster');
-    api.mode = 'phone';
-    boxIn(screen);
-    var video = make('video', 'show-video', 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover');
-    video.muted = true;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.playsInline = true;
-    video.preload = 'none';
-    // The screen's own <img> (a <picture> with a phone source) shows through until the video has
-    // a frame, so phones fetch one poster, not two. data-phone-poster sets one on the video instead.
-    if (fig.getAttribute('data-phone-poster')) video.poster = fig.getAttribute('data-phone-poster');
-    var img = screen.querySelector('img');
-    if (img && img.alt) video.setAttribute('aria-label', img.alt);
-    screen.appendChild(video);
-
-    var engaged = false, loaded = false, seg = -1, times = [];
-    var steps = Steps(fig.querySelector('[data-steps]'), function (k) { load(); cond.hold(false); cond.go(k, 'click'); });
-    var n = steps.items.length;
-    steps.items.forEach(function (li) { times.push(parseFloat(li.getAttribute('data-t'))); });
-    var replay = action(fig, 'replay', WORDS.replay, function () { load(); cond.hold(false); cond.go(0, 'replay'); });
-    function ends(i) { return isFinite(times[i + 1]) ? times[i + 1] : 0; }
-    var player = Player(video, function (t) {
-      if (seg < 0) return;
-      var a = times[seg] || 0, b = ends(seg) || video.duration || a + 4;
-      steps.set(seg, lin(t, a, b));
-    }, function () {
-      if (seg < 0) return;
-      steps.set(seg, 1);
-      if (seg === n - 1) { fig.setAttribute('data-state', 'done'); replay.hidden = false; }
-    }, null, function () {
-      // The end of a step while the clock tells the story: straight on into the next one, with
-      // no freeze (pause, wait for the timer, seek) at each step.
-      return seg >= 0 && seg < n - 1 && cond.next();
-    });
-    video.addEventListener('error', function () { warn('the ' + name + ' recording stays a picture'); fig.setAttribute('data-state', 'failed'); cond.stop(); });
-
-    function load() {
-      if (loaded) return;
-      loaded = true;
-      video.preload = 'auto';
-      video.src = ROOT + 'media/' + name + '.mp4';
-      if (times.some(function (t) { return !isFinite(t); })) {
-        cuesFrom(name, times, cued);
-        cueWait = setTimeout(cued, 2500);   // no media/<name>.json: play as before, unbounded
-      } else cued();
-    }
-    // The cue times come from media/<name>.json (when the <li>s have no data-t). A step that
-    // started before they arrived played on past its end (no end yet) and the next step then
-    // seeked back over it: the first stretch is held until they are known.
-    var cueWait = 0, cuesIn = false, pending = null;
-    function cued() {
-      clearTimeout(cueWait);
-      if (cuesIn) return;
-      cuesIn = true;
-      if (pending) { var a = pending; pending = null; play(a[0], a[1], a[2]); }
-    }
-    function play(i, prev, how) {
-      seg = i;
-      replay.hidden = true;
-      if (i < 0) { pending = null; player.pause(); player.seek(0); steps.set(-1); return; }
-      load();
-      fig.setAttribute('data-state', 'story');
-      steps.set(i, 0);
-      if (!cuesIn) { pending = [i, prev, how]; return; }
-      var from = times[i] || 0;
-      // Already there (the clock carried the video on into this step): no seek, so no hitch.
-      if (how === 'clock' && player.playing() && Math.abs(video.currentTime - from) < 0.15) from = null;
-      player.play(from, ends(i));
-    }
-    var cond = Conductor(fig, n, play, function (i) {
-      var a = times[i] || 0, b = ends(i);
-      return b > a ? (b - a) * 1000 : 4000;
-    }, function () { return engaged && !lean(); });
-    // The video loads and starts once the visitor's first scroll has settled (scrollend, or 150 ms
-    // without a scroll event where scrollend is missing), not on the scroll's first frame: fetching
-    // and decoding it mid-swipe made the first swipe hitch on iPhones. A tap or key that doesn't
-    // scroll starts it 150 ms later; one that turns into a scroll waits for that scroll to settle.
-    var SETTLE = 150, settleT = 0, HAS_END = 'onscrollend' in W, WAKE = ['pointerdown', 'keydown', 'touchstart'];
-    function engage() {
-      if (engaged) return;
-      engaged = true;
-      clearTimeout(settleT);
-      W.removeEventListener('scroll', onScroll, true);
-      if (HAS_END) W.removeEventListener('scrollend', engage, true);
-      WAKE.forEach(function (t) { W.removeEventListener(t, onWake, true); });
-      if (lean()) return;           // Save-Data: the poster stays until a step is chosen
-      load();
-      cond.start();
-    }
-    function later() { clearTimeout(settleT); settleT = setTimeout(engage, SETTLE); }
-    function onScroll() { if (HAS_END) clearTimeout(settleT); else later(); }
-    function onWake() { later(); }
-    if (!still()) {
-      W.addEventListener('scroll', onScroll, { capture: true, passive: true });
-      if (HAS_END) W.addEventListener('scrollend', engage, { capture: true, passive: true });
-      WAKE.forEach(function (t) { W.addEventListener(t, onWake, { capture: true, passive: true }); });
-    }
-    api.go = function (k) { load(); cond.hold(false); cond.go(k, 'click'); };
-    api.step = function () { return cond.cur(); };
-    api.video = video;
     return api;
   }
 

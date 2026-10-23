@@ -5,7 +5,7 @@
      2. The header: Products menu, the phone menu sheet, the join code, the floating bar
      3. Carousels (.carousel): arrows, keys, swipe, right to left
      4. Sticky step lists (.steps-sticky): the pinned titles beside the recordings
-     5. The opening's scroll fallback (.opening) where CSS scroll-driven animations are missing
+     5. (removed 2026-10-23: the opening's scroll fallback; the opening no longer moves on scroll)
      6. Illustrations and scene plates: a plate's drawn device (img/plates/<data-plate>.webp)
         is loaded here, only once site.css opts it in and it is near the view, and takes over
         from the CSS frame; ?ph shows the placeholders' file names
@@ -302,33 +302,6 @@
     }, { rootMargin: '-50% 0px -50% 0px' });
     panels.forEach(function (p) { io.observe(p); });
     activate(0);
-  });
-
-  /* ---------------------------------------------------------------- 5. The opening, without scroll-driven CSS */
-  // Where animation-timeline is missing (Safari before 26, Firefox), the opening's motion follows
-  // --od: how far the opening's top has scrolled past the top of the screen, in vh. One rect read
-  // per frame, only while the opening is on screen, and --od written on the elements that use it
-  // (the three tiles and the stage's device), not on .opening: an inherited property there
-  // restyled the whole opening every frame (site.css registers --od as not inherited).
-  var supportsScrollCSS = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
-  if (!still && !supportsScrollCSS && 'IntersectionObserver' in window) document.querySelectorAll('.opening').forEach(function (el) {
-    root.classList.add('k-sd-js');
-    var raf = 0, last = '', users = el.querySelectorAll('.opening-tile, .opening-stage .device');
-    function update() {
-      raf = 0;
-      var top = el.getBoundingClientRect().top;
-      var od = Math.max(0, -top / (window.innerHeight / 100)).toFixed(2);
-      if (od === last) return;
-      last = od;
-      for (var i = 0; i < users.length; i++) users[i].style.setProperty('--od', od);
-    }
-    function request() { if (!raf) raf = requestAnimationFrame(update); }
-    new IntersectionObserver(function (list) {
-      if (list[0].isIntersecting) { window.addEventListener('scroll', request, { passive: true }); request(); }
-      else window.removeEventListener('scroll', request);
-    }).observe(el);
-    window.addEventListener('resize', request);
-    update();
   });
 
   /* ---------------------------------------------------------------- 6. Illustrations and scene plates */

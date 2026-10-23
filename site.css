@@ -590,105 +590,61 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .caption { max-width: 62ch; font-size: 15px; font-weight: 500; line-height: 1.45; color: var(--text); text-wrap: pretty; }
 .caption b { font-weight: 600; color: var(--ink); }
 
-/* ======================================================================== The opening scroll (§7.8) */
-/* The pinned hero of / and /students/, after Granola. Copy on the inline start; on the other side a
-   tall track whose stage sticks for about one screen of scroll. As the visitor scrolls, the device
-   settles from slightly large to its place and three illustration tiles (the visitor's materials)
-   gather behind it, shrink and fade. Four invisible markers (.opening-marks > i[data-step]) let the
-   showcase driver pick the story's step when one crosses the middle of the screen.
-   CSS scroll-driven animations where supported; site.js otherwise sets --od (how far the opening
-   has scrolled, in vh) and the same motion follows it. Reduced motion: no pin, no movement; the
-   tiles sit still round the stage (hidden on phones). Phones: copy, then the pinned stage.
+/* ======================================================================== The opening (§7.8) */
+/* The hero of / and /students/: copy on the inline start, the hero animation (.show--anim, below)
+   beside it, with three illustration tiles (the visitor's materials) sitting still round it. The
+   owner (2026-10-23) dropped the scroll pin and the scroll-linked motion with the live app: it is
+   an ordinary hero that scrolls with the page. Phones and tablets: copy, then the animation; no tiles.
      <section class="opening">
        <div class="wrap opening-grid">
-         <div class="opening-copy">chip-switch, h1, lead, .hero-actions, .hero-note</div>
+         <div class="opening-copy">chip-switch, h1, lead, .hero-actions, .beta-note</div>
          <div class="opening-track">
            <div class="opening-stage">
              <div class="opening-collage" aria-hidden="true"><div class="ill opening-tile">…</div> ×3</div>
-             <figure class="show only-wide" …>browser device</figure>
-             <figure class="rec only-narrow" …>phone device</figure>
+             <figure class="show show--anim">…</figure>
            </div>
-           <div class="opening-marks" aria-hidden="true"><i data-step="1"></i><i data-step="2"></i><i data-step="3"></i><i data-step="4"></i></div>
          </div>
        </div>
-     </section>
-   .opening--pin-copy also pins the copy column beside the stage (desktop). */
-.opening { position: relative; overflow-x: clip; padding-block-start: 16px; view-timeline-inset: 0; }
-.opening-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; gap: var(--s-8); }
+     </section> */
+.opening { position: relative; overflow-x: clip; padding-block-start: 16px; }
+.opening-grid { display: grid; grid-template-columns: minmax(0, 4.5fr) minmax(0, 7.5fr); align-items: center; gap: var(--s-8); }
+@media (min-width: 1360px) { .opening-grid { grid-template-columns: minmax(0, 4.1fr) minmax(0, 7.9fr); } } /* wide screens: the hero ~840px at 1440 */
 .opening-copy { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 24px;
   min-height: calc(100vh - var(--sticky-top) - 16px); min-height: calc(100svh - var(--sticky-top) - 16px); padding-block: 24px; }
 .opening-copy .lead { max-width: 30em; }
-.opening-track { --pin-len: calc(90svh + var(--sticky-top) + 16px); position: relative; min-height: 190vh; min-height: 190svh; }
-.opening-stage { position: sticky; inset-block-start: var(--sticky-top); isolation: isolate; display: flex; flex-direction: column; justify-content: center;
-  height: calc(100vh - var(--sticky-top) - 16px); height: calc(100svh - var(--sticky-top) - 16px); }
-.opening-stage > :is(.show, .rec) { position: relative; z-index: 1; width: min(88%, calc((100svh - 270px) * 1.6)); margin-inline: auto; }
-.opening-stage .device { --settle-s: 1.03; --settle-x: 0%; --settle-y: -1vh; }   /* a barely-there settle as the visitor scrolls; the app inside never zooms */
+.opening-track { position: relative; }
+.opening-stage { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: center; }
 .opening-collage { position: absolute; inset: 0 0 64px; z-index: 0; pointer-events: none; }
 .opening-tile { --ar: 1; position: absolute; inset-inline: 0; inset-block-start: 50%; width: 26%; margin: -13% auto 0;
   translate: calc(var(--fx) * var(--k-dir)) var(--fy); rotate: calc(var(--fr) * var(--k-dir)); box-shadow: 0 18px 40px -24px rgb(30 12 60 / .4); }
-.opening-tile:nth-child(1) { --fx: 152%; --fy: -150%; --fr: 6deg; --g0: 0vh; --g1: 50vh; --g0n: 0; }
-.opening-tile:nth-child(2) { --fx: -158%; --fy: -75%; --fr: -5deg; --g0: 6vh; --g1: 56vh; --g0n: 6; }   /* upper left, half behind the frame: clear of the H1 and the captions, with or without motion */
-.opening-tile:nth-child(3) { --fx: 156%; --fy: 80%; --fr: 4deg; --g0: 12vh; --g1: 62vh; --g0n: 12; }
-.opening-marks { position: absolute; inset: 0; pointer-events: none; }
-.opening-marks > i { position: absolute; inset-inline: 0; height: 1px; inset-block-start: calc(50svh - var(--sticky-top) + var(--at, 0) * var(--pin-len)); }
-.opening-marks > i:nth-child(1) { --at: .15; } .opening-marks > i:nth-child(2) { --at: .35; } .opening-marks > i:nth-child(3) { --at: .6; } .opening-marks > i:nth-child(4) { --at: .85; }
-@media (min-width: 1025px) and (prefers-reduced-motion: no-preference) {
-  .opening--pin-copy .opening-copy { position: sticky; inset-block-start: var(--sticky-top); height: calc(100svh - var(--sticky-top) - 16px); min-height: 0; }
-}
+.opening-tile:nth-child(1) { --fx: 152%; --fy: -150%; --fr: 6deg; }
+.opening-tile:nth-child(2) { --fx: -158%; --fy: -75%; --fr: -5deg; }   /* upper left, half behind the frame: clear of the H1 and the captions */
+.opening-tile:nth-child(3) { --fx: 156%; --fy: 80%; --fr: 4deg; }
 @media (max-width: 1024px) {
   .opening-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .opening-copy { min-height: 0; padding-block: 16px 0; }
-  .opening-track { --sticky-top: 72px; --pin-len: calc(100svh + 88px); min-height: 200vh; min-height: 200svh; }
-  .opening-stage { height: calc(100svh - 88px); }
-  .opening-stage > :is(.show, .rec) { width: min(100%, 560px); }
-  .opening-stage > :is(.show, .rec):has(.device--phone) { width: auto; align-items: center; }
-  .opening-stage .device--phone { --device-w: min(64vw, calc((100svh - 230px) * 390 / 844 * .94)); }
-  .opening-collage { inset-block-end: 80px; }
-  .opening-tile { width: 32%; margin-block-start: -16%; }
-  .opening-tile:nth-child(1) { --fx: 112%; --fy: -118%; }
-  .opening-tile:nth-child(2) { --fx: -114%; --fy: 18%; }
-  .opening-tile:nth-child(3) { --fx: 112%; --fy: 112%; }
-}
-/* A live scene with a phone recording (data-phone-recording): under 900px showcase.js plays that
-   recording of the app's phone layout instead of loading the app, so the browser frame turns into
-   a phone there (its poster is the <picture>'s phone source). */
-@media (max-width: 899px) {
-  .opening-stage > .show[data-phone-recording] { width: auto; align-items: center; }
-  /* The screen starts under the app's own header and toolbar (the top 200 of its 844 px), so the
-     book, the lecture and the question fill it, and the phone can be wider for the same height. */
-  .show[data-phone-recording] { --phone-screen: 390 / 644; }
-  .show[data-phone-recording] .device--browser { --device-w: min(86vw, calc((100svh - 190px) * 390 / 644 * .94)); width: var(--device-w); max-width: 100%;
-    padding: calc(var(--device-w) * .026); background: #151515; border: 0; border-radius: calc(var(--device-w) * .124); box-shadow: 0 24px 50px -28px rgb(30 12 60 / .4); }
-  .show[data-phone-recording] .device--browser::before { content: ""; position: absolute; z-index: 2; inset-inline: 0; inset-block-start: calc(var(--device-w) * .048);
-    width: 28%; height: calc(var(--device-w) * .074); margin-inline: auto; border-radius: var(--r-pill); background: #151515; }
-  .show[data-phone-recording] .device--browser .device-bar { display: none; }
-  .show[data-phone-recording] .device--browser .device-screen { --screen: var(--phone-screen); --focus: 50% 100%; border-radius: calc(var(--device-w) * .098); }
-  .show[data-phone-recording] .show-video { object-position: 50% 100%; }
-}
-@media (max-width: 899px) and (min-width: 641px) { .show[data-phone-recording] .device--browser { --device-w: min(340px, calc((100svh - 240px) * 390 / 644 * .94)); } }
-@media (max-width: 1024px) and (min-width: 641px) {
-  .opening-stage .device--phone { --device-w: 300px; }
-  /* Tablets: a landscape device with room on both sides, so the tiles sit beside it, not under the caption. */
-  .opening-tile { width: min(26%, 220px); margin-block-start: max(-13%, -110px); }
-  .opening-tile:nth-child(1) { --fx: 175%; --fy: -80%; }
-  .opening-tile:nth-child(2) { --fx: -175%; --fy: 10%; }
-  .opening-tile:nth-child(3) { --fx: 175%; --fy: 70%; }
-}
-@media (max-width: 899px) and (min-width: 641px) {
-  /* Round the phone that plays the recording there, not a landscape frame. */
-  .opening:has(.show[data-phone-recording]) .opening-tile:nth-child(odd) { --fx: 140%; }
-  .opening:has(.show[data-phone-recording]) .opening-tile:nth-child(2) { --fx: -140%; }
+  .opening-stage { padding-block-end: 24px; }
+  .opening-collage { display: none; }
 }
 
-/* The hero animation (/ only, owner 2026-10-23): one 4:3 looping video of the study view on a
-   monitor (the frame and the step captions are drawn in it), on every width, in place of the live
-   app and the phone recording. Its own canvas is --page, so it sits on the page without a box.
-     <figure class="show show--anim"><video class="anim-video" data-anim …><source media=…>…</video><figcaption class="caption">…</figcaption></figure> */
-.opening-stage > .show--anim { width: min(100%, calc((100svh - var(--sticky-top) - 96px) * 4 / 3)); }
-.anim-video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: contain; background: var(--page);
-  /* Trimmed to the drawn caption, monitor and stand, so the opening's tiles behind it are not boxed in by its empty corners. */
+/* The hero animation (owner 2026-10-23): one 4:3 looping video of the study view on a monitor (the
+   frame and the step captions are drawn in it), on every width, in place of the live app and the
+   phone recording, on /, /students/ and /products/study-view/. Its canvas is --page and its outer 5%
+   on each side is empty, so the video is drawn 1/0.9 of its figure's width and centred: the monitor
+   lines up with the figure (and the caption under it), the empty margin falls into the gutter.
+   clip-path trims it to the caption, the monitor and the stand, so the tiles behind are not boxed in.
+     <figure class="show show--anim"><video class="anim-video" data-anim …><source media=…>…</video><figcaption class="caption">…</figcaption></figure>
+   Sizes (video width): 1280–1920 ≈ 795px beside the copy, capped by the screen's height; phones the
+   full screen width (monitor = the text column). site.js plays it on screen only, never with reduced motion. */
+.show--anim { gap: 12px; }
+.anim-video { display: block; width: calc(100% / .9); max-width: none; height: auto; margin-inline: calc(100% / -18); aspect-ratio: 4 / 3; object-fit: contain; background: var(--page);
   clip-path: polygon(9.375% 2.5%, 90.625% 2.5%, 90.625% 11.667%, 96.25% 11.667%, 96.25% 92.5%, 63.125% 92.5%, 63.125% 100%, 36.875% 100%, 36.875% 92.5%, 3.75% 92.5%, 3.75% 11.667%, 9.375% 11.667%); }
-@media (max-width: 1024px) { .opening-stage > .show--anim { width: min(100%, 720px, calc((100svh - 88px - 96px) * 4 / 3)); } }
+/* Beside the copy: the whole column, unless the screen is too short to show it with its caption. */
+.opening-stage > .show--anim { width: min(100%, calc((100svh - var(--sticky-top) - 150px) * 4 / 3 * .9)); margin-inline: auto; }
+@media (max-width: 1024px) { .opening-stage > .show--anim { width: min(100%, 680px); } }
+/* The study view page: centred under the copy. */
+.pr-hero-media.show--anim { width: min(100%, 900px, calc((100svh - var(--sticky-top) - 150px) * 4 / 3 * .9)); }
+@media (max-width: 1024px) { .pr-hero-media.show--anim { width: min(100%, 680px); } }
 
 /* ======================================================================== Sticky step list (/ and /students/, §7.8) */
 /* Each step is a panel: its copy (h3, two lines, a text link) and its framed recording.
@@ -806,9 +762,6 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 @keyframes k-in { from { opacity: 0; translate: 0 -6px; } }
 @keyframes k-out { to { opacity: 0; translate: 0 -4px; } }
 @keyframes k-ring { 50% { scale: 1.35; opacity: .35; } }   /* breathes out and back to the ring at rest */
-@keyframes k-settle { from { scale: var(--settle-s); translate: calc(var(--settle-x) * var(--k-dir)) var(--settle-y); } }
-@keyframes k-gather { to { translate: 0 0; rotate: 0deg; scale: .75; } }
-@keyframes k-fade { to { opacity: 0; } }
 @keyframes k-drift { from { translate: 0 calc(var(--depth, 24) * 1px); } to { translate: 0 calc(var(--depth, 24) * -1px); } }
 @keyframes k-covered { to { scale: .96; } }
 
@@ -832,19 +785,11 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
   .show-hint:is(.is-on, :not([hidden])) :is(.show-ring, .show-hint-ring) { animation: k-ring calc(var(--dur-camera) * 1.2) var(--ease-inout) var(--dur-slow) 3; }
 }
 
-/* Scroll-linked motion: only where the browser has scroll-driven animations (the opening also has
-   site.js's fallback below). Transform and opacity only, on the compositor. */
+/* Scroll-linked motion: only where the browser has scroll-driven animations. Transform and opacity only, on the compositor. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .opening { view-timeline: --opening block; view-timeline-inset: 0; }
-    .opening-stage .device { animation: k-settle var(--ease-inout) both; animation-timeline: --opening; animation-range: exit-crossing 0px exit-crossing 100vh; }
-    .opening-tile { animation: k-gather var(--ease-inout) both, k-fade var(--ease-inout) both; animation-timeline: --opening, --opening;
-      animation-range: exit-crossing var(--g0) exit-crossing var(--g1), exit-crossing 60vh exit-crossing 80vh; }
     .mosaic-col + .mosaic-col { animation: k-drift linear both; animation-timeline: view(); animation-range: cover; --depth: 20; }
     .closing-tile { animation: k-drift linear both; animation-timeline: view(); animation-range: cover; }
-  }
-  @media (prefers-reduced-motion: no-preference) and (max-width: 1024px) {
-    .opening-stage .device { animation: none; }   /* phones and tablets: the device stays as it is */
   }
   @media (prefers-reduced-motion: no-preference) and (max-width: 900px) {
     .closing-tile { animation: none; }
@@ -864,41 +809,6 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
     .stack-card:nth-child(3) { animation-timeline: --stack-4; }
     .stack-card:nth-child(4) { animation-timeline: --stack-5; }
   }
-}
-/* The opening without scroll-driven animations: site.js sets html.k-sd-js and, on each tile and the
-   stage's device, --od (how far the opening has scrolled past the top of the screen, in vh). Same
-   ranges as above, and the same gentle in-and-out (a smoothstep, close to --ease-inout). --od is
-   registered as not inherited, so its per-frame write restyles only those four elements. */
-@property --od { syntax: '<number>'; inherits: false; initial-value: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  html.k-sd-js .opening-stage .device {
-    --q: clamp(0, var(--od, 0) / 100, 1);
-    --p: calc(var(--q) * var(--q) * (3 - 2 * var(--q)));
-    scale: calc(var(--settle-s) - (var(--settle-s) - 1) * var(--p));
-    translate: calc(var(--settle-x) * var(--k-dir) * (1 - var(--p))) calc(var(--settle-y) * (1 - var(--p)));
-  }
-  html.k-sd-js .opening-tile {
-    --t: clamp(0, (var(--od, 0) - var(--g0n)) / 50, 1);
-    --e: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
-    translate: calc(var(--fx) * var(--k-dir) * (1 - var(--e))) calc(var(--fy) * (1 - var(--e)));
-    rotate: calc(var(--fr) * var(--k-dir) * (1 - var(--e)));
-    scale: calc(1 - .25 * var(--e));
-    opacity: calc(1 - clamp(0, (var(--od, 0) - 60) / 20, 1));
-  }
-}
-@media (prefers-reduced-motion: no-preference) and (max-width: 1024px) {
-  html.k-sd-js .opening-stage .device { scale: none; translate: none; }
-}
-/* Reduced motion: the opening is an ordinary hero (no pin); the tiles sit still round the stage on
-   desktop and are hidden on phones. */
-@media (prefers-reduced-motion: reduce) {
-  .opening-track { min-height: 0; }
-  .opening-stage { position: relative; inset-block-start: auto; height: auto; padding-block: 72px 24px; }
-  .opening-marks { display: none; }
-}
-@media (prefers-reduced-motion: reduce) and (max-width: 1024px) {
-  .opening-collage { display: none; }
-  .opening-stage { padding-block: 0; }
 }
 
 /* ======================================================================== Product page layouts (product-pages agent) */
@@ -1064,11 +974,6 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 .pr-close-links .i { width: 18px; height: 18px; }
 
 /* Per-page pieces of the above */
-/* The study view's hero frame: under 900px it plays the phone recording in a phone (site.css above). */
-@media (max-width: 899px) {
-  .pr-hero-media.show[data-phone-recording] { align-items: center; }
-  .pr-hero-media.show[data-phone-recording] > :not(.device) { align-self: stretch; }
-}
 /* Minis: the drawn phone of plate P2, cropped round the phone so it is as large as the hero allows
    (--frac: the share of the picture's width shown; --x0: where the crop starts). */
 .hero-grid > .pr-hero-phone { width: 100%; max-width: 500px; margin-inline-start: auto; }
@@ -1229,8 +1134,6 @@ html.ph-on :is(.plate[data-ph].is-missing, .plate[data-ph]:not(:has(.plate-img, 
 }
 @media (max-width: 380px) { .beta-note { gap: 8px; padding-inline-end: 12px; font-size: 14px; } }
 
-/* Tablets: the phone recording's caption lines up with the line above it, not centred in the figure. */
-@media (max-width: 899px) { .opening-stage > .show[data-phone-recording] > .caption { align-self: flex-start; } }
 
 /* Small text: nothing under 12px where a person has to read it. */
 .tag { font-size: 12px; height: 24px; }

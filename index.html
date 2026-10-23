@@ -104,7 +104,7 @@
     "width": 1200,
     "height": 630
    },
-   "dateModified": "2026-10-13",
+   "dateModified": "2026-10-23",
    "about": {
     "@id": "https://klaroplatform.com/#app"
    },
@@ -317,8 +317,8 @@
 
 <main id="main">
 
-<!-- 1. The opening (redesign.md 7.1, 7.8): the real app pinned beside the copy while the story plays. -->
-<section class="opening opening--pin-copy" data-opening aria-labelledby="hero-title">
+<!-- 1. The opening (redesign.md 7.1): the copy beside the hero animation of the study view (owner, 2026-10-23: no scroll pin). -->
+<section class="opening" aria-labelledby="hero-title">
   <div class="wrap opening-grid">
     <div class="opening-copy">
       <nav class="chip-switch" aria-label="Klaro for"><span class="chip-switch-label">Klaro for…</span><a href="./" aria-current="page">Tutors</a><a href="students/">Students and parents</a></nav>
@@ -339,7 +339,8 @@
         </div>
         <!-- The hero (owner, 2026-10-23): a short looping animation of the real study view on a
              monitor, on phones and computers alike, in place of the live app and the phone recording.
-             Reduced motion: no <source> matches, so the poster stands. site.js pauses it off screen. -->
+             Reduced motion: no <source> matches, so the poster stands. site.js pauses it off screen.
+             The same figure is the hero of students/ and products/study-view/. -->
         <figure class="show show--anim">
           <video class="anim-video" data-anim autoplay muted loop playsinline preload="auto" width="1600" height="1200" poster="media/study-anim-poster.webp" aria-label="Klaro's study view on a sample Biology course. Step 1: tap a line in the book and the lecture plays the part that explains it. Step 2: practise that exact part, right beside it.">
             <source media="(prefers-reduced-motion: no-preference) and (max-width: 899px)" src="media/study-anim-960.webm" type="video/webm">
